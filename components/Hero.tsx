@@ -43,7 +43,7 @@ export function Hero() {
             AI Workflow Consulting
           </p>
           <h1 className="mt-5 max-w-[12em] font-display text-[clamp(3rem,6.2vw,5.5rem)] leading-[1.02] font-medium tracking-[-0.02em]">
-            We build the AI systems your operations actually run on.
+            We build the AI systems your operations <span className="italic">actually run on.</span>
           </h1>
           <p className="mt-7 max-w-[40rem] text-[17px] leading-[1.65] text-[#F7F4EC]/80 md:text-[18px]">
             Valentini &amp; Co. audits high-friction processes and engineers workflows around the

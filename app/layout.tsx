@@ -93,6 +93,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     >
       <body className="flex min-h-full flex-col">
         <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "document.documentElement.dataset.modality='pointer';addEventListener('pointerdown',function(){document.documentElement.dataset.modality='pointer'});addEventListener('keydown',function(e){if(e.key==='Tab'||e.key.indexOf('Arrow')===0)document.documentElement.dataset.modality='keyboard'});",
+          }}
+        />
+        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />

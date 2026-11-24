@@ -1,23 +1,55 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
 import type { PracticePage } from "@/lib/practices";
 
 export function PracticeView({ practice }: { practice: PracticePage }) {
+  const copy = (
+    <div
+      className={`flex flex-col justify-end px-6 pb-14 md:px-10 lg:col-span-7 lg:px-14 lg:py-36 ${
+        practice.image.side === "left" ? "pt-12" : "pt-32"
+      }`}
+    >
+      <p className="font-mono text-[11px] tracking-[0.2em] text-[#C5A869] uppercase">
+        {practice.kicker} · Active practice
+      </p>
+      <h1 className="mt-5 max-w-[14ch] font-display text-[clamp(2.8rem,5vw,4.6rem)] leading-[1.02] font-medium tracking-[-0.02em]">
+        {practice.title}
+      </h1>
+      <p className="mt-4 font-display text-[1.5rem] text-[#C5A869] italic">{practice.statement}</p>
+      <p className="mt-8 max-w-[40rem] text-[17px] leading-7 text-[#F7F4EC]/78">{practice.lede}</p>
+    </div>
+  );
+  const photo = (
+    <div className="relative min-h-[46vh] lg:col-span-5 lg:min-h-full">
+      <Image
+        src={practice.image.src}
+        alt={practice.image.alt}
+        fill
+        sizes="(min-width: 1024px) 42vw, 100vw"
+        className={`object-cover ${practice.image.position}`}
+      />
+    </div>
+  );
+
   return (
     <>
-      <Navbar overlay />
+      <Navbar />
       <main id="top" className="flex-1">
-        <section className="bg-[#0B1F16] px-6 pt-32 pb-20 text-[#F7F4EC] md:px-10 md:pt-40 md:pb-28">
-          <div className="mx-auto max-w-[90rem]">
-            <p className="font-mono text-[11px] tracking-[0.2em] text-[#C5A869] uppercase">
-              {practice.kicker} · Active practice
-            </p>
-            <h1 className="mt-5 max-w-[16ch] font-display text-[clamp(2.8rem,5.4vw,4.8rem)] leading-[1.02] font-medium tracking-[-0.02em]">
-              {practice.title}
-            </h1>
-            <p className="mt-4 font-display text-[1.5rem] text-[#C5A869] italic">{practice.statement}</p>
-            <p className="mt-8 max-w-[42rem] text-[17px] leading-7 text-[#F7F4EC]/78">{practice.lede}</p>
+        <section className="bg-[#0B1F16] text-[#F7F4EC]">
+          <div className="mx-auto grid max-w-[90rem] lg:min-h-[86vh] lg:grid-cols-12">
+            {practice.image.side === "left" ? (
+              <>
+                {photo}
+                {copy}
+              </>
+            ) : (
+              <>
+                {copy}
+                {photo}
+              </>
+            )}
           </div>
         </section>
 

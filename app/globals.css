@@ -49,9 +49,18 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+:focus {
+  outline: none;
+}
+
 :focus-visible {
   outline: 1px solid #c5a869;
   outline-offset: 3px;
+}
+
+/* Some controls match :focus-visible on a pointer click. Keep the ring for keyboard only. */
+html[data-modality="pointer"] :focus-visible {
+  outline: none;
 }
 
 ::selection {
@@ -82,13 +91,15 @@ input[type="range"] {
   cursor: pointer;
 }
 
-input[type="range"]:focus {
+input[type="range"]:focus,
+input[type="range"]:focus-visible {
   outline: none;
 }
 
-input[type="range"]:focus-visible {
+html[data-modality="keyboard"] input[type="range"]:focus-visible::-webkit-slider-thumb,
+html[data-modality="keyboard"] input[type="range"]:focus-visible::-moz-range-thumb {
   outline: 1px solid #c5a869;
-  outline-offset: 4px;
+  outline-offset: 3px;
 }
 
 input[type="range"]::-webkit-slider-runnable-track {

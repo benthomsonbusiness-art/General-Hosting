@@ -27,8 +27,8 @@ export function Engagement() {
               Three phases. Built to own.
             </h2>
             <p className="mt-6 max-w-sm text-[16px] leading-7 text-[#4F5752]">
-              Every build ships with documentation, monitoring, and full client ownership of the
-              code and the infrastructure it runs on.
+              Every build ships with documentation, monitoring, and ownership of the code and the
+              infrastructure it runs on.
             </p>
           </div>
         </div>

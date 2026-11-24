@@ -32,6 +32,7 @@ export type PracticePage = {
   description: string;
   statement: string;
   lede: string;
+  image: { src: string; alt: string; position: string; side: "left" | "right" };
   areas: { title: string; body: string }[];
   engagement: { title: string; body: string }[];
 };
@@ -45,6 +46,12 @@ export const metaAds: PracticePage = {
     "Valentini & Co. builds Meta account structure, creative testing, and measurement a team can operate. An active advisory practice taking direct inquiries.",
   statement: "Paid Acquisition & Creative Testing Systems",
   lede: "The work is the account structure, the testing ledger, and the measurement a team can run after we leave. This practice is open. Inquiries come straight to the firm.",
+  image: {
+    src: "/images/systems-geometry.jpg",
+    alt: "Vertical brass and dark stone fins crossed by diagonal sunlight.",
+    position: "object-[18%_center]",
+    side: "right",
+  },
   areas: [
     {
       title: "Account architecture",
@@ -92,6 +99,12 @@ export const strategy: PracticePage = {
     "Commercial and operational strategy for founders, COOs, and managing partners. An active Valentini & Co. advisory practice taking direct inquiries.",
   statement: "Commercial & Operational Strategy",
   lede: "For founders, COOs, and managing partners who need a clear account of the offer, the margin, and how the company actually decides. The practice is open. Work starts with a direct inquiry.",
+  image: {
+    src: "/images/consultation-room.jpg",
+    alt: "A consultation room with forest-green paneling, a cognac leather chair, and linen curtains.",
+    position: "object-[center_18%]",
+    side: "left",
+  },
   areas: [
     {
       title: "Offer and price",

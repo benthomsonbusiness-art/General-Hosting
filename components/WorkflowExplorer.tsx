@@ -118,9 +118,8 @@ export function WorkflowExplorer() {
               Three systems. The same discipline.
             </h2>
           </div>
-          <p className="max-w-sm text-[15px] leading-6 text-[#F7F4EC]/70">
-            Production patterns installed inside the tools a company already uses. Run one. Open any
-            step.
+          <p className="max-w-sm text-[17px] leading-7 text-[#F7F4EC]/70">
+            Production patterns for the tools a company already runs. Run one. Open any step.
           </p>
         </div>
 
@@ -137,8 +136,8 @@ export function WorkflowExplorer() {
                 type="button"
                 role="tab"
                 aria-selected={selectedTab}
-                className={`relative shrink-0 pb-3 text-left text-[13px] tracking-[0.01em] ${
-                  selectedTab ? "text-[#F7F4EC]" : "text-[#F7F4EC]/50 hover:text-[#F7F4EC]/80"
+                className={`relative shrink-0 pb-3 text-left text-[15px] tracking-[0.01em] ${
+                  selectedTab ? "text-[#F7F4EC]" : "text-[#F7F4EC]/70 hover:text-[#F7F4EC]"
                 }`}
                 onClick={() => reset(item.id)}
               >
@@ -146,7 +145,7 @@ export function WorkflowExplorer() {
                 {selectedTab ? (
                   <motion.span
                     layoutId="workflow-underline"
-                    className="absolute inset-x-0 -bottom-px h-px bg-[#C5A869]"
+                    className="absolute inset-x-0 bottom-0 z-10 h-[2px] bg-[#C5A869]"
                   />
                 ) : null}
               </button>
@@ -154,7 +153,7 @@ export function WorkflowExplorer() {
           })}
         </div>
 
-        <p className="mt-6 max-w-3xl text-[15px] leading-6 text-[#F7F4EC]/72">{workflow.summary}</p>
+        <p className="mt-6 max-w-3xl text-[17px] leading-7 text-[#F7F4EC]/70">{workflow.summary}</p>
 
         <div className="mt-8 flex flex-wrap items-center gap-3">
           <button

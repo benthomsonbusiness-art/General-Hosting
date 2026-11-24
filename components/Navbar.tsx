@@ -116,7 +116,7 @@ export function Navbar({ overlay = false }: { overlay?: boolean }) {
     <header className="fixed inset-x-0 top-0 z-50">
       <a
         href="#top"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-4 focus:z-[60] focus:bg-[#F7F4EC] focus:px-3 focus:py-2 focus:text-[#133224]"
+        className="sr-only focus-visible:not-sr-only focus-visible:absolute focus-visible:top-3 focus-visible:left-4 focus-visible:z-[60] focus-visible:bg-[#F7F4EC] focus-visible:px-3 focus-visible:py-2 focus-visible:text-[#133224]"
       >
         Skip to content
       </a>

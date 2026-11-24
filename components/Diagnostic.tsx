@@ -275,7 +275,7 @@ function InquiryFields({ initialPractice }: { initialPractice: PracticeInterest 
 
 function controlClass(invalid: boolean) {
   return `w-full border-0 border-b bg-transparent py-3 text-[15px] text-[#F7F4EC] outline-none placeholder:text-[#F7F4EC]/35 ${
-    invalid ? "border-[#E7B2A4]" : "border-[rgba(197,168,105,0.45)] focus:border-[#C5A869]"
+    invalid ? "border-[#E7B2A4]" : "border-[rgba(197,168,105,0.45)] focus-visible:border-[#C5A869]"
   }`;
 }
 
