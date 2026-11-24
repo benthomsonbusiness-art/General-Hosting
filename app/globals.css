@@ -40,6 +40,7 @@
   --font-sans: var(--font-jakarta), "Plus Jakarta Sans", system-ui, sans-serif;
   --font-display: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
   --font-display-italic: var(--font-cormorant-italic), "Cormorant Garamond", Georgia, serif;
+  --font-ampersand-face: var(--font-ampersand), var(--font-cormorant), Georgia, serif;
   --font-mono: var(--font-jetbrains), "JetBrains Mono", ui-monospace, monospace;
   --radius-sm: 0px;
   --radius-md: 0px;

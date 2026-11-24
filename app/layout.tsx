@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { Cormorant_Garamond, JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
+import localFont from "next/font/local";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { InputModality } from "@/components/util/InputModality";
@@ -26,6 +27,16 @@ const cormorantItalic = Cormorant_Garamond({
   variable: "--font-cormorant-italic",
   display: "swap",
   preload: false,
+});
+
+// The wordmark ampersand, subset from Cormorant Garamond Italic 500 (SIL Open Font License), so
+// pages without italic text do not download the full italic file.
+const ampersand = localFont({
+  src: "./fonts/cormorant-italic-ampersand.woff2",
+  weight: "500",
+  style: "italic",
+  variable: "--font-ampersand",
+  display: "swap",
 });
 
 const jakarta = Plus_Jakarta_Sans({
@@ -103,7 +114,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${cormorant.variable} ${cormorantItalic.variable} ${jakarta.variable} ${jetbrains.variable} h-full antialiased`}
+      className={`${cormorant.variable} ${cormorantItalic.variable} ${ampersand.variable} ${jakarta.variable} ${jetbrains.variable} h-full antialiased`}
     >
       <body data-surface="light" className="flex min-h-full flex-col">
         <InputModality />
