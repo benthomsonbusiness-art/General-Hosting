@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+:root {
+  --forest: #133224;
+  --emerald: #0d2419;
+  --ivory: #f7f4ec;
+  --cream: #efeadf;
+  --gold: #c5a869;
+  --gold-hover: #b39453;
+  --ink-heading: #133224;
+  --ink-body: #2e3e36;
+  --ink-muted: #64726a;
+  --on-dark-heading: #f7f4ec;
+  --on-dark-body: #d8d4c8;
+  --on-dark-muted: #9ba89f;
+  --background: #f7f4ec;
+  --foreground: #2e3e36;
+}
+
+@theme inline {
+  --color-forest: var(--forest);
+  --color-emerald: var(--emerald);
+  --color-ivory: var(--ivory);
+  --color-cream: var(--cream);
+  --color-gold: var(--gold);
+  --color-gold-hover: var(--gold-hover);
+  --color-ink: var(--ink-heading);
+  --color-ink-body: var(--ink-body);
+  --color-ink-muted: var(--ink-muted);
+  --color-on-dark: var(--on-dark-heading);
+  --color-on-dark-body: var(--on-dark-body);
+  --color-on-dark-muted: var(--on-dark-muted);
+  --color-hairline: rgba(19, 50, 36, 0.14);
+  --color-hairline-dark: rgba(197, 168, 105, 0.35);
+  --color-hairline-nav: rgba(197, 168, 105, 0.25);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter), Inter, system-ui, sans-serif;
+  --font-display: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  --radius-sm: 2px;
+  --radius-md: 2px;
+  --radius-lg: 2px;
+  --radius-xl: 2px;
+  --radius-2xl: 2px;
+  --radius-3xl: 2px;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.25rem;
+  background: var(--forest);
+}
+
+body {
+  background: var(--ivory);
+  color: var(--ink-body);
+  font-family: var(--font-sans);
+  font-weight: 400;
+  line-height: 1.7;
+  text-rendering: optimizeLegibility;
+}
+
+:focus-visible {
+  outline: 1px solid #c5a869;
+  outline-offset: 3px;
+}
+
+::selection {
+  background: #133224;
+  color: #f7f4ec;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
