@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { Cormorant_Garamond, JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
+import { InputModality } from "@/components/InputModality";
 import { MotionRoot } from "@/components/MotionRoot";
 import { INQUIRY_EMAIL, SITE_URL } from "@/lib/site";
 import "./globals.css";
@@ -92,12 +93,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       className={`${cormorant.variable} ${jakarta.variable} ${jetbrains.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
-        <script
-          dangerouslySetInnerHTML={{
-            __html:
-              "document.documentElement.dataset.modality='pointer';addEventListener('pointerdown',function(){document.documentElement.dataset.modality='pointer'});addEventListener('keydown',function(e){if(e.key==='Tab'||e.key.indexOf('Arrow')===0)document.documentElement.dataset.modality='keyboard'});",
-          }}
-        />
+        <InputModality />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

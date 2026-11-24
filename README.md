@@ -18,7 +18,7 @@ The photographs in `public/images/hero-architecture.jpg` and `public/images/syst
 
 Fields: `fullName`, `email`, `companyRole`, `practice`, `note`. `fax_number` is a honeypot.
 
-The route requires `Content-Type: application/json`, allows a missing `Origin` or the site's own origin (plus localhost and `*.workers.dev`), and limits each IP to 5 submissions in 10 minutes.
+The route requires `Content-Type: application/json`. It allows a missing `Origin`, a same-origin request, localhost, the hosts in `SITE_HOSTS`, the exact preview host `valentini-preview.benthomsonbusiness.workers.dev`, and extra hosts in the optional `ALLOWED_ORIGINS` env var (comma-separated hosts or origins). The in-memory limit is 5 submissions in 10 minutes, keyed on `cf-connecting-ip` and then `X-Forwarded-For`.
 
 Environment variables:
 

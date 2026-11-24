@@ -21,7 +21,7 @@ type Status = "idle" | "submitting" | "success" | "error";
 
 export function Diagnostic() {
   return (
-    <section id="diagnostic" className="bg-[#133224] text-[#F7F4EC]">
+    <section id="diagnostic" tabIndex={-1} className="bg-[#133224] text-[#F7F4EC] outline-none">
       <div className="mx-auto grid max-w-[90rem] lg:grid-cols-12">
         <div className="relative min-h-[420px] lg:col-span-5 lg:min-h-full">
           <Image

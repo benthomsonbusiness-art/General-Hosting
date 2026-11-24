@@ -43,9 +43,9 @@ export const metaAds: PracticePage = {
   kicker: "Meta Ads Consulting",
   title: "Paid acquisition, run as a system.",
   description:
-    "Valentini & Co. builds Meta account structure, creative testing, and measurement a team can operate. An active advisory practice taking direct inquiries.",
+    "Valentini & Co. builds Meta account structure, creative testing, and measurement a team can operate.",
   statement: "Paid Acquisition & Creative Testing Systems",
-  lede: "The work is the account structure, the testing ledger, and the measurement a team can run after we leave. Inquiries come straight to the firm.",
+  lede: "The work is the account structure, the testing ledger, and the measurement a team can run after we leave.",
   image: {
     src: "/images/systems-geometry.jpg",
     alt: "Vertical brass and dark stone fins crossed by diagonal sunlight.",
@@ -96,9 +96,9 @@ export const strategy: PracticePage = {
   kicker: "Strategy",
   title: "Commercial and operational decisions, written so they can be executed.",
   description:
-    "Commercial and operational strategy for founders, COOs, and managing partners. An active Valentini & Co. advisory practice taking direct inquiries.",
+    "Commercial and operational strategy for founders, COOs, and managing partners.",
   statement: "Commercial & Operational Strategy",
-  lede: "For founders, COOs, and managing partners who need a clear account of the offer, the margin, and how the company decides. Work starts with a direct inquiry.",
+  lede: "For founders, COOs, and managing partners who need a clear account of the offer, the margin, and how the company decides.",
   image: {
     src: "/images/consultation-room.jpg",
     alt: "A consultation room with forest-green paneling, a cognac leather chair, and linen curtains.",

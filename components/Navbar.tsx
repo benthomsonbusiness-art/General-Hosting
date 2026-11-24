@@ -123,10 +123,18 @@ export function Navbar({ overlay = false }: { overlay?: boolean }) {
     if (pathname !== "/") return;
     const target = document.getElementById(id);
     if (!target) return;
+    target.tabIndex = -1;
+    const reduced = prefersReducedMotion();
     target.scrollIntoView({
-      behavior: prefersReducedMotion() ? "auto" : "smooth",
+      behavior: reduced ? "auto" : "smooth",
       block: "start",
     });
+    const focusTarget = () => target.focus({ preventScroll: true });
+    if (reduced || !("onscrollend" in window)) {
+      window.setTimeout(focusTarget, reduced ? 0 : 400);
+      return;
+    }
+    window.addEventListener("scrollend", focusTarget, { once: true });
   }
 
   function focusPracticeItem(index: number) {

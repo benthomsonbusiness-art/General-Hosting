@@ -1,13 +1,20 @@
 import type { Metadata } from "next";
 import { LegalFrame, LegalLinks, LegalSection } from "@/components/legal-frame";
-import { INQUIRY_EMAIL } from "@/lib/site";
+import { INQUIRY_EMAIL, SITE_URL } from "@/lib/site";
+
+const title = "Privacy";
+const description = "Placeholder privacy notice for the Valentini & Co. website. Not in effect.";
 
 export const metadata: Metadata = {
-  title: "Privacy",
-  description:
-    "Placeholder privacy notice for the Valentini & Co. website. Not in effect.",
+  title,
+  description,
   alternates: { canonical: "/privacy" },
   robots: { index: false, follow: true },
+  openGraph: {
+    title: `${title} — Valentini & Co.`,
+    description,
+    url: `${SITE_URL}/privacy`,
+  },
 };
 
 export default function PrivacyPage() {

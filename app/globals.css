@@ -104,8 +104,18 @@ input[type="range"]:focus-visible {
 
 html[data-modality="keyboard"] input[type="range"]:focus-visible::-webkit-slider-thumb,
 html[data-modality="keyboard"] input[type="range"]:focus-visible::-moz-range-thumb {
-  outline: 2px solid #c5a869;
+  outline: 2px solid var(--range-focus, #c5a869);
   outline-offset: 3px;
+}
+
+[data-surface="light"] input[type="range"]:focus-visible::-webkit-slider-thumb {
+  --range-focus: #133224;
+  outline-color: #133224;
+}
+
+[data-surface="light"] input[type="range"]:focus-visible::-moz-range-thumb {
+  --range-focus: #133224;
+  outline-color: #133224;
 }
 
 input[type="range"]::-webkit-slider-runnable-track {

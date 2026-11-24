@@ -18,7 +18,12 @@ const PHASES = [
 
 export function Engagement() {
   return (
-    <section id="how-we-work" data-surface="light" className="bg-[#F7F4EC] text-[#1A1E1B]">
+    <section
+      id="how-we-work"
+      tabIndex={-1}
+      data-surface="light"
+      className="bg-[#F7F4EC] text-[#1A1E1B] outline-none"
+    >
       <div className="mx-auto grid max-w-[90rem] gap-12 px-6 py-20 md:px-10 md:py-28 lg:grid-cols-12 lg:gap-16 lg:py-32">
         <div className="lg:col-span-4">
           <div className="lg:sticky lg:top-28">

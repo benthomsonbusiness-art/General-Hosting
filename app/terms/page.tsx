@@ -1,12 +1,20 @@
 import type { Metadata } from "next";
 import { LegalFrame, LegalLinks, LegalSection } from "@/components/legal-frame";
-import { INQUIRY_EMAIL } from "@/lib/site";
+import { INQUIRY_EMAIL, SITE_URL } from "@/lib/site";
+
+const title = "Terms";
+const description = "Placeholder terms for the Valentini & Co. website. Not in effect.";
 
 export const metadata: Metadata = {
-  title: "Terms",
-  description: "Placeholder terms for the Valentini & Co. website. Not in effect.",
+  title,
+  description,
   alternates: { canonical: "/terms" },
   robots: { index: false, follow: true },
+  openGraph: {
+    title: `${title} — Valentini & Co.`,
+    description,
+    url: `${SITE_URL}/terms`,
+  },
 };
 
 export default function TermsPage() {

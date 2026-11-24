@@ -29,6 +29,7 @@ export function WorkflowExplorer() {
   const runToken = useRef(0);
   const approveRef = useRef<(() => void) | null>(null);
   const approveButtonRef = useRef<HTMLButtonElement>(null);
+  const rerunRef = useRef<HTMLButtonElement>(null);
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
   useEffect(() => {
@@ -42,6 +43,7 @@ export function WorkflowExplorer() {
 
   useEffect(() => {
     if (phase === "awaiting") approveButtonRef.current?.focus();
+    if (phase === "complete") rerunRef.current?.focus();
   }, [phase]);
 
   const workflow = WORKFLOWS.find((item) => item.id === workflowId) ?? WORKFLOWS[0];
@@ -135,7 +137,7 @@ export function WorkflowExplorer() {
   const running = phase === "running" || phase === "awaiting";
 
   return (
-    <section id="architecture" className="bg-[#0B1F16] text-[#F7F4EC]">
+    <section id="architecture" tabIndex={-1} className="bg-[#0B1F16] text-[#F7F4EC] outline-none">
       <div className="mx-auto max-w-[90rem] px-6 py-20 md:px-10 md:py-28 lg:py-32">
         <div className="flex flex-wrap items-end justify-between gap-8">
           <div className="max-w-3xl">
@@ -204,6 +206,7 @@ export function WorkflowExplorer() {
 
         <div className="mt-8 flex flex-wrap items-center gap-3">
           <button
+            ref={rerunRef}
             type="button"
             className={`border border-[#C5A869] px-4 py-2.5 font-mono text-[12px] tracking-[0.14em] text-[#F7F4EC] uppercase transition-colors hover:bg-[#C5A869] hover:text-[#0B1F16] ${
               running ? "cursor-not-allowed opacity-40" : ""

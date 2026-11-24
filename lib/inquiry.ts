@@ -1,4 +1,4 @@
-import { SITE_DOMAIN, SITE_URL } from "@/lib/site";
+import { PREVIEW_HOSTS, SITE_HOSTS } from "@/lib/site";
 
 export const PRACTICE_INTERESTS = [
   "AI Workflow Consulting",
@@ -28,6 +28,7 @@ export type FieldErrors = Partial<Record<InquiryField, string>>;
 const EMAIL = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 const WINDOW_MS = 10 * 60 * 1000;
 const RATE_LIMIT = 5;
+// In-memory only, and keyed per isolate. A durable fix is a Cloudflare rate-limit rule or Turnstile.
 const hits = new Map<string, number[]>();
 
 export function practiceFromQuery(value: string | null | undefined): PracticeInterest {
@@ -62,17 +63,26 @@ function isPractice(value: string): value is PracticeInterest {
 }
 
 function clientIp(request: Request): string {
+  const connecting = request.headers.get("cf-connecting-ip")?.trim();
+  if (connecting) return connecting;
   const forwarded = request.headers.get("x-forwarded-for");
-  if (forwarded) {
-    const first = forwarded.split(",")[0]?.trim();
-    if (first) return first;
+  const first = forwarded?.split(",")[0]?.trim();
+  if (first) return first;
+  return "unknown";
+}
+
+function pruneBuckets(now: number) {
+  for (const [key, stamps] of hits) {
+    const recent = stamps.filter((stamp) => now - stamp < WINDOW_MS);
+    if (recent.length === 0) hits.delete(key);
+    else hits.set(key, recent);
   }
-  return request.headers.get("x-real-ip")?.trim() || "local";
 }
 
 function isRateLimited(ip: string): boolean {
   const now = Date.now();
-  const recent = (hits.get(ip) ?? []).filter((stamp) => now - stamp < WINDOW_MS);
+  pruneBuckets(now);
+  const recent = hits.get(ip) ?? [];
   if (recent.length >= RATE_LIMIT) {
     hits.set(ip, recent);
     return true;
@@ -82,7 +92,34 @@ function isRateLimited(ip: string): boolean {
   return false;
 }
 
-function originAllowed(origin: string | null): boolean {
+function extraHosts(): string[] {
+  const raw = process.env.ALLOWED_ORIGINS;
+  if (!raw) return [];
+  const hosts: string[] = [];
+  for (const part of raw.split(",")) {
+    const token = part.trim();
+    if (!token) continue;
+    try {
+      const host = token.includes("://") ? new URL(token).hostname : token;
+      hosts.push(host.toLowerCase());
+    } catch {
+      continue;
+    }
+  }
+  return hosts;
+}
+
+function requestHost(request: Request): string {
+  const forwarded = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
+  const raw = forwarded.split(",")[0]?.trim().toLowerCase() ?? "";
+  if (raw.startsWith("[")) {
+    const end = raw.indexOf("]");
+    return end === -1 ? raw : raw.slice(0, end + 1);
+  }
+  return raw.split(":")[0] ?? "";
+}
+
+function originAllowed(origin: string | null, request: Request): boolean {
   if (!origin) return true;
   let url: URL;
   try {
@@ -92,12 +129,11 @@ function originAllowed(origin: string | null): boolean {
   }
   const host = url.hostname.toLowerCase();
   if (host === "localhost" || host === "127.0.0.1" || host === "[::1]") return true;
-  if (host === SITE_DOMAIN || host.endsWith(".workers.dev")) return true;
-  try {
-    return url.origin === new URL(SITE_URL).origin;
-  } catch {
-    return false;
-  }
+  if ((SITE_HOSTS as readonly string[]).includes(host)) return true;
+  if ((PREVIEW_HOSTS as readonly string[]).includes(host)) return true;
+  if (extraHosts().includes(host)) return true;
+  const current = requestHost(request);
+  return current !== "" && current === host;
 }
 
 export function validateInquiry(
@@ -216,7 +252,7 @@ export async function handleInquiry(request: Request): Promise<Response> {
     );
   }
 
-  if (!originAllowed(request.headers.get("origin"))) {
+  if (!originAllowed(request.headers.get("origin"), request)) {
     return Response.json(
       { ok: false, error: "This origin is not allowed to submit inquiries." },
       { status: 403 },
