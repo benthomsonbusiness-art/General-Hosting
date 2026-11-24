@@ -19,9 +19,9 @@ export function LegalFrame({
   return (
     <>
       <Navbar />
-      <main id="top" className="flex-1 bg-[#F7F4EC] pt-28 text-[#1A1E1B]">
+      <main id="top" data-surface="light" className="flex-1 bg-[#F7F4EC] pt-28 text-[#1A1E1B]">
         <article className="mx-auto w-full max-w-[42rem] px-6 pt-8 pb-24">
-          <p className="font-mono text-[11px] tracking-[0.2em] text-[#C5A869] uppercase">{kicker}</p>
+          <p className="font-mono text-[12px] tracking-[0.16em] text-gold-ink uppercase">{kicker}</p>
           <h1 className="mt-4 font-display text-[clamp(3rem,7vw,4.5rem)] leading-[0.96] font-medium tracking-[-0.02em] text-[#133224]">
             {title}
           </h1>

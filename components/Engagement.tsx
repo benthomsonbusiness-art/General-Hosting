@@ -2,7 +2,7 @@ const PHASES = [
   {
     when: "Week 1",
     title: "Operational Audit & Architecture",
-    body: "We sit with the people who do the work and write down the path the data actually takes. The week ends with a data contract, the failure cases, and a short list of hours worth taking back. Production code waits until that document exists.",
+    body: "We sit with the people who do the work and write down the path the data takes. The week ends with a data contract, the failure cases, and a short list of hours worth taking back. Production code waits until that document exists.",
   },
   {
     when: "Weeks 2–4",
@@ -18,16 +18,16 @@ const PHASES = [
 
 export function Engagement() {
   return (
-    <section id="how-we-work" className="scroll-mt-24 bg-[#F7F4EC] text-[#1A1E1B]">
+    <section id="how-we-work" data-surface="light" className="bg-[#F7F4EC] text-[#1A1E1B]">
       <div className="mx-auto grid max-w-[90rem] gap-12 px-6 py-20 md:px-10 md:py-28 lg:grid-cols-12 lg:gap-16 lg:py-32">
         <div className="lg:col-span-4">
           <div className="lg:sticky lg:top-28">
-            <p className="font-mono text-[11px] tracking-[0.2em] text-[#C5A869] uppercase">How we work</p>
+            <p className="font-mono text-[12px] tracking-[0.16em] text-gold-ink uppercase">How we work</p>
             <h2 className="mt-4 font-display text-[clamp(2.5rem,4.2vw,3.8rem)] leading-[1.02] font-medium tracking-[-0.02em] text-[#133224]">
               Three phases. Built to own.
             </h2>
             <p className="mt-6 max-w-sm text-[16px] leading-7 text-[#4F5752]">
-              Every build ships with documentation, monitoring, and ownership of the code and the
+              Each build ships with documentation, monitoring, and ownership of the code and the
               infrastructure it runs on.
             </p>
           </div>
@@ -35,7 +35,7 @@ export function Engagement() {
         <ol className="border-t border-[rgba(19,50,36,0.14)] lg:col-span-8">
           {PHASES.map((phase) => (
             <li key={phase.when} className="border-b border-[rgba(19,50,36,0.14)] py-10 md:py-12">
-              <p className="font-mono text-[11px] tracking-[0.18em] text-[#C5A869] uppercase">{phase.when}</p>
+              <p className="font-mono text-[12px] tracking-[0.14em] text-gold-ink uppercase">{phase.when}</p>
               <h3 className="mt-3 font-display text-[clamp(1.8rem,2.6vw,2.4rem)] leading-tight font-medium text-[#133224]">
                 {phase.title}
               </h3>

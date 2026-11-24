@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { LegalFrame, LegalLinks, LegalSection } from "@/components/legal-frame";
+import { INQUIRY_EMAIL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Terms",
   description: "Placeholder terms for the Valentini & Co. website. Not in effect.",
   alternates: { canonical: "/terms" },
+  robots: { index: false, follow: true },
 };
 
 export default function TermsPage() {
@@ -46,7 +48,7 @@ export default function TermsPage() {
       </LegalSection>
       <LegalSection heading="Contact">
         <p>
-          Questions about these terms can be sent to inquiries@valentiniandco.com. The final text
+          Questions about these terms can be sent to {INQUIRY_EMAIL}. The final text
           will be the governing contact statement.
         </p>
       </LegalSection>

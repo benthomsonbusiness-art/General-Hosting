@@ -22,7 +22,7 @@ const ROWS = [
 
 export function Diagnosis() {
   return (
-    <section className="bg-[#F7F4EC] text-[#1A1E1B]">
+    <section data-surface="light" className="bg-[#F7F4EC] text-[#1A1E1B]">
       <div className="mx-auto grid max-w-[90rem] gap-12 px-6 py-20 md:px-10 md:py-28 lg:grid-cols-12 lg:gap-16 lg:py-32">
         <figure className="lg:col-span-5">
           <div className="relative">
@@ -35,13 +35,11 @@ export function Diagnosis() {
               className="h-auto w-full object-cover"
             />
           </div>
-          <figcaption className="mt-3 font-mono text-[10px] tracking-[0.18em] text-[#4F5752] uppercase">
-            Diagnosis before deployment
-          </figcaption>
+          <figcaption className="mt-3 text-[12px] text-[#4F5752]">Mapped before built.</figcaption>
         </figure>
 
         <div className="lg:col-span-7">
-          <p className="font-mono text-[11px] tracking-[0.2em] text-[#C5A869] uppercase">
+          <p className="font-mono text-[12px] tracking-[0.16em] text-gold-ink uppercase">
             Diagnosis before code
           </p>
           <h2 className="mt-4 max-w-[14em] text-balance font-display text-[clamp(2.6rem,4.6vw,4.25rem)] leading-[1.02] font-medium tracking-[-0.02em] text-[#133224]">
@@ -54,8 +52,8 @@ export function Diagnosis() {
               The chain breaks the first time a field is empty, and nobody owns the failure.
             </p>
             <p>
-              Operational leverage is more specific. Map where the data enters. Mark the step where
-              a person actually has to judge it. Write the rest as ordinary code that either
+              Production work is more specific. Map where the data enters. Mark the step where
+              a person has to judge it. Write the rest as ordinary code that either
               succeeds or fails in the open. A model belongs in the middle only when the output is
               a typed object the system can reject.
             </p>
@@ -75,15 +73,11 @@ export function Diagnosis() {
                   {row.label}
                 </h3>
                 <div className="md:col-span-4">
-                  <p className="font-mono text-[10px] tracking-[0.16em] text-[#4F5752] uppercase">
-                    Prompt toys
-                  </p>
+                  <p className="font-sans text-[12px] text-[#4F5752]">Typical setup</p>
                   <p className="mt-2 text-[14.5px] leading-relaxed text-[#4F5752]">{row.toy}</p>
                 </div>
                 <div className="md:col-span-5">
-                  <p className="font-mono text-[10px] tracking-[0.16em] text-[#133224] uppercase">
-                    Production workflows
-                  </p>
+                  <p className="font-sans text-[12px] text-[#133224]">Production workflows</p>
                   <p className="mt-2 text-[14.5px] leading-relaxed text-[#1A1E1B]">{row.production}</p>
                 </div>
               </div>

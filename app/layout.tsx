@@ -1,9 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { Cormorant_Garamond, JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
+import { MotionRoot } from "@/components/MotionRoot";
+import { INQUIRY_EMAIL, SITE_URL } from "@/lib/site";
 import "./globals.css";
-
-const siteUrl = "https://valentiniandco.com";
 
 const description =
   "Valentini & Co. audits high-friction operations and engineers AI-assisted workflows around the tools a company already runs. Deterministic code, human approval gates, and systems the team owns.";
@@ -31,7 +31,7 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Valentini & Co. — AI Workflow Consulting",
     template: "%s — Valentini & Co.",
@@ -74,9 +74,9 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
   name: "Valentini & Co.",
-  url: siteUrl,
+  url: SITE_URL,
   description,
-  email: "inquiries@valentiniandco.com",
+  email: INQUIRY_EMAIL,
   knowsAbout: [
     "AI workflow consulting",
     "Business process automation",
@@ -102,7 +102,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        {children}
+        <MotionRoot>{children}</MotionRoot>
       </body>
     </html>
   );

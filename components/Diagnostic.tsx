@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import { FormEvent, Suspense, useRef, useState, type ReactNode } from "react";
+import { FormEvent, Suspense, useEffect, useRef, useState, type ReactNode } from "react";
 import {
   HONEYPOT_FIELD,
   PRACTICE_INTERESTS,
@@ -11,7 +11,9 @@ import {
   type FieldErrors,
   type InquiryField,
   type PracticeInterest,
+  INQUIRY_OFFLINE_ERROR,
 } from "@/lib/inquiry";
+import { INQUIRY_EMAIL } from "@/lib/site";
 
 const FIELD_ORDER: InquiryField[] = ["fullName", "email", "companyRole", "practice", "note"];
 
@@ -19,7 +21,7 @@ type Status = "idle" | "submitting" | "success" | "error";
 
 export function Diagnostic() {
   return (
-    <section id="diagnostic" className="scroll-mt-24 bg-[#133224] text-[#F7F4EC]">
+    <section id="diagnostic" className="bg-[#133224] text-[#F7F4EC]">
       <div className="mx-auto grid max-w-[90rem] lg:grid-cols-12">
         <div className="relative min-h-[420px] lg:col-span-5 lg:min-h-full">
           <Image
@@ -61,6 +63,12 @@ function InquiryFields({ initialPractice }: { initialPractice: PracticeInterest 
   const [formError, setFormError] = useState<string | null>(null);
   const [receivedName, setReceivedName] = useState("");
   const [practice, setPractice] = useState<PracticeInterest>(initialPractice);
+  const [offline, setOffline] = useState(false);
+  const thanksRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    if (status === "success") thanksRef.current?.focus();
+  }, [status]);
 
   function clearField(name: string) {
     if (!FIELD_ORDER.includes(name as InquiryField)) return;
@@ -122,6 +130,7 @@ function InquiryFields({ initialPractice }: { initialPractice: PracticeInterest 
           const firstInvalid = FIELD_ORDER.find((field) => body.fieldErrors?.[field]);
           if (firstInvalid) form.querySelector<HTMLElement>(`#${firstInvalid}`)?.focus();
         }
+        setOffline(response.status === 503 || body?.error === INQUIRY_OFFLINE_ERROR);
         setFormError(body?.error ?? "The inquiry could not be sent. Try again in a moment.");
         setStatus("error");
         return;
@@ -143,12 +152,19 @@ function InquiryFields({ initialPractice }: { initialPractice: PracticeInterest 
     return (
       <div role="status" className="mt-12 border-t border-[rgba(197,168,105,0.35)] pt-8">
         <p className="font-mono text-[11px] tracking-[0.2em] text-[#C5A869] uppercase">Received</p>
-        <h3 className="mt-4 font-display text-[clamp(2.2rem,4vw,3.4rem)] leading-[1.05] font-medium">
+        <h3
+          ref={thanksRef}
+          tabIndex={-1}
+          className="mt-4 font-display text-[clamp(2.2rem,4vw,3.4rem)] leading-[1.05] font-medium outline-none"
+        >
           Thank you{receivedName ? `, ${receivedName}` : ""}.
         </h3>
         <p className="mt-5 max-w-md text-[16px] leading-7 text-[#F7F4EC]/75">
-          The note is with Valentini &amp; Co. We read every inquiry and reply from
-          inquiries@valentiniandco.com.
+          The note is with Valentini &amp; Co. We read every inquiry and reply from{" "}
+          <a className="underline decoration-[#C5A869] underline-offset-4" href={`mailto:${INQUIRY_EMAIL}`}>
+            {INQUIRY_EMAIL}
+          </a>
+          .
         </p>
       </div>
     );
@@ -239,7 +255,7 @@ function InquiryFields({ initialPractice }: { initialPractice: PracticeInterest 
           </select>
         </Field>
         <Field
-          label="What workflow is slowing your team down right now?"
+          label="What's the problem you want looked at?"
           id="note"
           error={errors.note}
         >
@@ -258,7 +274,12 @@ function InquiryFields({ initialPractice }: { initialPractice: PracticeInterest 
 
       {formError ? (
         <p role="alert" className="mt-6 text-sm text-[#F0C2B6]">
-          {formError}
+          {formError}{" "}
+          {offline ? (
+            <a className="underline decoration-[#C5A869] underline-offset-4" href={`mailto:${INQUIRY_EMAIL}`}>
+              {INQUIRY_EMAIL}
+            </a>
+          ) : null}
         </p>
       ) : null}
 
@@ -275,7 +296,7 @@ function InquiryFields({ initialPractice }: { initialPractice: PracticeInterest 
 
 function controlClass(invalid: boolean) {
   return `w-full border-0 border-b bg-transparent py-3 text-[15px] text-[#F7F4EC] outline-none placeholder:text-[#F7F4EC]/35 ${
-    invalid ? "border-[#E7B2A4]" : "border-[rgba(197,168,105,0.45)] focus-visible:border-[#C5A869]"
+    invalid ? "border-[#E7B2A4]" : "border-[#C5A869] focus-visible:border-[#F7F4EC]"
   }`;
 }
 
@@ -292,7 +313,7 @@ function Field({
 }) {
   return (
     <div>
-      <label htmlFor={id} className="mb-1 block font-mono text-[10px] tracking-[0.16em] text-[#C5A869] uppercase">
+      <label htmlFor={id} className="mb-1 block font-sans text-[12px] text-[#C5A869]">
         {label}
       </label>
       {children}

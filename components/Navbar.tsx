@@ -31,6 +31,8 @@ export function Navbar({ overlay = false }: { overlay?: boolean }) {
   const practicesId = useId();
   const wrapRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const menuToggleRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<Array<HTMLAnchorElement | null>>([]);
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -45,14 +47,53 @@ export function Navbar({ overlay = false }: { overlay?: boolean }) {
 
   useEffect(() => {
     if (!open) return;
+    const media = window.matchMedia("(min-width: 1024px)");
+    const onChange = () => {
+      if (!media.matches) return;
+      setOpen(false);
+      menuToggleRef.current?.focus();
+    };
+    media.addEventListener("change", onChange);
+    return () => media.removeEventListener("change", onChange);
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
     const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    const main = document.querySelector("main");
+    const footer = document.querySelector("footer");
+    if (main instanceof HTMLElement) main.inert = true;
+    if (footer instanceof HTMLElement) footer.inert = true;
+    menuRef.current?.querySelector<HTMLAnchorElement>("a")?.focus();
+
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
+      if (event.key === "Escape") {
+        setOpen(false);
+        menuToggleRef.current?.focus();
+        return;
+      }
+      if (event.key !== "Tab" || !menuRef.current || !menuToggleRef.current) return;
+      const items = [
+        menuToggleRef.current,
+        ...menuRef.current.querySelectorAll<HTMLElement>("a, button"),
+      ];
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (!first || !last) return;
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => {
       document.body.style.overflow = previous;
+      if (main instanceof HTMLElement) main.inert = false;
+      if (footer instanceof HTMLElement) footer.inert = false;
       window.removeEventListener("keydown", onKey);
     };
   }, [open]);
@@ -88,17 +129,41 @@ export function Navbar({ overlay = false }: { overlay?: boolean }) {
     });
   }
 
+  function focusPracticeItem(index: number) {
+    const items = itemRefs.current.filter((item): item is HTMLAnchorElement => item !== null);
+    items[index]?.focus();
+  }
+
   function onPracticeKey(event: React.KeyboardEvent<HTMLButtonElement>) {
-    if (event.key === "ArrowDown" || event.key === "Enter" || event.key === " ") {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      setPracticesOpen((value) => {
+        const next = !value;
+        if (next) window.setTimeout(() => focusPracticeItem(0), 0);
+        return next;
+      });
+    }
+    if (event.key === "ArrowDown") {
       event.preventDefault();
       setPracticesOpen(true);
-      window.setTimeout(() => itemRefs.current[0]?.focus(), 0);
+      window.setTimeout(() => focusPracticeItem(0), 0);
     }
-    if (event.key === "Escape") setPracticesOpen(false);
+    if (event.key === "Home" || event.key === "End") {
+      event.preventDefault();
+      setPracticesOpen(true);
+      window.setTimeout(() => {
+        const items = itemRefs.current.filter((item): item is HTMLAnchorElement => item !== null);
+        focusPracticeItem(event.key === "Home" ? 0 : items.length - 1);
+      }, 0);
+    }
+    if (event.key === "Escape") {
+      setPracticesOpen(false);
+      buttonRef.current?.focus();
+    }
   }
 
   function onMenuKey(event: React.KeyboardEvent<HTMLDivElement>) {
-    const items = itemRefs.current.filter(Boolean);
+    const items = itemRefs.current.filter((item): item is HTMLAnchorElement => item !== null);
     const index = items.findIndex((item) => item === document.activeElement);
     if (event.key === "ArrowDown") {
       event.preventDefault();
@@ -107,6 +172,14 @@ export function Navbar({ overlay = false }: { overlay?: boolean }) {
     if (event.key === "ArrowUp") {
       event.preventDefault();
       items[(index - 1 + items.length) % items.length]?.focus();
+    }
+    if (event.key === "Home") {
+      event.preventDefault();
+      items[0]?.focus();
+    }
+    if (event.key === "End") {
+      event.preventDefault();
+      items[items.length - 1]?.focus();
     }
   }
 
@@ -172,11 +245,11 @@ export function Navbar({ overlay = false }: { overlay?: boolean }) {
                 }`}
               />
             </button>
-            {practicesOpen ? (
-              <div
+            <div
                 id={practicesId}
                 role="menu"
                 aria-label="Practices"
+                hidden={!practicesOpen}
                 className="absolute top-[calc(100%+0.85rem)] left-1/2 w-72 -translate-x-1/2 border border-[rgba(197,168,105,0.25)] bg-[#0B1F16]"
                 onKeyDown={onMenuKey}
               >
@@ -195,20 +268,18 @@ export function Navbar({ overlay = false }: { overlay?: boolean }) {
                       onClick={() => setPracticesOpen(false)}
                     >
                       <span>{practice.label}</span>
-                      {current ? (
-                        <span className="font-mono text-[10px] tracking-[0.16em] text-[#C5A869] uppercase">
-                          Current
-                        </span>
-                      ) : (
-                        <span className="font-mono text-[10px] tracking-[0.16em] text-[#F7F4EC]/45 uppercase">
-                          {practice.mark === "Active" ? "Active" : ""}
-                        </span>
-                      )}
+                      <span className="flex gap-3 font-mono text-[11px] tracking-[0.14em] uppercase">
+                        {practice.id === "ai" ? <span className="text-[#C5A869]">Flagship</span> : null}
+                        {current ? (
+                          <span className="text-[#C5A869]">Current</span>
+                        ) : practice.mark === "Active" ? (
+                          <span className="text-[#F7F4EC]/60">Active</span>
+                        ) : null}
+                      </span>
                     </Link>
                   );
                 })}
-              </div>
-            ) : null}
+            </div>
           </div>
           {ANCHORS.map((link) => (
             <Link
@@ -237,15 +308,21 @@ export function Navbar({ overlay = false }: { overlay?: boolean }) {
             }
           }}
         >
-          Book a Diagnostic
+          Request a Diagnostic
         </Link>
 
         <button
+          ref={menuToggleRef}
           type="button"
           className="inline-flex h-11 w-11 items-center justify-center text-[#F7F4EC] lg:hidden"
           aria-expanded={open}
           aria-controls={menuId}
-          onClick={() => setOpen((value) => !value)}
+          onClick={() => {
+            setOpen((value) => {
+              if (value) menuToggleRef.current?.focus();
+              return !value;
+            });
+          }}
         >
           {open ? <X strokeWidth={1.25} aria-hidden /> : <Menu strokeWidth={1.25} aria-hidden />}
           <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
@@ -254,9 +331,13 @@ export function Navbar({ overlay = false }: { overlay?: boolean }) {
       </div>
 
       {open ? (
-        <div id={menuId} className="fixed inset-x-0 top-16 bottom-0 z-40 overflow-y-auto bg-[#0B1F16] lg:hidden">
+        <div
+          ref={menuRef}
+          id={menuId}
+          className="fixed inset-x-0 top-16 bottom-0 z-40 overflow-y-auto bg-[#0B1F16] lg:hidden"
+        >
           <nav className="mx-auto flex max-w-md flex-col px-6 pt-8 pb-16" aria-label="Mobile">
-            <p className="font-mono text-[10px] tracking-[0.2em] text-[#C5A869] uppercase">Practices</p>
+            <p className="font-mono text-[12px] tracking-[0.16em] text-[#C5A869] uppercase">Practices</p>
             {NAV_PRACTICES.map((practice) => (
               <Link
                 key={practice.id}
@@ -266,13 +347,21 @@ export function Navbar({ overlay = false }: { overlay?: boolean }) {
                 onClick={() => setOpen(false)}
               >
                 {practice.label}
+                {practice.id === "ai" ? (
+                  <span className="ml-3 align-middle font-mono text-[11px] tracking-[0.14em] text-[#C5A869] uppercase">
+                    Flagship
+                  </span>
+                ) : null}
                 {active === practice.id ? (
-                  <span className="ml-3 align-middle font-mono text-[10px] tracking-[0.16em] text-[#C5A869] uppercase">
+                  <span className="ml-3 align-middle font-mono text-[11px] tracking-[0.14em] text-[#C5A869] uppercase">
                     Current
                   </span>
                 ) : null}
               </Link>
             ))}
+            <p className="mt-8 font-mono text-[12px] tracking-[0.16em] text-[#C5A869] uppercase">
+              On this page
+            </p>
             {ANCHORS.map((link) => (
               <Link
                 key={link.id}
@@ -292,7 +381,7 @@ export function Navbar({ overlay = false }: { overlay?: boolean }) {
             ))}
             <Link
               href="/#diagnostic"
-              className="mt-8 border border-[#C5A869] px-4 py-3 text-center text-[11px] tracking-[0.18em] text-[#F7F4EC] uppercase"
+              className="mt-8 border border-[#C5A869] px-4 py-3 text-center text-[12px] tracking-[0.14em] text-[#F7F4EC] uppercase"
               onClick={(event) => {
                 if (pathname === "/") {
                   event.preventDefault();
@@ -302,7 +391,7 @@ export function Navbar({ overlay = false }: { overlay?: boolean }) {
                 }
               }}
             >
-              Book a Diagnostic
+              Request a Diagnostic
             </Link>
           </nav>
         </div>

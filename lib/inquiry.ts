@@ -1,3 +1,5 @@
+import { SITE_DOMAIN, SITE_URL } from "@/lib/site";
+
 export const PRACTICE_INTERESTS = [
   "AI Workflow Consulting",
   "Meta Ads Consulting",
@@ -7,6 +9,9 @@ export const PRACTICE_INTERESTS = [
 export type PracticeInterest = (typeof PRACTICE_INTERESTS)[number];
 
 export const HONEYPOT_FIELD = "fax_number";
+
+export const INQUIRY_OFFLINE_ERROR =
+  "Inquiries are offline right now. Please email us directly.";
 
 export type Inquiry = {
   fullName: string;
@@ -21,6 +26,9 @@ export type InquiryField = keyof Inquiry;
 export type FieldErrors = Partial<Record<InquiryField, string>>;
 
 const EMAIL = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+const WINDOW_MS = 10 * 60 * 1000;
+const RATE_LIMIT = 5;
+const hits = new Map<string, number[]>();
 
 export function practiceFromQuery(value: string | null | undefined): PracticeInterest {
   const normalized = (value ?? "").trim().toLowerCase();
@@ -45,8 +53,51 @@ function readString(record: Record<string, unknown>, key: string): string {
   return value.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "").trim();
 }
 
+function singleLine(value: string): string {
+  return value.replace(/[\r\n\t]+/g, " ").trim();
+}
+
 function isPractice(value: string): value is PracticeInterest {
   return (PRACTICE_INTERESTS as readonly string[]).includes(value);
+}
+
+function clientIp(request: Request): string {
+  const forwarded = request.headers.get("x-forwarded-for");
+  if (forwarded) {
+    const first = forwarded.split(",")[0]?.trim();
+    if (first) return first;
+  }
+  return request.headers.get("x-real-ip")?.trim() || "local";
+}
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const recent = (hits.get(ip) ?? []).filter((stamp) => now - stamp < WINDOW_MS);
+  if (recent.length >= RATE_LIMIT) {
+    hits.set(ip, recent);
+    return true;
+  }
+  recent.push(now);
+  hits.set(ip, recent);
+  return false;
+}
+
+function originAllowed(origin: string | null): boolean {
+  if (!origin) return true;
+  let url: URL;
+  try {
+    url = new URL(origin);
+  } catch {
+    return false;
+  }
+  const host = url.hostname.toLowerCase();
+  if (host === "localhost" || host === "127.0.0.1" || host === "[::1]") return true;
+  if (host === SITE_DOMAIN || host.endsWith(".workers.dev")) return true;
+  try {
+    return url.origin === new URL(SITE_URL).origin;
+  } catch {
+    return false;
+  }
 }
 
 export function validateInquiry(
@@ -60,9 +111,9 @@ export function validateInquiry(
   }
 
   const fieldErrors: FieldErrors = {};
-  const fullName = readString(input, "fullName");
-  const email = readString(input, "email");
-  const companyRole = readString(input, "companyRole");
+  const fullName = singleLine(readString(input, "fullName"));
+  const email = singleLine(readString(input, "email"));
+  const companyRole = singleLine(readString(input, "companyRole"));
   const practiceRaw = readString(input, "practice");
   const practice = isPractice(practiceRaw) ? practiceRaw : null;
   const note = readString(input, "note");
@@ -80,7 +131,7 @@ export function validateInquiry(
     fieldErrors.practice = "Select a practice.";
   }
   if (note.length < 8 || note.length > 2000) {
-    fieldErrors.note = "Describe the workflow in a sentence or two.";
+    fieldErrors.note = "Describe the problem in a sentence or two.";
   }
 
   if (!practice || Object.keys(fieldErrors).length > 0) {
@@ -157,6 +208,28 @@ async function sendWithResend(inquiry: Inquiry): Promise<void> {
 }
 
 export async function handleInquiry(request: Request): Promise<Response> {
+  const contentType = request.headers.get("content-type") ?? "";
+  if (!contentType.toLowerCase().startsWith("application/json")) {
+    return Response.json(
+      { ok: false, error: "Content-Type must be application/json." },
+      { status: 415 },
+    );
+  }
+
+  if (!originAllowed(request.headers.get("origin"))) {
+    return Response.json(
+      { ok: false, error: "This origin is not allowed to submit inquiries." },
+      { status: 403 },
+    );
+  }
+
+  if (isRateLimited(clientIp(request))) {
+    return Response.json(
+      { ok: false, error: "Too many inquiries from this network. Try again shortly." },
+      { status: 429 },
+    );
+  }
+
   let payload: unknown;
   try {
     payload = await request.json();
@@ -199,10 +272,10 @@ export async function handleInquiry(request: Request): Promise<Response> {
   if (jobs.length === 0) {
     if (process.env.NODE_ENV === "development") {
       console.info("[inquiry] accepted with no delivery channel configured");
-    } else {
-      console.warn("[inquiry] accepted with no delivery channel configured");
+      return Response.json({ ok: true, delivered: false });
     }
-    return Response.json({ ok: true, delivered: false });
+    console.error("[inquiry] no delivery channel configured");
+    return Response.json({ ok: false, error: INQUIRY_OFFLINE_ERROR }, { status: 503 });
   }
 
   const results = await Promise.allSettled(jobs);

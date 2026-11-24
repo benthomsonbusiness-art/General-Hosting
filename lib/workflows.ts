@@ -112,7 +112,7 @@ export const WORKFLOWS: Workflow[] = [
       {
         id: "approval",
         name: "Human Approval Gate (Slack)",
-        timing: "Awaiting Approval",
+        timing: "Human",
         simMs: 700,
         gate: true,
         mode: "Human gate",
@@ -131,7 +131,7 @@ export const WORKFLOWS: Workflow[] = [
       },
       {
         id: "response",
-        name: "Tailored First Response",
+        name: "Approved First Response",
         timing: "860ms",
         simMs: 720,
         mode: "Draft by model, send by code",
@@ -236,7 +236,7 @@ export const WORKFLOWS: Workflow[] = [
       {
         id: "partner",
         name: "Partner Review Gate",
-        timing: "Awaiting Approval",
+        timing: "Human",
         simMs: 700,
         gate: true,
         mode: "Human gate",

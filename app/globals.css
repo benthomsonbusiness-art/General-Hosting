@@ -6,6 +6,7 @@
   --ivory: #f7f4ec;
   --stone: #ede7da;
   --gold: #c5a869;
+  --gold-ink: #7d6128;
   --ink: #1a1e1b;
   --slate: #4f5752;
   --background: #0b1f16;
@@ -18,6 +19,7 @@
   --color-ivory: var(--ivory);
   --color-stone: var(--stone);
   --color-gold: var(--gold);
+  --color-gold-ink: var(--gold-ink);
   --color-ink: var(--ink);
   --color-slate: var(--slate);
   --color-background: var(--background);
@@ -54,8 +56,12 @@ body {
 }
 
 :focus-visible {
-  outline: 1px solid #c5a869;
+  outline: 2px solid #c5a869;
   outline-offset: 3px;
+}
+
+[data-surface="light"] :focus-visible {
+  outline-color: #133224;
 }
 
 /* Some controls match :focus-visible on a pointer click. Keep the ring for keyboard only. */
@@ -98,13 +104,13 @@ input[type="range"]:focus-visible {
 
 html[data-modality="keyboard"] input[type="range"]:focus-visible::-webkit-slider-thumb,
 html[data-modality="keyboard"] input[type="range"]:focus-visible::-moz-range-thumb {
-  outline: 1px solid #c5a869;
+  outline: 2px solid #c5a869;
   outline-offset: 3px;
 }
 
 input[type="range"]::-webkit-slider-runnable-track {
   height: 1px;
-  background: rgba(19, 50, 36, 0.4);
+  background: rgba(19, 50, 36, 0.7);
 }
 
 input[type="range"]::-webkit-slider-thumb {
@@ -119,7 +125,7 @@ input[type="range"]::-webkit-slider-thumb {
 
 input[type="range"]::-moz-range-track {
   height: 1px;
-  background: rgba(19, 50, 36, 0.4);
+  background: rgba(19, 50, 36, 0.7);
   border: 0;
 }
 

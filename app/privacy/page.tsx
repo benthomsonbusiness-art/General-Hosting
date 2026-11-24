@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { LegalFrame, LegalLinks, LegalSection } from "@/components/legal-frame";
+import { INQUIRY_EMAIL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Privacy",
   description:
     "Placeholder privacy notice for the Valentini & Co. website. Not in effect.",
   alternates: { canonical: "/privacy" },
+  robots: { index: false, follow: true },
 };
 
 export default function PrivacyPage() {
@@ -44,7 +46,7 @@ export default function PrivacyPage() {
       <LegalSection heading="Requests">
         <p>
           A contact for access, correction, and deletion requests will be published with the final
-          notice. Write to inquiries@valentiniandco.com in the meantime. No retention rule is in
+          notice. Write to {INQUIRY_EMAIL} in the meantime. No retention rule is in
           effect on this draft.
         </p>
       </LegalSection>

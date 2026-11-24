@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { BrandMark, BrandWordmark } from "@/components/BrandMark";
 import { NAV_PRACTICES } from "@/lib/practices";
+import { INQUIRY_EMAIL } from "@/lib/site";
 
 const LEGAL = [
   { href: "/privacy", label: "Privacy" },
@@ -18,14 +19,14 @@ export function Footer() {
               <BrandWordmark className="text-[13px]" />
             </Link>
             <a
-              href="mailto:inquiries@valentiniandco.com"
+              href={`mailto:${INQUIRY_EMAIL}`}
               className="mt-8 block font-mono text-[12px] tracking-[0.06em] text-[#F7F4EC]/80"
             >
-              inquiries@valentiniandco.com
+              {INQUIRY_EMAIL}
             </a>
           </div>
           <nav className="md:col-span-4" aria-label="Practices">
-            <p className="font-mono text-[10px] tracking-[0.2em] text-[#C5A869] uppercase">Practices</p>
+            <p className="font-mono text-[12px] tracking-[0.16em] text-[#C5A869] uppercase">Practices</p>
             <ul className="mt-4 space-y-3">
               {NAV_PRACTICES.map((practice) => (
                 <li key={practice.id}>
@@ -37,7 +38,7 @@ export function Footer() {
             </ul>
           </nav>
           <nav className="md:col-span-3" aria-label="Legal">
-            <p className="font-mono text-[10px] tracking-[0.2em] text-[#C5A869] uppercase">Legal</p>
+            <p className="font-mono text-[12px] tracking-[0.16em] text-[#C5A869] uppercase">Legal</p>
             <ul className="mt-4 space-y-3">
               {LEGAL.map((link) => (
                 <li key={link.href}>
@@ -49,7 +50,7 @@ export function Footer() {
             </ul>
           </nav>
         </div>
-        <p className="mt-14 font-mono text-[11px] tracking-[0.12em] text-[#F7F4EC]/45">
+        <p className="mt-14 font-mono text-[12px] tracking-[0.08em] text-[#F7F4EC]/60">
           © 2026 Valentini &amp; Co.
         </p>
       </div>

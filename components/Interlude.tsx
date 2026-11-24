@@ -27,7 +27,7 @@ export function Interlude() {
       <div className="absolute inset-0 bg-[#0B1F16]/45" />
       <div className="relative flex h-full items-center justify-center px-6">
         <p className="max-w-[18em] text-center font-display text-[clamp(1.85rem,3.5vw,3.15rem)] leading-[1.12] font-medium tracking-[-0.02em] text-[#F7F4EC] italic">
-          The leverage is the contract around the model: what enters, what must be true, and who is
+          The value is the contract around the model: what enters, what must be true, and who is
           allowed to let it leave.
         </p>
       </div>

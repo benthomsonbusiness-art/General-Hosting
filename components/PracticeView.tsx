@@ -12,7 +12,7 @@ export function PracticeView({ practice }: { practice: PracticePage }) {
       }`}
     >
       <p className="font-mono text-[11px] tracking-[0.2em] text-[#C5A869] uppercase">
-        {practice.kicker} · Active practice
+        {practice.kicker}
       </p>
       <h1 className="mt-5 max-w-[14ch] font-display text-[clamp(2.8rem,5vw,4.6rem)] leading-[1.02] font-medium tracking-[-0.02em]">
         {practice.title}
@@ -53,9 +53,9 @@ export function PracticeView({ practice }: { practice: PracticePage }) {
           </div>
         </section>
 
-        <section className="bg-[#F7F4EC] text-[#1A1E1B]">
+        <section data-surface="light" className="bg-[#F7F4EC] text-[#1A1E1B]">
           <div className="mx-auto max-w-[90rem] px-6 py-20 md:px-10 md:py-28">
-            <p className="font-mono text-[11px] tracking-[0.2em] text-[#C5A869] uppercase">Where the work sits</p>
+            <p className="font-mono text-[12px] tracking-[0.16em] text-gold-ink uppercase">Where the work sits</p>
             <h2 className="mt-4 font-display text-[clamp(2.2rem,3.6vw,3.2rem)] leading-tight font-medium tracking-[-0.02em] text-[#133224]">
               Areas of focus
             </h2>
@@ -73,7 +73,7 @@ export function PracticeView({ practice }: { practice: PracticePage }) {
               ))}
             </div>
 
-            <p className="mt-20 font-mono text-[11px] tracking-[0.2em] text-[#C5A869] uppercase">
+            <p className="mt-20 font-mono text-[12px] tracking-[0.16em] text-gold-ink uppercase">
               How an engagement is structured
             </p>
             <div className="mt-8 border-t border-[rgba(19,50,36,0.14)]">
@@ -94,7 +94,7 @@ export function PracticeView({ practice }: { practice: PracticePage }) {
               href={`/?practice=${practice.param}#diagnostic`}
               className="mt-12 inline-flex border border-[#133224] px-5 py-3.5 text-[11px] font-medium tracking-[0.16em] text-[#133224] uppercase transition-colors hover:bg-[#133224] hover:text-[#F7F4EC]"
             >
-              Book a diagnostic for this practice
+              Request a Diagnostic
             </Link>
           </div>
         </section>

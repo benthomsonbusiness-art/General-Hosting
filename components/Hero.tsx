@@ -31,11 +31,12 @@ export function Hero() {
             fill
             priority
             sizes="100vw"
-            className="object-cover"
+            className="object-cover object-[22%_center] md:object-center"
           />
         </motion.div>
       </div>
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#0B1F16]/85 via-[#0B1F16]/40 to-transparent" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0B1F16]/80 md:hidden" />
 
       <div className="relative z-10 flex min-h-[92vh] flex-col justify-end">
         <div className="mx-auto w-full max-w-[90rem] px-6 pt-32 pb-10 md:px-10 md:pb-14">
@@ -55,25 +56,25 @@ export function Hero() {
               href="#diagnostic"
               className="inline-flex bg-[#F7F4EC] px-5 py-3.5 text-[11px] font-medium tracking-[0.16em] text-[#133224] uppercase transition-colors hover:bg-[#C5A869]"
             >
-              Request a Workflow Audit
+              Request a Diagnostic
             </Link>
             <Link
               href="#architecture"
               className="text-[14px] text-[#F7F4EC]/85 underline decoration-[#C5A869]/80 underline-offset-[7px] hover:text-[#F7F4EC]"
             >
-              Inspect Live Architectures <span aria-hidden="true">→</span>
+              Explore the blueprints <span aria-hidden="true">→</span>
             </Link>
           </div>
         </div>
         <div className="border-t border-[rgba(197,168,105,0.25)] bg-[#0B1F16]/35">
-          <ul className="mx-auto flex max-w-[90rem] flex-wrap gap-x-5 gap-y-2 px-6 py-4 md:px-10">
+          <ul className="mx-auto grid max-w-[90rem] grid-cols-2 gap-x-4 gap-y-2 px-6 py-4 sm:flex sm:flex-wrap sm:gap-x-5 md:px-10">
             {SCOPE.map((item, index) => (
               <li
                 key={item}
-                className="font-mono text-[10px] tracking-[0.16em] text-[#F7F4EC]/75 uppercase sm:text-[11px]"
+                className="font-mono text-[11px] tracking-[0.14em] text-[#F7F4EC]/75 uppercase sm:text-[12px]"
               >
                 {index > 0 ? (
-                  <span className="mr-5 text-[#C5A869]/80" aria-hidden="true">
+                  <span className="mr-5 hidden text-[#C5A869]/80 sm:inline" aria-hidden="true">
                     ·
                   </span>
                 ) : null}
