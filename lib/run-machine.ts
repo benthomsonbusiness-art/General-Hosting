@@ -26,8 +26,8 @@ export type RunState = {
   traveling: boolean;
   mode: "auto" | "step";
   nodes: Record<string, NodeState>;
-  /** AI node ids with the low-confidence simulation switched on. */
-  lowConfidence: string[];
+  /** Nodes where the chosen scenario hands the item to a person. */
+  stops: string[];
   message: string;
 };
 
@@ -43,7 +43,7 @@ export type RunAction =
   | { type: "REJECT" }
   | { type: "EXPIRE" }
   | { type: "RESET" }
-  | { type: "TOGGLE_LOW_CONFIDENCE"; nodeId: string };
+  | { type: "SET_STOPS"; ids: string[] };
 
 export function initialRun(): RunState {
   return {
@@ -53,7 +53,7 @@ export function initialRun(): RunState {
     traveling: false,
     mode: "auto",
     nodes: {},
-    lowConfidence: [],
+    stops: [],
     message: "",
   };
 }
@@ -82,16 +82,18 @@ function enter(workflow: Workflow, state: RunState, index: number): RunState {
   };
 }
 
-/** Completes the current node. Ends the run on low confidence or after the last node. */
+/** Completes the current node. Ends the run on a scenario stop or after the last node. Gates are never stops. */
 function finish(workflow: Workflow, state: RunState): RunState {
   const node = workflow.nodes[state.index];
-  if (node.kind === "ai" && state.lowConfidence.includes(node.id)) {
+  if (node.kind !== "human" && state.stops.includes(node.id)) {
     return {
       ...state,
       status: "manual",
       traveling: false,
       nodes: { ...skipAfter(workflow, state), [node.id]: "low-confidence" },
-      message: `${node.label}: confidence below the threshold. ${node.confidence?.belowThreshold ?? ""} Nothing was sent.`,
+      message: node.confidence
+        ? `Below the threshold. ${node.confidence.belowThreshold}`
+        : `Handed to a person. ${node.failure}`,
     };
   }
   const nodes = { ...state.nodes, [node.id]: "complete" as const };
@@ -116,7 +118,7 @@ export function runReducer(workflow: Workflow) {
           ...initialRun(),
           token: state.token + 1,
           mode: action.mode,
-          lowConfidence: state.lowConfidence,
+          stops: state.stops,
         };
         return enter(workflow, fresh, 0);
       }
@@ -167,16 +169,9 @@ export function runReducer(workflow: Workflow) {
         };
       }
       case "RESET":
-        return { ...initialRun(), token: state.token + 1, message: "Run reset." };
-      case "TOGGLE_LOW_CONFIDENCE": {
-        const on = state.lowConfidence.includes(action.nodeId);
-        return {
-          ...state,
-          lowConfidence: on
-            ? state.lowConfidence.filter((id) => id !== action.nodeId)
-            : [...state.lowConfidence, action.nodeId],
-        };
-      }
+        return { ...initialRun(), token: state.token + 1, stops: state.stops, message: "Run reset." };
+      case "SET_STOPS":
+        return { ...state, stops: action.ids };
     }
   };
 }

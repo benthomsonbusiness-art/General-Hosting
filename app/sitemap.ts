@@ -1,7 +1,6 @@
 import type { MetadataRoute } from "next";
-import { INDUSTRIES } from "@/content/industries";
 import { INSIGHTS } from "@/content/insights";
-import { SERVICES, SUB_SERVICES, serviceHref, subServiceHref } from "@/content/services";
+import { SERVICES, serviceHref } from "@/content/services";
 import { WORKFLOWS } from "@/content/workflows";
 import { absolute } from "@/lib/seo";
 
@@ -14,11 +13,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/",
     "/services",
     ...SERVICES.map((item) => serviceHref(item.slug)),
-    ...SUB_SERVICES.map((item) => subServiceHref(item.slug)),
     "/workflows",
     ...WORKFLOWS.map((item) => `/workflows/${item.id}`),
     "/industries",
-    ...INDUSTRIES.map((item) => `/industries/${item.slug}`),
     "/insights",
     "/approach",
     "/about",

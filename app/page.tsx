@@ -1,18 +1,14 @@
+import Image from "next/image";
 import Link from "next/link";
-import { EngagementStrip, InsightCluster, ServiceLeadCard, ServiceTextCard } from "@/components/cards/Cards";
-import { ProblemList } from "@/components/content/Blocks";
+import { InsightCard, WorkflowTile } from "@/components/cards/Cards";
+import { PathDiagram } from "@/components/content/Diagrams";
 import { CtaBand } from "@/components/layout/CtaBand";
-import { HeroSplit } from "@/components/layout/Heroes";
-import { Container, Section, SectionHeading } from "@/components/layout/Section";
+import { Container, Section } from "@/components/layout/Section";
 import { Reveal } from "@/components/util/Reveal";
-import { StaticGraph } from "@/components/workflow/StaticGraph";
-import { WorkflowTeaser } from "@/components/workflow/WorkflowTeaser";
-import { MECHANICS } from "@/content/approach";
-import { ENGAGEMENTS } from "@/content/engagements";
-import { INDUSTRIES } from "@/content/industries";
+import { HeroPlayer } from "@/components/workflow/HeroPlayer";
 import { INSIGHTS } from "@/content/insights";
 import { HOME } from "@/content/pages";
-import { FLAGSHIP, PHOTOS, SERVICES, serviceHref } from "@/content/services";
+import { PHOTOS, SERVICES, serviceHref } from "@/content/services";
 import { getWorkflow, WORKFLOWS } from "@/content/workflows";
 import { pageMetadata } from "@/lib/seo";
 import { CTA_HREF, CTA_LABEL, SITE_NAME } from "@/lib/site";
@@ -25,186 +21,106 @@ export const metadata = pageMetadata({
 });
 
 export default function HomePage() {
-  const teaser = getWorkflow("lead-triage") ?? WORKFLOWS[0];
+  const lead = getWorkflow("lead-triage") ?? WORKFLOWS[0];
 
   return (
     <>
-      <HeroSplit
-        display
-        title={
-          <>
-            We build the AI systems your operations <em>actually run on</em>.
-          </>
-        }
-        dek={HOME.dek}
-        photo={PHOTOS.hero}
-        actions={
-          <>
-            <Link href={CTA_HREF} className="btn btn-primary">
-              {CTA_LABEL}
-            </Link>
-            <Link href="/workflows" className="arrow-link min-h-11 items-center">
-              Explore the workflows
-            </Link>
-          </>
-        }
-      />
+      <Section flush className="overflow-hidden">
+        <div className="relative lg:min-h-[calc(100svh-var(--header-h))]">
+          <div className="absolute inset-y-0 right-0 hidden w-[54%] lg:block">
+            <div className="cut-left absolute inset-0 bg-obsidian">
+              <Image
+                src={PHOTOS.hero.src}
+                alt={PHOTOS.hero.alt}
+                fill
+                loading="eager"
+                sizes="(min-width: 1024px) 54vw, 1px"
+                className="object-cover opacity-80"
+                style={{ objectPosition: "58% center" }}
+              />
+            </div>
+          </div>
+          <div className="wrap relative grid items-center gap-x-10 gap-y-10 py-12 lg:min-h-[inherit] lg:grid-cols-12 lg:py-10">
+            <div className="lg:col-span-5">
+              <h1 className="display">
+                We build the AI systems your operations <em>actually run on</em>.
+              </h1>
+              <p className="lead mt-7 max-w-[30rem] text-muted">{HOME.dek}</p>
+              <div className="mt-9 flex flex-wrap items-center gap-x-8 gap-y-3">
+                <Link href={CTA_HREF} className="btn btn-primary">
+                  {CTA_LABEL}
+                </Link>
+                <Link href="/workflows" className="arrow-link min-h-11 items-center">
+                  Try the workflows
+                </Link>
+              </div>
+            </div>
+            <div data-surface="dark" className="bg-obsidian p-5 sm:p-7 lg:col-span-7">
+              <HeroPlayer workflow={lead} />
+            </div>
+          </div>
+        </div>
+      </Section>
 
-      <Section surface="stone" labelledBy="automate">
+      <Section labelledBy="problems">
         <Container>
-          <SectionHeading
-            id="automate"
-            title="What we automate"
-            lede="Most manual work starts as one of these. Each link opens an illustrative workflow you can step through."
-          />
-          <Reveal className="mt-10">
-            <ProblemList
-              items={HOME.problems.map((item) => ({
-                q: item.q,
-                a: item.a,
-                href: `/workflows/${item.workflowId}`,
-                linkLabel: `See ${item.area.toLowerCase()}`,
-              }))}
-            />
+          <h2 id="problems" className="h2">
+            Start with one of these
+          </h2>
+          <Reveal>
+            <ul className="mt-12 grid gap-4 md:grid-cols-4">
+              {HOME.problems.map((item, index) => {
+                const workflow = getWorkflow(item.workflowId);
+                return workflow ? (
+                  <li key={item.workflowId} className={index === 0 ? "md:col-span-2" : ""}>
+                    <WorkflowTile workflow={workflow} line={item.q} wide={index === 0} />
+                  </li>
+                ) : null;
+              })}
+            </ul>
           </Reveal>
         </Container>
       </Section>
 
-      <Section surface="forest" labelledBy="teaser">
+      <Section surface="forest" labelledBy="how">
         <Container>
-          <SectionHeading
-            id="teaser"
-            title={teaser.title}
-            lede={teaser.summary}
-            action={
-              <Link href="/workflows" className="arrow-link min-h-11 items-center">
-                Open the workflow explorer
-              </Link>
-            }
-          />
-          <p className="small mt-5 text-muted">Simulation with sample data. Timings are illustrative.</p>
-          <div className="mt-10">
-            <WorkflowTeaser workflow={teaser}>
-              <StaticGraph workflow={teaser} />
-            </WorkflowTeaser>
+          <h2 id="how" className="h2">
+            {HOME.how.heading}
+          </h2>
+          <div className="mt-14">
+            <PathDiagram />
+          </div>
+          <div className="mt-14 flex flex-wrap items-end justify-between gap-x-12 gap-y-5">
+            <p className="max-w-[34rem]">{HOME.how.own}</p>
+            <Link href="/approach" className="arrow-link min-h-11 items-center">
+              How we work
+            </Link>
           </div>
         </Container>
       </Section>
 
-      <Section labelledBy="mechanics">
-        <Container className="grid gap-x-16 gap-y-10 lg:grid-cols-12">
+      <Section surface="stone" labelledBy="insight">
+        <Container className="grid items-end gap-x-16 gap-y-12 lg:grid-cols-12">
+          <div className="lg:col-span-8">
+            <h2 id="insight" className="sr-only">
+              Latest insight
+            </h2>
+            <InsightCard insight={INSIGHTS[0]} lead />
+          </div>
           <div className="lg:col-span-4">
-            <div className="lg:sticky lg:top-[calc(var(--header-h)+3rem)]">
-              <SectionHeading id="mechanics" title={HOME.mechanicsHeading} lede={HOME.mechanicsLede} />
-              <Link href="/approach" className="arrow-link mt-6 min-h-11 items-center">
-                How we work
-              </Link>
-            </div>
-          </div>
-          <ol className="border-t border-heading lg:col-span-8">
-            {MECHANICS.map((item, index) => (
-              <li key={item.title} className="grid gap-x-6 gap-y-1.5 border-b border-rule py-7 sm:grid-cols-[2.5rem_1fr]">
-                <span className="h3 text-accent" aria-hidden>
-                  {index + 1}
-                </span>
-                <div>
-                  <h3 className="h3">{item.title}</h3>
-                  <p className="mt-2 max-w-[40rem]">{item.body}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </Container>
-      </Section>
-
-      <Section surface="stone" labelledBy="services">
-        <Container>
-          <SectionHeading
-            id="services"
-            title="Services"
-            action={
-              <Link href="/services" className="arrow-link min-h-11 items-center">
-                Services overview
-              </Link>
-            }
-          />
-          <div className="mt-10 grid gap-6 lg:grid-cols-12">
-            <div className="lg:col-span-8">
-              <ServiceLeadCard
-                name={FLAGSHIP.name}
-                summary={FLAGSHIP.summary}
-                href={serviceHref(FLAGSHIP.slug)}
-                photo={PHOTOS.fins}
-                linkLabel="See the practice"
-              />
-            </div>
-            <div className="flex flex-col gap-6 lg:col-span-4">
+            <p className="text-muted">The firm also advises on</p>
+            <ul className="mt-2">
               {SERVICES.filter((item) => item.kind === "secondary").map((item) => (
-                <ServiceTextCard key={item.slug} name={item.name} summary={item.summary} href={serviceHref(item.slug)} />
-              ))}
-            </div>
-          </div>
-        </Container>
-      </Section>
-
-      <Section labelledBy="industries">
-        <Container>
-          <SectionHeading
-            id="industries"
-            title="Where these workflows apply"
-            lede="The patterns carry across industries. The systems and the approvals differ."
-            action={
-              <Link href="/industries" className="arrow-link min-h-11 items-center">
-                All industries
-              </Link>
-            }
-          />
-          <ul className="mt-10 grid gap-x-12 border-t border-rule md:grid-cols-2">
-            {INDUSTRIES.map((item) => (
-              <li key={item.slug} className="border-b border-rule">
-                <Link href={`/industries/${item.slug}`} className="group block py-5">
-                  <span className="h4 card-title arrow-after block text-heading after:ml-2 after:text-accent">
+                <li key={item.slug}>
+                  <Link
+                    href={serviceHref(item.slug)}
+                    className="block py-1.5 font-display text-[2.1rem] leading-tight text-forest decoration-1 underline-offset-8 hover:underline"
+                  >
                     {item.name}
-                  </span>
-                  <span className="mt-1 block text-muted">{item.summary}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </Container>
-      </Section>
-
-      <Section surface="stone" labelledBy="insights">
-        <Container>
-          <SectionHeading
-            id="insights"
-            title="Latest insights"
-            action={
-              <Link href="/insights" className="arrow-link min-h-11 items-center">
-                All insights
-              </Link>
-            }
-          />
-          <div className="mt-10">
-            <InsightCluster insights={INSIGHTS.slice(0, 3)} />
-          </div>
-        </Container>
-      </Section>
-
-      <Section labelledBy="engagements">
-        <Container>
-          <SectionHeading
-            id="engagements"
-            title="How an engagement runs"
-            lede="Three stages. You can stop after any of them and keep everything that was made."
-            action={
-              <Link href="/approach" className="arrow-link min-h-11 items-center">
-                Read the approach
-              </Link>
-            }
-          />
-          <div className="mt-10">
-            <EngagementStrip stages={ENGAGEMENTS.stages} />
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </Container>
       </Section>

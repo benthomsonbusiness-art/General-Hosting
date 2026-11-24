@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { InsightRow, insightMeta } from "@/components/cards/Cards";
+import { InsightCard, insightMeta } from "@/components/cards/Cards";
 import { Prose } from "@/components/content/Blocks";
 import { ShareLinks } from "@/components/content/ShareLinks";
 import { CtaBand } from "@/components/layout/CtaBand";
@@ -98,7 +98,7 @@ export default async function InsightPage({ params }: Props) {
         </header>
 
         <div data-surface="light" className="wrap pb-20 md:pb-28">
-          <div className="grid gap-x-12 gap-y-8 border-t border-rule pt-10 md:pt-14 lg:grid-cols-12">
+          <div className="grid gap-x-12 gap-y-8 pt-4 lg:grid-cols-12">
             <div className="lg:col-span-3">
               <InPageIndex items={index} />
             </div>
@@ -116,13 +116,17 @@ export default async function InsightPage({ params }: Props) {
         <Container>
           <SectionHeading id="related" title="Related insights" />
           <div className="mt-8">
-            <InsightRow
-              insights={relatedInsights(
+            <ul className="grid gap-x-8 gap-y-12 md:grid-cols-3">
+              {relatedInsights(
                 (item) => item.topics.some((topic) => insight.topics.includes(topic)),
                 3,
                 insight.slug,
-              )}
-            />
+              ).map((item) => (
+                <li key={item.slug}>
+                  <InsightCard insight={item} />
+                </li>
+              ))}
+            </ul>
           </div>
         </Container>
       </Section>

@@ -125,7 +125,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <a href="#site-footer" className={skip}>
           Skip to footer
         </a>
-        <SiteHeader panels={NAV} />
+        <SiteHeader items={NAV} />
         <main id="main" tabIndex={-1} className="flex-1 outline-none">
           {children}
         </main>

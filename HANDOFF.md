@@ -3,6 +3,17 @@
 Last updated: Nov 24, 2026 (ET) · Branch: `cursor/valentini-platform-v2` · Base: `1e42b44` (PR #4 head) · Agent: Claude Code
 Deployed commit: `ab5a4bb` (later commits change documentation only)
 
+## v3 redesign (branch `cursor/valentini-platform-v3`, local, not pushed or deployed)
+
+Ben asked for a whole redesign: minimalist, visual, interactive workflows. The sections below this one describe v2 and still apply to the API, deploy steps and open decisions.
+
+- **Workflows:** each of the 8 has its own scene (`components/workflow/scenes/`), driven by the same reducer. Visitors pick a sample input (`content/scenarios.ts`), set the confidence threshold, edit the draft and decide at the gate. Step details moved to a side dialog.
+- **Motion switch:** follows the OS setting by default; a visitor's choice is saved in localStorage only. Ben's laptop has reduced motion on, so v2 never animated for him.
+- **Structure:** four menu links; six industry pages became one picker and five sub-services became sections of the flagship page. Old URLs redirect (308).
+- **Departures from PROMPT.md, requested by Ben:** mega-menu, in-page indexes on service pages, service and industry filters on Insights, and the minimum word counts are gone. H2 is Cormorant. The "no three equal icon cards" rule is kept.
+- **Words on screen at 1440px (v2 to v3):** Home 906 to 256, flagship 939 to 437, Approach 1,104 to 392, Workflows 616 to 199.
+- **Checks:** 52 unit tests; crawl of every sitemap path at 4 widths with axe at 2; scripted behavior checks; Lighthouse Accessibility and Best Practices 100, Performance 95–100. Worker 1,303 KiB gzipped.
+- **Known:** script transfer is about 210 KB per page including prefetch, over the 180 KB budget in PROMPT §16. Simulated mobile LCP on the flagship is 2.9 s. No screen-reader pass. No new photography. Less text may reduce search traffic. Screenshots in `docs/screenshots/v2` are the old design.
 ## Status
 
 - Milestone reached: M8, except the human screen-reader pass and the business and audit reviews

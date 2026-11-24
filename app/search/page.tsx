@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { SearchResults } from "@/components/content/SearchResults";
-import { HeroBlock } from "@/components/layout/Heroes";
+import { HeroPlain } from "@/components/layout/Heroes";
 import { Container, Section } from "@/components/layout/Section";
 import { SEARCH_PAGE } from "@/content/pages";
 import { pageMetadata } from "@/lib/seo";
@@ -14,12 +14,11 @@ export const metadata = pageMetadata({
 export default function SearchPage() {
   return (
     <>
-      <HeroBlock
+      <HeroPlain
         title="Search"
-        dek="Services, workflow blueprints, industries and insights."
         crumbs={[{ name: "Search", path: "/search" }]}
       />
-      <Section>
+      <Section flush className="pb-20 md:pb-28">
         <Container className="max-w-[60rem]">
           <SearchResults />
           <noscript>
