@@ -1,61 +1,56 @@
 import Link from "next/link";
-import { BrandEmblem, BrandWordmark } from "@/components/BrandMark";
+import { BrandMark, BrandWordmark } from "@/components/BrandMark";
+import { NAV_PRACTICES } from "@/lib/practices";
 
-const anchors = [
-  { href: "#capabilities", label: "Capabilities" },
-  { href: "#approach", label: "Approach" },
-  { href: "#who-we-serve", label: "Who We Serve" },
-  { href: "#inquire", label: "Inquire" },
-];
-
-const pages = [
+const LEGAL = [
   { href: "/privacy", label: "Privacy" },
   { href: "/terms", label: "Terms" },
 ];
 
 export function Footer() {
   return (
-    <footer className="bg-emerald text-on-dark-body">
-      <div className="border-t border-hairline-dark">
-        <div className="mx-auto flex max-w-6xl flex-col gap-12 px-6 py-14 md:flex-row md:items-start md:justify-between md:px-10">
-          <div className="max-w-sm">
-            <div className="flex items-center gap-4">
-              <BrandEmblem className="h-11 w-11 shrink-0" title="Valentini & Co." />
-              <BrandWordmark />
-            </div>
-            <p className="mt-6 text-[14px] leading-[1.7] text-on-dark-muted">
-              <a
-                className="text-on-dark-body"
-                href="mailto:inquiries@valentiniandco.com"
-              >
-                inquiries@valentiniandco.com
-              </a>
-              <span className="mt-1 block">New Jersey · Advising Studios Nationwide</span>
-            </p>
+    <footer className="bg-[#0B1F16] text-[#F7F4EC]">
+      <div className="mx-auto max-w-[90rem] border-t border-[rgba(197,168,105,0.25)] px-6 py-14 md:px-10 md:py-16">
+        <div className="grid gap-12 md:grid-cols-12">
+          <div className="md:col-span-5">
+            <Link href="/" className="inline-flex items-center gap-3" aria-label="Valentini and Company, home">
+              <BrandMark className="h-11 w-11 shrink-0" title="Valentini & Co." />
+              <BrandWordmark className="text-[13px]" />
+            </Link>
+            <a
+              href="mailto:inquiries@valentiniandco.com"
+              className="mt-8 block font-mono text-[12px] tracking-[0.06em] text-[#F7F4EC]/80"
+            >
+              inquiries@valentiniandco.com
+            </a>
           </div>
-          <nav aria-label="Footer" className="flex max-w-md flex-wrap gap-x-6 gap-y-3">
-            {anchors.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="text-[11px] font-medium tracking-[0.18em] text-on-dark uppercase"
-              >
-                {link.label}
-              </a>
-            ))}
-            {pages.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-[11px] font-medium tracking-[0.18em] text-on-dark uppercase"
-              >
-                {link.label}
-              </Link>
-            ))}
+          <nav className="md:col-span-4" aria-label="Practices">
+            <p className="font-mono text-[10px] tracking-[0.2em] text-[#C5A869] uppercase">Practices</p>
+            <ul className="mt-4 space-y-3">
+              {NAV_PRACTICES.map((practice) => (
+                <li key={practice.id}>
+                  <Link href={practice.href} className="text-[14px] text-[#F7F4EC]/85 hover:text-[#F7F4EC]">
+                    {practice.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <nav className="md:col-span-3" aria-label="Legal">
+            <p className="font-mono text-[10px] tracking-[0.2em] text-[#C5A869] uppercase">Legal</p>
+            <ul className="mt-4 space-y-3">
+              {LEGAL.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="text-[14px] text-[#F7F4EC]/85 hover:text-[#F7F4EC]">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </nav>
         </div>
-        <p className="mx-auto max-w-6xl px-6 pb-10 text-[13px] text-on-dark-muted md:px-10">
-          © 2026 Valentini & Co. All rights reserved.
+        <p className="mt-14 font-mono text-[11px] tracking-[0.12em] text-[#F7F4EC]/45">
+          © 2026 Valentini &amp; Co.
         </p>
       </div>
     </footer>

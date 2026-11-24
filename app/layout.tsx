@@ -1,11 +1,12 @@
-import type { Metadata } from "next";
-import { Cormorant_Garamond, Inter } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import type { ReactNode } from "react";
+import { Cormorant_Garamond, JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
 const siteUrl = "https://valentiniandco.com";
 
 const description =
-  "Valentini & Co. pairs precision Meta advertising with instant AI lead-to-booking systems for boutique fitness studios—turning local demand into filled classes without discounting the brand.";
+  "Valentini & Co. audits high-friction operations and engineers AI-assisted workflows around the tools a company already runs. Deterministic code, human approval gates, and systems the team owns.";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -15,17 +16,24 @@ const cormorant = Cormorant_Garamond({
   display: "swap",
 });
 
-const inter = Inter({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  weight: ["300", "400", "500"],
-  variable: "--font-inter",
+  weight: ["400", "500", "600"],
+  variable: "--font-jakarta",
+  display: "swap",
+});
+
+const jetbrains = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-jetbrains",
   display: "swap",
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Valentini & Co. — Paid Acquisition & AI Automation Advisory",
+    default: "Valentini & Co. — AI Workflow Consulting",
     template: "%s — Valentini & Co.",
   },
   description,
@@ -35,18 +43,31 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "/",
     siteName: "Valentini & Co.",
-    title: "Valentini & Co. — Paid Acquisition & AI Automation Advisory",
+    title: "Valentini & Co. — AI Workflow Consulting",
     description,
+    images: [
+      {
+        url: "/images/hero-architecture.jpg",
+        width: 1280,
+        height: 720,
+        alt: "Green marble, walnut slats, and a city at twilight.",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Valentini & Co. — Paid Acquisition & AI Automation Advisory",
+    title: "Valentini & Co. — AI Workflow Consulting",
     description,
+    images: ["/images/hero-architecture.jpg"],
   },
   robots: {
     index: true,
     follow: true,
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0B1F16",
 };
 
 const jsonLd = {
@@ -56,19 +77,19 @@ const jsonLd = {
   url: siteUrl,
   description,
   email: "inquiries@valentiniandco.com",
-  areaServed: "United States",
-  address: {
-    "@type": "PostalAddress",
-    addressRegion: "NJ",
-    addressCountry: "US",
-  },
+  knowsAbout: [
+    "AI workflow consulting",
+    "Business process automation",
+    "Meta advertising",
+    "Operational strategy",
+  ],
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="en"
-      className={`${cormorant.variable} ${inter.variable} h-full antialiased`}
+      className={`${cormorant.variable} ${jakarta.variable} ${jetbrains.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
         <script

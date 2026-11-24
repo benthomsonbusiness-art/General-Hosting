@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { LegalFrame, LegalLinks, LegalSection } from "@/components/legal-frame";
 
 export const metadata: Metadata = {
-  title: { absolute: "Terms — Valentini & Co." },
-  description:
-    "Placeholder terms for the Valentini & Co. website. Not in effect.",
+  title: "Terms",
+  description: "Placeholder terms for the Valentini & Co. website. Not in effect.",
+  alternates: { canonical: "/terms" },
 };
 
 export default function TermsPage() {
@@ -16,45 +16,44 @@ export default function TermsPage() {
     >
       <LegalSection heading="Using this site">
         <p>
-          Browsing the site does not create a client relationship, a retainer,
-          or any other engagement with Valentini & Co.
+          Browsing the site does not create a client relationship, a retainer, or any other
+          engagement with Valentini &amp; Co.
         </p>
       </LegalSection>
       <LegalSection heading="Inquiries">
         <p>
-          Sending an inquiry asks for a conversation. It does not reserve
-          services, form a contract, or require a response.
+          Sending a diagnostic request asks for a conversation. It does not reserve services, form
+          a contract, or require a response.
         </p>
       </LegalSection>
       <LegalSection heading="Materials on the site">
         <p>
-          Text, marks, and images on the site belong to Valentini & Co. or
-          their licensors. The final terms will state what visitors may do with
-          them.
+          Text, marks, and images on the site belong to Valentini &amp; Co. or their licensors. The
+          final terms will state what visitors may do with them.
         </p>
       </LegalSection>
       <LegalSection heading="Liability">
         <p>
-          The final terms will set the limits that apply to use of the site.
-          This placeholder is not those terms.
+          The final terms will set the limits that apply to use of the site. This placeholder is
+          not those terms.
         </p>
       </LegalSection>
       <LegalSection heading="Changes">
         <p>
-          Valentini & Co. will replace this page with the approved terms and
-          may update them later. The published date will appear here.
+          Valentini &amp; Co. will replace this page with the approved terms and may update them
+          later. The published date will appear here.
         </p>
       </LegalSection>
       <LegalSection heading="Contact">
         <p>
-          A contact for questions about these terms will be published with the
-          final text.
+          Questions about these terms can be sent to inquiries@valentiniandco.com. The final text
+          will be the governing contact statement.
         </p>
       </LegalSection>
       <LegalLinks
         links={[
           { href: "/privacy", label: "Privacy" },
-          { href: "/", label: "Back" },
+          { href: "/", label: "Home" },
         ]}
       />
     </LegalFrame>

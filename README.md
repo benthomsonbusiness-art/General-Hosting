@@ -1,34 +1,31 @@
-# General-Hosting
+# Valentini & Co.
 
-Valentini & Co. website.
+Editorial site for Valentini & Co. The flagship practice is AI Workflow Consulting. Meta Ads Consulting and Strategy are active advisory practices with their own pages.
 
 ## Brand files
 
-Drop the final logo files in `/public/brand/`. Next.js serves files in `public/` from the site root, so `public/brand/logo.svg` is available at `/brand/logo.svg`.
-
 | Path | Use |
 | --- | --- |
-| `public/brand/logo.svg` | Primary wordmark |
-| `public/brand/logo-mark.svg` | Monogram, when it is a separate file |
-| `public/brand/favicon.ico` | Browser icon |
+| `public/brand/logo.svg` | Stacked lockup: Split-V monogram and wordmark |
+| `public/brand/logo-mark.svg` | Monogram only |
+| `app/icon.svg` | Favicon, same monogram on forest |
 
-Prefer SVG for the wordmark. Do not commit design-tool source files or temporary exports.
+## Inquiry
 
-## Inquiry environment
+`POST /api/inquiry` and `POST /api/inquire` share one handler.
 
-`/api/inquire` reads two environment variables:
+Fields: `fullName`, `email`, `companyRole`, `practice`, `note`. `fax_number` is a honeypot.
 
-- `WEBHOOK_URL` — the n8n webhook URL that receives each inquiry.
-- `RESEND_API_KEY` — the Resend API key used to send the inquiry email.
+Environment variables, all optional for local and preview confirmation:
 
-For local development, put them in `.env.local` at the project root. Next.js loads that file on the server. `.gitignore` already ignores `.env*`, so the values stay out of git.
+- `WEBHOOK_URL` — receives each inquiry as JSON
+- `RESEND_API_KEY` — Resend API key
+- `RESEND_FROM` — required when `RESEND_API_KEY` is set
+- `INQUIRY_TO` or `RESEND_TO` — required when `RESEND_API_KEY` is set
 
-```
-WEBHOOK_URL=https://your-n8n-host/webhook/your-webhook-id
-RESEND_API_KEY=re_your_key
-```
+If no delivery channel is configured, a valid inquiry is still accepted so the confirmation state works.
 
-Set the same names in the deployment environment. Restart `npm run dev` after changing `.env.local`.
+For local development, put the values in `.env.local`. `.gitignore` already ignores `.env*`.
 
 ## Legal pages
 

@@ -1,20 +1,9 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { Cormorant_Garamond, Inter } from "next/font/google";
+import { Footer } from "@/components/Footer";
+import { Navbar } from "@/components/Navbar";
 
-const display = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  display: "swap",
-});
-
-const sans = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  display: "swap",
-});
-
-const hairline = "border-[rgba(197,168,105,0.35)]";
+const hairline = "border-[rgba(19,50,36,0.14)]";
 
 export function LegalFrame({
   kicker,
@@ -28,82 +17,46 @@ export function LegalFrame({
   children: ReactNode;
 }) {
   return (
-    <div
-      className={`${sans.className} flex flex-1 flex-col bg-[#F7F4EC] text-[#133224]`}
-    >
-      <header className={`border-b bg-[#133224] text-[#F7F4EC] ${hairline}`}>
-        <div className="mx-auto flex h-16 max-w-5xl items-center justify-between gap-6 px-6">
-          <Link
-            href="/"
-            className={`${display.className} text-[0.8rem] font-medium tracking-[0.28em] text-[#F7F4EC] outline-offset-[3px] focus-visible:outline focus-visible:outline-1 focus-visible:outline-[rgba(197,168,105,0.95)]`}
-          >
-            VALENTINI & CO.
-          </Link>
-          <Link
-            href="/"
-            className={`border-b pb-0.5 text-[0.68rem] tracking-[0.18em] text-[#F7F4EC] uppercase outline-offset-[3px] focus-visible:outline focus-visible:outline-1 focus-visible:outline-[rgba(197,168,105,0.95)] ${hairline}`}
-          >
-            Back
-          </Link>
-        </div>
-      </header>
-      <main className="mx-auto w-full max-w-[40rem] flex-1 px-6 pt-20 pb-24">
-        <p className="mb-4 text-[0.72rem] tracking-[0.22em] uppercase">
-          {kicker}
-        </p>
-        <h1
-          className={`${display.className} mb-6 text-[clamp(3rem,7vw,4.25rem)] leading-[0.95] font-normal tracking-[-0.02em]`}
-        >
-          {title}
-        </h1>
-        <p className="mb-8 text-[1.05rem] leading-7">{lede}</p>
-        <p
-          className={`mb-12 rounded-[2px] border bg-[#133224] px-4 py-3.5 text-sm leading-6 text-[#F7F4EC] ${hairline}`}
-        >
-          Placeholder. Counsel-approved text will replace this page before
-          publication. Nothing on this page is in effect.
-        </p>
-        <div className="flex flex-col">{children}</div>
+    <>
+      <Navbar />
+      <main id="top" className="flex-1 bg-[#F7F4EC] pt-28 text-[#1A1E1B]">
+        <article className="mx-auto w-full max-w-[42rem] px-6 pt-8 pb-24">
+          <p className="font-mono text-[11px] tracking-[0.2em] text-[#C5A869] uppercase">{kicker}</p>
+          <h1 className="mt-4 font-display text-[clamp(3rem,7vw,4.5rem)] leading-[0.96] font-medium tracking-[-0.02em] text-[#133224]">
+            {title}
+          </h1>
+          <p className="mt-6 text-[1.05rem] leading-7 text-[#4F5752]">{lede}</p>
+          <p className="mt-8 border-l border-[#C5A869] pl-4 font-mono text-[12px] leading-6 text-[#4F5752]">
+            Placeholder. Counsel-approved text will replace this page before publication. Nothing
+            on this page is in effect.
+          </p>
+          <div className="mt-12">{children}</div>
+        </article>
       </main>
-    </div>
+      <Footer />
+    </>
   );
 }
 
-export function LegalSection({
-  heading,
-  children,
-}: {
-  heading: string;
-  children: ReactNode;
-}) {
+export function LegalSection({ heading, children }: { heading: string; children: ReactNode }) {
   return (
     <section className={`border-t py-6 ${hairline}`}>
-      <h2
-        className={`${display.className} mb-2 text-[1.75rem] leading-tight font-medium`}
-      >
+      <h2 className="mb-2 font-display text-[1.7rem] leading-tight font-medium text-[#133224]">
         {heading}
       </h2>
-      <div className="text-[0.98rem] leading-7">{children}</div>
+      <div className="text-[0.98rem] leading-7 text-[#1A1E1B]">{children}</div>
     </section>
   );
 }
 
-export function LegalLinks({
-  links,
-}: {
-  links: { href: string; label: string }[];
-}) {
+export function LegalLinks({ links }: { links: { href: string; label: string }[] }) {
   return (
     <nav
       aria-label="Related"
-      className={`mt-10 flex flex-wrap gap-x-6 gap-y-3 border-t pt-6 text-[0.68rem] tracking-[0.18em] uppercase ${hairline}`}
+      className={`mt-10 flex flex-wrap gap-x-6 gap-y-3 border-t pt-6 font-mono text-[11px] tracking-[0.16em] uppercase ${hairline}`}
     >
       {links.map((link) => (
-        <Link
-          key={link.href}
-          href={link.href}
-          className={`border-b pb-0.5 outline-offset-[3px] focus-visible:outline focus-visible:outline-1 focus-visible:outline-[rgba(197,168,105,0.95)] ${hairline}`}
-        >
+        <Link key={link.href} href={link.href} className="border-b border-[#C5A869] pb-0.5">
           {link.label}
         </Link>
       ))}

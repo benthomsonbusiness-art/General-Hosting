@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
-import { Approach } from "@/components/Approach";
-import { Capabilities } from "@/components/Capabilities";
+import { Diagnosis } from "@/components/Diagnosis";
+import { Diagnostic } from "@/components/Diagnostic";
+import { Engagement } from "@/components/Engagement";
+import { Estimator } from "@/components/Estimator";
 import { Footer } from "@/components/Footer";
+import { HashScroll } from "@/components/HashScroll";
 import { Hero } from "@/components/Hero";
-import InquiryForm from "@/components/InquiryForm";
+import { Interlude } from "@/components/Interlude";
 import { Navbar } from "@/components/Navbar";
-import { PartnerCriteria } from "@/components/PartnerCriteria";
-import { Thesis } from "@/components/Thesis";
+import { WorkflowExplorer } from "@/components/WorkflowExplorer";
 
 export const metadata: Metadata = {
   alternates: {
@@ -17,14 +19,16 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
-      <Navbar />
-      <main id="top">
+      <HashScroll />
+      <Navbar overlay />
+      <main id="top" className="flex-1">
         <Hero />
-        <Thesis />
-        <Capabilities />
-        <Approach />
-        <PartnerCriteria />
-        <InquiryForm />
+        <Diagnosis />
+        <Interlude />
+        <WorkflowExplorer />
+        <Engagement />
+        <Estimator />
+        <Diagnostic />
       </main>
       <Footer />
     </>

@@ -1,20 +1,19 @@
-export const PRIMARY_FOCUSES = [
-  "Meta Ads + AI Lead Automation",
-  "AI Lead Follow-Up & Booking Systems",
-  "Meta Ads Acquisition",
-  "Executive KPI & Growth Advisory",
+export const PRACTICE_INTERESTS = [
+  "AI Workflow Consulting",
+  "Meta Ads Consulting",
+  "Strategy",
 ] as const;
 
-export type PrimaryFocus = (typeof PRIMARY_FOCUSES)[number];
+export type PracticeInterest = (typeof PRACTICE_INTERESTS)[number];
+
+export const HONEYPOT_FIELD = "fax_number";
 
 export type Inquiry = {
   fullName: string;
   email: string;
-  studioName: string;
-  cityState: string;
-  websiteOrInstagram?: string;
-  primaryFocus: PrimaryFocus;
-  note?: string;
+  companyRole: string;
+  practice: PracticeInterest;
+  note: string;
 };
 
 export type InquiryField = keyof Inquiry;
@@ -22,6 +21,19 @@ export type InquiryField = keyof Inquiry;
 export type FieldErrors = Partial<Record<InquiryField, string>>;
 
 const EMAIL = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+
+export function practiceFromQuery(value: string | null | undefined): PracticeInterest {
+  const normalized = (value ?? "").trim().toLowerCase();
+  if (
+    normalized === "meta-ads" ||
+    normalized === "meta ads" ||
+    normalized === "meta ads consulting"
+  ) {
+    return "Meta Ads Consulting";
+  }
+  if (normalized === "strategy") return "Strategy";
+  return "AI Workflow Consulting";
+}
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -33,20 +45,8 @@ function readString(record: Record<string, unknown>, key: string): string {
   return value.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "").trim();
 }
 
-function isPrimaryFocus(value: string): value is PrimaryFocus {
-  return (PRIMARY_FOCUSES as readonly string[]).includes(value);
-}
-
-function isWebsiteOrHandle(value: string): boolean {
-  if (value.length > 200 || /[\s<>]/.test(value)) return false;
-  if (/^@[A-Za-z0-9._]{1,30}$/.test(value)) return true;
-  const withProtocol = /^https?:\/\//i.test(value) ? value : `https://${value}`;
-  try {
-    const url = new URL(withProtocol);
-    return (url.protocol === "http:" || url.protocol === "https:") && url.hostname.includes(".");
-  } catch {
-    return false;
-  }
+function isPractice(value: string): value is PracticeInterest {
+  return (PRACTICE_INTERESTS as readonly string[]).includes(value);
 }
 
 export function validateInquiry(
@@ -55,54 +55,171 @@ export function validateInquiry(
   if (!isRecord(input)) {
     return {
       ok: false,
-      fieldErrors: { fullName: "Enter your full name." },
+      fieldErrors: { fullName: "Enter your name." },
     };
   }
 
   const fieldErrors: FieldErrors = {};
   const fullName = readString(input, "fullName");
   const email = readString(input, "email");
-  const studioName = readString(input, "studioName");
-  const cityState = readString(input, "cityState");
-  const websiteOrInstagram = readString(input, "websiteOrInstagram");
-  const primaryFocusRaw = readString(input, "primaryFocus");
-  const primaryFocus = isPrimaryFocus(primaryFocusRaw) ? primaryFocusRaw : null;
+  const companyRole = readString(input, "companyRole");
+  const practiceRaw = readString(input, "practice");
+  const practice = isPractice(practiceRaw) ? practiceRaw : null;
   const note = readString(input, "note");
 
   if (fullName.length < 2 || fullName.length > 100) {
-    fieldErrors.fullName = "Enter your full name.";
+    fieldErrors.fullName = "Enter your name.";
   }
   if (!EMAIL.test(email) || email.length > 254) {
-    fieldErrors.email = "Enter a valid email.";
+    fieldErrors.email = "Enter a valid work email.";
   }
-  if (studioName.length < 2 || studioName.length > 120) {
-    fieldErrors.studioName = "Enter the studio name.";
+  if (companyRole.length < 2 || companyRole.length > 140) {
+    fieldErrors.companyRole = "Enter your company and role.";
   }
-  if (cityState.length < 2 || cityState.length > 120) {
-    fieldErrors.cityState = "Enter the city and state.";
+  if (!practice) {
+    fieldErrors.practice = "Select a practice.";
   }
-  if (websiteOrInstagram && !isWebsiteOrHandle(websiteOrInstagram)) {
-    fieldErrors.websiteOrInstagram = "Enter a website, domain, or @handle.";
-  }
-  if (!primaryFocus) {
-    fieldErrors.primaryFocus = "Select a primary focus.";
-  }
-  if (note.length > 2000) {
-    fieldErrors.note = "Keep the note under 2000 characters.";
+  if (note.length < 8 || note.length > 2000) {
+    fieldErrors.note = "Describe the workflow in a sentence or two.";
   }
 
-  if (!primaryFocus || Object.keys(fieldErrors).length > 0) {
+  if (!practice || Object.keys(fieldErrors).length > 0) {
     return { ok: false, fieldErrors };
   }
 
-  const value: Inquiry = {
-    fullName,
-    email,
-    studioName,
-    cityState,
-    primaryFocus,
+  return {
+    ok: true,
+    value: { fullName, email, companyRole, practice, note },
   };
-  if (websiteOrInstagram) value.websiteOrInstagram = websiteOrInstagram;
-  if (note) value.note = note;
-  return { ok: true, value };
+}
+
+function inquiryText(inquiry: Inquiry): string {
+  return [
+    `Name: ${inquiry.fullName}`,
+    `Email: ${inquiry.email}`,
+    `Company / Role: ${inquiry.companyRole}`,
+    `Practice: ${inquiry.practice}`,
+    "",
+    inquiry.note,
+  ].join("\n");
+}
+
+async function postWebhook(inquiry: Inquiry): Promise<void> {
+  const url = process.env.WEBHOOK_URL;
+  if (!url) return;
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    signal: AbortSignal.timeout(10000),
+    body: JSON.stringify({
+      source: "valentini-inquiry",
+      submittedAt: new Date().toISOString(),
+      ...inquiry,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Webhook responded ${response.status}`);
+  }
+}
+
+async function sendWithResend(inquiry: Inquiry): Promise<void> {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) return;
+
+  const from = process.env.RESEND_FROM;
+  const to = process.env.INQUIRY_TO ?? process.env.RESEND_TO;
+  if (!from || !to) {
+    throw new Error("RESEND_FROM and INQUIRY_TO are required when RESEND_API_KEY is set.");
+  }
+
+  const response = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    signal: AbortSignal.timeout(10000),
+    body: JSON.stringify({
+      from,
+      to: [to],
+      reply_to: inquiry.email,
+      subject: `Inquiry — ${inquiry.practice} — ${inquiry.companyRole}`,
+      text: inquiryText(inquiry),
+    }),
+  });
+
+  if (!response.ok) {
+    const detail = await response.text();
+    throw new Error(`Resend responded ${response.status}: ${detail.slice(0, 300)}`);
+  }
+}
+
+export async function handleInquiry(request: Request): Promise<Response> {
+  let payload: unknown;
+  try {
+    payload = await request.json();
+  } catch {
+    return Response.json({ ok: false, error: "Invalid request." }, { status: 400 });
+  }
+
+  if (!isRecord(payload)) {
+    return Response.json({ ok: false, error: "Invalid request." }, { status: 400 });
+  }
+
+  const honeypot = payload[HONEYPOT_FIELD];
+  if (typeof honeypot === "string" && honeypot.trim() !== "") {
+    if (process.env.NODE_ENV === "development") {
+      console.info("[inquiry] honeypot tripped");
+    }
+    return Response.json({ ok: true, delivered: false });
+  }
+
+  const parsed = validateInquiry(payload);
+  if (!parsed.ok) {
+    return Response.json(
+      {
+        ok: false,
+        error: "Please correct the highlighted fields.",
+        fieldErrors: parsed.fieldErrors,
+      },
+      { status: 422 },
+    );
+  }
+
+  if (process.env.NODE_ENV === "development") {
+    console.info("[inquiry]", parsed.value);
+  }
+
+  const jobs: Array<Promise<void>> = [];
+  if (process.env.WEBHOOK_URL) jobs.push(postWebhook(parsed.value));
+  if (process.env.RESEND_API_KEY) jobs.push(sendWithResend(parsed.value));
+
+  if (jobs.length === 0) {
+    if (process.env.NODE_ENV === "development") {
+      console.info("[inquiry] accepted with no delivery channel configured");
+    } else {
+      console.warn("[inquiry] accepted with no delivery channel configured");
+    }
+    return Response.json({ ok: true, delivered: false });
+  }
+
+  const results = await Promise.allSettled(jobs);
+  const rejected = results.filter((result) => result.status === "rejected");
+  for (const result of rejected) {
+    if (result.status === "rejected") {
+      const reason = result.reason instanceof Error ? result.reason.message : "Delivery failed";
+      console.error("[inquiry] delivery failed", reason);
+    }
+  }
+
+  if (rejected.length === results.length) {
+    return Response.json(
+      { ok: false, error: "We could not send your inquiry. Please try again shortly." },
+      { status: 502 },
+    );
+  }
+
+  return Response.json({ ok: true, delivered: true });
 }
