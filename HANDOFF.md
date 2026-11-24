@@ -1,13 +1,13 @@
 # HANDOFF — Valentini platform v2
 
 Last updated: Nov 24, 2026 (ET) · Branch: `cursor/valentini-platform-v2` · Base: `1e42b44` (PR #4 head) · Agent: Claude Code
-Build commit: `34782dd` (this file is committed after it)
+Deployed commit: `ab5a4bb` (later commits change documentation only)
 
 ## Status
 
-- Milestone reached: M7 complete, M8 partly complete (see "Not done"). Work was finished under a time limit set by Ben.
+- Milestone reached: M8, except the human screen-reader pass and the business and audit reviews
 - Build: lint ✅ · tsc ✅ · 51 unit tests ✅ · next build ✅ (44 pages static; only `/api/inquiry` is dynamic) · opennextjs-cloudflare build ✅ (1,324 KiB gzipped by `wrangler deploy --dry-run`; Free cap is 3 MiB)
-- Deployed preview: not deployed — no Cloudflare credentials on this machine (`wrangler whoami` is logged out). Deploy pending.
+- Deployed preview: https://valentini-next.benthomsonbusiness.workers.dev (new Worker `valentini-next`; `valentini-preview` was not touched) · PR: https://github.com/benthomsonbusiness-art/General-Hosting/pull/5
 
 ## Done
 
@@ -22,14 +22,10 @@ Build commit: `34782dd` (this file is committed after it)
 
 ## Not done / next steps (in order)
 
-1. Deploy to `valentini-next` (Sammy). Then check the preview with at most about 10 GETs and one POST (expect 503).
-2. Open the PR into `cursor/valentini-editorial-site-7174` if it is not open yet. `gh` is not installed on this machine.
-3. Screen-reader pass: VoiceOver or NVDA on Home, Workflows, Contact. Nobody has done this.
-4. Screenshots are **not committed**. A full set (about 9 MB) was made locally and reviewed by eye, then left out of the repo.
-5. Mobile LCP on service and sub-service heroes (see Known issues).
-6. Copy read by Bruce, especially scope statements such as "we do not manage ads day to day" (Meta Ads FAQ), and the list of things each industry page says we won't automate.
-7. Optional fifth insight, Turnstile, Workers Rate Limiting binding: not started.
-
+1. Bruce (business review) and Andy (audit) review the preview. Bruce should read scope statements such as "we do not manage ads day to day" (Meta Ads FAQ) and each industry page's "What we won't automate".
+2. Screen-reader pass by a person: VoiceOver or NVDA on Home, Workflows, Contact. Nobody has done this. It is the one checklist item that could not be automated.
+3. Ben answers the open decisions below. Inquiry delivery matters most: until a channel is configured, the form returns 503.
+4. Optional, not started: fifth insight, Turnstile, Workers Rate Limiting binding. D1 is not provisioned.
 ## Decisions made (and why)
 
 - Insight bodies are typed blocks, not MDX. MDX was not attempted: typed blocks add no dependency and the content check can read every string.
@@ -40,6 +36,7 @@ Build commit: `34782dd` (this file is committed after it)
 - Low confidence ends a run as "Manual review". This is one status more than the prompt's list.
 - `lib/inquiry.ts` was split: `inquiry-shared.ts` is the client-safe half.
 - D1 `ip_hash` is stored only when `IP_HASH_SALT` is set, because a hash of an IP without a secret is reversible.
+- The wordmark ampersand is a 0.9 KB subset of Cormorant Garamond Italic (`app/fonts`), so most pages skip the 39 KB italic file.
 - Milestones M0–M7 landed in one build commit instead of one per milestone. This departs from §18.
 - Article photos are hidden below 1024px. They are optional in the spec, and hiding them keeps mobile LCP on text.
 - The workflow data is 42 KB, slightly over the prompt's "about 40 KB".
@@ -57,13 +54,13 @@ Build commit: `34782dd` (this file is committed after it)
 9. Founder section. Default: none (empty slot in `app/about/page.tsx`).
 10. Response-time promise. Default: none.
 11. Photography: need 2560px versions and 4–6 more editorial photos. The same four photos repeat often.
-12. PR target: the PR #4 branch, or a draft into `main`. Default: the PR #4 branch.
+12. PR target: opened into the PR #4 branch. Say if a draft into `main` is preferred.
 
 ## Known issues / risks
 
 - `og:image` and canonical URLs use valentiniandco.com, which does not resolve yet.
-- `cf-connecting-ip` overwrite: **not verified.** Cloudflare's HTTP-headers page does not say what happens to a client-sent value, and the Error 1000 page only lists the header as a cause of a halted request. Test with one request and `wrangler tail` after deploy. If it can be spoofed, the in-memory limiter can be bypassed.
-- Simulated mobile LCP is about 3.0 s on hero-photo pages (budget 2.5 s). Scores vary between runs on this laptop.
+- `cf-connecting-ip`: **verified on the deployed Worker.** One request with a fake value was rejected by Cloudflare's edge with a 403 HTML page and never appeared in `wrangler tail`, so clients cannot spoof it there. `x-forwarded-for` is only a fallback when that header is absent.
+- Mobile LCP on hero-photo pages: 1.8–1.9 s with throttling applied (inside the 2.5 s budget), 2.8–3.0 s in Lighthouse's simulated mode (over it). Simulation counts scripts that load before the image paints.
 - Lighthouse SEO reads 66–69 locally. The only failing audit is `is-crawlable`, caused by the intentional noindex on non-production hosts.
 - `npm audit`: 0 high or critical, 3 moderate, all in the dev-only OpenNext toolchain.
 - **OneDrive:** the working copy is inside OneDrive, and `next build` started failing there with EPERM when it deletes `.next`. Final builds were made in a copy outside OneDrive. Move the clone out of OneDrive before building.
@@ -77,7 +74,9 @@ Build commit: `34782dd` (this file is committed after it)
 - Crawl (headless Chrome, 39 paths at 390/768/1280/1440): 0 console errors, 0 overflow, unique titles and descriptions, all og/twitter images present, 41 internal links resolve. axe-core WCAG 2.2 AA and best practices at 390 and 1440: 0 violations.
 - Keyboard, scripted in headless Chrome: mega-menu, drawer, search, tabs, estimator, in-page index, gate focus (Approve → Reset), form errors and success. These are scripted checks, not a person using a screen reader.
 - Reduced motion: no token, no reveals, Run uses step mode.
-- Lighthouse (mobile, local): Accessibility 100, Best Practices 100 on 6 pages. Performance 84–100 across runs: Home 84–100, flagship 76–96, Workflows 100, industry 99, article 81–94, contact 100. First-load JS about 160 KB gzipped, plus about 50 KB of prefetch on pages that link to the explorer.
+- Lighthouse (mobile, local, median of 3 after the font change): flagship 95, About 96, Home 100 simulated; 97–98 on all three with applied throttling. Before that change: Workflows 100, industry 99, contact 100, and Accessibility 100 and Best Practices 100 on 6 pages. First-load JS about 160 KB gzipped.
+- Screenshots: `docs/screenshots/v2/` (12 pages at 4 widths, plus the waiting gate at 4 widths), downscaled, reduced motion on.
+- Deployed preview: 10 GETs, all correct (one is the 308 redirect); one POST returned 503 with the CSP, X-Frame-Options and noindex headers; one browser load of /workflows ran to the gate, waited, and completed after a click with 0 console errors.
 
 ## How to run / deploy
 
