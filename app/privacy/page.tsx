@@ -1,26 +1,17 @@
-import type { Metadata } from "next";
-import { LegalFrame, LegalLinks, LegalSection } from "@/components/legal-frame";
-import { INQUIRY_EMAIL, SITE_URL } from "@/lib/site";
+import { LegalFrame, LegalSection } from "@/components/layout/LegalFrame";
+import { pageMetadata } from "@/lib/seo";
+import { INQUIRY_EMAIL } from "@/lib/site";
 
 const title = "Privacy";
 const description = "Placeholder privacy notice for the Valentini & Co. website. Not in effect.";
 
-export const metadata: Metadata = {
-  title,
-  description,
-  alternates: { canonical: "/privacy" },
-  robots: { index: false, follow: true },
-  openGraph: {
-    title: `${title} — Valentini & Co.`,
-    description,
-    url: `${SITE_URL}/privacy`,
-  },
-};
+export const metadata = pageMetadata({ title, description, path: "/privacy", noindex: true });
 
 export default function PrivacyPage() {
   return (
     <LegalFrame
-      kicker="Privacy"
+      path="/privacy"
+      other={{ href: "/terms", label: "Terms" }}
       title="Privacy"
       lede="This notice will explain how Valentini & Co. handles information collected on this website. The sections below mark what the final text must cover."
     >
@@ -41,12 +32,12 @@ export default function PrivacyPage() {
       <LegalSection heading="Who receives it">
         <p>
           When configured, the inquiry route can forward a submission to a webhook and send mail
-          through Resend. The final notice will name each recipient and the reason they receive it.
+          through Resend. If inquiry storage is switched on, the submission is also saved in a Cloudflare D1 database together with its delivery status and, when configured, a one-way hash of the network address that changes daily. The final notice will name each recipient and the reason they receive it.
         </p>
       </LegalSection>
       <LegalSection heading="How long it is kept">
         <p>
-          The final notice will state how long submissions and logs are kept, and when they are
+          The retention period for stored submissions is to be confirmed: [retention period]. The final notice will state how long submissions and logs are kept, and when they are
           deleted.
         </p>
       </LegalSection>
@@ -57,12 +48,6 @@ export default function PrivacyPage() {
           effect on this draft.
         </p>
       </LegalSection>
-      <LegalLinks
-        links={[
-          { href: "/terms", label: "Terms" },
-          { href: "/", label: "Home" },
-        ]}
-      />
     </LegalFrame>
   );
 }

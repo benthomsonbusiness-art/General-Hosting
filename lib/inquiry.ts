@@ -1,66 +1,17 @@
-import { PREVIEW_HOSTS, SITE_HOSTS } from "@/lib/site";
+import {
+  HONEYPOT_FIELD,
+  INQUIRY_OFFLINE_ERROR,
+  isRecord,
+  validateInquiry,
+  type Inquiry,
+} from "./inquiry-shared.ts";
+import { markInquiry, storeInquiry, tooManyStored } from "./inquiry-store.ts";
+import { PREVIEW_HOSTS, SITE_HOSTS } from "./site.ts";
 
-export const PRACTICE_INTERESTS = [
-  "AI Workflow Consulting",
-  "Meta Ads Consulting",
-  "Strategy",
-] as const;
-
-export type PracticeInterest = (typeof PRACTICE_INTERESTS)[number];
-
-export const HONEYPOT_FIELD = "fax_number";
-
-export const INQUIRY_OFFLINE_ERROR =
-  "Inquiries are offline right now. Please email us directly.";
-
-export type Inquiry = {
-  fullName: string;
-  email: string;
-  companyRole: string;
-  practice: PracticeInterest;
-  note: string;
-};
-
-export type InquiryField = keyof Inquiry;
-
-export type FieldErrors = Partial<Record<InquiryField, string>>;
-
-const EMAIL = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 const WINDOW_MS = 10 * 60 * 1000;
 const RATE_LIMIT = 5;
-// In-memory only, and keyed per isolate. A durable fix is a Cloudflare rate-limit rule or Turnstile.
+// In-memory only, and keyed per isolate. With D1 bound, tooManyStored adds a durable check.
 const hits = new Map<string, number[]>();
-
-export function practiceFromQuery(value: string | null | undefined): PracticeInterest {
-  const normalized = (value ?? "").trim().toLowerCase();
-  if (
-    normalized === "meta-ads" ||
-    normalized === "meta ads" ||
-    normalized === "meta ads consulting"
-  ) {
-    return "Meta Ads Consulting";
-  }
-  if (normalized === "strategy") return "Strategy";
-  return "AI Workflow Consulting";
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === "object" && value !== null && !Array.isArray(value);
-}
-
-function readString(record: Record<string, unknown>, key: string): string {
-  const value = record[key];
-  if (typeof value !== "string") return "";
-  return value.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "").trim();
-}
-
-function singleLine(value: string): string {
-  return value.replace(/[\r\n\t]+/g, " ").trim();
-}
-
-function isPractice(value: string): value is PracticeInterest {
-  return (PRACTICE_INTERESTS as readonly string[]).includes(value);
-}
 
 function clientIp(request: Request): string {
   const connecting = request.headers.get("cf-connecting-ip")?.trim();
@@ -110,8 +61,11 @@ function extraHosts(): string[] {
 }
 
 function requestHost(request: Request): string {
-  const forwarded = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
-  const raw = forwarded.split(",")[0]?.trim().toLowerCase() ?? "";
+  // X-Forwarded-Host is client-controlled, so it is read outside production only.
+  const forwarded =
+    process.env.NODE_ENV !== "production" ? request.headers.get("x-forwarded-host") : null;
+  const source = forwarded ?? request.headers.get("host") ?? "";
+  const raw = source.split(",")[0]?.trim().toLowerCase() ?? "";
   if (raw.startsWith("[")) {
     const end = raw.indexOf("]");
     return end === -1 ? raw : raw.slice(0, end + 1);
@@ -128,56 +82,15 @@ function originAllowed(origin: string | null, request: Request): boolean {
     return false;
   }
   const host = url.hostname.toLowerCase();
-  if (host === "localhost" || host === "127.0.0.1" || host === "[::1]") return true;
   if ((SITE_HOSTS as readonly string[]).includes(host)) return true;
   if ((PREVIEW_HOSTS as readonly string[]).includes(host)) return true;
   if (extraHosts().includes(host)) return true;
+  if (host === "localhost" || host === "127.0.0.1" || host === "[::1]") {
+    // Loopback is a development origin. To test a local production build, set ALLOWED_ORIGINS.
+    return process.env.NODE_ENV !== "production";
+  }
   const current = requestHost(request);
   return current !== "" && current === host;
-}
-
-export function validateInquiry(
-  input: unknown,
-): { ok: true; value: Inquiry } | { ok: false; fieldErrors: FieldErrors } {
-  if (!isRecord(input)) {
-    return {
-      ok: false,
-      fieldErrors: { fullName: "Enter your name." },
-    };
-  }
-
-  const fieldErrors: FieldErrors = {};
-  const fullName = singleLine(readString(input, "fullName"));
-  const email = singleLine(readString(input, "email"));
-  const companyRole = singleLine(readString(input, "companyRole"));
-  const practiceRaw = readString(input, "practice");
-  const practice = isPractice(practiceRaw) ? practiceRaw : null;
-  const note = readString(input, "note");
-
-  if (fullName.length < 2 || fullName.length > 100) {
-    fieldErrors.fullName = "Enter your name.";
-  }
-  if (!EMAIL.test(email) || email.length > 254) {
-    fieldErrors.email = "Enter a valid work email.";
-  }
-  if (companyRole.length < 2 || companyRole.length > 140) {
-    fieldErrors.companyRole = "Enter your company and role.";
-  }
-  if (!practice) {
-    fieldErrors.practice = "Select a practice.";
-  }
-  if (note.length < 8 || note.length > 2000) {
-    fieldErrors.note = "Describe the problem in a sentence or two.";
-  }
-
-  if (!practice || Object.keys(fieldErrors).length > 0) {
-    return { ok: false, fieldErrors };
-  }
-
-  return {
-    ok: true,
-    value: { fullName, email, companyRole, practice, note },
-  };
 }
 
 function inquiryText(inquiry: Inquiry): string {
@@ -243,6 +156,13 @@ async function sendWithResend(inquiry: Inquiry): Promise<void> {
   }
 }
 
+function tooMany(): Response {
+  return Response.json(
+    { ok: false, error: "Too many inquiries from this network. Try again shortly." },
+    { status: 429 },
+  );
+}
+
 export async function handleInquiry(request: Request): Promise<Response> {
   const contentType = request.headers.get("content-type") ?? "";
   if (!contentType.toLowerCase().startsWith("application/json")) {
@@ -259,12 +179,8 @@ export async function handleInquiry(request: Request): Promise<Response> {
     );
   }
 
-  if (isRateLimited(clientIp(request))) {
-    return Response.json(
-      { ok: false, error: "Too many inquiries from this network. Try again shortly." },
-      { status: 429 },
-    );
-  }
+  const ip = clientIp(request);
+  if (isRateLimited(ip)) return tooMany();
 
   let payload: unknown;
   try {
@@ -301,34 +217,45 @@ export async function handleInquiry(request: Request): Promise<Response> {
     console.info("[inquiry]", parsed.value);
   }
 
+  if (await tooManyStored(ip, RATE_LIMIT, WINDOW_MS)) return tooMany();
+
+  // Stored before delivery, so a failed email or webhook does not lose the lead.
+  const storedId = await storeInquiry(parsed.value, ip);
+
   const jobs: Array<Promise<void>> = [];
   if (process.env.WEBHOOK_URL) jobs.push(postWebhook(parsed.value));
   if (process.env.RESEND_API_KEY) jobs.push(sendWithResend(parsed.value));
 
   if (jobs.length === 0) {
+    await markInquiry(storedId, "no_channel");
     if (process.env.NODE_ENV === "development") {
       console.info("[inquiry] accepted with no delivery channel configured");
       return Response.json({ ok: true, delivered: false });
     }
+    // A stored row is not a reply. Without a channel nobody is notified, so say so.
     console.error("[inquiry] no delivery channel configured");
     return Response.json({ ok: false, error: INQUIRY_OFFLINE_ERROR }, { status: 503 });
   }
 
   const results = await Promise.allSettled(jobs);
-  const rejected = results.filter((result) => result.status === "rejected");
-  for (const result of rejected) {
+  const failures: string[] = [];
+  for (const result of results) {
     if (result.status === "rejected") {
       const reason = result.reason instanceof Error ? result.reason.message : "Delivery failed";
+      failures.push(reason);
       console.error("[inquiry] delivery failed", reason);
     }
   }
+  const detail = failures.length > 0 ? failures.join("; ").slice(0, 500) : null;
 
-  if (rejected.length === results.length) {
+  if (failures.length === results.length) {
+    await markInquiry(storedId, "failed", detail);
     return Response.json(
       { ok: false, error: "We could not send your inquiry. Please try again shortly." },
       { status: 502 },
     );
   }
 
+  await markInquiry(storedId, "delivered", detail);
   return Response.json({ ok: true, delivered: true });
 }

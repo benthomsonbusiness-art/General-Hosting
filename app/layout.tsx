@@ -1,104 +1,124 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { Cormorant_Garamond, JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
-import { InputModality } from "@/components/InputModality";
-import { MotionRoot } from "@/components/MotionRoot";
-import { INQUIRY_EMAIL, SITE_URL } from "@/lib/site";
+import { SiteFooter } from "@/components/layout/SiteFooter";
+import { SiteHeader } from "@/components/layout/SiteHeader";
+import { InputModality } from "@/components/util/InputModality";
+import { JsonLd } from "@/components/util/JsonLd";
+import { HOME } from "@/content/pages";
+import { NAV } from "@/content/site-nav";
+import { DEFAULT_SHARE_IMAGE } from "@/lib/seo";
+import { INQUIRY_EMAIL, SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
-
-const description =
-  "Valentini & Co. audits high-friction operations and engineers AI-assisted workflows around the tools a company already runs. Deterministic code, human approval gates, and systems the team owns.";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
   variable: "--font-cormorant",
   display: "swap",
 });
 
-const jakarta = Plus_Jakarta_Sans({
+// Emphasis and pull quotes only, so it does not compete with the hero image for bandwidth.
+const cormorantItalic = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
+  style: "italic",
+  variable: "--font-cormorant-italic",
+  display: "swap",
+  preload: false,
+});
+
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-jakarta",
   display: "swap",
 });
 
+// Used only for the payload viewer, so it is not preloaded on other pages.
 const jetbrains = JetBrains_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],
   variable: "--font-jetbrains",
   display: "swap",
+  preload: false,
 });
+
+const title = `${SITE_NAME} — AI Workflow Automation`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: {
-    default: "Valentini & Co. — AI Workflow Consulting",
-    template: "%s — Valentini & Co.",
-  },
-  description,
-  applicationName: "Valentini & Co.",
+  title: { default: title, template: `%s — ${SITE_NAME}` },
+  description: HOME.metaDescription,
+  applicationName: SITE_NAME,
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "/",
-    siteName: "Valentini & Co.",
-    title: "Valentini & Co. — AI Workflow Consulting",
-    description,
-    images: [
-      {
-        url: "/images/hero-architecture.jpg",
-        width: 1280,
-        height: 720,
-        alt: "Green marble, walnut slats, and a city at twilight.",
-      },
-    ],
+    siteName: SITE_NAME,
+    title,
+    description: HOME.metaDescription,
+    images: [DEFAULT_SHARE_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Valentini & Co. — AI Workflow Consulting",
-    description,
-    images: ["/images/hero-architecture.jpg"],
+    title,
+    description: HOME.metaDescription,
+    images: [DEFAULT_SHARE_IMAGE],
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  robots: { index: true, follow: true },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0B1F16",
+  themeColor: "#F7F4EC",
 };
 
-const jsonLd = {
+const organization = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
-  name: "Valentini & Co.",
+  "@id": `${SITE_URL}/#firm`,
+  name: SITE_NAME,
   url: SITE_URL,
-  description,
+  description: HOME.metaDescription,
   email: INQUIRY_EMAIL,
+  image: `${SITE_URL}${DEFAULT_SHARE_IMAGE.url}`,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Bloomington",
+    addressRegion: "IN",
+    addressCountry: "US",
+  },
   knowsAbout: [
-    "AI workflow consulting",
+    "AI workflow automation",
     "Business process automation",
     "Meta advertising",
     "Operational strategy",
   ],
 };
 
+const skip =
+  "skip-link sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:top-3 focus-visible:left-4 focus-visible:z-[60] focus-visible:bg-forest focus-visible:px-4 focus-visible:py-3 focus-visible:font-semibold focus-visible:text-ivory";
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="en"
-      className={`${cormorant.variable} ${jakarta.variable} ${jetbrains.variable} h-full antialiased`}
+      data-scroll-behavior="smooth"
+      className={`${cormorant.variable} ${cormorantItalic.variable} ${jakarta.variable} ${jetbrains.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col">
+      <body data-surface="light" className="flex min-h-full flex-col">
         <InputModality />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-        <MotionRoot>{children}</MotionRoot>
+        <JsonLd data={organization} />
+        <a href="#main" className={skip}>
+          Skip to content
+        </a>
+        <a href="#site-footer" className={skip}>
+          Skip to footer
+        </a>
+        <SiteHeader panels={NAV} />
+        <main id="main" tabIndex={-1} className="flex-1 outline-none">
+          {children}
+        </main>
+        <SiteFooter />
       </body>
     </html>
   );

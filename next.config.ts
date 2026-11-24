@@ -1,5 +1,5 @@
 import type { NextConfig } from "next";
-import { SITE_DOMAIN } from "./lib/site";
+import { SITE_DOMAIN, SITE_URL, SITE_WWW } from "./lib/site";
 
 const isDev = process.env.NODE_ENV !== "production";
 
@@ -21,9 +21,14 @@ const contentSecurityPolicy = [
 ].join("; ");
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  cacheComponents: true,
-  partialPrefetching: true,
+  // cacheComponents must stay off: with it on, pages return 500 on Cloudflare Workers via OpenNext.
+  cacheComponents: false,
+  images: {
+    loader: "custom",
+    loaderFile: "./lib/image-loader.ts",
+    deviceSizes: [480, 640, 800, 960, 1280],
+    imageSizes: [240],
+  },
   turbopack: {
     rules: {
       "*.css": {
@@ -31,6 +36,23 @@ const nextConfig: NextConfig = {
         as: "*.css",
       },
     },
+  },
+  async redirects() {
+    return [
+      // Code-level backup for www. Prefer a Cloudflare redirect rule once the domain exists.
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: SITE_WWW }],
+        destination: `${SITE_URL}/:path*`,
+        permanent: true,
+      },
+      {
+        source: "/practices/meta-ads",
+        destination: "/services/meta-ads-consulting",
+        permanent: true,
+      },
+      { source: "/practices/strategy", destination: "/services/strategy", permanent: true },
+    ];
   },
   async headers() {
     return [
@@ -51,7 +73,10 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/:path*",
-        missing: [{ type: "host", value: SITE_DOMAIN }],
+        missing: [
+          { type: "host", value: SITE_DOMAIN },
+          { type: "host", value: SITE_WWW },
+        ],
         headers: [{ key: "X-Robots-Tag", value: "noindex" }],
       },
     ];
