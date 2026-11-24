@@ -1,26 +1,17 @@
-import type { Metadata } from "next";
-import { LegalFrame, LegalLinks, LegalSection } from "@/components/legal-frame";
-import { INQUIRY_EMAIL, SITE_URL } from "@/lib/site";
+import { LegalFrame, LegalSection } from "@/components/layout/LegalFrame";
+import { pageMetadata } from "@/lib/seo";
+import { INQUIRY_EMAIL } from "@/lib/site";
 
 const title = "Terms";
 const description = "Placeholder terms for the Valentini & Co. website. Not in effect.";
 
-export const metadata: Metadata = {
-  title,
-  description,
-  alternates: { canonical: "/terms" },
-  robots: { index: false, follow: true },
-  openGraph: {
-    title: `${title} — Valentini & Co.`,
-    description,
-    url: `${SITE_URL}/terms`,
-  },
-};
+export const metadata = pageMetadata({ title, description, path: "/terms", noindex: true });
 
 export default function TermsPage() {
   return (
     <LegalFrame
-      kicker="Terms"
+      path="/terms"
+      other={{ href: "/privacy", label: "Privacy" }}
       title="Terms"
       lede="These terms will govern use of the Valentini & Co. website. Until the approved text is published, this page creates no obligation on either side."
     >
@@ -32,7 +23,7 @@ export default function TermsPage() {
       </LegalSection>
       <LegalSection heading="Inquiries">
         <p>
-          Sending a diagnostic request asks for a conversation. It does not reserve services, form
+          Requesting a workflow audit or a consultation asks for a conversation. It does not reserve services, form
           a contract, or require a response.
         </p>
       </LegalSection>
@@ -60,12 +51,6 @@ export default function TermsPage() {
           will be the governing contact statement.
         </p>
       </LegalSection>
-      <LegalLinks
-        links={[
-          { href: "/privacy", label: "Privacy" },
-          { href: "/", label: "Home" },
-        ]}
-      />
     </LegalFrame>
   );
 }

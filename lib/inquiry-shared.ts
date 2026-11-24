@@ -1,0 +1,103 @@
+/** Client-safe half of the inquiry contract: constants, types and validation. */
+
+export const PRACTICE_INTERESTS = [
+  "AI Workflow Automation",
+  "Meta Ads Consulting",
+  "Strategy",
+] as const;
+
+export type PracticeInterest = (typeof PRACTICE_INTERESTS)[number];
+
+export const HONEYPOT_FIELD = "fax_number";
+
+export const INQUIRY_OFFLINE_ERROR =
+  "Inquiries are offline right now. Please email us directly.";
+
+export type Inquiry = {
+  fullName: string;
+  email: string;
+  companyRole: string;
+  practice: PracticeInterest;
+  note: string;
+};
+
+export type InquiryField = keyof Inquiry;
+
+export type FieldErrors = Partial<Record<InquiryField, string>>;
+
+const EMAIL = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+
+export function practiceFromQuery(value: string | null | undefined): PracticeInterest {
+  const normalized = (value ?? "").trim().toLowerCase();
+  if (
+    normalized === "meta-ads" ||
+    normalized === "meta ads" ||
+    normalized === "meta ads consulting"
+  ) {
+    return "Meta Ads Consulting";
+  }
+  if (normalized === "strategy") return "Strategy";
+  return "AI Workflow Automation";
+}
+
+export function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function readString(record: Record<string, unknown>, key: string): string {
+  const value = record[key];
+  if (typeof value !== "string") return "";
+  return value.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "").trim();
+}
+
+function singleLine(value: string): string {
+  return value.replace(/[\r\n\t]+/g, " ").trim();
+}
+
+function isPractice(value: string): value is PracticeInterest {
+  return (PRACTICE_INTERESTS as readonly string[]).includes(value);
+}
+
+export function validateInquiry(
+  input: unknown,
+): { ok: true; value: Inquiry } | { ok: false; fieldErrors: FieldErrors } {
+  if (!isRecord(input)) {
+    return {
+      ok: false,
+      fieldErrors: { fullName: "Enter your name." },
+    };
+  }
+
+  const fieldErrors: FieldErrors = {};
+  const fullName = singleLine(readString(input, "fullName"));
+  const email = singleLine(readString(input, "email"));
+  const companyRole = singleLine(readString(input, "companyRole"));
+  const practiceRaw = readString(input, "practice");
+  const practice = isPractice(practiceRaw) ? practiceRaw : null;
+  const note = readString(input, "note");
+
+  if (fullName.length < 2 || fullName.length > 100) {
+    fieldErrors.fullName = "Enter your name.";
+  }
+  if (!EMAIL.test(email) || email.length > 254) {
+    fieldErrors.email = "Enter a valid work email.";
+  }
+  if (companyRole.length < 2 || companyRole.length > 140) {
+    fieldErrors.companyRole = "Enter your company and role.";
+  }
+  if (!practice) {
+    fieldErrors.practice = "Select a practice.";
+  }
+  if (note.length < 8 || note.length > 2000) {
+    fieldErrors.note = "Describe the problem in a sentence or two.";
+  }
+
+  if (!practice || Object.keys(fieldErrors).length > 0) {
+    return { ok: false, fieldErrors };
+  }
+
+  return {
+    ok: true,
+    value: { fullName, email, companyRole, practice, note },
+  };
+}
