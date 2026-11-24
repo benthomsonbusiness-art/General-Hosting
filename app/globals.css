@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Laptop windows too short for the workflow stage and its controls at full spacing. */
+@custom-variant short (@media (min-width: 64rem) and (max-height: 55rem));
+
 :root {
   --forest: #133224;
   --obsidian: #0b1f16;

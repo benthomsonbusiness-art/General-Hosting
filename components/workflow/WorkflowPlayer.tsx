@@ -118,7 +118,7 @@ export function WorkflowPlayer({
     <MotionRoot motion={motion}>
       <div ref={rootRef} data-motion={motion ? "on" : "off"} data-surface="dark" className="scene">
         {hero ? null : (
-          <div className="mb-5 flex flex-wrap items-center justify-between gap-x-8 gap-y-4">
+          <div className="mb-5 short:mb-2 flex flex-wrap items-center justify-between gap-x-8 gap-y-4">
             <div role="group" aria-label="Sample input" className="flex flex-wrap gap-2">
               {scenarios.map((item, index) => (
                 <button
@@ -134,19 +134,33 @@ export function WorkflowPlayer({
                 </button>
               ))}
             </div>
-            <p className="text-[14px] text-ivory/75">Simulation · sample data · illustrative timings</p>
+            <div className="flex flex-wrap items-center gap-x-8 text-[15px]">
+              <p className="text-[14px] text-ivory/75">Simulation · sample data · illustrative timings</p>
+              <button
+                type="button"
+                role="switch"
+                aria-checked={motion}
+                className="flex min-h-11 items-center gap-3"
+                onClick={() => setMotion(!motion)}
+              >
+                Motion
+                <span aria-hidden className={`relative h-5 w-9 ${motion ? "bg-gold" : "bg-ivory/30"}`}>
+                  <span className={`absolute top-0.5 h-4 w-4 bg-obsidian ${motion ? "right-0.5" : "left-0.5"}`} />
+                </span>
+              </button>
+            </div>
           </div>
         )}
 
         <Track workflow={workflow} state={state} compact={hero} onSelect={hero ? undefined : setDetail} />
 
-        <div className={`relative ${hero ? "min-h-[21rem]" : "mt-2 min-h-[21.5rem]"}`}>
+        <div className={`relative ${hero ? "min-h-[21rem]" : "mt-2 min-h-[21.5rem] short:mt-0 short:min-h-[17.5rem]"}`}>
           <div className={hero ? "h-full" : "h-full min-h-[inherit] [&>*]:min-h-[inherit]"}>
             <Scene state={state} scenario={scenario} draft={draft} onDraft={setDraft} />
           </div>
         </div>
 
-        <div className={`flex flex-wrap items-center justify-between gap-x-8 gap-y-4 mt-4`}>
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-x-8 gap-y-4 short:mt-3">
           <p
             role="status"
             className={`min-h-12 flex-1 basis-64 ${hero ? "text-[15px]" : "font-display text-[1.45rem] leading-snug"}`}
@@ -251,18 +265,6 @@ export function WorkflowPlayer({
               onClick={() => setDetail(node.id)}
             >
               Details of this step
-            </button>
-            <button
-              type="button"
-              role="switch"
-              aria-checked={motion}
-              className="flex min-h-11 items-center gap-3"
-              onClick={() => setMotion(!motion)}
-            >
-              Motion
-              <span aria-hidden className={`relative h-5 w-9 ${motion ? "bg-gold" : "bg-ivory/30"}`}>
-                <span className={`absolute top-0.5 h-4 w-4 bg-obsidian ${motion ? "right-0.5" : "left-0.5"}`} />
-              </span>
             </button>
           </div>
         )}

@@ -63,19 +63,19 @@ export function WorkflowExplorer({ initialId }: { initialId: string }) {
               aria-selected={active}
               aria-controls="workflow-panel"
               tabIndex={active ? 0 : -1}
-              className={`scene-fade flex w-28 shrink-0 flex-col items-center px-2 pt-3 pb-3 text-center md:w-auto ${
+              className={`scene-fade flex w-28 shrink-0 flex-col items-center px-2 pt-3 pb-3 text-center md:w-auto short:pt-1.5 short:pb-2 ${
                 active ? "bg-forest text-ivory" : "text-ivory/75 hover:text-ivory"
               }`}
               onClick={() => choose(index)}
             >
-              <Thumb id={item.id} className="h-9 w-15" />
-              <span className={`mt-2 text-[13px] leading-tight ${active ? "font-semibold" : ""}`}>{item.title}</span>
+              <Thumb id={item.id} className="h-9 w-15 short:h-7 short:w-12" />
+              <span className={`mt-2 text-[13px] leading-tight short:mt-1 ${active ? "font-semibold" : ""}`}>{item.title}</span>
             </button>
           );
         })}
       </div>
 
-      <div id="workflow-panel" role="tabpanel" aria-labelledby={`tab-${workflow.id}`} className="pt-5">
+      <div id="workflow-panel" role="tabpanel" aria-labelledby={`tab-${workflow.id}`} className="pt-5 short:pt-2">
         <h2 className="sr-only">{workflow.title}</h2>
         {/* Keyed by workflow: switching unmounts the run, which clears its timers. */}
         <WorkflowPlayer key={workflow.id} workflow={workflow} Scene={SCENES[workflow.id]} />

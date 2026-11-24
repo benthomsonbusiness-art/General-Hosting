@@ -325,7 +325,7 @@ function AdsScene({ state, scenario }: SceneProps) {
     <div className="grid h-full gap-5 md:grid-cols-12">
       <div className="flex flex-col justify-center md:col-span-8">
         <p className="text-[13px] text-ivory/75">Cost per result, sample account</p>
-        <svg viewBox="0 0 480 170" aria-hidden className="mt-2 w-full">
+        <svg viewBox="0 22 480 116" aria-hidden className="mt-2 w-full">
           <path d="M0 134L480 118V82L0 98Z" fill="#F7F4EC" opacity={r(1) ? 0.12 : 0} className="scene-fade" />
           <path
             d={spike ? SPIKE : STEADY}
@@ -344,7 +344,7 @@ function AdsScene({ state, scenario }: SceneProps) {
           {[0, 1, 2, 3].map((i) => (
             <span
               key={i}
-              className={`scene-fade h-14 ${i === 2 && spike && r(2) ? "bg-gold" : "bg-ivory/15"}`}
+              className={`scene-fade h-14 short:h-10 ${i === 2 && spike && r(2) ? "bg-gold" : "bg-ivory/15"}`}
               style={{ clipPath: "polygon(14% 0,100% 0,86% 100%,0 100%)" }}
             />
           ))}

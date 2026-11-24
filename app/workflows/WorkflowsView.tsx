@@ -14,10 +14,10 @@ export function WorkflowsView({ selected }: { selected?: Workflow }) {
   return (
     <>
       <section id="explorer" aria-label="Workflow explorer" data-surface="dark" className="bg-obsidian">
-        <div className="wrap flex flex-wrap items-baseline justify-between gap-x-10 gap-y-2 pt-5 pb-3">
+        <div className="wrap flex flex-wrap items-baseline justify-between gap-x-10 gap-y-2 pt-5 pb-3 short:pt-3 short:pb-1">
           <div>
             <Breadcrumbs items={crumbs} className="mb-1" />
-            <h1 className="font-display text-[clamp(2rem,1.5rem+1.6vw,2.75rem)] leading-none font-medium">
+            <h1 className="font-display text-[clamp(2rem,1.5rem+1.6vw,2.75rem)] leading-none font-medium short:text-[2rem]">
               Watch one thing change
             </h1>
           </div>

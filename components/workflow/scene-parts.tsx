@@ -55,7 +55,7 @@ export function Paper({
   return (
     <div
       data-surface="light"
-      className={`scene-paper ${tone === "stone" ? "bg-stone" : "bg-ivory"} p-5 md:p-7 ${className}`}
+      className={`scene-paper ${tone === "stone" ? "bg-stone" : "bg-ivory"} p-5 md:p-7 short:p-5 ${className}`}
     >
       {children}
     </div>

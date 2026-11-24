@@ -3,7 +3,9 @@
 Last updated: Nov 24, 2026 (ET) · Branch: `cursor/valentini-platform-v2` · Base: `1e42b44` (PR #4 head) · Agent: Claude Code
 Deployed commit: `ab5a4bb` (later commits change documentation only)
 
-## v3 redesign (branch `cursor/valentini-platform-v3`, local, not pushed or deployed)
+## v3 redesign (branch `cursor/valentini-platform-v3`, pushed and deployed to `valentini-next`)
+
+The preview URL below now serves v3. PR #5 still contains v2 only; v3 has no PR yet. `valentini-preview` and `main` were not touched.
 
 Ben asked for a whole redesign: minimalist, visual, interactive workflows. The sections below this one describe v2 and still apply to the API, deploy steps and open decisions.
 
@@ -13,6 +15,9 @@ Ben asked for a whole redesign: minimalist, visual, interactive workflows. The s
 - **Departures from PROMPT.md, requested by Ben:** mega-menu, in-page indexes on service pages, service and industry filters on Insights, and the minimum word counts are gone. H2 is Cormorant. The "no three equal icon cards" rule is kept.
 - **Words on screen at 1440px (v2 to v3):** Home 906 to 256, flagship 939 to 437, Approach 1,104 to 392, Workflows 616 to 199.
 - **Checks:** 52 unit tests; crawl of every sitemap path at 4 widths with axe at 2; scripted behavior checks; Lighthouse Accessibility and Best Practices 100, Performance 95–100. Worker 1,303 KiB gzipped.
+- **Laptop fit:** the `short` variant in `app/globals.css` tightens the player when the window is at least 1024px wide and at most 880px tall. Run and the gate buttons are on screen without scrolling for all 8 workflows at 1536x791, 1440x789 and 1440x900. At 1366x657 they need a scroll.
+- **Deployed checks (first v3 deploy):** 6 GETs (pages, script, two 308 redirects, 404) and headers correct; one POST with an empty body returned 422 with field errors; one browser run reached the gate, waited, and finished after a click, with no site errors and no third-party requests. The laptop fit was deployed after that and checked with one GET.
+- **Caching:** hashed files under `/_next/static` are served with `max-age=0, must-revalidate`, because there is no `public/_headers`. Not changed yet.
 - **Known:** script transfer is about 210 KB per page including prefetch, over the 180 KB budget in PROMPT §16. Simulated mobile LCP on the flagship is 2.9 s. No screen-reader pass. No new photography. Less text may reduce search traffic. Screenshots in `docs/screenshots/v2` are the old design.
 ## Status
 
