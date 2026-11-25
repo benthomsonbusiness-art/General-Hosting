@@ -1,5 +1,8 @@
 import assert from "node:assert/strict";
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 import { test } from "node:test";
+import { markAllowed } from "../lib/logos.ts";
 import type { Workflow, WorkflowNode } from "../content/workflows.ts";
 import { appsByCategory, showMark, trademarkLines, usedAppSlugs } from "../lib/used-apps.ts";
 
@@ -8,13 +11,9 @@ function node(extra: Partial<WorkflowNode>): WorkflowNode {
     id: "n",
     label: "Step",
     kind: "deterministic",
-    tools: [],
     does: "",
-    input: "",
-    output: "",
     guardrail: "",
     failure: "",
-    sampleMs: 0,
     timingLabel: "",
     payload: "{}",
     ...extra,
@@ -32,7 +31,7 @@ const sample = {
         { id: "t", label: "Look up", port: "tools", does: "", readOnly: true, app: "hubspot", operation: "Find", alternatives: [] },
       ],
     }),
-    node({ kind: "human", gate: { approver: "Sales lead", channel: "Slack", channelApp: "slack" } }),
+    node({ kind: "human", gate: { approver: "Sales lead", channel: "Slack", channelApp: "slack", operation: "Approve button" } }),
     node({ kind: "output", app: { app: "gmail", operation: "Send", alternatives: [] } }),
     node({ kind: "deterministic", app: { app: "code", operation: "Match", alternatives: [] } }),
     node({ kind: "output", app: { app: "googlecalendar", operation: "Create event", alternatives: [] } }),
@@ -59,6 +58,9 @@ test("groups by category and writes one trademark line per owner", () => {
   assert.ok(lines.includes("Claude is a trademark of Anthropic."));
 });
 
-test("no mark is drawn without a cleared status and an artwork file", () => {
-  for (const slug of usedAppSlugs([sample])) assert.equal(showMark(slug), false);
+test("a mark is drawn only when LOGO_MODE or its status allows it and the artwork file exists", () => {
+  for (const slug of usedAppSlugs([sample])) {
+    const file = existsSync(join(process.cwd(), "public", "logos", `${slug}.svg`));
+    assert.equal(showMark(slug), markAllowed(slug) && file);
+  }
 });

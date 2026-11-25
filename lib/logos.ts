@@ -167,7 +167,7 @@ export const APPS: Record<AppSlug, AppEntry> = {
   ),
   salesforce: app(
     "Salesforce",
-    "Salesforce",
+    "Salesforce, Inc.",
     "crm",
     "contacts",
     "https://www.salesforce.com/company/legal/tmcusageguidelines/",
