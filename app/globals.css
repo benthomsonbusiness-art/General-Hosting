@@ -411,9 +411,6 @@ html[data-modality="pointer"] :focus-visible {
     transition: opacity 180ms ease-out var(--delay, 0ms);
   }
 
-  [data-motion="on"] .scene-open {
-    transition: grid-template-rows 420ms var(--ease);
-  }
 
   .sx {
     opacity: 0;
@@ -496,28 +493,12 @@ html[data-modality="pointer"] :focus-visible {
   [data-motion="on"] .scene-tile {
     transition:
       opacity 420ms var(--ease),
-      transform 420ms var(--ease),
-      background-color 420ms var(--ease),
-      color 320ms var(--ease),
-      border-color 320ms var(--ease),
-      fill 420ms var(--ease);
+      transform 420ms var(--ease);
     transition-delay: var(--delay, 0ms);
-  }
-
-  [data-motion="on"] .scene-mark {
-    transition: background-size 620ms var(--ease);
   }
 
   [data-motion="on"] .scene-grow {
     transition: transform 500ms var(--ease);
-  }
-
-  [data-motion="on"] .scene-move {
-    transition: left 500ms var(--ease);
-  }
-
-  [data-motion="on"] .scene-draw {
-    transition: stroke-dashoffset 800ms var(--ease);
   }
 
   [data-motion="on"] .scene-stamp {
@@ -526,12 +507,17 @@ html[data-modality="pointer"] :focus-visible {
       transform 260ms var(--ease);
   }
 
-  [data-motion="on"] .scene-scan {
-    animation: scan 1100ms ease-in-out infinite alternate;
+  .packet-track {
+    position: absolute;
+    top: 0.7rem;
+    left: 12.5%;
+    width: 50%;
+    height: 0.5rem;
+    container-type: inline-size;
   }
 
   .packet {
-    left: 62%;
+    transform: translate3d(calc(100cqi - 0.5rem), 0, 0);
   }
 
   [data-motion="on"] .packet {
@@ -597,15 +583,6 @@ html[data-modality="pointer"] :focus-visible {
   animation-timing-function: var(--ease);
 }
 
-@keyframes scan {
-  from {
-    top: 8%;
-  }
-  to {
-    top: 92%;
-  }
-}
-
 @keyframes stage-fill {
   from {
     transform: scaleX(0);
@@ -633,13 +610,11 @@ html[data-modality="pointer"] :focus-visible {
 
 @keyframes packet {
   0% {
-    left: 8%;
+    transform: translate3d(0, 0, 0);
   }
-  72% {
-    left: 62%;
-  }
+  72%,
   100% {
-    left: 62%;
+    transform: translate3d(calc(100cqi - 0.5rem), 0, 0);
   }
 }
 

@@ -28,7 +28,9 @@ export function Stations() {
     <div data-motion={motion ? "on" : "off"}>
       <ol className="relative grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-4">
         <span aria-hidden className="absolute top-3 right-[12%] left-[12%] hidden h-px bg-line sm:block" />
-        <span aria-hidden className="packet absolute top-3 hidden h-2 w-2 -translate-x-1/2 bg-ivory sm:block" />
+        <span aria-hidden className="packet-track hidden sm:block">
+          <span className="packet absolute top-0 left-0 h-2 w-2 bg-ivory" />
+        </span>
         {steps.map((step, index) => {
           const person = step.title === "Person";
           return (

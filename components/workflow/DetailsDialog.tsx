@@ -56,7 +56,7 @@ export function DetailsDialog({
         <div className="p-7 md:p-10">
           <div className="flex items-center justify-between">
             <p className="text-[15px] text-slate">
-              {NODE_KINDS[node.kind]}, {index + 1} of {workflow.nodes.length}
+              {NODE_KINDS[node.kind]}
             </p>
             <button
               type="button"

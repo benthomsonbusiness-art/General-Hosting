@@ -12,11 +12,11 @@ export function WorkflowText({ workflows }: { workflows: Workflow[] }) {
           <div key={workflow.id} className="pt-3 pb-6">
             <h3 className="h3">{workflow.title}</h3>
             <p className="measure mt-3">{workflow.summary}</p>
-            <ol className="mt-6 grid gap-x-12 gap-y-6 md:grid-cols-2">
-              {workflow.nodes.map((node, index) => (
+            <ul className="mt-6 grid gap-x-12 gap-y-6 md:grid-cols-2">
+              {workflow.nodes.map((node) => (
                 <li key={node.id}>
                   <p className="font-semibold">
-                    {index + 1}. {node.label}{" "}
+                    {node.label}{" "}
                     <span className="small text-muted">({NODE_KINDS[node.kind].toLowerCase()})</span>
                   </p>
                   <p className="mt-1">{node.does}</p>
@@ -25,7 +25,7 @@ export function WorkflowText({ workflows }: { workflows: Workflow[] }) {
                   </p>
                 </li>
               ))}
-            </ol>
+            </ul>
             <p className="small mt-6 text-muted">
               A run can also stop at: {exits.map((id) => EXITS[id].toLowerCase()).join("; ")}. {workflow.ownership}
             </p>
