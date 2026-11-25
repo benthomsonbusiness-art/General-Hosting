@@ -1,3 +1,21 @@
+# HANDOFF — Valentini platform v5
+
+Last updated: Nov 25, 2026 (ET) · Branch: `cursor/valentini-platform-v5` · Base: `cursor/valentini-platform-v4` (`861307b`)
+
+## v5 redesign (the operator's console)
+
+The paper, pencil, and brass-stamp identity is gone. The site is a dark console. Gold is only the control a person presses to approve, plus the gold stroke that already lives in the logo.
+
+- **What changed:** Tokens, Mona Sans, and IBM Plex Mono replace the v4 type and color system. Home is a working lead-triage console. Workflows, services, industries, approach, about, insights, contact, search, and legal pages use the same system. The hours estimator shows hours only. The inquiry form is the only contact channel. `lib/run-machine.ts` and `POST /api/inquiry` behavior are unchanged.
+- **Commit:** `2845a42` is the redesign. The following commit is this note.
+- **Deploy:** not deployed. `npx wrangler whoami` returned: "You are not authenticated. Please run `wrangler login`." No secrets were set. `valentini-preview` and `main` were not touched. The intended Worker is `valentini-next`.
+- **Pull request:** https://github.com/benthomsonbusiness-art/General-Hosting/pull/7 into `cursor/valentini-platform-v4`. Do not merge without Ben.
+- **Photographs:** 16 files in `public/images/`, prompts in `docs/image-shotlist.md`. None fell back to a coded panel. `about-founder.jpg` was not generated. About shows the name Ben Thomson and two sentences, with no portrait.
+- **Checks that passed:** `npm run check`, `npm test` (53), `npm run lint`, `npx tsc --noEmit`, `npm run build` (33 pages). Removal patterns from the brief return nothing. Home no longer scrolls sideways at 390, 1440, or 1536.
+- **Not verified here:** Cloudflare deploy, live headers, axe, Lighthouse, and a person using a keyboard or a screen reader. Review screenshots are outside the repo, one file per page at 1536×791, 1440×900, and 390×844, with motion off so the frames stay still.
+
+---
+
 # HANDOFF — Valentini platform v4
 
 Last updated: Nov 25, 2026 (PT) · Branch: `cursor/valentini-platform-v4` · Base: `cursor/valentini-platform-v3` (`cd2292a`)
@@ -6,8 +24,8 @@ Last updated: Nov 25, 2026 (PT) · Branch: `cursor/valentini-platform-v4` · Bas
 
 Complete visual, typographic, photographic, and layout redesign built on Direction A ("paper becomes motion") while keeping all core logic, `lib/run-machine.ts`, `/api/inquiry`, tests, redirects, and SEO metadata intact.
 
-- **Visual identity & typography:** Self-hosted `Bricolage Grotesque` (`opsz`, `wdth`, `wght`), `IBM Plex Sans`, and `JetBrains Mono` via `next/font/google`, reserving `Cormorant Garamond` strictly for `BrandWordmark`. Dropped `#EDE7DA` (`bg-stone`) section bands, diagonal slanted polygons, and decorative gold; introduced `--paper` (`#FCFBF7`), `--moss` (`#244B38`), and `--terracotta` (`#A84B2E`), restricting `#C5A869` gold to human approval gates and primary buttons.
-- **Photography & cutouts (`public/images/`, `docs/image-shotlist.md`):** All **30** custom assets (`hero-paper-fall.jpg`, `gate-detail.jpg`, `texture-green.jpg`, `texture-paper.jpg`, 8 alpha PNG cutouts `cut-*`, all 8 workflow photos `wf-*`, all 6 vertical industry still-lifes `ind-*`, and all 4 aligned table crossfade photos `approach-*`) are generated, resized into `public/images/sized/*.webp` (`157` files via `scripts/resize-images.mjs` + `sharp`), registered in `lib/image-loader.ts`, and wired across all pages.
+- **Visual identity & typography:** Self-hosted Bricolage Grotesque (`opsz`, `wdth`, `wght`), IBM Plex Sans, and a coding mono via `next/font/google`, reserving Cormorant Garamond strictly for `BrandWordmark`. Dropped `#EDE7DA` (`bg-stone`) section bands, diagonal slanted polygons, and decorative gold; introduced `--paper` (`#FCFBF7`), `--moss` (`#244B38`), and a warm clay accent (`#A84B2E`), restricting `#C5A869` gold to human approval gates and primary buttons.
+- **Photography and cutouts (`public/images/`, `docs/image-shotlist.md`):** All **30** custom assets (falling-paper hero, gate macro, green desk texture, paper fiber texture, 8 alpha PNG cutouts, all 8 workflow photos, all 6 vertical industry still lifes, and all 4 aligned table photos) are generated, resized into `public/images/sized/*.webp` (`157` files via `scripts/resize-images.mjs` + `sharp`), registered in `lib/image-loader.ts`, and wired across all pages.
 - **Pages & interactive updates:** Rebuilt Home (`HomeOpening`, scroll-sorted lanes, 3 full-bleed workflow scenes, `HomePathSequence`), Workflows (`Stage`, `WorkflowExplorer` tactile image strips + ViewTransition morphs), Services hub & detail pages (`SubServiceScenes`, `StageDiagram` without slants, `Estimator` with a live responsive stacked-paper volume meter), Industries (`Pickers` 6 expanding vertical photographic columns preserving `?industry=` and arrow keys), How We Work (`ApproachStages` 4-state sticky walnut-table photo crossfade), About monograph, Insights magazine spread (`InsightExplorer` + ViewTransition cover morph into articles), and split-screen Contact. Deleted temporary `/lab` routes (`app/lab`, `components/lab`).
 - **Verification (`cursor/valentini-platform-v4`):**
   - `npm run check`: passed (8 workflows, 8 services, 6 industries, 4 insights; zero banned copy across `app/`, `components/`, and `content/`).
@@ -120,7 +138,7 @@ Ben asked for a whole redesign: minimalist, visual, interactive workflows. The s
 - API on local `next start`: 415, 403 (evil and localhost), 422, honeypot 200, 503, 429 on the sixth request, `/api/inquire` 404.
 - Local workerd (`opennextjs-cloudflare preview`): page types, sitemap, search index, image, 404, redirect, CSP and noindex headers all correct.
 - Crawl (headless Chrome, 39 paths at 390/768/1280/1440): 0 console errors, 0 overflow, unique titles and descriptions, all og/twitter images present, 41 internal links resolve. axe-core WCAG 2.2 AA and best practices at 390 and 1440: 0 violations.
-- Keyboard, scripted in headless Chrome: mega-menu, drawer, search, tabs, estimator, in-page index, gate focus (Approve → Reset), form errors and success. These are scripted checks, not a person using a screen reader.
+- Keyboard, scripted in headless Chrome: mega-menu, drawer, search, tabs, estimator, in-page index, gate focus (Approve, then Reset), form errors and success. These are scripted checks, not a person using a screen reader.
 - Reduced motion: no token, no reveals, Run uses step mode.
 - Lighthouse (mobile, local, median of 3 after the font change): flagship 95, About 96, Home 100 simulated; 97–98 on all three with applied throttling. Before that change: Workflows 100, industry 99, contact 100, and Accessibility 100 and Best Practices 100 on 6 pages. First-load JS about 160 KB gzipped.
 - Screenshots: `docs/screenshots/v2/` (12 pages at 4 widths, plus the waiting gate at 4 widths), downscaled, reduced motion on.
