@@ -1,96 +1,20 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { JsonLd } from "@/components/util/JsonLd";
-import { InPageIndex, type IndexItem } from "@/components/nav/InPageIndex";
+import { Thumb } from "@/components/workflow/Thumb";
 import type { Faq as FaqItem } from "@/content/approach";
 import { getWorkflow } from "@/content/workflows";
 import type { Block } from "@/content/insights";
 import { faqJsonLd } from "@/lib/seo";
 
-/** Long-page layout: the index on the left, sections on the right. */
-export function IndexedBody({ items, children }: { items: IndexItem[]; children: ReactNode }) {
-  return (
-    <div data-surface="light" className="wrap py-10 md:py-14 lg:py-20">
-      <div className="grid gap-x-12 gap-y-8 lg:grid-cols-12">
-        <div className="lg:col-span-3">
-          <InPageIndex items={items} />
-        </div>
-        <div className="min-w-0 lg:col-span-9">{children}</div>
-      </div>
-    </div>
-  );
-}
-
-export function BodySection({
-  id,
-  title,
-  lede,
-  children,
-}: {
-  id: string;
-  title: string;
-  lede?: string;
-  children: ReactNode;
-}) {
-  return (
-    <section
-      id={id}
-      tabIndex={-1}
-      aria-labelledby={`${id}-heading`}
-      className="py-10 outline-none first:pt-0 last:pb-0 md:py-12"
-    >
-      <h2 id={`${id}-heading`} className="h2 max-w-[20em]">
-        {title}
-      </h2>
-      {lede ? <p className="lead mt-4 max-w-[42rem] text-muted">{lede}</p> : null}
-      <div className="mt-8">{children}</div>
-    </section>
-  );
-}
-
-/** Hairline rows: a short heading on the left, the text on the right. */
-export function DefinitionRows({ rows, level = 3 }: { rows: { title: string; body: string }[]; level?: 3 | 4 }) {
-  const Heading = level === 4 ? "h4" : "h3";
-  return (
-    <div className="border-t border-rule">
-      {rows.map((row) => (
-        <div key={row.title} className="grid gap-x-8 gap-y-2 border-b border-rule py-6 md:grid-cols-12">
-          <Heading className="h4 md:col-span-4">{row.title}</Heading>
-          <p className="md:col-span-8">{row.body}</p>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-export function ProblemList({
-  items,
-}: {
-  items: { q: string; a: string; href: string; linkLabel: string }[];
-}) {
-  return (
-    <ul className="grid gap-x-12 border-t border-rule lg:grid-cols-2">
-      {items.map((item) => (
-        <li key={item.href} className="border-b border-rule">
-          <Link href={item.href} className="group flex h-full flex-col py-7">
-            <span className="h3 card-title block text-heading">{item.q}</span>
-            <span className="mt-2 block max-w-[34rem] text-muted">{item.a}</span>
-            <span className="arrow-link mt-auto pt-4 text-[15px]">{item.linkLabel}</span>
-          </Link>
-        </li>
-      ))}
-    </ul>
-  );
-}
-
 export function Faq({ items, jsonLd = true }: { items: FaqItem[]; jsonLd?: boolean }) {
   return (
-    <div className="border-t border-rule">
+    <div>
       {jsonLd ? <JsonLd data={faqJsonLd(items)} /> : null}
       {items.map((item) => (
-        <details key={item.q} className="group/faq border-b border-rule">
+        <details key={item.q} className="group/faq">
           <summary className="flex min-h-14 items-center justify-between gap-6 py-4">
-            <h3 className="h4">{item.q}</h3>
+            <h3 className="font-display text-[1.7rem] leading-tight font-medium">{item.q}</h3>
             <span aria-hidden className="relative h-4 w-4 shrink-0">
               <span className="absolute inset-x-0 top-1/2 h-0.5 -translate-y-1/2 bg-accent" />
               <span className="absolute inset-y-0 left-1/2 w-0.5 -translate-x-1/2 bg-accent group-open/faq:hidden" />
@@ -126,25 +50,12 @@ export function WorkflowEmbed({ id }: { id: string }) {
   if (!workflow) return null;
   return (
     <aside data-surface="dark" className="my-10 bg-forest p-6 md:p-8">
-      <p className="eyebrow">Workflow blueprint</p>
-      <p className="h3 mt-2 text-heading">{workflow.title}</p>
-      <ol className="mt-5 flex flex-wrap items-center gap-x-2 gap-y-2.5 text-[14px]">
-        {workflow.nodes.map((node, index) => (
-          <li key={node.id} className="flex items-center gap-2">
-            <span
-              className={`border px-2.5 py-1 ${
-                node.kind === "human" ? "border-dashed border-gold text-gold" : "border-rule"
-              }`}
-            >
-              {node.label}
-            </span>
-            {index < workflow.nodes.length - 1 ? <span aria-hidden>→</span> : null}
-          </li>
-        ))}
-      </ol>
+      <Thumb id={id} className="h-16 w-28 text-ivory/80" />
+      <p className="mt-5 font-display text-[2rem] leading-none text-heading">{workflow.title}</p>
+      <p className="mt-3">{workflow.summary.split(". ")[0]}.</p>
       <p className="small mt-5 text-muted">Simulation with sample data.</p>
       <Link href={`/workflows/${workflow.id}`} className="arrow-link mt-2 min-h-11 items-center">
-        Open this workflow
+        Try this workflow
       </Link>
     </aside>
   );

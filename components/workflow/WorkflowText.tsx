@@ -1,24 +1,28 @@
 import { EXITS, NODE_KINDS, type ExitId, type Workflow } from "@/content/workflows";
+import { Thumb } from "./Thumb";
 
 /** The same steps as plain HTML: indexable, printable, and readable without JavaScript. */
-export function WorkflowText({ workflows, openId }: { workflows: Workflow[]; openId?: string }) {
+export function WorkflowText({ workflows }: { workflows: Workflow[] }) {
   return (
-    <div className="border-t border-rule">
+    <div className="grid gap-x-12 lg:grid-cols-2">
       {workflows.map((workflow) => {
         const exits = (Object.keys(EXITS) as ExitId[]).filter((id) =>
           workflow.edges.some((edge) => edge.to === id),
         );
         return (
-          <details key={workflow.id} open={workflow.id === openId} className="group/text border-b border-rule">
-            <summary className="flex min-h-14 items-center justify-between gap-6 py-4">
-              <h3 className="h4">{workflow.title}</h3>
-              <span className="small shrink-0 text-muted">{workflow.nodes.length} steps</span>
+          <details key={workflow.id} className="group/text open:lg:col-span-2">
+            <summary className="flex min-h-16 items-center gap-5 py-2">
+              <Thumb id={workflow.id} className="h-9 w-15 shrink-0 text-forest" />
+              <h3 className="font-display text-[1.6rem] leading-tight font-medium">{workflow.title}</h3>
+              <span aria-hidden className="ml-auto text-[1.4rem] text-gold-ink group-open/text:rotate-45">
+                +
+              </span>
             </summary>
-            <div className="pb-8">
+            <div className="pt-3 pb-10">
               <p className="max-w-[46rem]">{workflow.summary}</p>
-              <ol className="mt-6 grid gap-x-10 gap-y-6 md:grid-cols-2">
+              <ol className="mt-6 grid gap-x-12 gap-y-6 md:grid-cols-2">
                 {workflow.nodes.map((node, index) => (
-                  <li key={node.id} className="border-l-2 border-rule pl-5">
+                  <li key={node.id}>
                     <p className="font-semibold text-forest">
                       {index + 1}. {node.label}{" "}
                       <span className="small text-muted">({NODE_KINDS[node.kind].toLowerCase()})</span>
@@ -31,7 +35,7 @@ export function WorkflowText({ workflows, openId }: { workflows: Workflow[]; ope
                 ))}
               </ol>
               <p className="small mt-6 text-muted">
-                A run can also stop at: {exits.map((id) => EXITS[id].toLowerCase()).join("; ")}.
+                A run can also stop at: {exits.map((id) => EXITS[id].toLowerCase()).join("; ")}. {workflow.ownership}
               </p>
             </div>
           </details>

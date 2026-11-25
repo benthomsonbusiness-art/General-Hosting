@@ -51,6 +51,15 @@ const nextConfig: NextConfig = {
         destination: "/services/meta-ads-consulting",
         permanent: true,
       },
+      // Sub-services and industries are sections of one page each.
+      ...["workflow-audit", "build-and-deploy", "retained-operations", "ai-agents-and-integrations", "reporting-and-data-pipelines"].map(
+        (slug) => ({
+          source: `/services/ai-workflow-automation/${slug}`,
+          destination: `/services/ai-workflow-automation#${slug}`,
+          permanent: true,
+        }),
+      ),
+      { source: "/industries/:slug", destination: "/industries?industry=:slug", permanent: true },
       { source: "/practices/strategy", destination: "/services/strategy", permanent: true },
     ];
   },

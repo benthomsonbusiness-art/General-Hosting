@@ -1,20 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { EngagementStrip, InsightRow, WorkflowCard } from "@/components/cards/Cards";
-import { BodySection, DefinitionRows, Faq, IndexedBody } from "@/components/content/Blocks";
-import { CapabilityTabs } from "@/components/content/CapabilityTabs";
+import { WorkflowTile } from "@/components/cards/Cards";
+import { Faq } from "@/components/content/Blocks";
+import { StageDiagram } from "@/components/content/Diagrams";
 import { Estimator } from "@/components/content/Estimator";
 import { CtaBand } from "@/components/layout/CtaBand";
 import { HeroSplit } from "@/components/layout/Heroes";
-import { Container, Section, SectionHeading } from "@/components/layout/Section";
+import { Container, Section } from "@/components/layout/Section";
 import { JsonLd } from "@/components/util/JsonLd";
-import { ENGAGEMENTS } from "@/content/engagements";
-import { relatedInsights } from "@/content/insights";
-import { getService, SERVICES, SUB_SERVICES, serviceHref, subServiceHref } from "@/content/services";
+import { getService, SERVICES, SUB_SERVICES, serviceHref } from "@/content/services";
 import { workflowsById } from "@/content/workflows";
 import { pageMetadata, serviceJsonLd } from "@/lib/seo";
-import { INQUIRY_EMAIL } from "@/lib/site";
 
 export const dynamicParams = false;
 
@@ -41,21 +38,6 @@ export default async function ServicePage({ params }: Props) {
   const workflows = workflowsById(service.workflowIds);
   const path = serviceHref(service.slug);
 
-  const sections = [
-    { id: "problem", label: service.introHeading },
-    { id: "help", label: "How we can help" },
-    ...(flagship ? [{ id: "sub-services", label: "Services in this practice" }] : []),
-    ...(service.detail ? [{ id: "detail", label: service.detail.heading }] : []),
-    ...(workflows.length > 0 ? [{ id: "workflows", label: "Example workflows" }] : []),
-    ...(flagship
-      ? [
-          { id: "hours", label: "Hours estimator" },
-          { id: "engagement", label: "Engagement model" },
-        ]
-      : []),
-    { id: "questions", label: "Questions" },
-  ];
-
   return (
     <>
       <JsonLd data={serviceJsonLd(service.name, service.metaDescription, path)} />
@@ -69,105 +51,120 @@ export default async function ServicePage({ params }: Props) {
           { name: service.name, path },
         ]}
         actions={
-          <>
-            <Link href={service.cta.href} className="btn btn-primary">
-              {service.cta.label}
-            </Link>
-            {flagship ? (
-              <Link href="/workflows" className="arrow-link min-h-11 items-center">
-                See the workflows
-              </Link>
-            ) : (
-              <a href={`mailto:${INQUIRY_EMAIL}`} className="arrow-link min-h-11 items-center">
-                Email the firm
-              </a>
-            )}
-          </>
+          <Link href={service.cta.href} className="btn btn-primary">
+            {service.cta.label}
+          </Link>
         }
       />
 
-      <IndexedBody items={sections}>
-        <BodySection id="problem" title={service.introHeading}>
-          <div className="max-w-[44rem] space-y-5">
-            {service.intro.map((text) => (
-              <p key={text}>{text}</p>
-            ))}
-          </div>
-        </BodySection>
-
-        <BodySection id="help" title="How we can help">
-          <CapabilityTabs items={service.capabilities} label={`${service.name} capabilities`} />
-        </BodySection>
-
-        {flagship ? (
-          <BodySection id="sub-services" title="Services in this practice">
-            <ul className="border-t border-heading">
+      {flagship ? (
+        <Section labelledBy="services">
+          <Container>
+            <h2 id="services" className="h2">
+              Five ways in
+            </h2>
+            <ul className="mt-14 space-y-14">
               {SUB_SERVICES.map((item) => (
-                <li key={item.slug} className="border-b border-rule">
-                  <Link href={subServiceHref(item.slug)} className="group grid gap-x-8 gap-y-1.5 py-6 md:grid-cols-12">
-                    <span className="h4 card-title arrow-after text-heading after:ml-2 after:text-accent md:col-span-4">
-                      {item.name}
+                <li key={item.slug} id={item.slug} tabIndex={-1} className="grid gap-x-12 gap-y-4 outline-none lg:grid-cols-12">
+                  <h3 className="lg:col-span-5">
+                    <span className="block text-[15px] font-semibold text-gold-ink">{item.name}</span>
+                    <span className="mt-1 block font-display text-[clamp(1.7rem,1.3rem+1.3vw,2.4rem)] leading-[1.1] font-medium">
+                      {item.question}
                     </span>
-                    <span className="md:col-span-8">
-                      <span className="block font-semibold">{item.question}</span>
-                      <span className="mt-1 block text-muted">{item.answer}</span>
-                    </span>
-                  </Link>
+                  </h3>
+                  <div className="lg:col-span-7">
+                    <p className="lead">{item.answer}</p>
+                    <ul aria-label={`What you get from ${item.name}`} className="mt-5 flex flex-wrap gap-2">
+                      {item.get.map((line) => (
+                        <li key={line} className="bg-stone px-3.5 py-1.5 text-[15px]">
+                          {line}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </li>
               ))}
             </ul>
-          </BodySection>
-        ) : null}
-
-        {service.detail ? (
-          <BodySection id="detail" title={service.detail.heading} lede={service.detail.lede}>
-            <DefinitionRows rows={service.detail.rows} />
-          </BodySection>
-        ) : null}
-
-        {workflows.length > 0 ? (
-          <BodySection
-            id="workflows"
-            title={workflows.length > 1 ? "Example workflows" : "The reporting workflow"}
-            lede="Illustrative blueprints with sample data. Open one to step through it."
-          >
-            <div className="border-b border-rule">
-              {workflows.map((workflow) => (
-                <WorkflowCard key={workflow.id} workflow={workflow} />
+          </Container>
+        </Section>
+      ) : (
+        <Section labelledBy="areas">
+          <Container>
+            <h2 id="areas" className="h2">
+              Where we help
+            </h2>
+            <dl className="mt-14 grid gap-x-16 gap-y-11 md:grid-cols-2">
+              {service.areas.map((area) => (
+                <div key={area.title}>
+                  <dt className="font-display text-[2rem] leading-none text-forest">{area.title}</dt>
+                  <dd className="mt-3 max-w-[28rem]">{area.body}</dd>
+                </div>
               ))}
-            </div>
-          </BodySection>
-        ) : null}
+            </dl>
+          </Container>
+        </Section>
+      )}
 
-        {flagship ? (
-          <>
-            <BodySection
-              id="hours"
-              title="An illustrative reading of the hours"
-              lede="Set the sliders to the size of one process. This is arithmetic with a stated assumption, and it is the same arithmetic the audit uses."
-            >
-              <Estimator />
-            </BodySection>
-            <BodySection
-              id="engagement"
-              title="Engagement model"
-              lede="The audit comes first. Build work is scoped once the size of each workflow is known."
-            >
-              <EngagementStrip stages={ENGAGEMENTS.stages} />
-            </BodySection>
-          </>
-        ) : null}
+      {workflows.length > 0 ? (
+        <Section surface="stone" labelledBy="try">
+          <Container>
+            <h2 id="try" className="h2">
+              Try one
+            </h2>
+            <ul className={`mt-12 grid gap-4 ${workflows.length > 1 ? "md:grid-cols-4" : "md:grid-cols-2"}`}>
+              {workflows.map((workflow, index) => (
+                <li key={workflow.id} className={index === 0 && workflows.length > 1 ? "md:col-span-2" : ""}>
+                  <WorkflowTile workflow={workflow} wide={index === 0 && workflows.length > 1} />
+                </li>
+              ))}
+            </ul>
+            <p className="small mt-5 text-muted">Simulations with sample data.</p>
+          </Container>
+        </Section>
+      ) : null}
 
-        <BodySection id="questions" title="Questions">
-          <Faq items={service.faqs} />
-        </BodySection>
-      </IndexedBody>
-
-      <Section surface="stone" labelledBy="related">
+      <Section labelledBy="runs" surface={workflows.length > 0 ? "ivory" : "stone"}>
         <Container>
-          <SectionHeading id="related" title="Related insights" />
-          <div className="mt-8">
-            <InsightRow insights={relatedInsights((item) => item.services.includes(service.slug))} />
+          <h2 id="runs" className="h2">
+            How it runs
+          </h2>
+          <div className="mt-12">
+            {flagship ? (
+              <StageDiagram />
+            ) : (
+              <ol className="grid gap-x-12 gap-y-8 md:grid-cols-3">
+                {service.steps?.map((step) => (
+                  <li key={step.title}>
+                    <h3 className="font-display text-[2rem] leading-none font-medium">{step.title}</h3>
+                    <p className="mt-3">{step.body}</p>
+                  </li>
+                ))}
+              </ol>
+            )}
+          </div>
+        </Container>
+      </Section>
+
+      {flagship ? (
+        <Section surface="stone" labelledBy="hours">
+          <Container>
+            <h2 id="hours" className="h2 max-w-[12em]">
+              An illustrative reading of the hours
+            </h2>
+            <div className="mt-10">
+              <Estimator />
+            </div>
+          </Container>
+        </Section>
+      ) : null}
+
+      <Section labelledBy="questions">
+        <Container className="grid gap-x-16 gap-y-8 lg:grid-cols-12">
+          <h2 id="questions" className="h2 lg:col-span-4">
+            Questions
+          </h2>
+          <div className="lg:col-span-8">
+            <Faq items={service.faqs} />
           </div>
         </Container>
       </Section>
@@ -177,7 +174,6 @@ export default async function ServicePage({ params }: Props) {
       ) : (
         <CtaBand
           headline={["Bring the question you have.", "We'll tell you whether we can help."]}
-          body="Describe the account or the decision in a few sentences. We reply by email to set up a first conversation."
           label={service.cta.label}
           href={service.cta.href}
         />

@@ -1,5 +1,5 @@
 import { InquiryForm } from "@/components/forms/InquiryForm";
-import { HeroBlock } from "@/components/layout/Heroes";
+import { HeroPlain } from "@/components/layout/Heroes";
 import { Container, Section } from "@/components/layout/Section";
 import { CONTACT } from "@/content/pages";
 import { pageMetadata } from "@/lib/seo";
@@ -14,41 +14,35 @@ export const metadata = pageMetadata({
 export default function ContactPage() {
   return (
     <>
-      <HeroBlock title={CTA_LABEL} dek={CONTACT.dek} crumbs={[{ name: "Contact", path: "/contact" }]} />
-      <Section labelledBy="form-heading">
-        <Container className="grid gap-x-16 gap-y-14 lg:grid-cols-12">
+      <HeroPlain title={CTA_LABEL} dek={CONTACT.dek} crumbs={[{ name: "Contact", path: "/contact" }]} />
+      <Section flush labelledBy="form-heading" className="pb-20 md:pb-28">
+        <Container className="grid gap-x-20 gap-y-14 lg:grid-cols-12">
           <div className="lg:col-span-7">
             <h2 id="form-heading" className="sr-only">
               Inquiry form
             </h2>
-            <p className="mb-8 max-w-[42rem] text-muted">{CONTACT.guidance}</p>
             <InquiryForm />
+            <p className="small mt-6 text-muted">{CONTACT.guidance}</p>
           </div>
           <aside className="lg:col-span-5" aria-labelledby="talk">
-            <div className="bg-stone p-7 md:p-9">
-              <h2 id="talk" className="h3">
-                Talk to the firm
-              </h2>
-              <p className="mt-3 font-semibold">Valentini &amp; Co.</p>
-              <p>{SITE_LOCALITY}</p>
-              <a href={`mailto:${INQUIRY_EMAIL}`} className="text-link inline-flex min-h-11 items-center">
-                {INQUIRY_EMAIL}
-              </a>
-              <h3 className="h4 mt-7 border-t border-rule pt-6">What happens next</h3>
-              <ol className="mt-4 space-y-5">
-                {CONTACT.next.map((step, index) => (
-                  <li key={step.title} className="grid grid-cols-[2rem_1fr]">
-                    <span className="font-bold text-accent" aria-hidden>
-                      {index + 1}
-                    </span>
-                    <div>
-                      <p className="font-semibold text-heading">{step.title}</p>
-                      <p className="mt-0.5">{step.body}</p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
-            </div>
+            <h2 id="talk" className="font-display text-[2rem] leading-none font-medium">
+              What happens next
+            </h2>
+            <ol className="mt-6 space-y-4">
+              {CONTACT.next.map((step, index) => (
+                <li key={step} className="flex gap-4">
+                  <span aria-hidden className="font-display text-[1.6rem] leading-none text-accent">
+                    {index + 1}
+                  </span>
+                  {step}
+                </li>
+              ))}
+            </ol>
+            <p className="mt-10 font-semibold">Valentini &amp; Co.</p>
+            <p>{SITE_LOCALITY}</p>
+            <a href={`mailto:${INQUIRY_EMAIL}`} className="text-link inline-flex min-h-11 items-center">
+              {INQUIRY_EMAIL}
+            </a>
           </aside>
         </Container>
       </Section>

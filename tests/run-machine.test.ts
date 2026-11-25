@@ -60,7 +60,7 @@ for (const workflow of WORKFLOWS) {
   const ai = workflow.nodes.find((node) => node.kind === "ai");
   if (ai) {
     test(`${workflow.id}: low confidence goes to manual review before any send`, () => {
-      const toggled = reduce(initialRun(), { type: "TOGGLE_LOW_CONFIDENCE", nodeId: ai.id });
+      const toggled = reduce(initialRun(), { type: "SET_STOPS", ids: [ai.id] });
       let state = advance(workflow, reduce(toggled, { type: "START", mode: "auto" }));
       while (state.status === "awaiting") state = advance(workflow, reduce(state, { type: "APPROVE" }));
       assert.equal(state.status, "manual");
@@ -84,4 +84,12 @@ test("output payload flips to sent only when complete", () => {
   const output = WORKFLOWS[0].nodes[WORKFLOWS[0].nodes.length - 1];
   assert.match(livePayload(output.payload, "active"), /"sent": false/);
   assert.match(livePayload(output.payload, "complete"), /"sent": true/);
+});
+
+test("a stop on a gate is ignored: the gate still waits", () => {
+  const workflow = WORKFLOWS[0];
+  const reduce = runReducer(workflow);
+  const gate = workflow.nodes.find((node) => node.kind === "human")!;
+  const set = reduce(initialRun(), { type: "SET_STOPS", ids: [gate.id] });
+  assert.equal(advance(workflow, reduce(set, { type: "START", mode: "auto" })).status, "awaiting");
 });

@@ -10,6 +10,7 @@ import * as engagements from "../content/engagements.ts";
 import { INDUSTRIES } from "../content/industries.ts";
 import { BODIES, wordCount } from "../content/insights/bodies.ts";
 import { INSIGHTS } from "../content/insights/index.ts";
+import * as scenarios from "../content/scenarios.ts";
 import * as pages from "../content/pages.ts";
 import { SERVICES, SUB_SERVICES } from "../content/services.ts";
 import * as nav from "../content/site-nav.ts";
@@ -95,6 +96,7 @@ walk(pages, "pages");
 walk(SERVICES, "services");
 walk(SUB_SERVICES, "subservices");
 walk(nav, "nav");
+walk(scenarios.SCENARIOS, "scenarios");
 walk(WORKFLOWS, "workflows");
 
 /** Text written directly in components: JSX text plus string attributes a reader can see. */
@@ -146,7 +148,7 @@ function refs(ids: string[], valid: Set<string>, where: string) {
   for (const id of ids) if (!valid.has(id)) fail(`${where}: unknown reference "${id}"`);
 }
 
-for (const item of [...SERVICES, ...SUB_SERVICES, ...INDUSTRIES]) {
+for (const item of [...SERVICES, ...INDUSTRIES]) {
   refs(item.workflowIds, workflowIds, item.slug);
 }
 for (const item of INDUSTRIES) {
@@ -162,8 +164,6 @@ for (const item of INDUSTRIES) {
 
 const described: { where: string; text: string }[] = [
   ...SERVICES.map((item) => ({ where: item.slug, text: item.metaDescription })),
-  ...SUB_SERVICES.map((item) => ({ where: item.slug, text: item.metaDescription })),
-  ...INDUSTRIES.map((item) => ({ where: item.slug, text: item.metaDescription })),
   ...INSIGHTS.map((item) => ({ where: item.slug, text: item.metaDescription })),
   ...WORKFLOWS.map((item) => ({ where: item.id, text: item.metaDescription })),
   ...Object.entries(pages).flatMap(([name, value]) =>
@@ -249,6 +249,14 @@ function checkWorkflow(workflow: Workflow) {
   }
 }
 WORKFLOWS.forEach(checkWorkflow);
+for (const workflow of WORKFLOWS) {
+  const list = scenarios.SCENARIOS[workflow.id];
+  if (!list) fail(`${workflow.id}: no scenarios`);
+  for (const item of list ?? []) {
+    const stop = workflow.nodes.find((node) => node.id === item.stopAt);
+    if (item.stopAt && (!stop || stop.kind === "human")) fail(`${workflow.id}/${item.id}: bad stopAt`);
+  }
+}
 
 const size = JSON.stringify(WORKFLOWS).length;
 if (size > 44 * 1024) fail(`workflow data is ${Math.round(size / 1024)} KB`);

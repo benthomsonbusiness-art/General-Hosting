@@ -1,10 +1,8 @@
-import { DefinitionRows } from "@/components/content/Blocks";
 import { CtaBand } from "@/components/layout/CtaBand";
-import { HeroBlock } from "@/components/layout/Heroes";
-import { Container, Section, SectionHeading } from "@/components/layout/Section";
+import { Container, Section } from "@/components/layout/Section";
+import { Breadcrumbs } from "@/components/nav/Breadcrumbs";
 import { WorkflowExplorer } from "@/components/workflow/WorkflowExplorer";
 import { WorkflowText } from "@/components/workflow/WorkflowText";
-import { PRINCIPLES } from "@/content/approach";
 import { WORKFLOWS_PAGE } from "@/content/pages";
 import { WORKFLOWS, type Workflow } from "@/content/workflows";
 
@@ -15,43 +13,33 @@ export function WorkflowsView({ selected }: { selected?: Workflow }) {
   ];
   return (
     <>
-      <HeroBlock
-        title="Workflow blueprints"
-        dek={WORKFLOWS_PAGE.dek}
-        crumbs={crumbs}
-        aside={<p className="border-l-2 border-gold pl-5 text-[15px] leading-6 font-medium">{WORKFLOWS_PAGE.note}</p>}
-      />
-
-      <section id="explorer" aria-label="Workflow explorer" data-surface="dark" className="bg-obsidian">
-        <WorkflowExplorer initialId={selected?.id ?? WORKFLOWS[0].id} />
+      <section id="explorer" aria-label="Workflow explorer">
+        <WorkflowExplorer
+          initialId={selected?.id ?? WORKFLOWS[0].id}
+          heading={
+            <>
+              <Breadcrumbs items={crumbs} className="mb-2" />
+              <h1 className="font-display text-[clamp(2.4rem,1.7rem+1.9vw,3.4rem)] leading-[1.02] font-medium short:text-[2.5rem]">
+                {WORKFLOWS_PAGE.title}
+              </h1>
+            </>
+          }
+        />
       </section>
 
-      <Section labelledBy="text">
+      <Section surface="stone" labelledBy="text">
         <Container>
-          <SectionHeading
-            id="text"
-            title="Every step, in text"
-            lede="The same blueprints as plain lists, with the guardrail on each step."
-          />
+          <h2 id="text" className="h2">
+            Every step, in writing
+          </h2>
+          <p className="mt-4 max-w-[40rem] text-muted">{WORKFLOWS_PAGE.note}</p>
           <div className="mt-8">
-            <WorkflowText workflows={WORKFLOWS} openId={selected?.id} />
+            <WorkflowText workflows={WORKFLOWS} />
           </div>
         </Container>
       </Section>
 
-      <Section surface="stone" labelledBy="common">
-        <Container>
-          <SectionHeading id="common" title="What every blueprint has in common" />
-          <div className="mt-8">
-            <DefinitionRows rows={PRINCIPLES.map((item) => ({ title: item.title, body: item.short }))} />
-          </div>
-        </Container>
-      </Section>
-
-      <CtaBand
-        headline={["Want one of these", "mapped to your tools?"]}
-        body="Tell us which process it would replace and which systems it touches. The audit works out whether it is worth building."
-      />
+      <CtaBand headline={["Want one of these", "mapped to your tools?"]} />
     </>
   );
 }

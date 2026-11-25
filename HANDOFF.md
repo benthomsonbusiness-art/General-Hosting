@@ -3,6 +3,33 @@
 Last updated: Nov 24, 2026 (ET) · Branch: `cursor/valentini-platform-v2` · Base: `1e42b44` (PR #4 head) · Agent: Claude Code
 Deployed commit: `ab5a4bb` (later commits change documentation only)
 
+## Workflow stage (after v3, same branch; pushed and deployed to `valentini-next`, deployed commit `51b00b8`)
+
+Ben found the v3 player off and chose an approach based on Lindy's layout and Ramp's storytelling. Layout and pacing were borrowed; no artwork, copy or logos were.
+
+- **Files:** `components/workflow/Stage.tsx` (window, status, gate), `WorkflowExplorer.tsx` (list, step caption, "Change the sample" panel), `HeroPlayer.tsx`, `hooks.ts` (`usePlayer`), `scenes/*`, `content/windows.ts`. `WorkflowPlayer`, `Track`, `MotionRoot` and the `framer-motion` dependency are gone.
+- **Playback:** with motion on, a run starts by itself when the stage is in view, can be paused, and waits at every gate. It moves keyboard focus only after the visitor has acted on that run. With motion off, nothing autoplays and Start is step mode. The reducer in `lib/run-machine.ts` is unchanged.
+- **Controls:** 11 at rest (about 22 in v3). Samples, threshold, step-through, expiry and step details sit behind one disclosure.
+- **Checks (local):** 53 unit tests; 76 scripted behavior checks; axe on every workflow at start and at its stop, at 390 and 1440 (36 runs, 0 violations); crawl clean; Lighthouse Performance 96–100, Accessibility and Best Practices 100. Scripts 178–192 KB per page including prefetch. Fits without scrolling at 1536x791, 1440x900 and 1366x657.
+- **Deployed checks:** 3 GETs correct (two pages, one 308 redirect; noindex and CSP present). One browser run of Accounts payable waited at both gates and finished after two clicks, with no third-party requests. No POST this time, because the API did not change.
+- **Known:** on phones, Accounts payable grows about 50px at its first gate because its two button labels stack. The "Laptop fit" and 1366x657 notes below describe the previous player.
+
+## v3 redesign (branch `cursor/valentini-platform-v3`, pushed and deployed to `valentini-next`)
+
+The preview URL below now serves v3. PR #5 contains v2 only. v3 is PR #6 (https://github.com/benthomsonbusiness-art/General-Hosting/pull/6), based on the v2 branch, so merge #5 first. `valentini-preview` and `main` were not touched.
+
+Ben asked for a whole redesign: minimalist, visual, interactive workflows. The sections below this one describe v2 and still apply to the API, deploy steps and open decisions.
+
+- **Workflows:** each of the 8 has its own scene (`components/workflow/scenes/`), driven by the same reducer. Visitors pick a sample input (`content/scenarios.ts`), set the confidence threshold, edit the draft and decide at the gate. Step details moved to a side dialog.
+- **Motion switch:** follows the OS setting by default; a visitor's choice is saved in localStorage only. Ben's laptop has reduced motion on, so v2 never animated for him.
+- **Structure:** four menu links; six industry pages became one picker and five sub-services became sections of the flagship page. Old URLs redirect (308).
+- **Departures from PROMPT.md, requested by Ben:** mega-menu, in-page indexes on service pages, service and industry filters on Insights, and the minimum word counts are gone. H2 is Cormorant. The "no three equal icon cards" rule is kept.
+- **Words on screen at 1440px (v2 to v3):** Home 906 to 256, flagship 939 to 437, Approach 1,104 to 392, Workflows 616 to 199.
+- **Checks:** 52 unit tests; crawl of every sitemap path at 4 widths with axe at 2; scripted behavior checks; Lighthouse Accessibility and Best Practices 100, Performance 95–100. Worker 1,303 KiB gzipped.
+- **Laptop fit:** the `short` variant in `app/globals.css` tightens the player when the window is at least 1024px wide and at most 880px tall. Run and the gate buttons are on screen without scrolling for all 8 workflows at 1536x791, 1440x789 and 1440x900. At 1366x657 they need a scroll.
+- **Deployed checks (first v3 deploy):** 6 GETs (pages, script, two 308 redirects, 404) and headers correct; one POST with an empty body returned 422 with field errors; one browser run reached the gate, waited, and finished after a click, with no site errors and no third-party requests. The laptop fit was deployed after that and checked with one GET.
+- **Caching:** hashed files under `/_next/static` are served with `max-age=0, must-revalidate`, because there is no `public/_headers`. Not changed yet.
+- **Known:** script transfer is about 210 KB per page including prefetch, over the 180 KB budget in PROMPT §16. Simulated mobile LCP on the flagship is 2.9 s. No screen-reader pass. No new photography. Less text may reduce search traffic. Screenshots in `docs/screenshots/v2` are the old design.
 ## Status
 
 - Milestone reached: M8, except the human screen-reader pass and the business and audit reviews

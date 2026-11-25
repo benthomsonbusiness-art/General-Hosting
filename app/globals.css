@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Laptop windows too short for the workflow stage and its controls at full spacing. */
+@custom-variant short (@media (min-width: 64rem) and (max-height: 55rem));
+
 :root {
   --forest: #133224;
   --obsidian: #0b1f16;
@@ -64,6 +67,7 @@
   --btn-text: var(--ivory);
   --btn-hover: var(--obsidian);
   --on-heading: var(--ivory);
+  --thumb-accent: var(--gold-ink);
 }
 
 [data-surface="dark"] {
@@ -77,6 +81,7 @@
   --btn-text: var(--obsidian);
   --btn-hover: var(--ivory);
   --on-heading: var(--forest);
+  --thumb-accent: var(--gold);
 }
 
 @layer base {
@@ -159,7 +164,7 @@ html[data-modality="pointer"] :focus-visible {
   .display {
     font-family: var(--font-display);
     font-weight: 500;
-    font-size: clamp(2.75rem, 1.6rem + 4.6vw, 5rem);
+    font-size: clamp(2.75rem, 1.6rem + 3.4vw, 4.6rem);
     line-height: 1.02;
     letter-spacing: -0.01em;
   }
@@ -171,15 +176,16 @@ html[data-modality="pointer"] :focus-visible {
   .h1 {
     font-family: var(--font-display);
     font-weight: 500;
-    font-size: clamp(2.25rem, 1.5rem + 3.2vw, 3.75rem);
-    line-height: 1.06;
+    font-size: clamp(2.5rem, 1.5rem + 4.2vw, 5rem);
+    line-height: 1.02;
     letter-spacing: -0.01em;
   }
 
   .h2 {
-    font-weight: 700;
-    font-size: clamp(1.75rem, 1.4rem + 1.5vw, 2.5rem);
-    line-height: 1.15;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(2.25rem, 1.5rem + 3vw, 3.75rem);
+    line-height: 1.04;
     letter-spacing: -0.015em;
   }
 
@@ -350,12 +356,253 @@ html[data-modality="pointer"] :focus-visible {
     border-width: 2px;
   }
 
+  /* Workflow scenes. State lives in classes; motion is a separate switch on the root. */
+  .scene {
+    overflow-x: clip;
+  }
+
+  /* The stage: one palette color, cut once at the angle of the mark's gold stroke. */
+  .stage {
+    min-height: min(44rem, max(34rem, calc(100svh - var(--header-h) - 3.5rem)));
+    background: var(--field);
+  }
+
+  .stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--field-cut);
+    clip-path: polygon(58% 0, 100% 0, 100% 100%, 24% 100%);
+  }
+
+  .stage[data-field="forest"] {
+    --field: var(--forest);
+    --field-cut: var(--obsidian);
+  }
+
+  .stage[data-field="obsidian"] {
+    --field: var(--obsidian);
+    --field-cut: var(--forest);
+  }
+
+  .stage[data-field="gold"] {
+    --field: var(--gold);
+    --field-cut: color-mix(in srgb, var(--gold) 74%, var(--ivory));
+  }
+
+  .stage[data-field="stone"] {
+    --field: var(--stone);
+    --field-cut: color-mix(in srgb, var(--stone) 78%, var(--gold));
+  }
+
+  .stage-window {
+    box-shadow: 0 24px 48px -24px rgb(11 31 22 / 0.45);
+  }
+
+  .stage-fill {
+    animation: stage-fill var(--step) linear both;
+  }
+
+  [data-motion="on"] .stage-spin {
+    animation: spin 900ms linear infinite;
+  }
+
+  .scene-rise {
+    opacity: 0;
+    visibility: hidden;
+    translate: 0 28px;
+  }
+
+  .scene-rise-on {
+    opacity: 1;
+    visibility: visible;
+    translate: none;
+  }
+
+  .scene-word {
+    opacity: 0;
+  }
+
+  .scene-word-on {
+    opacity: 1;
+  }
+
+  .scene-open {
+    display: grid;
+    grid-template-rows: 0fr;
+    visibility: hidden;
+  }
+
+  .scene-open > * {
+    overflow: hidden;
+    padding-block: 0;
+  }
+
+  .scene-open-on {
+    grid-template-rows: 1fr;
+    visibility: visible;
+  }
+
+  .scene-open-on > * {
+    padding-block: 0.5rem;
+  }
+
+  [data-motion="on"] .scene-dot {
+    animation: dot 900ms ease-in-out infinite alternate;
+  }
+
+  [data-motion="on"] .scene-rise {
+    transition:
+      opacity 420ms ease-out,
+      translate 520ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  [data-motion="on"] .scene-word {
+    transition: opacity 180ms ease-out var(--delay, 0ms);
+  }
+
+  [data-motion="on"] .scene-open {
+    transition: grid-template-rows 420ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .sx {
+    opacity: 0;
+    translate: 0 8px;
+    visibility: hidden;
+  }
+
+  .sx-on {
+    opacity: 1;
+    translate: none;
+    visibility: visible;
+  }
+
+  .scene-mark {
+    background: linear-gradient(rgb(197 168 105 / 0.5), rgb(197 168 105 / 0.5)) no-repeat 0 60% / 0% 72%;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  .scene-mark-on {
+    background-size: 100% 72%;
+  }
+
+  .scene-stamp {
+    position: absolute;
+    right: 0.5rem;
+    bottom: 0.5rem;
+    border: 2px solid var(--gold-ink);
+    background: #fffdf8;
+    padding: 0.35rem 0.9rem;
+    color: var(--gold-ink);
+    font-weight: 700;
+    opacity: 0;
+    rotate: -8deg;
+    scale: 1.5;
+    visibility: hidden;
+  }
+
+  .scene-stamp-on {
+    opacity: 1;
+    scale: 1;
+    visibility: visible;
+  }
+
+  .scene-draw {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+
+  .scene-draw-on {
+    stroke-dashoffset: 0;
+  }
+
+  .scene-tile {
+    background: var(--stone);
+    color: var(--slate);
+    clip-path: polygon(9% 0, 100% 0, 91% 100%, 0 100%);
+  }
+
+  .scene-tile-on {
+    background: var(--forest);
+    color: var(--ivory);
+  }
+
+  .scene-redact-on {
+    background: var(--ink);
+    color: var(--ink);
+  }
+
+  .scene-scan {
+    position: absolute;
+    inset-inline: 0;
+    top: 50%;
+    z-index: 1;
+    height: 3px;
+    background: var(--gold);
+  }
+
+  [data-motion="on"] .sx,
+  [data-motion="on"] .scene-fade,
+  [data-motion="on"] .scene-tile {
+    transition:
+      opacity 420ms ease-out,
+      translate 420ms ease-out,
+      background-color 420ms ease-out,
+      color 320ms ease-out,
+      border-color 320ms ease-out,
+      fill 420ms ease-out;
+    transition-delay: var(--delay, 0ms);
+  }
+
+  [data-motion="on"] .scene-mark {
+    transition: background-size 620ms ease-out;
+  }
+
+  [data-motion="on"] .scene-grow {
+    transition: transform 800ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  [data-motion="on"] .scene-move {
+    transition: left 800ms cubic-bezier(0.5, 0, 0.2, 1);
+  }
+
+  [data-motion="on"] .scene-draw {
+    transition: stroke-dashoffset 1000ms ease-in-out;
+  }
+
+  [data-motion="on"] .scene-stamp {
+    transition:
+      opacity 180ms ease-in,
+      scale 260ms cubic-bezier(0.3, 1.4, 0.5, 1);
+  }
+
+  [data-motion="on"] .scene-scan {
+    animation: scan 1100ms ease-in-out infinite alternate;
+  }
+
+  /* The cut: panels and photos share the angle of the mark's gold stroke. */
+  .cut-band {
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 4vw), 0 100%);
+  }
+
   .scroll-none {
     scrollbar-width: none;
   }
 
   .scroll-none::-webkit-scrollbar {
     display: none;
+  }
+}
+
+/* On phones the stamp takes its own line, so it never covers text. */
+@media (max-width: 39.9375rem) {
+  .scene-stamp {
+    position: static;
+    width: fit-content;
+    margin-top: 0.5rem;
+    padding: 0.1rem 0.6rem;
+    rotate: -3deg;
   }
 }
 
@@ -382,6 +629,45 @@ html[data-modality="pointer"] :focus-visible {
 
   .band {
     padding-block: 7rem;
+  }
+}
+
+@keyframes scan {
+  from {
+    top: 8%;
+  }
+  to {
+    top: 92%;
+  }
+}
+
+@keyframes stage-fill {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes spin {
+  to {
+    rotate: 360deg;
+  }
+}
+
+@keyframes dot {
+  from {
+    opacity: 0.25;
+  }
+}
+
+@keyframes open-cut {
+  from {
+    clip-path: polygon(60% 0, 100% 0, 100% 100%, 47% 100%);
+  }
+}
+
+@media (min-width: 64rem) and (prefers-reduced-motion: no-preference) {
+  .cut-left {
+    animation: open-cut 900ms cubic-bezier(0.2, 0.8, 0.2, 1);
   }
 }
 
@@ -444,6 +730,22 @@ input[type="range"]::-moz-range-thumb {
   background: var(--forest);
   border: 1px solid var(--gold);
   border-radius: 0;
+}
+
+.range-dark::-webkit-slider-runnable-track {
+  background: rgb(247 244 236 / 0.6) !important;
+}
+
+.range-dark::-moz-range-track {
+  background: rgb(247 244 236 / 0.6) !important;
+}
+
+.range-dark::-webkit-slider-thumb {
+  background: var(--gold) !important;
+}
+
+.range-dark::-moz-range-thumb {
+  background: var(--gold) !important;
 }
 
 @media (prefers-reduced-motion: reduce) {

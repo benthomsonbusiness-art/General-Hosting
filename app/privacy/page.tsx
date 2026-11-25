@@ -19,7 +19,7 @@ export default function PrivacyPage() {
         <p>
           The inquiry form asks for a name, a work email, a company and role, a practice interest,
           and a description of the workflow. The final notice will also cover ordinary technical
-          data such as browser type and pages visited. This placeholder does not publish those
+          data such as browser type and pages visited. The workflow pages save one motion preference in the browser, and it is not sent anywhere. This placeholder does not publish those
           details as a policy.
         </p>
       </LegalSection>
