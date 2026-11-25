@@ -11,7 +11,7 @@ export const WINDOWS: Record<string, StageWindow> = {
   "lead-triage": {
     place: "Inbox",
     field: "forest",
-    doing: ["Receiving", "Looking up the company", "Scoring the fit", "Updating the CRM", "", "Sending"],
+    doing: ["Receiving", "Scoring and drafting", "Updating the CRM", "", "Sending"],
   },
   "proposal-ops": {
     place: "Proposals",
@@ -35,6 +35,7 @@ export const WINDOWS: Record<string, StageWindow> = {
       "Building the workspace",
       "Drafting the welcome",
       "",
+      "Sending the welcome",
       "Booking the kickoff",
     ],
   },
@@ -61,6 +62,6 @@ export const WINDOWS: Record<string, StageWindow> = {
   "recruiting-screen": {
     place: "Hiring",
     field: "obsidian",
-    doing: ["Receiving", "Finding evidence", "", "", "Booking"],
+    doing: ["Receiving", "Masking details", "Finding evidence", "", "", "Booking"],
   },
 };

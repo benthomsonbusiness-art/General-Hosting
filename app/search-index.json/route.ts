@@ -11,6 +11,7 @@ import {
 } from "@/content/pages";
 import { SERVICES, SUB_SERVICES, serviceHref, subServiceHref } from "@/content/services";
 import { WORKFLOWS } from "@/content/workflows";
+import { appName } from "@/lib/logos";
 import type { SearchEntry } from "@/lib/search";
 import { CTA_LABEL } from "@/lib/site";
 
@@ -54,7 +55,14 @@ function entries(): SearchEntry[] {
       title: item.title,
       type: "Workflow",
       summary: item.summary,
-      keywords: item.nodes.flatMap((node) => [node.label, ...node.tools]).join(" "),
+      keywords: item.nodes
+        .flatMap((node) => [
+          node.label,
+          ...(node.app ? [appName(node.app.app), ...node.app.alternatives] : []),
+          ...(node.gate?.channelApp ? [appName(node.gate.channelApp)] : []),
+          ...(node.attached ?? []).flatMap((tool) => [tool.label, appName(tool.app), ...tool.alternatives]),
+        ])
+        .join(" "),
     })),
     ...INSIGHTS.map((item): SearchEntry => ({
       url: `/insights/${item.slug}`,

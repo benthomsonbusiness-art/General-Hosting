@@ -152,7 +152,7 @@ export const APPS: Record<AppSlug, AppEntry> = {
   googledocs: app("Google Docs", "Google", "docs", "document", GOOGLE, `${NO_FILE} Not in SVG Logos, and the mark is multicolor. ${ASK}`),
   googleanalytics: app("Google Analytics", "Google", "ads", "chart", GOOGLE, `${svgLogos("google-analytics")} ${ASK}`),
   googleads: app("Google Ads", "Google", "ads", "megaphone", GOOGLE, `${svgLogos("google-ads")} ${ASK}`),
-  outlook: app("Microsoft Outlook", "Microsoft", "email", "mail", MICROSOFT, `Artwork: @iconify-json/vscode-icons 1.2.100 "file-type-outlook" (MIT), unaltered. ${ASK}`),
+  outlook: app("Outlook", "Microsoft", "email", "mail", MICROSOFT, `Artwork: @iconify-json/vscode-icons 1.2.100 "file-type-outlook" (MIT), unaltered. ${ASK}`),
   teams: app("Microsoft Teams", "Microsoft", "chat", "message", MICROSOFT, `${svgLogos("microsoft-teams")} ${ASK}`),
   excel: app("Microsoft Excel", "Microsoft", "docs", "table", MICROSOFT, `Artwork: @iconify-json/vscode-icons 1.2.100 "file-type-excel2" (MIT), unaltered. ${ASK}`),
   slack: app("Slack", "Slack Technologies", "chat", "message", "https://slack.com/terms-of-service/slack-brand", `${svgLogos("slack-icon")} ${ASK}`),
