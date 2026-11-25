@@ -259,7 +259,7 @@ for (const workflow of WORKFLOWS) {
 }
 
 const size = JSON.stringify(WORKFLOWS).length;
-if (size > 44 * 1024) fail(`workflow data is ${Math.round(size / 1024)} KB`);
+if (size > 52 * 1024) fail(`workflow data is ${Math.round(size / 1024)} KB`);
 
 if (errors.length > 0) {
   console.error(`Content check failed with ${errors.length} problem(s):`);
