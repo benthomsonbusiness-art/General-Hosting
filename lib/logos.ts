@@ -140,7 +140,7 @@ export const APPS: Record<AppSlug, AppEntry> = {
   googledocs: app("Google Docs", "Google", "docs", "document", GOOGLE, ASK),
   googleanalytics: app("Google Analytics", "Google", "ads", "chart", GOOGLE, ASK),
   googleads: app("Google Ads", "Google", "ads", "megaphone", GOOGLE, ASK),
-  outlook: app("Microsoft Outlook", "Microsoft", "email", "mail", MICROSOFT, ASK),
+  outlook: app("Outlook", "Microsoft", "email", "mail", MICROSOFT, ASK),
   teams: app("Microsoft Teams", "Microsoft", "chat", "message", MICROSOFT, ASK),
   excel: app("Microsoft Excel", "Microsoft", "docs", "table", MICROSOFT, ASK),
   slack: app("Slack", "Slack Technologies", "chat", "message", "https://slack.com/terms-of-service/slack-brand", ASK),
