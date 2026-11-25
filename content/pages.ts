@@ -15,7 +15,7 @@ export const HOME = {
       { title: "Approval", body: "You see the draft next to the original. Nothing goes out until you click approve." },
       { title: "Record", body: "Logs who approved it, what they changed and exactly what was sent." },
     ],
-    own: "It runs in your accounts, from code in your repository. If we stop working together, it keeps running.",
+    own: "It runs in your accounts, from code in your repository. Every login, log and line of code belongs to you.",
   },
 };
 

@@ -122,7 +122,7 @@ function Tip({
           </span>
         </span>
       ) : null}
-      {linked ? <span className="flow-tip-more">Click for the full step →</span> : null}
+      {linked ? <span className="flow-tip-more">See the full step →</span> : null}
     </span>
   );
 }

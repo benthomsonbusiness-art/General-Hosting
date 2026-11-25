@@ -93,6 +93,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="en"
+      data-motion="on"
       data-scroll-behavior="smooth"
       className={`${mona.variable} ${cormorantWordmark.variable} ${plexMono.variable} h-full antialiased`}
     >

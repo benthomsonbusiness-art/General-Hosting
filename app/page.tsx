@@ -1,9 +1,10 @@
 import { Check } from "lucide-react";
 import Link from "next/link";
+import { BookingPanel } from "@/components/home/BookingPanel";
+import { QueuePanel } from "@/components/home/QueuePanel";
 import { RepoPanel } from "@/components/home/RepoPanel";
 import { Stations } from "@/components/home/Stations";
 import { ClosingCta } from "@/components/layout/ClosingCta";
-import { HardwareFrame } from "@/components/media/HardwareFrame";
 import { RowLink } from "@/components/cards/RowLink";
 import { flowExample } from "@/components/workflow/examples";
 import { FlowDiagram } from "@/components/workflow/flow/FlowDiagram";
@@ -98,12 +99,15 @@ export default function HomePage() {
       </section>
 
       <section data-surface="dark" aria-labelledby="helps" className="border-t border-line bg-obsidian">
-        <div className="wrap grid items-center gap-x-12 gap-y-10 py-14 lg:grid-cols-12 lg:py-20">
-          <div className="lg:col-span-7">
+        <div className="wrap grid grid-cols-[minmax(0,1fr)] items-center gap-10 py-14 lg:grid-cols-12 lg:py-20">
+          <div className="lg:col-span-5">
             <h2 id="helps" className="h2">
               Where it helps first
             </h2>
-            <ul className="mt-8 border-t border-line">
+            <p className="mt-4 max-w-[36rem] text-muted">
+              Most companies start with one of these. Each is a workflow we have already drawn out.
+            </p>
+            <ul className="mt-6 border-t border-line">
               {HOME.problems.map((problem) => {
                 const workflow = getWorkflow(problem.workflowId);
                 if (!workflow || !FIRST.includes(problem.workflowId as (typeof FIRST)[number])) return null;
@@ -118,30 +122,33 @@ export default function HomePage() {
               See all eight workflows
             </Link>
           </div>
-          <div className="lg:col-span-5">
-            <HardwareFrame
-              src="/images/ind-professional.jpg"
-              alt="A quiet office after hours, a closed laptop on a dark green desk under a lamp."
-              width={4}
-              height={5}
-              sizes="(min-width: 1024px) 40vw, 100vw"
-            />
+          <div className="min-w-0 lg:col-span-7">
+            <QueuePanel />
           </div>
         </div>
       </section>
 
       {QUOTE ? (
-        <section data-surface="dark" aria-label="Client testimonial" className="border-t border-line bg-forest">
-          <figure className="wrap mx-auto max-w-[60rem] py-14 text-center lg:py-20">
-            <blockquote className="h3 font-normal">“{QUOTE.quote}”</blockquote>
-            <figcaption className="mt-6 text-muted">
-              <span className="font-semibold text-body">{QUOTE.company}</span>
-              {QUOTE.location ? ` · ${QUOTE.location}` : ""}
-            </figcaption>
-            <Link href="/testimonials" className="btn btn-secondary mt-8">
-              Read testimonials
-            </Link>
-          </figure>
+        <section data-surface="dark" aria-labelledby="client" className="border-t border-line bg-forest">
+          <div className="wrap grid grid-cols-[minmax(0,1fr)] items-center gap-10 py-14 lg:grid-cols-12 lg:py-20">
+            <figure className="lg:col-span-5">
+              <p id="client" className="small font-semibold tracking-[0.08em] text-gold uppercase">
+                Client story
+              </p>
+              <blockquote className="h3 mt-4 font-normal">“{QUOTE.quote}”</blockquote>
+              <figcaption className="mt-6 text-muted">
+                <span className="font-semibold text-body">{QUOTE.company}</span>
+                {QUOTE.location ? ` · ${QUOTE.location}` : ""}
+                {QUOTE.project ? <span className="mt-1 block">{QUOTE.project}</span> : null}
+              </figcaption>
+              <Link href="/testimonials" className="btn btn-secondary mt-8">
+                Read testimonials
+              </Link>
+            </figure>
+            <div className="min-w-0 lg:col-span-7">
+              <BookingPanel />
+            </div>
+          </div>
         </section>
       ) : null}
 
