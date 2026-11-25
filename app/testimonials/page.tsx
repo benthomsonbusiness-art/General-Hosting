@@ -30,14 +30,16 @@ export default function TestimonialsPage() {
               {TESTIMONIALS.map((item) => {
                 const workflow = item.workflowId ? getWorkflow(item.workflowId) : undefined;
                 return (
-                  <li key={`${item.name}-${item.company}`} className="rounded-lg border border-line bg-well p-8">
+                  <li key={item.company} className="rounded-lg border border-line bg-well p-8">
                     <figure>
                       <blockquote className="text-xl leading-relaxed text-heading">“{item.quote}”</blockquote>
                       <figcaption className="mt-6 border-t border-line pt-4">
-                        <span className="block font-semibold text-heading">{item.name}</span>
+                        <span className="block font-semibold text-heading">{item.company}</span>
                         <span className="block text-muted">
-                          {item.role}, {item.company}
+                          {item.name === item.role ? item.role : `${item.name}, ${item.role}`}
+                          {item.location ? ` · ${item.location}` : ""}
                         </span>
+                        {item.project ? <span className="mt-3 block text-[15px] text-body">{item.project}</span> : null}
                         {workflow ? (
                           <Link
                             href={`/workflows/${workflow.id}`}

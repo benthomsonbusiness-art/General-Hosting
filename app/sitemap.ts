@@ -13,6 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/",
     "/services",
     ...SERVICES.map((item) => serviceHref(item.slug)),
+    "/how-it-works",
     "/workflows",
     ...WORKFLOWS.map((item) => `/workflows/${item.id}`),
     "/industries",

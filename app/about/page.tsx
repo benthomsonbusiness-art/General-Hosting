@@ -61,8 +61,8 @@ export default function AboutPage() {
             <p className="mt-2 text-slate">Founder</p>
             <p className="measure mt-5 text-ink">{ABOUT.founder}</p>
             <p className="mt-8 text-slate">{ABOUT.where}</p>
-            <Link href="/approach" className="text-link mt-2 inline-flex min-h-11 items-center">
-              How we work
+            <Link href="/how-it-works" className="text-link mt-2 inline-flex min-h-11 items-center">
+              How it works
             </Link>
           </div>
         </Container>

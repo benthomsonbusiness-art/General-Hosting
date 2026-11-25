@@ -6,7 +6,8 @@ import { RowLink } from "@/components/cards/RowLink";
 import { flowExample } from "@/components/workflow/examples";
 import { FlowDiagram } from "@/components/workflow/flow/FlowDiagram";
 import { ENGAGEMENTS } from "@/content/engagements";
-import { HOME, WORKFLOWS_PAGE } from "@/content/pages";
+import { HOME } from "@/content/pages";
+import { TESTIMONIALS } from "@/content/testimonials";
 import { getWorkflow } from "@/content/workflows";
 import { pageMetadata } from "@/lib/seo";
 import { CTA_HREF, CTA_LABEL, SITE_NAME } from "@/lib/site";
@@ -23,6 +24,8 @@ const FIRST = ["lead-triage", "ap-intake", "daily-brief"] as const;
 /** The one workflow drawn on the first screen. Browsing the rest happens on /workflows. */
 const HERO_FLOW = flowExample("lead-triage");
 
+const QUOTE = TESTIMONIALS[0];
+
 const TREE = `your-company/automations
   workflows/lead-triage/
   workflows/ap-intake/
@@ -34,87 +37,45 @@ export default function HomePage() {
   return (
     <>
       <section data-surface="dark" className="bg-obsidian">
-        <div className="wrap grid items-start gap-x-8 gap-y-10 py-8 lg:grid-cols-12 lg:py-12">
-          <div className="lg:col-span-5">
-            <h1 className="h1">Your back office runs on its own until it needs your approval.</h1>
-            <p className="lead mt-5 max-w-[34rem] text-muted">
-              We map how work moves through your company, then build the automations inside the tools you already use.
-            </p>
-            <div className="mt-6 flex flex-wrap items-center gap-3">
-              <Link href={CTA_HREF} className="btn btn-primary">
-                {CTA_LABEL}
-              </Link>
-              <Link href="/workflows" className="btn btn-secondary">
-                See example workflows
+        <div className="wrap py-10 lg:py-16">
+          <h1 className="h1 max-w-[22ch]">
+            Automate the busywork. <span className="text-gold">Approve what matters.</span>
+          </h1>
+          <p className="lead mt-6 max-w-[62rem] text-muted">
+            We map how work moves through your company, then build the automations inside the tools you already use.
+            Routine steps run on their own, and nothing goes out until you approve it.
+          </p>
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <Link href={CTA_HREF} className="btn btn-primary">
+              {CTA_LABEL}
+            </Link>
+            <Link href="/how-it-works" className="btn btn-secondary">
+              How it works
+            </Link>
+          </div>
+          <div className="mt-12 min-w-0">
+            <div className="mb-3 flex flex-wrap items-baseline justify-between gap-3">
+              <p id="hero-flow" className="small text-muted">
+                Example: {HERO_FLOW.title}
+              </p>
+              <Link href="/workflows" className="text-link small inline-flex min-h-11 items-center">
+                See all eight workflows
               </Link>
             </div>
-          </div>
-          <div className="min-w-0 lg:col-span-7">
-            <p id="hero-flow" className="small mb-3 text-muted">
-              {HERO_FLOW.title}
-            </p>
             <FlowDiagram
               id="hero-flow-diagram"
               title={HERO_FLOW.title}
               nodes={HERO_FLOW.nodes}
-              variant="compact"
               stepsHref={`/workflows/${HERO_FLOW.id}`}
               labelledBy="hero-flow"
               eager
-              footer={
-                <Link href={`/workflows/${HERO_FLOW.id}`} className="btn btn-secondary mt-4">
-                  {WORKFLOWS_PAGE.open}
-                </Link>
-              }
             />
           </div>
         </div>
       </section>
 
-      <section data-surface="dark" aria-labelledby="helps" className="border-t border-line bg-obsidian">
-        <div className="wrap py-14 lg:py-20">
-          <h2 id="helps" className="h2">
-            Where it helps first
-          </h2>
-          <ul className="mt-8 border-t border-line">
-            {HOME.problems.map((problem) => {
-              const workflow = getWorkflow(problem.workflowId);
-              if (!workflow || !FIRST.includes(problem.workflowId as (typeof FIRST)[number])) return null;
-              return (
-                <li key={problem.workflowId} className="border-b border-line">
-                  <RowLink href={`/workflows/${workflow.id}`} title={problem.q} line={workflow.title} />
-                </li>
-              );
-            })}
-          </ul>
-          <Link href="/workflows" className="btn btn-secondary mt-6">
-            See all eight workflows
-          </Link>
-        </div>
-      </section>
-
-      <section data-surface="dark" aria-labelledby="built" className="bg-forest">
-        <div className="grid items-stretch lg:grid-cols-2">
-          <div className="px-5 py-14 sm:px-8 lg:py-20 lg:pr-12 lg:pl-[max(3rem,calc((100vw-84rem)/2+3rem))]">
-            <h2 id="built" className="h2">
-              What happens to each item
-            </h2>
-            <div className="mt-10">
-              <Stations />
-            </div>
-          </div>
-          <HardwareFrame
-            src="/images/key-hero.jpg"
-            alt="A gold push key set into a forest-green machined panel, waiting to be pressed."
-            width={2400}
-            height={1030}
-            sizes="(min-width: 1024px) 50vw, 100vw"
-          />
-        </div>
-      </section>
-
       <section data-surface="dark" aria-labelledby="yours" className="border-t border-line bg-obsidian">
-        <div className="wrap grid items-start gap-10 py-14 lg:grid-cols-12 lg:py-20">
+        <div className="wrap grid items-center gap-10 py-14 lg:grid-cols-12 lg:py-20">
           <div className="lg:col-span-5">
             <h2 id="yours" className="h2">
               You own what we build.
@@ -124,6 +85,68 @@ export default function HomePage() {
           <pre className="console col-span-1 overflow-x-auto p-5 font-mono text-[13px] leading-relaxed text-ivory/80 lg:col-span-7">
             {TREE}
           </pre>
+        </div>
+      </section>
+
+      <section data-surface="dark" aria-labelledby="helps" className="border-t border-line bg-obsidian">
+        <div className="wrap grid items-center gap-x-12 gap-y-10 py-14 lg:grid-cols-12 lg:py-20">
+          <div className="lg:col-span-7">
+            <h2 id="helps" className="h2">
+              Where it helps first
+            </h2>
+            <ul className="mt-8 border-t border-line">
+              {HOME.problems.map((problem) => {
+                const workflow = getWorkflow(problem.workflowId);
+                if (!workflow || !FIRST.includes(problem.workflowId as (typeof FIRST)[number])) return null;
+                return (
+                  <li key={problem.workflowId} className="border-b border-line">
+                    <RowLink href={`/workflows/${workflow.id}`} title={problem.q} line={workflow.title} />
+                  </li>
+                );
+              })}
+            </ul>
+            <Link href="/workflows" className="btn btn-secondary mt-6">
+              See all eight workflows
+            </Link>
+          </div>
+          <div className="lg:col-span-5">
+            <HardwareFrame
+              src="/images/ind-professional.jpg"
+              alt="A quiet office after hours, a closed laptop on a dark green desk under a lamp."
+              width={4}
+              height={5}
+              sizes="(min-width: 1024px) 40vw, 100vw"
+            />
+          </div>
+        </div>
+      </section>
+
+      {QUOTE ? (
+        <section data-surface="dark" aria-label="Client testimonial" className="border-t border-line bg-forest">
+          <figure className="wrap mx-auto max-w-[60rem] py-14 text-center lg:py-20">
+            <blockquote className="h3 font-normal">“{QUOTE.quote}”</blockquote>
+            <figcaption className="mt-6 text-muted">
+              <span className="font-semibold text-body">{QUOTE.company}</span>
+              {QUOTE.location ? ` · ${QUOTE.location}` : ""}
+            </figcaption>
+            <Link href="/testimonials" className="btn btn-secondary mt-8">
+              Read testimonials
+            </Link>
+          </figure>
+        </section>
+      ) : null}
+
+      <section data-surface="dark" aria-labelledby="built" className="border-t border-line bg-forest">
+        <div className="wrap py-14 text-center lg:py-20">
+          <h2 id="built" className="h2">
+            What happens to each item
+          </h2>
+          <p className="mx-auto mt-4 max-w-[40rem] text-muted">
+            Every item passes the same four stations. Only the approval waits for a person.
+          </p>
+          <div className="mx-auto mt-12 max-w-[64rem]">
+            <Stations />
+          </div>
         </div>
       </section>
 
@@ -144,7 +167,12 @@ export default function HomePage() {
               </li>
             ))}
           </ol>
-          <p className="mt-6">Build and operations are scoped after the audit.</p>
+          <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
+            <p>Build and operations are scoped after the audit.</p>
+            <Link href="/how-it-works" className="btn btn-secondary">
+              See the full process
+            </Link>
+          </div>
         </div>
       </section>
 

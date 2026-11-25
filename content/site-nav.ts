@@ -9,6 +9,7 @@ export type NavItem = NavLink & {
 export const NAV: NavItem[] = [
   { label: "Workflows", href: "/workflows", match: ["/workflows"] },
   { label: "Services", href: "/services", match: ["/services"] },
+  { label: "How it works", href: "/how-it-works", match: ["/how-it-works"] },
   { label: "Insights", href: "/insights", match: ["/insights"] },
   { label: "Testimonials", href: "/testimonials", match: ["/testimonials"] },
   { label: "About", href: "/about", match: ["/about"] },
@@ -17,16 +18,15 @@ export const NAV: NavItem[] = [
 /** Listed under the main items in the phone menu, which has no footer in view. */
 export const DRAWER_LINKS: NavLink[] = [
   { label: "Industries", href: "/industries" },
-  { label: "How we work", href: "/approach" },
   { label: "Contact", href: "/contact" },
 ];
 
 export const FOOTER: NavLink[] = [
   { label: "Workflows", href: "/workflows" },
   { label: "Services", href: "/services" },
+  { label: "How it works", href: "/how-it-works" },
   { label: "Industries", href: "/industries" },
   { label: "Insights", href: "/insights" },
-  { label: "How we work", href: "/approach" },
   { label: "Testimonials", href: "/testimonials" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },

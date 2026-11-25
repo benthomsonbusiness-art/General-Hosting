@@ -21,8 +21,8 @@ const MORE = [
     title: "By industry",
   },
   {
-    href: "/approach",
-    title: "How we work",
+    href: "/how-it-works",
+    title: "How it works",
   },
 ];
 
