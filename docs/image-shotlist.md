@@ -1,0 +1,43 @@
+# Image Shotlist — Valentini & Co.
+
+Style across every shot: editorial still-life and macro photography, 85mm or 100mm macro lens, hard directional daylight with long crisp shadows, deep forest-green (`#133224`) or archival near-white (`#FCFBF7` / `#F7F4EC`) surfaces, visible material texture (cotton paper fibers, brass staples, folded creases, ink bleed), slight analog film grain, nothing glossy or rendered. No readable text, no logos, no brand names, no faces.
+
+## Generated and active in `public/images/`
+
+| File | Ratio | Source width | Status | Prompt |
+| --- | --- | --- | --- | --- |
+| `hero-paper-fall.jpg` | 16:9 | 1376 | Generated | Dozens of thick cream and off-white archival cotton paper sheets, folded envelopes, and ruled accounting forms suspended mid-fall above a deep forest-green wool baize surface (`#133224`), hard directional daylight from upper left casting crisp long shadows. |
+| `cut-invoice.png` | 4:5 | 960 (alpha) | Generated + extracted | Top-down macro flat-lay of a single worn cream cotton invoice sheet with faint ruled ledger lines and a brass corner staple, transparent background, no baked shadow. |
+| `cut-letter.png` | 4:5 | 960 (alpha) | Generated + extracted | Top-down macro flat-lay of a crisp ivory cotton correspondence letter sheet folded cleanly in thirds horizontally, transparent background, no baked shadow. |
+| `cut-receipt.png` | 4:5 | 960 (alpha) | Generated + extracted | Top-down macro flat-lay of a narrow vertical cream paper receipt strip with serrated torn top and bottom edges, transparent background, no baked shadow. |
+| `cut-ticket.png` | 4:5 | 960 (alpha) | Generated + extracted | Top-down macro flat-lay of an ivory cardstock routing ticket with a perforated stub edge and punched brass eyelet hole, transparent background, no baked shadow. |
+| `cut-resume.png` | 4:5 | 960 (alpha) | Generated + extracted | Top-down macro flat-lay of a thick white cotton resume sheet with a strip of matte black masking tape redacting the top header band, transparent background, no baked shadow. |
+| `cut-contract.png` | 4:5 | 960 (alpha) | Generated + extracted | Top-down macro flat-lay of a multi-page thick cream contract stack bound on the edge with an antique brass prong fastener, transparent background, no baked shadow. |
+| `cut-notebook.png` | 4:5 | 960 (alpha) | Generated + extracted | Top-down macro flat-lay of an open dark-green clothbound field notebook with blank faint-ruled cream pages, transparent background, no baked shadow. |
+| `cut-envelope.png` | 4:5 | 960 (alpha) | Generated + extracted | Top-down macro flat-lay of a heavy warm cream paper envelope with its triangular flap open, transparent background, no baked shadow. |
+| `wf-lead.jpg` | 3:2 | 1264 | Generated | Open heavy cream correspondence envelope on deep green wool baize (`#133224`) with a folded ivory letter sheet sliding halfway out in hard raking morning daylight. |
+| `wf-invoice.jpg` | 3:2 | 1264 | Generated | Neat stack of thick cream ledger invoices with brass staples on a deep forest-green table, one middle invoice sheet pulled two inches out in raking daylight. |
+| `gate-detail.jpg` | 21:9 | 1376 | Generated + cropped | 100mm macro of a heavy turned walnut and brushed brass rubber stamp hovering two millimeters above textured cotton rag paper on a dark green desk, crisp shadow just before contact. |
+| `texture-green.jpg` | 1:1 | 1024 | Generated | Seamless top-down macro of deep dark forest-green (`#133224`) matte wool baize desk blotter texture with subtle woven grain. |
+| `texture-paper.jpg` | 1:1 | 1024 | Derived from `cut-letter` cotton surface | Seamless top-down macro of warm unbleached cotton archival paper fibers (`#F7F4EC`). |
+
+## Pending generation (image-tool quota exhausted during batch generation; prompts ready)
+
+| File | Target Ratio & Min Width | Prompt |
+| --- | --- | --- |
+| `wf-proposal.jpg` | 3:2, 2400 | Editorial still-life photography, 85mm lens. A solid brushed-brass fountain pen resting diagonally across an unsigned thick cream proposal sheet on dark forest-green wood (`#133224`), hard directional daylight, long crisp shadow, visible cotton paper fibers, slight grain, no readable text or logos. |
+| `wf-onboarding.jpg` | 3:2, 2400 | Editorial still-life photography, 85mm lens. Two heavy brass keys resting atop a thick dark-green and manila client folder bound with cotton tape, crisp morning window light casting sharp shadows on a dark wood surface, slight film grain, no readable text. |
+| `wf-brief.jpg` | 3:2, 2400 | Editorial still-life photography, 85mm lens. Early morning window sunlight cutting in sharp diagonal bands across a crisp folded cream editorial brief sheet on a dark obsidian-green desk (`#0B1F16`), visible paper tooth, slight grain, no readable text. |
+| `wf-support.jpg` | 3:2, 2400 | Editorial still-life photography, 85mm lens. A matte dark architectural desk telephone beside a neat stack of cream cardstock routing tickets on deep forest-green baize (`#133224`), hard directional side light casting long shadows, no readable text or logos. |
+| `wf-ads.jpg` | 3:2, 2400 | Macro editorial photography, 100mm lens. Overlapping torn matte heavy poster paper layers in deep forest green, warm cream, and muted terracotta (`#A84B2E`) in sharp raking daylight casting crisp edge shadows, real paper fibers, no readable text. |
+| `wf-recruiting.jpg` | 3:2, 2400 | Editorial still-life photography, 85mm lens. A neat stack of heavy white cotton resumes on a deep forest-green tabletop with a crisp strip of matte black masking tape across the top header band, hard directional daylight, slight film grain, no readable text. |
+| `ind-professional.jpg` | 4:5, 2000 | Editorial interior still-life, 85mm lens, no people. A dark walnut and forest-green leather advisory desk with stacked linen-tied paper briefs and an unlit brass desk lamp against dark green wall paneling in raking afternoon daylight, slight film grain, no readable text. |
+| `ind-wellness.jpg` | 4:5, 2000 | Editorial architectural photograph, 85mm lens, no people. An empty warm oak hardwood movement studio floor at dawn with long diagonal window shadow bars falling across the timber toward a matte botanical green wall, serene directional light, slight grain. |
+| `ind-realestate.jpg` | 4:5, 2000 | Editorial still-life photograph, 85mm lens, no people. A ring of heavy antique brass keys resting inside the mortise lock of a dark painted forest-green architectural wood door in crisp morning sunlight, sharp shadows, real wood and brass texture. |
+| `ind-retail.jpg` | 4:5, 2000 | Editorial still-life photograph, 85mm lens, no people. A clean timber packing workbench with neatly folded unbleached kraft boxes, a spool of cotton twine, brass shears, and stacked blank packing slips against a deep green plaster wall, hard directional daylight, no readable text. |
+| `ind-home.jpg` | 4:5, 2000 | Editorial still-life photograph, 85mm lens, no people. An impeccably organized dark-painted service van shelving bay holding brass pipe fittings, coiled copper, and a timber clipboard with blank cream job forms in crisp side daylight, no logos, no readable text. |
+| `ind-finance.jpg` | 4:5, 2000 | Editorial still-life photograph, 85mm lens, no people. A thick forest-green clothbound accounting ledger lying open beside stacked cream ruled forms beneath a warm glowing brass banker's lamp on dark walnut in raking light, slight film grain, no readable numbers or text. |
+| `approach-map.jpg` | 16:9, 2560 | Editorial still-life, 85mm lens, high three-quarter angle over a dark walnut workbench with deep green wall behind. Dozens of loose cream forms, envelopes, receipts, and tickets scattered across the wooden table in hard directional daylight casting long shadows, no readable text. |
+| `approach-design.jpg` | 16:9, 2560 | Same dark walnut workbench and exact camera angle as `approach-map.jpg`. The exact same cream forms, envelopes, and cardstock tickets now sorted into four parallel aligned lanes across the table with faint pencil grid marks, crisp raking daylight. |
+| `approach-build.jpg` | 16:9, 2560 | Same dark walnut workbench and exact camera angle as `approach-map.jpg`. The arranged paper stacks now joined cleanly across the table by taut linen string and small brass clips leading toward one central stack, crisp raking daylight. |
+| `approach-handover.jpg` | 16:9, 2560 | Same dark walnut workbench and exact camera angle as `approach-map.jpg`. All loose papers gone, replaced by one thick tidy forest-green clothbound manual book with brass corner rivets resting squarely in the center of the walnut table in raking daylight. |

@@ -26,7 +26,7 @@ const nextConfig: NextConfig = {
   images: {
     loader: "custom",
     loaderFile: "./lib/image-loader.ts",
-    deviceSizes: [480, 640, 800, 960, 1280],
+    deviceSizes: [480, 640, 800, 960, 1280, 1600, 1920, 2560],
     imageSizes: [240],
   },
   turbopack: {
