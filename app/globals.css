@@ -93,7 +93,7 @@
 
   body {
     background-color: var(--obsidian);
-    background-image: linear-gradient(rgb(11 31 22 / 0.9), rgb(11 31 22 / 0.9)), url("/images/sized/texture-console-1024.webp");
+    background-image: linear-gradient(rgb(11 31 22 / 0.9), rgb(11 31 22 / 0.9)), url("/images/sized/texture-console-480.webp");
     background-size: auto, 480px;
     color: var(--ivory);
     font-family: var(--font-sans);
@@ -155,7 +155,7 @@ html[data-modality="pointer"] :focus-visible {
 
 @layer components {
   .bg-obsidian {
-    background-image: linear-gradient(rgb(11 31 22 / 0.9), rgb(11 31 22 / 0.9)), url("/images/sized/texture-console-1024.webp");
+    background-image: linear-gradient(rgb(11 31 22 / 0.9), rgb(11 31 22 / 0.9)), url("/images/sized/texture-console-480.webp");
     background-size: auto, 480px;
   }
 
@@ -174,14 +174,26 @@ html[data-modality="pointer"] :focus-visible {
     max-width: 68ch;
   }
 
+  /*
+   * One type scale, five display steps: display (home hero only), h1 (every other page H1),
+   * h2, h3, h4. Heading level and size are separate: an <h2> may wear .h3.
+   */
   .display,
   .h1 {
     font-family: var(--font-sans);
     font-variation-settings: "wdth" 115, "wght" 620;
     font-weight: 620;
-    font-size: clamp(2.6rem, 1.6rem + 4.2vw, 6rem);
     line-height: 0.98;
     letter-spacing: -0.03em;
+  }
+
+  .display {
+    font-size: clamp(2.6rem, 1.6rem + 4.2vw, 6rem);
+  }
+
+  .h1 {
+    font-size: clamp(2.5rem, 1.6rem + 3vw, 5rem);
+    line-height: 1;
   }
 
   .h2 {
@@ -197,14 +209,24 @@ html[data-modality="pointer"] :focus-visible {
     font-family: var(--font-sans);
     font-variation-settings: "wdth" 105, "wght" 600;
     font-weight: 600;
-    font-size: clamp(1.25rem, 1.1rem + 0.4vw, 1.5rem);
-    line-height: 1.25;
+    font-size: clamp(1.5rem, 1.2rem + 1.1vw, 2.25rem);
+    line-height: 1.12;
     letter-spacing: -0.015em;
   }
 
   .h4 {
+    font-family: var(--font-sans);
+    font-variation-settings: "wdth" 100, "wght" 600;
     font-weight: 600;
-    font-size: 1.125rem;
+    font-size: clamp(1.375rem, 1.2rem + 0.5vw, 1.75rem);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  /* Title of a list row that links somewhere: workflows, services, insights. Not a heading step. */
+  .row-title {
+    font-size: 1.25rem;
+    font-weight: 500;
     line-height: 1.35;
   }
 

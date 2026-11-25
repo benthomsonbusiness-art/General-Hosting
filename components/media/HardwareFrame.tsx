@@ -31,9 +31,9 @@ export function HardwareFrame({
       ) : (
         <div role="img" aria-label={alt} className="absolute inset-0">
           <svg viewBox="0 0 240 103" className="h-full w-full" aria-hidden>
-            <rect width="240" height="103" fill="#133224" />
-            <rect x="148" y="36" width="28" height="28" rx="2" fill="#C5A869" />
-            <rect x="151" y="33" width="22" height="4" rx="1" fill="#d4c08a" />
+            <rect width="240" height="103" className="fill-forest" />
+            <rect x="148" y="36" width="28" height="28" rx="2" className="fill-gold" />
+            <rect x="151" y="33" width="22" height="4" rx="1" className="fill-ivory/55" />
           </svg>
         </div>
       )}
