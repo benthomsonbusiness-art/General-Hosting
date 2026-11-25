@@ -69,6 +69,14 @@ export function useWorkflowRun(workflow: Workflow, paused: boolean) {
   return [state, dispatch] as const;
 }
 
+function useClientReady(): boolean {
+  return useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
+}
+
 function gateAt(workflow: Workflow): number {
   return workflow.nodes.find((node) => node.confidence)?.confidence?.threshold ?? 0.8;
 }
@@ -88,6 +96,7 @@ export function usePlayer(
 ) {
   const scenarios = SCENARIOS[workflow.id];
   const [motion, setMotion] = useMotion();
+  const clientReady = useClientReady();
   const [paused, setPaused] = useState(false);
   const [state, dispatch] = useWorkflowRun(workflow, paused);
   const [choice, setChoice] = useState(0);
@@ -104,7 +113,7 @@ export function usePlayer(
   // Home only. Other stages stay put until the visitor steps them.
   useEffect(() => {
     const root = rootRef.current;
-    if (!autoplay || !motion || !root) return;
+    if (!clientReady || !autoplay || !motion || !root) return;
     let timer = 0;
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -119,11 +128,11 @@ export function usePlayer(
       observer.disconnect();
       window.clearTimeout(timer);
     };
-  }, [autoplay, motion, workflow, dispatch, rootRef]);
+  }, [clientReady, autoplay, motion, workflow, dispatch, rootRef]);
 
   // Motion off on the home console: land on the gate before paint, without moving focus.
   useLayoutEffect(() => {
-    if (!openAtGate || motion || state.status !== "ready") return;
+    if (!clientReady || !openAtGate || motion || state.status !== "ready") return;
     const stops = stopsFor(workflow.nodes, scenarios[choice], threshold);
     const reduce = runReducer(workflow);
     let sim = reduce(initialRun(), { type: "SET_STOPS", ids: stops });
@@ -136,7 +145,7 @@ export function usePlayer(
       sim = reduce(sim, { type: "STEP" });
       guard += 1;
     }
-  }, [openAtGate, motion, state.status, workflow, scenarios, choice, threshold, dispatch]);
+  }, [clientReady, openAtGate, motion, state.status, workflow, scenarios, choice, threshold, dispatch]);
 
   useEffect(() => {
     if (!awaiting || !acted.current) return;

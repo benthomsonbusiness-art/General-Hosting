@@ -9,7 +9,7 @@ import { JsonLd } from "@/components/util/JsonLd";
 import { HOME } from "@/content/pages";
 import { NAV } from "@/content/site-nav";
 import { DEFAULT_SHARE_IMAGE } from "@/lib/seo";
-import { INQUIRY_EMAIL, SITE_NAME, SITE_URL } from "@/lib/site";
+import { SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const mona = Mona_Sans({
@@ -80,7 +80,6 @@ const organization = {
   name: SITE_NAME,
   url: SITE_URL,
   description: HOME.metaDescription,
-  email: INQUIRY_EMAIL,
   image: `${SITE_URL}${DEFAULT_SHARE_IMAGE.url}`,
   address: {
     "@type": "PostalAddress",

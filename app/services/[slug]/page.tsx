@@ -123,16 +123,14 @@ export default async function ServicePage({ params }: Props) {
             {flagship ? (
               <StageDiagram />
             ) : (
-              <ol className="grid gap-6 md:grid-cols-3">
-                {service.steps?.map((step, index) => (
-                  <li key={step.title} className="border border-ink/12 p-6">
-                    <h3 className="h3">
-                      {index + 1}. {step.title}
-                    </h3>
-                    <p className="mt-3 text-slate">{step.body}</p>
+              <ul className="divide-y divide-ink/12 border-y border-ink/12">
+                {service.steps?.map((step) => (
+                  <li key={step.title} className="grid gap-2 py-6 md:grid-cols-12 md:items-baseline">
+                    <h3 className="h3 md:col-span-4">{step.title}</h3>
+                    <p className="text-slate md:col-span-8">{step.body}</p>
                   </li>
                 ))}
-              </ol>
+              </ul>
             )}
           </div>
         </Container>
