@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { Cormorant_Garamond, IBM_Plex_Mono, Mona_Sans } from "next/font/google";
-import localFont from "next/font/local";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { InputModality } from "@/components/util/InputModality";
@@ -24,15 +23,6 @@ const cormorantWordmark = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["500"],
   variable: "--font-cormorant",
-  display: "swap",
-});
-
-// Wordmark ampersand subset from Cormorant Garamond Italic 500 (SIL Open Font License).
-const ampersand = localFont({
-  src: "./fonts/cormorant-italic-ampersand.woff2",
-  weight: "500",
-  style: "italic",
-  variable: "--font-ampersand",
   display: "swap",
 });
 
@@ -83,8 +73,8 @@ const organization = {
   image: `${SITE_URL}${DEFAULT_SHARE_IMAGE.url}`,
   address: {
     "@type": "PostalAddress",
-    addressLocality: "Bloomington",
-    addressRegion: "IN",
+    addressLocality: "Morristown",
+    addressRegion: "NJ",
     addressCountry: "US",
   },
   founder: { "@type": "Person", name: "Ben Thomson", jobTitle: "Founder" },
@@ -104,7 +94,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${mona.variable} ${cormorantWordmark.variable} ${ampersand.variable} ${plexMono.variable} h-full antialiased`}
+      className={`${mona.variable} ${cormorantWordmark.variable} ${plexMono.variable} h-full antialiased`}
     >
       <body data-surface="dark" className="flex min-h-full flex-col">
         <InputModality />

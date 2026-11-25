@@ -1,6 +1,7 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import Link from "next/link";
+import { HelpCta } from "@/components/layout/HelpCta";
 import { ClosingCta } from "@/components/layout/ClosingCta";
 import { Container, Section } from "@/components/layout/Section";
 import { HardwareFrame } from "@/components/media/HardwareFrame";
@@ -36,6 +37,7 @@ export default function AboutPage() {
             About the firm
           </h1>
           <p className="lead measure mt-5 text-muted">{ABOUT.dek}</p>
+          <HelpCta />
         </Container>
       </Section>
 
@@ -45,7 +47,7 @@ export default function AboutPage() {
             <div className="lg:col-span-4">
               <HardwareFrame
                 src={FOUNDER_PHOTO}
-                alt="Ben Thomson, founder of Valentini & Co."
+                alt="Ben Thomson, founder of Valentini Systems"
                 width={1600}
                 height={2000}
                 sizes="(min-width: 1024px) 30vw, 100vw"

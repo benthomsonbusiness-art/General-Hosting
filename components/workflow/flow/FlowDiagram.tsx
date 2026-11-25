@@ -1,6 +1,5 @@
 import { UserCheck } from "lucide-react";
 import type { CSSProperties, ReactNode } from "react";
-import { DIAGRAM_CAPTION } from "@/content/pages";
 import { NODE_KINDS } from "@/content/workflows";
 import { AppMark } from "./AppMark";
 import {
@@ -56,7 +55,12 @@ function Edges({ layout }: { layout: FlowLayout }) {
         const k = edge.keys.map((key) => `s${key}`).join(" ");
         if (edge.kind === "spine") {
           const y = spineY(edge.keys[0]);
-          return <line key={i} className="flow-edge" data-k={k} x1={pct(edge.fromF!)} y1={y} x2={pct(edge.toF!)} y2={y} />;
+          return (
+            <g key={i}>
+              <line className="flow-edge" data-k={k} x1={pct(edge.fromF!)} y1={y} x2={pct(edge.toF!)} y2={y} />
+              <line className="flow-edge-run" x1={pct(edge.fromF!)} y1={y} x2={pct(edge.toF!)} y2={y} />
+            </g>
+          );
         }
         if (edge.kind === "fork") {
           const mid = pct((edge.fromF! + edge.toF!) / 2);
@@ -322,7 +326,6 @@ export function FlowDiagram({
           </div>
         </div>
       </div>
-      <figcaption className="flow-caption">{DIAGRAM_CAPTION}</figcaption>
       {footer}
     </figure>
   );

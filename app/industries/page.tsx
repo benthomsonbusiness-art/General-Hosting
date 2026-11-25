@@ -1,4 +1,5 @@
 import { IndustryPicker } from "@/components/content/Pickers";
+import { HelpCta } from "@/components/layout/HelpCta";
 import { ClosingCta } from "@/components/layout/ClosingCta";
 import { Container, Section } from "@/components/layout/Section";
 import { Breadcrumbs } from "@/components/nav/Breadcrumbs";
@@ -23,6 +24,7 @@ export default function IndustriesPage() {
             What we automate, by industry
           </h1>
           <p className="lead mt-4 max-w-[36rem] text-muted">{INDUSTRIES_HUB.dek}</p>
+          <HelpCta />
           <div className="mt-10">
             <IndustryPicker
               industries={INDUSTRIES.map((item) => ({

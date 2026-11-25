@@ -1,4 +1,5 @@
 import { InsightExplorer } from "@/components/content/InsightExplorer";
+import { HelpCta } from "@/components/layout/HelpCta";
 import { ClosingCta } from "@/components/layout/ClosingCta";
 import { Container, Section } from "@/components/layout/Section";
 import { Breadcrumbs } from "@/components/nav/Breadcrumbs";
@@ -23,6 +24,7 @@ export default function InsightsPage() {
             Insights
           </h1>
           <p className="lead mt-4 max-w-[36rem] text-muted">{INSIGHTS_HUB.dek}</p>
+          <HelpCta line="Rather talk it through? Tell us which process slows your week down." />
           <div className="mt-10">
             <h2 className="sr-only">All insights</h2>
             <InsightExplorer insights={newest} />

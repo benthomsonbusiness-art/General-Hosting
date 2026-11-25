@@ -1,4 +1,6 @@
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { HelpCta } from "@/components/layout/HelpCta";
 import { ClosingCta } from "@/components/layout/ClosingCta";
 import { Container, Section } from "@/components/layout/Section";
 import { Breadcrumbs } from "@/components/nav/Breadcrumbs";
@@ -17,12 +19,10 @@ const MORE = [
   {
     href: "/industries",
     title: "By industry",
-    line: "Where the hours go in six kinds of company, and what stays with your team.",
   },
   {
     href: "/approach",
     title: "How we work",
-    line: "From the first map of your process to handing you the code.",
   },
 ];
 
@@ -38,26 +38,45 @@ export default function ServicesPage() {
             Services
           </h1>
           <p className="lead mt-4 max-w-[36rem] text-muted">{SERVICES_HUB.dek}</p>
+          <HelpCta />
 
-          <Link href={serviceHref(FLAGSHIP.slug)} className="group mt-10 block border-y border-line py-6">
+          <Link
+            href={serviceHref(FLAGSHIP.slug)}
+            className="group mt-10 flex items-center justify-between gap-6 border-y border-line py-6"
+          >
             <span className="card-title block h2">{FLAGSHIP.name}</span>
-            <span className="mt-3 block max-w-[40rem] text-muted">{FLAGSHIP.summary}</span>
+            <ArrowRight
+              aria-hidden
+              className="shrink-0 text-muted transition-transform duration-200 group-hover:translate-x-1"
+              size={20}
+              strokeWidth={1.5}
+            />
           </Link>
 
           <ul className="divide-y divide-line border-b border-line">
             {secondary.map((item) => (
               <li key={item.slug}>
-                <Link href={serviceHref(item.slug)} className="group block py-6">
+                <Link href={serviceHref(item.slug)} className="group flex items-center justify-between gap-6 py-6">
                   <span className="card-title block h4">{item.name}</span>
-                  <span className="mt-2 block max-w-[40rem] text-muted">{item.summary}</span>
+                  <ArrowRight
+                    aria-hidden
+                    className="shrink-0 text-muted transition-transform duration-200 group-hover:translate-x-1"
+                    size={20}
+                    strokeWidth={1.5}
+                  />
                 </Link>
               </li>
             ))}
             {MORE.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} className="group block py-6">
+                <Link href={item.href} className="group flex items-center justify-between gap-6 py-6">
                   <span className="card-title block h4">{item.title}</span>
-                  <span className="mt-2 block max-w-[40rem] text-muted">{item.line}</span>
+                  <ArrowRight
+                    aria-hidden
+                    className="shrink-0 text-muted transition-transform duration-200 group-hover:translate-x-1"
+                    size={20}
+                    strokeWidth={1.5}
+                  />
                 </Link>
               </li>
             ))}

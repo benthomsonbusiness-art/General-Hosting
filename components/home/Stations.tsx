@@ -1,4 +1,4 @@
-import { CodeXml, Database, UserCheck } from "lucide-react";
+import { CodeXml, Database, Sparkles, UserCheck } from "lucide-react";
 import { HOME } from "@/content/pages";
 
 const ICON = { "aria-hidden": true, focusable: "false", strokeWidth: 1.5 } as const;
@@ -11,7 +11,10 @@ const NODES = [
   <span key="rule" className="relative z-10 grid h-12 place-items-center border border-[rgb(247_244_236_/_0.16)] bg-obsidian text-ivory/64 w-12">
     <CodeXml {...ICON} size={22} />
   </span>,
-  <span key="ai" className="relative z-10 grid h-12 place-items-center border border-[rgb(247_244_236_/_0.16)] bg-obsidian text-ivory/64 w-28" />,
+  <span key="ai" className="relative z-10 flex h-12 w-28 items-center justify-center gap-2 border border-[rgb(247_244_236_/_0.16)] bg-forest text-ivory">
+    <Sparkles {...ICON} size={18} />
+    <span className="text-[13px] font-semibold">Draft</span>
+  </span>,
   <span key="approval" className="relative z-10 grid h-12 w-12 place-items-center rounded-[6px] bg-gold text-obsidian shadow-[inset_0_1px_0_rgb(247_244_236_/_0.55)]">
     <UserCheck {...ICON} size={20} strokeWidth={1.75} />
   </span>,

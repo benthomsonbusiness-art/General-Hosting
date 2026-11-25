@@ -2,7 +2,7 @@
 
 export const HOME = {
   metaDescription:
-    "Valentini & Co. automates back-office work for owner-led companies, inside the tools you already use. Nothing leaves your company until a person approves it.",
+    "Valentini Systems automates back-office work for owner-led companies, inside the tools you already use. Nothing leaves your company until a person approves it.",
   problems: [
     { q: "Inbound leads sitting a full day before anyone sends a first reply", workflowId: "lead-triage" },
     { q: "Supplier invoices keyed line by line and matched to purchase orders by eye", workflowId: "ap-intake" },
@@ -73,10 +73,6 @@ export const WORKFLOWS_PAGE = {
   all: "All workflows",
 };
 
-/** Under every workflow drawing. Product names and marks are examples, never a claim of partnership. */
-export const DIAGRAM_CAPTION =
-  "Example workflow with sample data. Product names and logos belong to their owners and show example integrations, not partnerships.";
-
 export const INSIGHTS_HUB = {
   metaDescription:
     "Short guides for owner-led companies on what to automate, where a person should approve, what a workflow audit covers and how a daily brief is built.",
@@ -85,22 +81,22 @@ export const INSIGHTS_HUB = {
 
 export const APPROACH_PAGE = {
   metaDescription:
-    "How Valentini & Co. runs a project: map the process, write down the rules and approvals, test beside your team, then hand over the code, accounts and manuals.",
+    "How Valentini Systems runs a project: map the process, write down the rules and approvals, test beside your team, then hand over the code, accounts and manuals.",
   dek: "We follow real work through your tools, write down every rule, test the automation beside your team before it sends anything, and hand you the code.",
 };
 
 export const ABOUT = {
   metaDescription:
-    "Valentini & Co. is an advisory firm in Bloomington, Indiana that automates back-office work for owner-led companies. You approve what goes out and own the code.",
+    "Valentini Systems is a Morristown, New Jersey firm that automates back-office work for owner-led companies. You approve what goes out and you own the code.",
   dek: "We automate back-office work inside the software your company already runs.",
   founder:
     "Routine work is written as plain rules. AI is used only where a step needs reading or drafting. Nothing leaves your company until a person on your team approves it.",
-  where: "Based in Bloomington, Indiana, working remotely with owner-led companies.",
+  where: "Based in Morristown, New Jersey, working with owner-led companies in person and remotely.",
 };
 
 export const CONTACT = {
   metaDescription:
-    "Tell Valentini & Co. which process slows your week down. Request a workflow audit, or ask about Meta ads or strategy, using the short form on this page.",
+    "Tell Valentini Systems which process slows your week down. Request a workflow audit, or ask about Meta ads or strategy, using the short form on this page.",
   dek: "A few sentences is enough. Say what the process is, who touches it, and where it stalls.",
   guidance: "Please do not send passwords, client records or other confidential material.",
   next: [
@@ -113,5 +109,13 @@ export const CONTACT = {
 
 export const SEARCH_PAGE = {
   metaDescription:
-    "Search the Valentini & Co. site for services, example workflows, industries and guides about automating back-office work at owner-led companies.",
+    "Search the Valentini Systems site for services, example workflows, industries and guides about automating back-office work at owner-led companies.",
+};
+
+export const TESTIMONIALS_PAGE = {
+  metaDescription:
+    "What owner-led companies say after Valentini Systems automated their back-office work: faster replies, fewer hours keyed by hand, and every send approved.",
+  dek: "What clients say once the work runs on its own and they still approve every send.",
+  empty:
+    "Client stories will appear here as our first engagements wrap up. In the meantime, request an audit and see the work for yourself.",
 };

@@ -1,6 +1,7 @@
 import { ApproachStages } from "@/components/content/ApproachStages";
 import { Faq } from "@/components/content/Blocks";
 import { StageDiagram } from "@/components/content/Diagrams";
+import { HelpCta } from "@/components/layout/HelpCta";
 import { ClosingCta } from "@/components/layout/ClosingCta";
 import { Container, Section } from "@/components/layout/Section";
 import { Breadcrumbs } from "@/components/nav/Breadcrumbs";
@@ -17,7 +18,11 @@ export const metadata = pageMetadata({
 export default function ApproachPage() {
   return (
     <>
-      <section data-surface="dark" aria-labelledby="approach-title" className="bg-obsidian pt-12 pb-20 md:pt-16 md:pb-28">
+      <section
+        data-surface="dark"
+        aria-labelledby="approach-title"
+        className="bg-obsidian pt-12 pb-20 md:pt-16 md:pb-28"
+      >
         <Container>
           <Breadcrumbs items={[{ name: "How we work", path: "/approach" }]} />
 
@@ -25,7 +30,10 @@ export default function ApproachPage() {
             <h1 id="approach-title" className="h1 lg:col-span-7">
               How we work
             </h1>
-            <p className="lead text-muted lg:col-span-5">{APPROACH_PAGE.dek}</p>
+            <div className="lg:col-span-5">
+              <p className="lead text-muted">{APPROACH_PAGE.dek}</p>
+              <HelpCta className="mt-6" line="" />
+            </div>
           </div>
 
           <ApproachStages />

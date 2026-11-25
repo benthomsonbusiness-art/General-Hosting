@@ -1,5 +1,5 @@
 import type { NextConfig } from "next";
-import { SITE_DOMAIN, SITE_URL, SITE_WWW } from "./lib/site";
+import { SITE_URL, SITE_WWW } from "./lib/site";
 
 const isDev = process.env.NODE_ENV !== "production";
 
@@ -79,14 +79,6 @@ const nextConfig: NextConfig = {
           // TODO: When https://valentiniandco.com is the live host, also send
           // Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
         ],
-      },
-      {
-        source: "/:path*",
-        missing: [
-          { type: "host", value: SITE_DOMAIN },
-          { type: "host", value: SITE_WWW },
-        ],
-        headers: [{ key: "X-Robots-Tag", value: "noindex" }],
       },
     ];
   },

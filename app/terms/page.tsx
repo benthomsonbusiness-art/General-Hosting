@@ -4,7 +4,7 @@ import { pageMetadata } from "@/lib/seo";
 import { trademarkLines, usedAppSlugs } from "@/lib/used-apps";
 
 const title = "Terms";
-const description = "Placeholder terms for the Valentini & Co. website. Not in effect.";
+const description = "Placeholder terms for the Valentini Systems website. Not in effect.";
 
 export const metadata = pageMetadata({ title, description, path: "/terms", noindex: true });
 
@@ -16,12 +16,12 @@ export default function TermsPage() {
       path="/terms"
       other={{ href: "/privacy", label: "Privacy" }}
       title="Terms"
-      lede="These terms will govern use of the Valentini & Co. website. Until the approved text is published, this page creates no obligation on either side."
+      lede="These terms will govern use of the Valentini Systems website. Until the approved text is published, this page creates no obligation on either side."
     >
       <LegalSection heading="Using this site">
         <p>
           Browsing the site does not create a client relationship, a retainer, or any other
-          engagement with Valentini &amp; Co.
+          engagement with Valentini Systems
         </p>
       </LegalSection>
       <LegalSection heading="Inquiries">
@@ -32,7 +32,7 @@ export default function TermsPage() {
       </LegalSection>
       <LegalSection heading="Materials on the site">
         <p>
-          Text and images on the site belong to Valentini &amp; Co. or its licensors. Third-party product names and
+          Text and images on the site belong to Valentini Systems or its licensors. Third-party product names and
           logos belong to their owners. They appear only to show the kinds of tools a workflow can connect to, and
           their use does not mean any of those companies is a client, partner or sponsor. The final terms will state
           what visitors may do with the site&apos;s own materials.
@@ -55,7 +55,7 @@ export default function TermsPage() {
       </LegalSection>
       <LegalSection heading="Changes">
         <p>
-          Valentini &amp; Co. will replace this page with the approved terms and may update them
+          Valentini Systems will replace this page with the approved terms and may update them
           later. The published date will appear here.
         </p>
       </LegalSection>

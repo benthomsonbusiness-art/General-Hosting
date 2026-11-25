@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { RowLink } from "@/components/cards/RowLink";
+import { HelpCta } from "@/components/layout/HelpCta";
 import { ClosingCta } from "@/components/layout/ClosingCta";
 import { Breadcrumbs } from "@/components/nav/Breadcrumbs";
 import { firstSentence, toFlowNodes } from "@/components/workflow/examples";
@@ -15,47 +16,48 @@ const COPY = WORKFLOWS_PAGE;
 /** /workflows: all eight, each with its one-line summary and a compact drawing. No controls. */
 export function WorkflowsIndex() {
   return (
-    <section data-surface="dark" aria-labelledby="workflows-title" className="bg-obsidian">
-      <div className="wrap pt-5 pb-16 lg:pb-24">
-        <Breadcrumbs items={[{ name: "Workflows", path: "/workflows" }]} className="mb-2" />
-        <h1 id="workflows-title" className="h1 mt-2 max-w-[16ch]">
-          {COPY.title}
-        </h1>
-        <p className="lead mt-4 max-w-[36rem] text-muted">{COPY.dek}</p>
-        <h2 className="h3 mt-14">{COPY.listHeading}</h2>
-        <ul className="mt-4 border-t border-line">
-          {WORKFLOWS.map((workflow, index) => {
-            const titleId = `wf-${workflow.id}`;
-            return (
-              <li
-                key={workflow.id}
-                className="grid gap-y-4 border-b border-line pb-10"
-              >
-                <div className="max-w-[44rem]">
-                  <RowLink
-                    href={`/workflows/${workflow.id}`}
-                    title={workflow.title}
-                    line={firstSentence(workflow.summary)}
-                    titleId={titleId}
-                  />
-                </div>
-                <div className="min-w-0">
-                  <FlowDiagram
-                    id={`flow-${workflow.id}`}
-                    title={workflow.title}
-                    nodes={toFlowNodes(workflow)}
-                    variant="compact"
-                    stepsHref={`/workflows/${workflow.id}`}
-                    labelledBy={titleId}
-                    eager={index === 0}
-                  />
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-    </section>
+    <>
+      <section data-surface="dark" aria-labelledby="workflows-title" className="bg-obsidian">
+        <div className="wrap pt-5 pb-16 lg:pb-24">
+          <Breadcrumbs items={[{ name: "Workflows", path: "/workflows" }]} className="mb-2" />
+          <h1 id="workflows-title" className="h1 mt-2 max-w-[16ch]">
+            {COPY.title}
+          </h1>
+          <p className="lead mt-4 max-w-[36rem] text-muted">{COPY.dek}</p>
+          <HelpCta line="Have a process that isn't listed? We'll map it with you." />
+          <h2 className="h3 mt-14">{COPY.listHeading}</h2>
+          <ul className="mt-4 border-t border-line">
+            {WORKFLOWS.map((workflow, index) => {
+              const titleId = `wf-${workflow.id}`;
+              return (
+                <li key={workflow.id} className="grid gap-y-4 border-b border-line pb-10">
+                  <div className="max-w-[44rem]">
+                    <RowLink
+                      href={`/workflows/${workflow.id}`}
+                      title={workflow.title}
+                      line={firstSentence(workflow.summary)}
+                      titleId={titleId}
+                    />
+                  </div>
+                  <div className="min-w-0">
+                    <FlowDiagram
+                      id={`flow-${workflow.id}`}
+                      title={workflow.title}
+                      nodes={toFlowNodes(workflow)}
+                      variant="compact"
+                      stepsHref={`/workflows/${workflow.id}`}
+                      labelledBy={titleId}
+                      eager={index === 0}
+                    />
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </section>
+      <ClosingCta />
+    </>
   );
 }
 
@@ -69,7 +71,10 @@ function Fits({ workflow }: { workflow: Workflow }) {
           <span className="font-semibold text-body">{COPY.fits}</span>{" "}
           {industries.map((item, index) => (
             <span key={item.slug}>
-              <Link href={`/industries?industry=${item.slug}`} className="text-link inline-flex min-h-11 items-center underline">
+              <Link
+                href={`/industries?industry=${item.slug}`}
+                className="text-link inline-flex min-h-11 items-center underline"
+              >
                 {item.name}
               </Link>
               {index < industries.length - 1 ? ", " : ""}
@@ -127,10 +132,7 @@ function Decides({ workflow }: { workflow: Workflow }) {
 function Exits({ workflow }: { workflow: Workflow }) {
   const hasAi = workflow.nodes.some((node) => node.kind === "ai");
   const hasGate = workflow.nodes.some((node) => node.kind === "human");
-  const lines = [
-    ...(hasAi ? [COPY.exits.manual] : []),
-    ...(hasGate ? [COPY.exits.rejected, COPY.exits.expired] : []),
-  ];
+  const lines = [...(hasAi ? [COPY.exits.manual] : []), ...(hasGate ? [COPY.exits.rejected, COPY.exits.expired] : [])];
   return (
     <p className="measure mt-8 text-muted">
       {lines.join(" ")} {workflow.ownership}
@@ -159,6 +161,7 @@ export function WorkflowDetail({ workflow }: { workflow: Workflow }) {
             {workflow.title}
           </h1>
           <p className="lead measure mt-5 text-muted">{workflow.summary}</p>
+          <HelpCta className="mt-6" line="Want this running in your company?" />
           <div className="mt-10">
             <FlowDiagram
               id={`flow-${workflow.id}`}
@@ -182,7 +185,7 @@ export function WorkflowDetail({ workflow }: { workflow: Workflow }) {
           </section>
         </div>
       </section>
-      <ClosingCta heading={COPY.closing} />
+      <ClosingCta />
       <nav aria-label="More workflows" data-surface="dark" className="border-t border-line bg-obsidian">
         <div className="wrap grid gap-x-8 py-8 sm:grid-cols-2">
           {previous ? (

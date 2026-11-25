@@ -135,6 +135,13 @@ export const PORT_LABEL: Record<Attachment["port"], string> = {
  */
 export const SHOW_APP_LINE = false;
 
+/**
+ * Whether the "what happens if it stops" notes are drawn above AI, approval and rule steps.
+ * Off: the drawing stays clean; the same facts are in the step text and the "Where a person
+ * decides" section of each workflow page.
+ */
+export const SHOW_EXITS = false;
+
 const PORT_ORDER: Attachment["port"][] = ["model", "memory", "tools", "calls"];
 
 /** The "App: Operation" line under a card, or undefined when the node names no app. */
@@ -153,6 +160,7 @@ export function gateLine(node: FlowNodeInput): string | undefined {
 
 /** Exit text drawn above a card: AI and approval steps always have one; rule steps when they can stop the item. */
 export function exitText(node: FlowNodeInput): string | undefined {
+  if (!SHOW_EXITS) return undefined;
   if (node.kind === "ai") return node.stopLabel ?? WORKFLOWS_PAGE.stubs.ai;
   if (node.kind === "human") return node.stopLabel ?? WORKFLOWS_PAGE.stubs.human;
   return node.stopLabel;

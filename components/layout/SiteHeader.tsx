@@ -92,9 +92,9 @@ export function SiteHeader({ items }: { items: NavItem[] }) {
       }`}
     >
       <div className="wrap flex h-(--header-h) items-center justify-between gap-4">
-        <Link href="/" className="flex min-h-11 min-w-0 items-center gap-3" aria-label="Valentini & Co. home" onClick={close}>
+        <Link href="/" className="flex min-h-11 min-w-0 items-center gap-3" aria-label="Valentini Systems home" onClick={close}>
           <BrandMark tone="dark" className="h-9 w-9 shrink-0" />
-          <span className="hidden sm:inline">
+          <span className="hidden sm:inline lg:max-xl:hidden">
             <BrandWordmark tone="dark" className="min-w-0 truncate text-[12px] sm:text-[14px]" />
           </span>
         </Link>

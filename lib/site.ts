@@ -1,9 +1,9 @@
-export const SITE_NAME = "Valentini & Co.";
+export const SITE_NAME = "Valentini Systems";
 export const SITE_DOMAIN = "valentiniandco.com";
 export const SITE_WWW = `www.${SITE_DOMAIN}`;
 export const SITE_URL = `https://${SITE_DOMAIN}`;
 export const INQUIRY_EMAIL = `inquiries@${SITE_DOMAIN}`;
-export const SITE_LOCALITY = "Bloomington, Indiana";
+export const SITE_LOCALITY = "Morristown, New Jersey";
 
 /** Exact public hosts. Add a hostname here only when it is this site. */
 export const SITE_HOSTS = [SITE_DOMAIN, SITE_WWW] as const;

@@ -1,6 +1,7 @@
 import { ViewTransition } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { HelpCta } from "@/components/layout/HelpCta";
 import { ClosingCta } from "@/components/layout/ClosingCta";
 import { HardwareFrame } from "@/components/media/HardwareFrame";
 import { InsightCard, insightMeta } from "@/components/cards/Cards";
@@ -42,9 +43,7 @@ export default async function InsightPage({ params }: Props) {
   if (!insight) notFound();
   const blocks = BODIES[insight.slug];
   const path = `/insights/${insight.slug}`;
-  const index = blocks.flatMap((block) =>
-    block.type === "h2" ? [{ id: block.id, label: block.text }] : [],
-  );
+  const index = blocks.flatMap((block) => (block.type === "h2" ? [{ id: block.id, label: block.text }] : []));
   const publisher = { "@type": "Organization", name: SITE_NAME, url: SITE_URL };
   const author = { "@type": "Person", name: AUTHOR };
 
@@ -109,6 +108,10 @@ export default async function InsightPage({ params }: Props) {
             <div className="min-w-0 lg:col-span-9">
               <Prose blocks={blocks} />
               <div className="max-w-[44rem]">
+                <div className="mt-12 rounded-lg border border-line p-6">
+                  <p className="h4">Want this mapped for your company?</p>
+                  <HelpCta className="mt-4" line="We start with one process and a short audit." />
+                </div>
                 <ShareLinks url={absolute(path)} />
               </div>
             </div>
@@ -138,7 +141,7 @@ export default async function InsightPage({ params }: Props) {
         </Container>
       </Section>
 
-      <ClosingCta heading="Want this mapped for your company?" />
+      <ClosingCta />
     </>
   );
 }

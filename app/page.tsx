@@ -40,11 +40,11 @@ export default function HomePage() {
             <p className="lead mt-5 max-w-[34rem] text-muted">
               We map how work moves through your company, then build the automations inside the tools you already use.
             </p>
-            <div className="mt-6 flex flex-col items-start gap-1">
+            <div className="mt-6 flex flex-wrap items-center gap-3">
               <Link href={CTA_HREF} className="btn btn-primary">
                 {CTA_LABEL}
               </Link>
-              <Link href="/workflows" className="text-link inline-flex min-h-11 items-center">
+              <Link href="/workflows" className="btn btn-secondary">
                 See example workflows
               </Link>
             </div>
@@ -62,7 +62,7 @@ export default function HomePage() {
               labelledBy="hero-flow"
               eager
               footer={
-                <Link href={`/workflows/${HERO_FLOW.id}`} className="text-link inline-flex min-h-11 items-center">
+                <Link href={`/workflows/${HERO_FLOW.id}`} className="btn btn-secondary mt-4">
                   {WORKFLOWS_PAGE.open}
                 </Link>
               }
@@ -87,7 +87,7 @@ export default function HomePage() {
               );
             })}
           </ul>
-          <Link href="/workflows" className="text-link mt-4 inline-flex min-h-11 items-center">
+          <Link href="/workflows" className="btn btn-secondary mt-6">
             See all eight workflows
           </Link>
         </div>

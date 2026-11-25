@@ -10,6 +10,7 @@ export const NAV: NavItem[] = [
   { label: "Workflows", href: "/workflows", match: ["/workflows"] },
   { label: "Services", href: "/services", match: ["/services"] },
   { label: "Insights", href: "/insights", match: ["/insights"] },
+  { label: "Testimonials", href: "/testimonials", match: ["/testimonials"] },
   { label: "About", href: "/about", match: ["/about"] },
 ];
 
@@ -26,6 +27,7 @@ export const FOOTER: NavLink[] = [
   { label: "Industries", href: "/industries" },
   { label: "Insights", href: "/insights" },
   { label: "How we work", href: "/approach" },
+  { label: "Testimonials", href: "/testimonials" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
   { label: "Search", href: "/search" },
@@ -38,4 +40,4 @@ export const LEGAL_LINKS: NavLink[] = [
 
 /** Printed under the copyright line. Product names appear on the site only as example integrations. */
 export const TRADEMARK_NOTE =
-  "Product names and logos on this site belong to their owners and show example integrations only. Valentini & Co. is not affiliated with, sponsored by or endorsed by them.";
+  "Product names and logos on this site belong to their owners and show example integrations only. Valentini Systems is not affiliated with, sponsored by or endorsed by them.";
