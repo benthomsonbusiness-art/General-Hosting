@@ -46,6 +46,7 @@ const nextConfig: NextConfig = {
         destination: `${SITE_URL}/:path*`,
         permanent: true,
       },
+      { source: "/approach", destination: "/how-it-works", permanent: true },
       {
         source: "/practices/meta-ads",
         destination: "/services/meta-ads-consulting",

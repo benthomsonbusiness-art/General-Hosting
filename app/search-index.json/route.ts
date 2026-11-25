@@ -24,7 +24,7 @@ function entries(): SearchEntry[] {
     { url: "/workflows", title: "Example workflows", type: "Page", summary: WORKFLOWS_PAGE.dek, keywords: "flowchart steps approval" },
     { url: "/industries", title: "Industries", type: "Page", summary: INDUSTRIES_HUB.dek, keywords: "sectors" },
     { url: "/insights", title: "Insights", type: "Page", summary: INSIGHTS_HUB.dek, keywords: "articles guides blog" },
-    { url: "/approach", title: "How we work", type: "Page", summary: APPROACH_PAGE.dek, keywords: "approach method process principles estimator hours faq" },
+    { url: "/how-it-works", title: "How it works", type: "Page", summary: APPROACH_PAGE.dek, keywords: "approach method process principles estimator hours faq" },
     { url: "/about", title: "About the firm", type: "Page", summary: ABOUT.dek, keywords: "company bloomington indiana philosophy" },
     { url: "/contact", title: `Contact: ${CTA_LABEL}`, type: "Page", summary: CONTACT.dek, keywords: "email inquiry form consultation" },
     { url: "/privacy", title: "Privacy", type: "Page", summary: "Placeholder privacy notice. Not in effect.", keywords: "legal data" },

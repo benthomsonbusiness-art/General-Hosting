@@ -1,5 +1,6 @@
 import { Check } from "lucide-react";
 import Link from "next/link";
+import { ScopeSteps } from "@/components/graphics/Graphics";
 import { BookingPanel } from "@/components/home/BookingPanel";
 import { QueuePanel } from "@/components/home/QueuePanel";
 import { RepoPanel } from "@/components/home/RepoPanel";
@@ -8,7 +9,6 @@ import { ClosingCta } from "@/components/layout/ClosingCta";
 import { RowLink } from "@/components/cards/RowLink";
 import { flowExample } from "@/components/workflow/examples";
 import { FlowDiagram } from "@/components/workflow/flow/FlowDiagram";
-import { ENGAGEMENTS } from "@/content/engagements";
 import { HOME } from "@/content/pages";
 import { TESTIMONIALS } from "@/content/testimonials";
 import { getWorkflow } from "@/content/workflows";
@@ -171,20 +171,11 @@ export default function HomePage() {
           <h2 id="engagement" className="h2">
             How the work is scoped
           </h2>
-          <ol className="mt-8 divide-y divide-line border-y border-line">
-            {ENGAGEMENTS.stages.map((stage, index) => (
-              <li key={stage.id} className="grid gap-2 py-5 sm:grid-cols-12 sm:items-baseline">
-                <h3 className="h3 sm:col-span-5">
-                  {index + 1} {stage.name}
-                </h3>
-                <p className="text-muted sm:col-span-7">
-                  {stage.shape}. {stage.delivers}
-                </p>
-              </li>
-            ))}
-          </ol>
+          <p className="mt-4 max-w-[40rem] text-muted">Start small. You only commit to the audit.</p>
+          <div className="mt-10">
+            <ScopeSteps />
+          </div>
           <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
-            <p>Build and operations are scoped after the audit.</p>
             <Link href="/how-it-works" className="btn btn-secondary">
               See the full process
             </Link>

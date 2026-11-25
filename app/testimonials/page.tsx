@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { NameMarquee } from "@/components/graphics/Graphics";
 import { ClosingCta } from "@/components/layout/ClosingCta";
 import { HelpCta } from "@/components/layout/HelpCta";
 import { Container, Section } from "@/components/layout/Section";
@@ -62,6 +63,21 @@ export default function TestimonialsPage() {
           )}
         </Container>
       </Section>
+      {TESTIMONIALS.length ? (
+        <section data-surface="dark" aria-labelledby="helped" className="border-t border-line bg-obsidian">
+          <div className="wrap py-14 lg:py-20">
+            <h2 id="helped" className="h2 text-center">
+              Companies we&apos;ve helped
+            </h2>
+          </div>
+          <div className="pb-14 lg:pb-20">
+            <NameMarquee
+              label="Companies we've helped"
+              names={TESTIMONIALS.map((item) => ({ name: item.company, place: item.location }))}
+            />
+          </div>
+        </section>
+      ) : null}
       <ClosingCta />
     </>
   );

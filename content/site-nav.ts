@@ -7,6 +7,7 @@ export type NavItem = NavLink & {
 
 /** Single source for the header, the mobile drawer and the footer. */
 export const NAV: NavItem[] = [
+  { label: "Home", href: "/", match: ["/"] },
   { label: "Workflows", href: "/workflows", match: ["/workflows"] },
   { label: "Services", href: "/services", match: ["/services"] },
   { label: "How it works", href: "/how-it-works", match: ["/how-it-works"] },
@@ -22,6 +23,7 @@ export const DRAWER_LINKS: NavLink[] = [
 ];
 
 export const FOOTER: NavLink[] = [
+  { label: "Home", href: "/" },
   { label: "Workflows", href: "/workflows" },
   { label: "Services", href: "/services" },
   { label: "How it works", href: "/how-it-works" },

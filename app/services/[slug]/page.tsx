@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
+import { IconCards, ScopeSteps, StepTrack } from "@/components/graphics/Graphics";
 import { notFound } from "next/navigation";
 import { Faq } from "@/components/content/Blocks";
-import { StageDiagram } from "@/components/content/Diagrams";
 import { Estimator } from "@/components/content/Estimator";
 import { SubServiceScenes } from "@/components/content/SubServiceScenes";
 import { ClosingCta } from "@/components/layout/ClosingCta";
@@ -44,20 +45,33 @@ export default async function ServicePage({ params }: Props) {
     <>
       <JsonLd data={serviceJsonLd(service.name, service.metaDescription, path)} />
       <Section labelledBy="service-title">
-        <Container>
-          <Breadcrumbs
-            items={[
-              { name: "Services", path: "/services" },
-              { name: service.name, path },
-            ]}
-          />
-          <h1 id="service-title" className="h1 mt-6 max-w-[16ch]">
-            {service.h1}
-          </h1>
-          <p className="lead measure mt-5 text-muted">{service.dek}</p>
-          <Link href={service.cta.href} className="btn btn-primary mt-8">
-            {service.cta.label}
-          </Link>
+        <Container className="grid grid-cols-[minmax(0,1fr)] items-center gap-10 lg:grid-cols-12">
+          <div className="lg:col-span-7">
+            <Breadcrumbs
+              items={[
+                { name: "Services", path: "/services" },
+                { name: service.name, path },
+              ]}
+            />
+            <h1 id="service-title" className="h1 mt-6 max-w-[16ch]">
+              {service.h1}
+            </h1>
+            <p className="lead measure mt-5 text-muted">{service.dek}</p>
+            <Link href={service.cta.href} className="btn btn-primary mt-8">
+              {service.cta.label}
+            </Link>
+          </div>
+          <div className="relative aspect-[4/3] overflow-hidden rounded-[14px] border border-line lg:col-span-5">
+            <Image
+              src={service.photo.src}
+              alt={service.photo.alt}
+              fill
+              priority
+              sizes="(min-width: 1024px) 40vw, 100vw"
+              className="object-cover"
+              style={{ objectPosition: service.photo.position }}
+            />
+          </div>
         </Container>
       </Section>
 
@@ -71,19 +85,14 @@ export default async function ServicePage({ params }: Props) {
           </Container>
         </Section>
       ) : (
-        <Section surface="ivory" labelledBy="areas">
+        <Section surface="forest" labelledBy="areas">
           <Container>
             <h2 id="areas" className="h2">
               Where we help
             </h2>
-            <dl className="mt-8 divide-y divide-ink/12 border-y border-ink/12">
-              {service.areas.map((area) => (
-                <div key={area.title} className="grid gap-2 py-6 md:grid-cols-12">
-                  <dt className="h4 md:col-span-5">{area.title}</dt>
-                  <dd className="text-slate md:col-span-7">{area.body}</dd>
-                </div>
-              ))}
-            </dl>
+            <div className="mt-10">
+              <IconCards items={service.areas} columns={5} />
+            </div>
           </Container>
         </Section>
       )}
@@ -137,23 +146,16 @@ export default async function ServicePage({ params }: Props) {
         </Section>
       ) : null}
 
-      <Section surface="ivory" labelledBy="runs">
+      <Section surface={flagship ? "forest" : "obsidian"} labelledBy="runs" className="border-t border-line">
         <Container>
           <h2 id="runs" className="h2">
             {flagship ? "How the work is scoped" : "How it runs"}
           </h2>
           <div className="mt-8">
             {flagship ? (
-              <StageDiagram />
+              <ScopeSteps />
             ) : (
-              <ul className="divide-y divide-ink/12 border-y border-ink/12">
-                {service.steps?.map((step) => (
-                  <li key={step.title} className="grid gap-2 py-6 md:grid-cols-12 md:items-baseline">
-                    <h3 className="h4 md:col-span-4">{step.title}</h3>
-                    <p className="text-slate md:col-span-8">{step.body}</p>
-                  </li>
-                ))}
-              </ul>
+              <StepTrack steps={(service.steps ?? []).map((step) => ({ title: step.title, line: step.body }))} />
             )}
           </div>
         </Container>

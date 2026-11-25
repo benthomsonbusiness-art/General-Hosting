@@ -1,6 +1,8 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
+import Image from "next/image";
 import Link from "next/link";
+import { IconCards } from "@/components/graphics/Graphics";
 import { HelpCta } from "@/components/layout/HelpCta";
 import { ClosingCta } from "@/components/layout/ClosingCta";
 import { Container, Section } from "@/components/layout/Section";
@@ -26,18 +28,37 @@ function hasFounderPhoto(): boolean {
   }
 }
 
+const GLANCE = [
+  { title: "Morristown, New Jersey", body: "Working in person and remotely." },
+  { title: "Founder-led", body: "You work with Ben directly." },
+  { title: "Three services", body: "Automation, Meta ads and strategy." },
+  { title: "You own it", body: "Code, accounts and logs stay yours." },
+];
+
 export default function AboutPage() {
   const photo = hasFounderPhoto();
   return (
     <>
       <Section labelledBy="about-title">
-        <Container>
-          <Breadcrumbs items={[{ name: "About the firm", path: "/about" }]} />
-          <h1 id="about-title" className="h1 mt-6">
-            About the firm
-          </h1>
-          <p className="lead measure mt-5 text-muted">{ABOUT.dek}</p>
-          <HelpCta />
+        <Container className="grid grid-cols-[minmax(0,1fr)] items-center gap-10 lg:grid-cols-12">
+          <div className="lg:col-span-7">
+            <Breadcrumbs items={[{ name: "About the firm", path: "/about" }]} />
+            <h1 id="about-title" className="h1 mt-6">
+              About the firm
+            </h1>
+            <p className="lead measure mt-5 text-muted">{ABOUT.dek}</p>
+            <HelpCta />
+          </div>
+          <div className="relative aspect-[4/3] overflow-hidden rounded-[14px] border border-line lg:col-span-5">
+            <Image
+              src="/images/key-hero.jpg"
+              alt="A gold push key set into a forest-green machined panel, waiting to be pressed."
+              fill
+              priority
+              sizes="(min-width: 1024px) 40vw, 100vw"
+              className="object-cover"
+            />
+          </div>
         </Container>
       </Section>
 
@@ -64,6 +85,17 @@ export default function AboutPage() {
             <Link href="/how-it-works" className="text-link mt-2 inline-flex min-h-11 items-center">
               How it works
             </Link>
+          </div>
+        </Container>
+      </Section>
+
+      <Section surface="forest" labelledBy="glance">
+        <Container>
+          <h2 id="glance" className="h2">
+            At a glance
+          </h2>
+          <div className="mt-10">
+            <IconCards columns={4} items={GLANCE} />
           </div>
         </Container>
       </Section>

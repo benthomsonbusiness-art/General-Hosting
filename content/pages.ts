@@ -123,6 +123,5 @@ export const TESTIMONIALS_PAGE = {
 export const HOW_IT_WORKS = {
   metaDescription:
     "What Valentini Systems offers and how a project runs: workflow automation, Meta ads and strategy, delivered in four steps from mapping to handing you the code.",
-  statement:
-    "We do three things for owner-led companies: automate the back-office work that eats your week, run Meta ads you can measure, and help you decide what to fix first. Every project follows the same four steps, and you approve each one before we move on.",
+  statement: "Three services. Four steps. You approve every one.",
 };

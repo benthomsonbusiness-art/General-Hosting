@@ -1,11 +1,10 @@
-import { ArrowRight } from "lucide-react";
-import Link from "next/link";
-import { HelpCta } from "@/components/layout/HelpCta";
+import { IconCards } from "@/components/graphics/Graphics";
+import { ServiceCards } from "@/components/graphics/ServiceCards";
 import { ClosingCta } from "@/components/layout/ClosingCta";
+import { HelpCta } from "@/components/layout/HelpCta";
 import { Container, Section } from "@/components/layout/Section";
 import { Breadcrumbs } from "@/components/nav/Breadcrumbs";
 import { SERVICES_HUB } from "@/content/pages";
-import { FLAGSHIP, SERVICES, serviceHref } from "@/content/services";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
@@ -14,21 +13,7 @@ export const metadata = pageMetadata({
   path: "/services",
 });
 
-/** Rows after the services: the same work seen by industry, and how a project goes. */
-const MORE = [
-  {
-    href: "/industries",
-    title: "By industry",
-  },
-  {
-    href: "/how-it-works",
-    title: "How it works",
-  },
-];
-
 export default function ServicesPage() {
-  const secondary = SERVICES.filter((item) => item.kind === "secondary");
-
   return (
     <>
       <Section labelledBy="services-title">
@@ -40,47 +25,19 @@ export default function ServicesPage() {
           <p className="lead mt-4 max-w-[36rem] text-muted">{SERVICES_HUB.dek}</p>
           <HelpCta />
 
-          <Link
-            href={serviceHref(FLAGSHIP.slug)}
-            className="group mt-10 flex items-center justify-between gap-6 border-y border-line py-6"
-          >
-            <span className="card-title block h2">{FLAGSHIP.name}</span>
-            <ArrowRight
-              aria-hidden
-              className="shrink-0 text-muted transition-transform duration-200 group-hover:translate-x-1"
-              size={20}
-              strokeWidth={1.5}
-            />
-          </Link>
+          <div className="mt-12">
+            <ServiceCards />
+          </div>
 
-          <ul className="divide-y divide-line border-b border-line">
-            {secondary.map((item) => (
-              <li key={item.slug}>
-                <Link href={serviceHref(item.slug)} className="group flex items-center justify-between gap-6 py-6">
-                  <span className="card-title block h4">{item.name}</span>
-                  <ArrowRight
-                    aria-hidden
-                    className="shrink-0 text-muted transition-transform duration-200 group-hover:translate-x-1"
-                    size={20}
-                    strokeWidth={1.5}
-                  />
-                </Link>
-              </li>
-            ))}
-            {MORE.map((item) => (
-              <li key={item.href}>
-                <Link href={item.href} className="group flex items-center justify-between gap-6 py-6">
-                  <span className="card-title block h4">{item.title}</span>
-                  <ArrowRight
-                    aria-hidden
-                    className="shrink-0 text-muted transition-transform duration-200 group-hover:translate-x-1"
-                    size={20}
-                    strokeWidth={1.5}
-                  />
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <div className="mt-6">
+            <IconCards
+              columns={2}
+              items={[
+                { title: "By industry", body: "What we automate in six kinds of company.", href: "/industries" },
+                { title: "How it works", body: "Four steps, from first map to handover.", href: "/how-it-works" },
+              ]}
+            />
+          </div>
         </Container>
       </Section>
       <ClosingCta />

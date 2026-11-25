@@ -18,7 +18,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...WORKFLOWS.map((item) => `/workflows/${item.id}`),
     "/industries",
     "/insights",
-    "/approach",
     "/testimonials",
     "/about",
     "/contact",
