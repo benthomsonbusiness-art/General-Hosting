@@ -45,11 +45,11 @@ const plexMono = IBM_Plex_Mono({
   preload: false,
 });
 
-const title = `${SITE_NAME} — AI Workflow Automation`;
+const title = `${SITE_NAME} | AI Workflow Automation`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: { default: title, template: `%s — ${SITE_NAME}` },
+  title: { default: title, template: `%s | ${SITE_NAME}` },
   description: HOME.metaDescription,
   applicationName: SITE_NAME,
   openGraph: {
@@ -87,6 +87,7 @@ const organization = {
     addressRegion: "IN",
     addressCountry: "US",
   },
+  founder: { "@type": "Person", name: "Ben Thomson", jobTitle: "Founder" },
   knowsAbout: [
     "AI workflow automation",
     "Business process automation",

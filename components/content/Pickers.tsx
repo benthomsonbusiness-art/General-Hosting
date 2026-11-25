@@ -127,22 +127,22 @@ function IndustryTabs({ industries, initial }: { industries: IndustryView[]; ini
                 />
               ) : null}
             </div>
-            <div className="console p-6 lg:col-span-7" aria-label={`${current.name} systems`}>
-              <h3 className="h3">{current.name}</h3>
+            <div className="console p-6 lg:col-span-7">
+              <h2 className="h3">{current.name}</h2>
               <p className="mt-3 text-muted">{current.line}</p>
-              <p className="mt-6 text-[15px]">Systems that usually sit in the path</p>
-              <ul className="mt-2 text-[15px] leading-relaxed text-ivory/80">
+              <p className="mt-6 text-[15px]">Work that piles up</p>
+              <ul className="mt-2 text-[15px] leading-relaxed text-muted">
                 {current.hours.map((hour) => (
                   <li key={hour}>{hour}</li>
                 ))}
               </ul>
-              <p className="mt-6 border-t border-line pt-4 text-[15px]">Stays with people. {current.stays}</p>
-              <h3 className="h3 mt-8">Workflows that apply</h3>
+              <p className="mt-6 border-t border-line pt-4 text-[15px]">Stays with your team: {current.stays}</p>
+              <h3 className="h4 mt-8">Example workflows</h3>
               <ul className="mt-4 divide-y divide-line border-y border-line">
                 {current.workflows.map((workflow) => (
                   <li key={workflow.id}>
-                    <Link href={`/workflows/${workflow.id}`} className="flex min-h-14 items-center py-2">
-                      <span className="card-title text-[1.15rem]">{workflow.title}</span>
+                    <Link href={`/workflows/${workflow.id}`} className="group flex min-h-14 items-center py-2">
+                      <span className="card-title row-title">{workflow.title}</span>
                     </Link>
                   </li>
                 ))}

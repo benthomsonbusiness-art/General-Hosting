@@ -1,11 +1,11 @@
 export type Faq = { q: string; a: string };
 
 export const PRINCIPLES: { title: string; short: string }[] = [
-  { title: "Deterministic code wherever possible", short: "The same answer every time." },
-  { title: "AI only where judgment is needed", short: "Output that fails its schema is discarded." },
+  { title: "Plain rules wherever possible", short: "Same input, same result." },
+  { title: "AI only for reading and drafting", short: "Answers that fail a check are thrown out." },
   { title: "A person approves what leaves the company", short: "It waits. It never sends itself." },
   { title: "You own the code, the accounts and the logs", short: "Removing our access is one line in the runbook." },
-  { title: "Every workflow ships with its operating kit", short: "Monitoring, an audit log and a runbook." },
+  { title: "Every workflow comes with a manual", short: "Alerts, a log of every action, and written steps for your team." },
 ];
 
 export const METHOD: { title: string; line: string; happens: string; see: string; approve: string }[] = [
@@ -19,18 +19,18 @@ export const METHOD: { title: string; line: string; happens: string; see: string
   },
   {
     title: "Design",
-    line: "Write the contract",
+    line: "Write it down",
     happens:
-      "We write each field, its source and its owner. We mark which steps are code, which need a model and which need a person.",
-    see: "The data contract, the gates and the failure table.",
-    approve: "Gates, thresholds and access.",
+      "We write down each piece of information, where it comes from and who owns it. We mark which steps are rules, which use AI and which need your approval.",
+    see: "The field list, the approval points, and what happens when something fails.",
+    approve: "Where you approve, the limits, and who gets access.",
   },
   {
     title: "Build",
-    line: "Run it in shadow",
+    line: "Test it beside your team",
     happens:
       "The workflow runs beside the manual process and sends nothing. Each difference is a defect until it is explained.",
-    see: "A shadow report of every difference.",
+    see: "A report of every difference from your team's work.",
     approve: "Going live.",
   },
   {
@@ -42,7 +42,8 @@ export const METHOD: { title: string; line: string; happens: string; see: string
   },
 ];
 
-export const OWNED_ITEMS = ["Repositories", "Accounts", "Logs", "Runbooks", "Prompts and schemas"];
+/** Links the four method stages to the three engagement stages. */
+export const STAGES_NOTE = "Map and Design happen in the workflow audit. Build and Hand over happen in build and deploy.";
 
 export const APPROACH_FAQ: Faq[] = [
   {
@@ -51,10 +52,10 @@ export const APPROACH_FAQ: Faq[] = [
   },
   {
     q: "How much time do you need from our people?",
-    a: "Most of it falls in the audit. After that we need one owner, plus the people who will sit at each approval gate.",
+    a: "Most of it falls in the audit. After that we need one owner, plus the people who will approve each step.",
   },
   {
-    q: "What if the shadow test goes badly?",
+    q: "What if the test goes badly?",
     a: "The manual process is still running, so nothing is lost. We fix the cause, or we tell you the step is not a good candidate.",
   },
   {

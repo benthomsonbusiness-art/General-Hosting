@@ -11,7 +11,7 @@ import { pageMetadata } from "@/lib/seo";
 import { CTA_HREF, CTA_LABEL, SITE_NAME } from "@/lib/site";
 
 export const metadata = pageMetadata({
-  title: `${SITE_NAME} — AI Workflow Automation`,
+  title: `${SITE_NAME} | AI Workflow Automation`,
   absoluteTitle: true,
   description: HOME.metaDescription,
   path: "/",
@@ -105,7 +105,7 @@ export default function HomePage() {
         <div className="wrap grid items-start gap-10 py-14 lg:grid-cols-12 lg:py-20">
           <div className="lg:col-span-5">
             <h2 id="yours" className="h2">
-              Everything runs in your accounts.
+              You own what we build.
             </h2>
             <p className="mt-4 max-w-[36rem] text-muted">{HOME.how.own}</p>
           </div>
@@ -118,7 +118,7 @@ export default function HomePage() {
       <section data-surface="dark" aria-labelledby="engagement" className="border-t border-line bg-obsidian">
         <div className="wrap py-14 lg:py-20">
           <h2 id="engagement" className="h2">
-            How an engagement runs
+            How the work is scoped
           </h2>
           <ol className="mt-8 divide-y divide-line border-y border-line">
             {ENGAGEMENTS.stages.map((stage, index) => (
@@ -132,7 +132,7 @@ export default function HomePage() {
               </li>
             ))}
           </ol>
-          <p className="mt-6">Scoped after the audit.</p>
+          <p className="mt-6">Build and operations are scoped after the audit.</p>
         </div>
       </section>
 
