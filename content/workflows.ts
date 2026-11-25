@@ -1,4 +1,28 @@
+import type { AppSlug, Glyph } from "../lib/logos.ts";
+
 export type NodeKind = "trigger" | "deterministic" | "ai" | "human" | "output";
+
+/** One app and the operation it performs. Drawn as the mono line "App: Operation". */
+export type AppRef = {
+  /** Registry slug from lib/logos.ts, or a house glyph for code, schedules and webhooks. */
+  app: AppSlug | Glyph;
+  /** "New response", "Update contact". `${appName}: ${operation}` stays at or under 22 characters. */
+  operation: string;
+  /** Text version only, never drawn: "HubSpot (or Salesforce, Pipedrive)". */
+  alternatives: string[];
+};
+
+/** A circle hanging off a spine card by a dashed line. */
+export type Attachment = AppRef & {
+  id: string;
+  /** Verb-first, at most 24 characters. */
+  label: string;
+  /** model, memory and tools only on ai nodes. calls only on trigger and deterministic nodes. */
+  port: "model" | "memory" | "tools" | "calls";
+  does: string;
+  /** Must be true on every ai-node attachment: the model never holds a write. */
+  readOnly: boolean;
+};
 
 export type WorkflowNode = {
   id: string;
@@ -24,8 +48,17 @@ export type WorkflowNode = {
     rejectLabel?: string;
     /** Completes the sentence "Rejected — …". */
     rejectOutcome?: string;
+    /** The app where the person approves. Named in the mono line, never drawn on the gold card. */
+    channelApp?: AppSlug;
+    /** Mono operation for the approval, e.g. "Approve button". */
+    operation?: string;
   };
   confidence?: { threshold: number; belowThreshold: string };
+  /** Required on trigger, deterministic and output nodes. Absent on ai and human nodes. */
+  app?: AppRef;
+  attached?: Attachment[];
+  /** Exit stub text for a rule step that can stop the item, drawn above the card. */
+  stopLabel?: string;
 };
 
 export type WorkflowEdge = {
