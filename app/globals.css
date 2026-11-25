@@ -240,10 +240,6 @@ html[data-modality="pointer"] :focus-visible {
     line-height: 1.25;
     white-space: nowrap;
     text-align: center;
-    transition:
-      background-color 150ms var(--ease),
-      color 150ms var(--ease),
-      border-color 150ms var(--ease);
   }
 
   .btn-primary {

@@ -93,7 +93,7 @@ export function WorkflowExplorer({ initialId, heading }: { initialId: string; he
                     aria-selected={active}
                     aria-controls="workflow-panel"
                     tabIndex={active ? 0 : -1}
-                    className={`group relative flex min-h-12 w-full items-center gap-3 overflow-hidden border px-3 py-2 text-left transition-colors duration-150 short:min-h-11 short:py-1 ${
+                    className={`group relative flex min-h-12 w-full items-center gap-3 overflow-hidden border px-3 py-2 text-left short:min-h-11 short:py-1 ${
                       active ? "border-forest bg-forest text-ivory" : "border-line text-ivory hover:border-ivory/30"
                     }`}
                     onClick={() => choose(at)}

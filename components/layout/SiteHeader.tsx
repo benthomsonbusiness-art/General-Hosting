@@ -85,7 +85,7 @@ export function SiteHeader({ items }: { items: NavItem[] }) {
     <header
       data-surface="dark"
       style={{ viewTransitionName: "site-header" }}
-      className={`sticky top-0 z-50 border-b transition-colors duration-200 ${
+      className={`sticky top-0 z-50 border-b ${
         scrolled ? "border-line bg-forest" : "border-transparent bg-obsidian"
       }`}
     >

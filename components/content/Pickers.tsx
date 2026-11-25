@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useRef, useState, type KeyboardEvent } from "react";
 import { HardwareFrame } from "@/components/media/HardwareFrame";
-import { useMotion } from "@/components/workflow/hooks";
 import { Thumb } from "@/components/workflow/Thumb";
 import type { Industry } from "@/content/industries";
 
@@ -65,7 +64,6 @@ function IndustryFromQuery({ industries }: { industries: IndustryView[] }) {
 
 function IndustryTabs({ industries, initial }: { industries: IndustryView[]; initial: number }) {
   const [selected, setSelected] = useState(initial);
-  const [motion] = useMotion();
   const tabs = useRef<Array<HTMLButtonElement | null>>([]);
 
   function choose(index: number, focus: boolean) {
@@ -105,7 +103,6 @@ function IndustryTabs({ industries, initial }: { industries: IndustryView[]; ini
               aria-selected={active}
               aria-controls="industry-panel"
               tabIndex={active ? 0 : -1}
-              style={motion ? { transition: "background-color 200ms var(--ease), color 200ms var(--ease)" } : undefined}
               className={`min-h-11 shrink-0 rounded-[6px] px-4 text-left text-[15px] ${
                 active ? "bg-ivory text-obsidian" : "border border-line text-ivory"
               }`}
