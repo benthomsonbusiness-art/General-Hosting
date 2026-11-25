@@ -10,7 +10,9 @@
   "preview_urls": false,
   "assets": { "directory": ".open-next/assets", "binding": "ASSETS" },
   "services": [{ "binding": "WORKER_SELF_REFERENCE", "service": "valentini-next" }],
-  "observability": { "enabled": true }
+  "observability": { "enabled": true },
+  // Workers Builds runs `wrangler preview` for non-production branches; it needs this block.
+  "previews": {}
   // Add "account_id" from `wrangler whoami` if the login has more than one account.
   // Optional inquiry storage. Create the database first (see HANDOFF.md), then uncomment:
   // "d1_databases": [
