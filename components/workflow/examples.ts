@@ -27,6 +27,8 @@ export function toFlowNodes(workflow: Pick<Workflow, "nodes">): FlowNodeInput[] 
     confidence: node.confidence,
     stopLabel: node.stopLabel,
     audience: node.audience,
+    does: node.does,
+    guardrail: node.guardrail,
   }));
 }
 

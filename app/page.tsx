@@ -1,4 +1,6 @@
+import { Check } from "lucide-react";
 import Link from "next/link";
+import { RepoPanel } from "@/components/home/RepoPanel";
 import { Stations } from "@/components/home/Stations";
 import { ClosingCta } from "@/components/layout/ClosingCta";
 import { HardwareFrame } from "@/components/media/HardwareFrame";
@@ -26,12 +28,11 @@ const HERO_FLOW = flowExample("lead-triage");
 
 const QUOTE = TESTIMONIALS[0];
 
-const TREE = `your-company/automations
-  workflows/lead-triage/
-  workflows/ap-intake/
-  monitoring/
-  audit-log/
-  RUNBOOK.md`;
+const OWN_POINTS = [
+  "Built in your accounts, not ours",
+  "Code, AI instructions and logs live in your repository",
+  "A written runbook so your team can run it without us",
+];
 
 export default function HomePage() {
   return (
@@ -81,10 +82,18 @@ export default function HomePage() {
               You own what we build.
             </h2>
             <p className="mt-4 max-w-[36rem] text-muted">{HOME.how.own}</p>
+            <ul className="mt-6 grid gap-3">
+              {OWN_POINTS.map((point) => (
+                <li key={point} className="flex items-start gap-3">
+                  <Check aria-hidden size={18} strokeWidth={2} className="mt-1 shrink-0 text-gold" />
+                  <span>{point}</span>
+                </li>
+              ))}
+            </ul>
           </div>
-          <pre className="console col-span-1 overflow-x-auto p-5 font-mono text-[13px] leading-relaxed text-ivory/80 lg:col-span-7">
-            {TREE}
-          </pre>
+          <div className="lg:col-span-7">
+            <RepoPanel />
+          </div>
         </div>
       </section>
 

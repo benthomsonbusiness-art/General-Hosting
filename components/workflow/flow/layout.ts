@@ -18,7 +18,7 @@ import { appName, type AppSlug, type Glyph } from "../../../lib/logos.ts";
 
 /** What the diagram reads from a node. Real workflow nodes satisfy it structurally. */
 export type FlowNodeInput = Pick<WorkflowNode, "id" | "label" | "kind"> &
-  Partial<Pick<WorkflowNode, "app" | "attached" | "gate" | "confidence" | "stopLabel" | "audience">>;
+  Partial<Pick<WorkflowNode, "app" | "attached" | "gate" | "confidence" | "stopLabel" | "audience" | "does" | "guardrail">>;
 
 export type FlowVariant = "full" | "compact";
 

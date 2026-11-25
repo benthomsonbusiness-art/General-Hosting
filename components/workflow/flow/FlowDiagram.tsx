@@ -1,6 +1,7 @@
 import { UserCheck } from "lucide-react";
 import type { CSSProperties, ReactNode } from "react";
-import { NODE_KINDS } from "@/content/workflows";
+import { NODE_KINDS, type Attachment } from "@/content/workflows";
+import { appName } from "@/lib/logos";
 import { AppMark } from "./AppMark";
 import {
   fluidLeft,
@@ -45,6 +46,93 @@ function Mono({ line }: { line?: string }) {
     </span>
   );
 }
+
+type Align = "start" | "center" | "end";
+
+/** Which way a hover card opens, so cards near the edges stay inside the drawing. */
+function alignFor(f: number): Align {
+  if (f < 0.22) return "start";
+  if (f > 0.78) return "end";
+  return "center";
+}
+
+/** The "App: Operation" app, said plainly. Undefined for house glyphs with no product behind them. */
+function productName(ref?: { app: string }): string | undefined {
+  if (!ref) return undefined;
+  const name = appName(ref.app as Parameters<typeof appName>[0]);
+  return name;
+}
+
+/**
+ * Hover and focus card: what the step does, how it is kept safe, and which other tools can do
+ * the same job. Hidden from screen readers; the step text on the workflow page says the same.
+ */
+function Tip({
+  kind,
+  title,
+  app,
+  does,
+  safeguard,
+  alternatives,
+  extra,
+  align,
+  place,
+  linked,
+}: {
+  kind: string;
+  title: string;
+  app?: string;
+  does?: string;
+  safeguard?: string;
+  alternatives?: string[];
+  extra?: { label: string; value: string };
+  align: Align;
+  place: "below" | "above";
+  linked: boolean;
+}) {
+  return (
+    <span className="flow-tip" data-align={align} data-place={place} aria-hidden="true">
+      <span className="flow-tip-kicker">
+        {kind}
+        {app ? <span className="flow-tip-app">{app}</span> : null}
+      </span>
+      <span className="flow-tip-title">{title}</span>
+      {does ? <span className="flow-tip-body">{does}</span> : null}
+      {extra ? (
+        <span className="flow-tip-row">
+          <span className="flow-tip-label">{extra.label}</span>
+          {extra.value}
+        </span>
+      ) : null}
+      {safeguard ? (
+        <span className="flow-tip-row">
+          <span className="flow-tip-label">Safeguard</span>
+          {safeguard}
+        </span>
+      ) : null}
+      {alternatives?.length ? (
+        <span className="flow-tip-row">
+          <span className="flow-tip-label">Also works with</span>
+          <span className="flow-tip-chips">
+            {alternatives.map((alt) => (
+              <span key={alt} className="flow-tip-chip">
+                {alt}
+              </span>
+            ))}
+          </span>
+        </span>
+      ) : null}
+      {linked ? <span className="flow-tip-more">Click for the full step →</span> : null}
+    </span>
+  );
+}
+
+const PORT_KIND: Record<Attachment["port"], string> = {
+  model: "AI model",
+  memory: "Memory",
+  tools: "Tool the AI can use",
+  calls: "Connected app",
+};
 
 /** Lines and exit stubs. Spine lines run center to center under the opaque cards. */
 function Edges({ layout }: { layout: FlowLayout }) {
@@ -95,7 +183,17 @@ function Edges({ layout }: { layout: FlowLayout }) {
   );
 }
 
-function Card({ node, laid, variant, eager }: { node: FlowNodeInput; laid?: LaidNode; variant: FlowVariant; eager: boolean }) {
+function Card({
+  node,
+  laid,
+  variant,
+  eager,
+}: {
+  node: FlowNodeInput;
+  laid?: LaidNode;
+  variant: FlowVariant;
+  eager: boolean;
+}) {
   const size = SIZES[variant];
   const ports = laid?.ports;
   const shared = {
@@ -103,12 +201,7 @@ function Card({ node, laid, variant, eager }: { node: FlowNodeInput; laid?: Laid
     "data-out": ports?.right ? "" : undefined,
   };
   const bottom = ports?.bottom.map((port) => (
-    <span
-      key={port.port}
-      aria-hidden
-      className="flow-port"
-      style={{ "--p": px(port.at.x - laid!.card.x) } as Vars}
-    />
+    <span key={port.port} aria-hidden className="flow-port" style={{ "--p": px(port.at.x - laid!.card.x) } as Vars} />
   ));
   if (node.kind === "ai") {
     return (
@@ -258,13 +351,37 @@ export function FlowDiagram({
                                 key={port.port}
                                 aria-hidden
                                 className="flow-port-label"
-                                style={{ "--l": px(port.labelRect.x - box.x), "--t": px(port.labelRect.y - box.y) } as Vars}
+                                style={
+                                  { "--l": px(port.labelRect.x - box.x), "--t": px(port.labelRect.y - box.y) } as Vars
+                                }
                               >
                                 {PORT_LABEL[port.port]}
                               </span>
                             ) : null,
                           )
                         : null}
+                      {laid ? (
+                        <Tip
+                          kind={NODE_KINDS[node.kind]}
+                          title={node.label}
+                          app={
+                            node.kind === "human"
+                              ? productName(node.gate ? { app: node.gate.channelApp } : undefined)
+                              : productName(node.app)
+                          }
+                          does={node.does}
+                          safeguard={node.guardrail}
+                          alternatives={node.kind === "human" ? undefined : node.app?.alternatives}
+                          extra={
+                            node.kind === "human" && node.gate
+                              ? { label: "Who approves", value: `${node.gate.approver}. ${node.gate.channel}.` }
+                              : undefined
+                          }
+                          align={alignFor(laid.f)}
+                          place="below"
+                          linked={base !== undefined}
+                        />
+                      ) : null}
                     </>
                   );
                   const attached = layout?.tools.filter((tool) => tool.parentIndex === index) ?? [];
@@ -302,6 +419,23 @@ export function FlowDiagram({
                                   <span className="flow-label">{item.label}</span>
                                   <Mono line={monoLine(item)} />
                                 </span>
+                                {tool && layout ? (
+                                  <Tip
+                                    kind={PORT_KIND[item.port]}
+                                    title={item.label}
+                                    app={productName(item)}
+                                    does={item.does}
+                                    safeguard={
+                                      item.readOnly
+                                        ? "Read-only. The AI can look things up here but never change anything."
+                                        : undefined
+                                    }
+                                    alternatives={item.alternatives}
+                                    align={alignFor((tool.circle.x + tool.circle.w / 2) / layout.minWidth)}
+                                    place="above"
+                                    linked={base !== undefined}
+                                  />
+                                ) : null}
                               </>
                             );
                             return (
