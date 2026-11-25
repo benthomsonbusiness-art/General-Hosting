@@ -19,7 +19,7 @@ export function Estimator() {
         <div>
           <Slider
             id="estimate-people"
-            label="People touching the workflow"
+            label="People who work on this task"
             hint="Everyone who routes, formats, copies or re-enters the work."
             min={1}
             max={25}
@@ -37,8 +37,8 @@ export function Estimator() {
           />
         </div>
         <div>
-          <p className="text-slate">Hours a year on this workflow</p>
-          <p className="mt-2 font-display text-[clamp(2rem,1.4rem+1.6vw,3rem)] leading-none tracking-[-0.02em] text-ink">
+          <p className="text-slate">Hours a year on this task</p>
+          <p className="h2 mt-2 text-ink">
             {formatInt(yearly)}
           </p>
           <div className="mt-6 h-2 overflow-hidden bg-ink/10" aria-hidden>
@@ -53,7 +53,7 @@ export function Estimator() {
         </div>
       </div>
       <p className="small mt-8 border-t border-ink/12 pt-5 text-slate">
-        An illustrative reading of the hours on this one workflow. Not a measured result.
+        An estimate from your inputs, not a measured result.
       </p>
     </div>
   );
@@ -80,7 +80,7 @@ function Slider({
     <label htmlFor={id} className="mt-6 block first:mt-0">
       <span className="block font-semibold">{label}</span>
       <span className="mt-1 block text-[15px] text-slate">{hint}</span>
-      <span className="mt-2 block text-[1.25rem]">{value}</span>
+      <span className="row-title mt-2 block">{value}</span>
       <input
         id={id}
         type="range"

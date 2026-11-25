@@ -1,15 +1,12 @@
 import type { ReactNode } from "react";
 
-export type Surface = "paper" | "ivory" | "stone" | "forest" | "moss" | "obsidian" | "well";
+export type Surface = "obsidian" | "forest" | "well" | "ivory";
 
 const FILL: Record<Surface, string> = {
-  paper: "bg-obsidian",
-  ivory: "bg-ivory text-ink",
-  stone: "bg-obsidian",
-  forest: "bg-forest",
-  moss: "bg-forest",
   obsidian: "bg-obsidian",
+  forest: "bg-forest",
   well: "bg-well",
+  ivory: "bg-ivory text-ink",
 };
 
 export function Container({ className = "", children }: { className?: string; children: ReactNode }) {
@@ -17,7 +14,7 @@ export function Container({ className = "", children }: { className?: string; ch
 }
 
 export function Section({
-  surface = "paper",
+  surface = "obsidian",
   id,
   labelledBy,
   className = "",

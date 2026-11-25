@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getWorkflow, WORKFLOWS } from "@/content/workflows";
 import { pageMetadata } from "@/lib/seo";
-import { WorkflowsView } from "../WorkflowsView";
+import { WorkflowDetail } from "../WorkflowsView";
 
 export const dynamicParams = false;
 
@@ -25,5 +25,5 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function WorkflowPage({ params }: Props) {
   const workflow = getWorkflow((await params).slug);
   if (!workflow) notFound();
-  return <WorkflowsView selected={workflow} />;
+  return <WorkflowDetail workflow={workflow} />;
 }

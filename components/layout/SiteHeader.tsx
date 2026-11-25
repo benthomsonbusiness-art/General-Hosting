@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { BrandMark, BrandWordmark } from "@/components/brand/BrandMark";
 import { SearchDialog } from "@/components/nav/SearchDialog";
 import { MotionSwitch } from "@/components/util/MotionSwitch";
-import type { NavItem } from "@/content/site-nav";
+import { DRAWER_LINKS, type NavItem } from "@/content/site-nav";
 import { CTA_HREF, CTA_LABEL } from "@/lib/site";
 
 const ICON = { strokeWidth: 1.5, "aria-hidden": true } as const;
@@ -80,6 +80,8 @@ export function SiteHeader({ items }: { items: NavItem[] }) {
   const close = () => setDrawer(false);
   const isCurrent = (item: NavItem) =>
     item.match.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`));
+  /** "page" on the item's own page, "true" inside its section (a workflow, a service), so the underline and the state agree. */
+  const current = (item: NavItem) => (pathname === item.href ? "page" : isCurrent(item) ? "true" : undefined);
 
   return (
     <header
@@ -90,9 +92,9 @@ export function SiteHeader({ items }: { items: NavItem[] }) {
       }`}
     >
       <div className="wrap flex h-(--header-h) items-center justify-between gap-4">
-        <Link href="/" className="flex min-h-11 min-w-0 items-center gap-3" aria-label="Valentini & Co. home" onClick={close}>
+        <Link href="/" className="flex min-h-11 min-w-0 items-center gap-3" aria-label="Valentini Systems home" onClick={close}>
           <BrandMark tone="dark" className="h-9 w-9 shrink-0" />
-          <span className="hidden sm:inline">
+          <span className="hidden sm:inline lg:max-xl:hidden">
             <BrandWordmark tone="dark" className="min-w-0 truncate text-[12px] sm:text-[14px]" />
           </span>
         </Link>
@@ -103,7 +105,7 @@ export function SiteHeader({ items }: { items: NavItem[] }) {
               <Link
                 key={item.href}
                 href={item.href}
-                aria-current={pathname === item.href ? "page" : undefined}
+                aria-current={current(item)}
                 className={`flex min-h-11 items-center text-[15px] underline-offset-4 hover:underline ${
                   isCurrent(item) ? "underline" : ""
                 }`}
@@ -164,13 +166,27 @@ export function SiteHeader({ items }: { items: NavItem[] }) {
             <Link
               key={item.href}
               href={item.href}
-              className="flex min-h-14 items-center border-b border-line text-[1.75rem] leading-none"
-              aria-current={pathname === item.href ? "page" : undefined}
+              className="h3 flex min-h-14 items-center border-b border-line"
+              aria-current={current(item)}
               onClick={close}
             >
               {item.label}
             </Link>
           ))}
+          <ul className="mt-4">
+            {DRAWER_LINKS.map((item) => (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  className="flex min-h-11 items-center text-muted underline-offset-4 hover:underline"
+                  aria-current={pathname === item.href ? "page" : undefined}
+                  onClick={close}
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </nav>
         <Link href={CTA_HREF} className="btn btn-primary mt-8 w-full" onClick={close}>
           {CTA_LABEL}

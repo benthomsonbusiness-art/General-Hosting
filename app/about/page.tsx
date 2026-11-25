@@ -1,7 +1,11 @@
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 import Link from "next/link";
+import { HelpCta } from "@/components/layout/HelpCta";
+import { ClosingCta } from "@/components/layout/ClosingCta";
 import { Container, Section } from "@/components/layout/Section";
+import { HardwareFrame } from "@/components/media/HardwareFrame";
 import { Breadcrumbs } from "@/components/nav/Breadcrumbs";
-import { PRINCIPLES } from "@/content/approach";
 import { ABOUT } from "@/content/pages";
 import { pageMetadata } from "@/lib/seo";
 
@@ -11,7 +15,19 @@ export const metadata = pageMetadata({
   path: "/about",
 });
 
+/** The founder photograph is never generated. The slot appears only once the real file is added. */
+const FOUNDER_PHOTO = "/images/about-founder.jpg";
+
+function hasFounderPhoto(): boolean {
+  try {
+    return existsSync(join(process.cwd(), "public", FOUNDER_PHOTO));
+  } catch {
+    return false;
+  }
+}
+
 export default function AboutPage() {
+  const photo = hasFounderPhoto();
   return (
     <>
       <Section labelledBy="about-title">
@@ -21,44 +37,38 @@ export default function AboutPage() {
             About the firm
           </h1>
           <p className="lead measure mt-5 text-muted">{ABOUT.dek}</p>
+          <HelpCta />
         </Container>
       </Section>
 
       <Section surface="ivory" labelledBy="founder">
-        <Container>
-          <h2 id="founder" className="h2">
-            Ben Thomson
-          </h2>
-          <p className="mt-2 text-slate">Founder</p>
-          <div className="measure mt-5 space-y-4 text-ink">
-            <p>
-              Ben Thomson is the founder. The firm writes routine work as code, uses a model only for judgment inside a
-              schema, and waits for a person before anything leaves the company.
-            </p>
-            <p>Clients own the code, the accounts, the logs, and the runbook.</p>
+        <Container className="grid gap-x-8 gap-y-10 lg:grid-cols-12">
+          {photo ? (
+            <div className="lg:col-span-4">
+              <HardwareFrame
+                src={FOUNDER_PHOTO}
+                alt="Ben Thomson, founder of Valentini Systems"
+                width={1600}
+                height={2000}
+                sizes="(min-width: 1024px) 30vw, 100vw"
+              />
+            </div>
+          ) : null}
+          <div className={photo ? "lg:col-span-7 lg:col-start-6" : "lg:col-span-8"}>
+            <h2 id="founder" className="h2">
+              Ben Thomson
+            </h2>
+            <p className="mt-2 text-slate">Founder</p>
+            <p className="measure mt-5 text-ink">{ABOUT.founder}</p>
+            <p className="mt-8 text-slate">{ABOUT.where}</p>
+            <Link href="/approach" className="text-link mt-2 inline-flex min-h-11 items-center">
+              How we work
+            </Link>
           </div>
         </Container>
       </Section>
 
-      <Section labelledBy="principles">
-        <Container>
-          <h2 id="principles" className="h2">
-            How the work is built
-          </h2>
-          <ul className="mt-8 divide-y divide-line border-y border-line">
-            {PRINCIPLES.map((item) => (
-              <li key={item.title} className="grid gap-2 py-6 md:grid-cols-12 md:items-baseline">
-                <h3 className="h3 md:col-span-7">{item.title}</h3>
-                <p className="text-muted md:col-span-5">{item.short}</p>
-              </li>
-            ))}
-          </ul>
-          <p className="mt-8 text-muted">{ABOUT.where}</p>
-          <Link href="/approach" className="text-link mt-2 inline-flex min-h-11 items-center">
-            Read how a project runs
-          </Link>
-        </Container>
-      </Section>
+      <ClosingCta />
     </>
   );
 }

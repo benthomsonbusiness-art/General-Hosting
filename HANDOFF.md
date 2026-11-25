@@ -1,3 +1,33 @@
+# HANDOFF: Valentini Systems rename and workflow polish
+
+Last updated: Nov 25, 2026 · Merged into `cursor/valentini-platform-v6` from `claude/peaceful-cannon-66jdb5`
+
+- **Name and domain:** Valentini Systems, `valentinisystems.com` (`lib/site.ts`). Wordmark reads VALENTINI SYSTEMS; the V mark is unchanged. `public/brand/logo.svg` was redrawn with Cormorant Garamond 500 outlines. The ampersand font was removed.
+- **Location:** Morristown, New Jersey (`SITE_LOCALITY`, About copy, JSON-LD).
+- **Indexing:** the `X-Robots-Tag: noindex` header for non-production hosts was removed at Ben's request.
+- **Workflow drawings:** every node and tool circle links to `/workflows/{id}#step-{node}` and the step opens on arrival (`OpenStepFromHash`). `SHOW_APP_LINE` and `SHOW_EXITS` in `layout.ts` are off: no "App: Operation" lines and no exit notes. No dot grid, no per-drawing caption. Cards, the approval key and a moving light on the spine (motion on only) are in `globals.css`.
+- **Pages:** new `/testimonials` (reads `content/testimonials.ts`, empty state until real, permitted quotes exist). Services hub shows titles only. `HelpCta` puts a request button near the top of most pages; every page ends on the default closing band.
+- **Header:** wordmark text hides between 1024 and 1279px so the five nav links fit.
+- **Checks:** 155 tests, tsc, lint, build pass; no sideways scroll on 10 pages at 390, 768, 1024, 1280.
+
+---
+
+# HANDOFF — Valentini platform v6
+
+Last updated: Nov 25, 2026 · Branch: `cursor/valentini-platform-v6` · Base: `cursor/valentini-platform-v5` (`584e19e`)
+
+Spec: `/mnt/project-files/redesign/v6-flowcharts-logos-copy/VALENTINI-V6-PROMPT.md` (Claude project files) with appendices A to E.
+
+- **Workflow drawings:** every workflow is drawn like Ben's reference: horizontal trigger, AI card with Model/Tools/Memory ports, rule cards with a Calls port, gold approval cards, results; dashed curves to round tool nodes; a label and an "App: Operation" line under every node; exits above the spine. Layout is `components/workflow/flow/layout.ts` (pure, tested); `FlowDiagram.tsx` renders it with no client JavaScript. Horizontal at 880px (5 columns) or 1040px (6), compact at 680px, vertical below. The old `Flowchart`, `ExampleFlow` and select box are gone; /workflows draws all eight.
+- **Workflow data:** `content/workflows.ts` rebuilt. `tools`, `input`, `output`, `sampleMs` removed; nodes carry `app`, `attached`, `gate.channelApp`, `gate.operation`, `stopLabel`. Step tags are Trigger, Rule, AI, Approval, Result. The run engine and its tests are unchanged.
+- **Logos:** Ben chose "Real logos now". `lib/logos.ts` has `LOGO_MODE = "all"`; 30 files in `public/logos/`, sources and licenses in `docs/logo-sources.md`. Every app's `status` is still `text-only` or `requested`: no brand has given written permission, and several brands' published rules require it. Set `LOGO_MODE = "cleared-only"` to fall back to names and icons. No file yet for Google Docs, Docusign, Calendly, BILL, Apollo, PandaDoc, Ramp, Pipedrive, Gusto.
+- **Copy and fixes:** Appendix D copy applied; FAQ contrast fixed; form posts without JavaScript and shows a "not set up" notice until `NEXT_PUBLIC_INQUIRY_LIVE=1`; closing CTA on every page; nav, type scale, services, approach, about, industries fixes; trademark lines in the footer and /terms; `public/_headers` for caching.
+- **Checks:** `npm run check`, `npm test` (155), `npx tsc --noEmit`, `npm run lint`, `npm run build` (33 pages) pass. 18 pages load with no sideways scroll at 1536, 1440, 1024, 768 and 390 wide.
+- **Not done:** axe and Lighthouse on the deployed site; moving the Motion switch into the phone drawer; steps opened from a `#step-…` link don't expand by themselves.
+- **Open for Ben:** engagement timelines (kept), founder photo (slot renders only when `public/images/about-founder.jpg` exists), inquiry delivery secrets.
+
+---
+
 # HANDOFF — Valentini platform v5
 
 Last updated: Nov 25, 2026 (ET) · Branch: `cursor/valentini-platform-v5` · Base: `cursor/valentini-platform-v4` (`861307b`)

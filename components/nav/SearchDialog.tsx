@@ -68,7 +68,7 @@ export function SearchDialog({
             name="q"
             type="search"
             autoComplete="off"
-            placeholder="Search services, workflows and insights"
+            placeholder="Search services, workflows, industries and insights"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             onKeyDown={(event) => {
@@ -123,13 +123,13 @@ export function SearchDialog({
 
         {searched && results.length === 0 ? (
           <p className="mt-6 text-slate">
-            No results for that search. Try the{" "}
+            Nothing matched. See the{" "}
             <Link href="/workflows" className="text-link" onClick={follow}>
-              workflow explorer
-            </Link>{" "}
-            or{" "}
+              example workflows
+            </Link>
+            , or{" "}
             <Link href="/contact" className="text-link" onClick={follow}>
-              contact the firm
+              tell us about your process
             </Link>
             .
           </p>

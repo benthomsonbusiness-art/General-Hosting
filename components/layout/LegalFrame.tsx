@@ -40,7 +40,7 @@ export function LegalFrame({
 export function LegalSection({ heading, children }: { heading: string; children: ReactNode }) {
   return (
     <section className="border-t border-rule py-6">
-      <h2 className="h3 mb-2">{heading}</h2>
+      <h2 className="h4 mb-2">{heading}</h2>
       {children}
     </section>
   );

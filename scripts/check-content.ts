@@ -14,7 +14,8 @@ import * as scenarios from "../content/scenarios.ts";
 import * as pages from "../content/pages.ts";
 import { SERVICES, SUB_SERVICES } from "../content/services.ts";
 import * as nav from "../content/site-nav.ts";
-import { EXITS, WORKFLOWS, type Workflow } from "../content/workflows.ts";
+import { EXITS, WORKFLOWS, type Workflow, type WorkflowNode } from "../content/workflows.ts";
+import { appName, isAppSlug, isGlyph } from "../lib/logos.ts";
 
 const errors: string[] = [];
 const fail = (message: string) => errors.push(message);
@@ -167,7 +168,7 @@ const described: { where: string; text: string }[] = [
   ...INSIGHTS.map((item) => ({ where: item.slug, text: item.metaDescription })),
   ...WORKFLOWS.map((item) => ({ where: item.id, text: item.metaDescription })),
   ...Object.entries(pages).flatMap(([name, value]) =>
-    "metaDescription" in value ? [{ where: name, text: value.metaDescription }] : [],
+    typeof value === "object" && "metaDescription" in value ? [{ where: name, text: value.metaDescription }] : [],
   ),
 ];
 for (const { where, text } of described) {
@@ -199,6 +200,68 @@ for (const insight of INSIGHTS) {
   }
 }
 
+// ---------- Diagram data ----------
+
+const MONO_MAX = 22;
+const DOMAIN = /\b[a-z0-9-]+\.[a-z]{2,}\b/gi;
+const APP_KINDS = new Set(["trigger", "deterministic", "output"]);
+
+/** The mono line under a card or circle: "App: Operation". */
+function checkMono(app: string, operation: string, where: string) {
+  if (!isAppSlug(app) && !isGlyph(app)) {
+    fail(`${where}: "${app}" is not an app slug or glyph`);
+    return;
+  }
+  const mono = `${appName(app)}: ${operation}`;
+  if (mono.length > MONO_MAX) fail(`${where}: "${mono}" is longer than ${MONO_MAX} characters`);
+  for (const domain of operation.match(DOMAIN) ?? []) {
+    if (!domain.endsWith(".example")) fail(`${where}: operation names a real domain "${domain}"`);
+  }
+}
+
+function checkDiagram(node: WorkflowNode, where: string) {
+  if (APP_KINDS.has(node.kind)) {
+    if (!node.app) fail(`${where}: ${node.kind} nodes need an app`);
+    else checkMono(node.app.app, node.app.operation, where);
+  } else if (node.app) {
+    fail(`${where}: ${node.kind} nodes carry no app`);
+  }
+  if (node.gate) checkMono(node.gate.channelApp, node.gate.operation, `${where} gate`);
+  if (node.stopLabel !== undefined) {
+    if (node.kind !== "deterministic" && node.kind !== "ai") fail(`${where}: stopLabel only on rule or AI steps`);
+    if (node.stopLabel.length > 40) fail(`${where}: stopLabel longer than 40 characters`);
+  }
+  const attached = node.attached ?? [];
+  if (attached.length > 5) fail(`${where}: more than 5 attachments`);
+  const models = attached.filter((item) => item.port === "model").length;
+  if (node.kind === "ai" && models !== 1) fail(`${where}: AI steps need exactly one model attachment`);
+  for (const item of attached) {
+    const at = `${where}/${item.id}`;
+    if (item.label.length > 24) fail(`${at}: attachment label longer than 24 characters`);
+    checkMono(item.app, item.operation, at);
+    if (item.port === "calls" && node.kind !== "trigger" && node.kind !== "deterministic") {
+      fail(`${at}: calls only on trigger and rule steps`);
+    }
+    if (item.port !== "calls" && node.kind !== "ai") fail(`${at}: ${item.port} only on AI steps`);
+    if (node.kind === "ai") {
+      if (!item.readOnly) fail(`${at}: everything an AI step holds must be read-only`);
+      if (/\d+\.\d+/.test(`${item.label} ${item.operation}`)) fail(`${at}: no version numbers`);
+    }
+    if (item.port === "model" && /\d/.test(`${item.label} ${item.operation}`)) {
+      fail(`${at}: model labels carry no version number`);
+    }
+  }
+}
+
+/** Spine columns as drawn: two outputs directly after one approval stack in one column. */
+function spineColumns(workflow: Workflow): number {
+  return workflow.nodes.filter((node, index, nodes) => {
+    const stacked =
+      node.kind === "output" && nodes[index - 1]?.kind === "output" && nodes[index - 2]?.kind === "human";
+    return !stacked;
+  }).length;
+}
+
 // ---------- Workflows ----------
 
 function checkWorkflow(workflow: Workflow) {
@@ -225,7 +288,8 @@ function checkWorkflow(workflow: Workflow) {
 
   for (const node of workflow.nodes) {
     const where = `${workflow.id}/${node.id}`;
-    if (node.label.length > 32) fail(`${where}: label longer than 32 characters`);
+    if (node.label.length > 28) fail(`${where}: label longer than 28 characters`);
+    checkDiagram(node, where);
     if (/\d\s?ms\b/.test(node.timingLabel)) fail(`${where}: timingLabel must not be a precise time`);
     if (node.kind === "human" && !node.gate) fail(`${where}: human nodes need a gate`);
     if (node.kind !== "human" && node.gate) fail(`${where}: only human nodes have gates`);
@@ -249,6 +313,17 @@ function checkWorkflow(workflow: Workflow) {
   }
 }
 WORKFLOWS.forEach(checkWorkflow);
+
+const COMPLIANCE = /\bcomplian(t|ce)\b|\bbias[- ]audit/i;
+for (const workflow of WORKFLOWS) {
+  const columns = spineColumns(workflow);
+  if (columns > 6) fail(`${workflow.id}: ${columns} spine columns (at most 6)`);
+  const ids = workflow.nodes.flatMap((node) => [node.id, ...(node.attached ?? []).map((item) => item.id)]);
+  unique(ids, `${workflow.id} node and attachment ids`);
+  const copy = JSON.stringify(workflow, (key, value) => (key === "payload" ? undefined : value));
+  const claim = copy.match(COMPLIANCE);
+  if (claim) fail(`${workflow.id}: no compliance claims ("${claim[0]}")`);
+}
 for (const workflow of WORKFLOWS) {
   const list = scenarios.SCENARIOS[workflow.id];
   if (!list) fail(`${workflow.id}: no scenarios`);
@@ -259,7 +334,7 @@ for (const workflow of WORKFLOWS) {
 }
 
 const size = JSON.stringify(WORKFLOWS).length;
-if (size > 44 * 1024) fail(`workflow data is ${Math.round(size / 1024)} KB`);
+if (size > 52 * 1024) fail(`workflow data is ${Math.round(size / 1024)} KB`);
 
 if (errors.length > 0) {
   console.error(`Content check failed with ${errors.length} problem(s):`);

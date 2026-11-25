@@ -1,8 +1,5 @@
 @import "tailwindcss";
 
-/* Laptop windows too short for the workflow stage and its controls at full spacing. */
-@custom-variant short (@media (min-width: 64rem) and (max-height: 55rem));
-
 :root {
   --obsidian: #0b1f16;
   --well: #07140e;
@@ -46,7 +43,6 @@
   --font-sans: var(--font-mona), "Mona Sans", system-ui, sans-serif;
   --font-display: var(--font-mona), "Mona Sans", system-ui, sans-serif;
   --font-wordmark: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
-  --font-ampersand-face: var(--font-ampersand), var(--font-cormorant), Georgia, serif;
   --font-mono: var(--font-plex-mono), "IBM Plex Mono", ui-monospace, monospace;
   --radius-sm: 0px;
   --radius-md: 0px;
@@ -93,7 +89,7 @@
 
   body {
     background-color: var(--obsidian);
-    background-image: linear-gradient(rgb(11 31 22 / 0.9), rgb(11 31 22 / 0.9)), url("/images/sized/texture-console-1024.webp");
+    background-image: linear-gradient(rgb(11 31 22 / 0.9), rgb(11 31 22 / 0.9)), url("/images/sized/texture-console-480.webp");
     background-size: auto, 480px;
     color: var(--ivory);
     font-family: var(--font-sans);
@@ -155,7 +151,7 @@ html[data-modality="pointer"] :focus-visible {
 
 @layer components {
   .bg-obsidian {
-    background-image: linear-gradient(rgb(11 31 22 / 0.9), rgb(11 31 22 / 0.9)), url("/images/sized/texture-console-1024.webp");
+    background-image: linear-gradient(rgb(11 31 22 / 0.9), rgb(11 31 22 / 0.9)), url("/images/sized/texture-console-480.webp");
     background-size: auto, 480px;
   }
 
@@ -174,14 +170,26 @@ html[data-modality="pointer"] :focus-visible {
     max-width: 68ch;
   }
 
+  /*
+   * One type scale, five display steps: display (home hero only), h1 (every other page H1),
+   * h2, h3, h4. Heading level and size are separate: an <h2> may wear .h3.
+   */
   .display,
   .h1 {
     font-family: var(--font-sans);
     font-variation-settings: "wdth" 115, "wght" 620;
     font-weight: 620;
-    font-size: clamp(2.6rem, 1.6rem + 4.2vw, 6rem);
     line-height: 0.98;
     letter-spacing: -0.03em;
+  }
+
+  .display {
+    font-size: clamp(2.6rem, 1.6rem + 4.2vw, 6rem);
+  }
+
+  .h1 {
+    font-size: clamp(2.5rem, 1.6rem + 3vw, 5rem);
+    line-height: 1;
   }
 
   .h2 {
@@ -197,14 +205,24 @@ html[data-modality="pointer"] :focus-visible {
     font-family: var(--font-sans);
     font-variation-settings: "wdth" 105, "wght" 600;
     font-weight: 600;
-    font-size: clamp(1.25rem, 1.1rem + 0.4vw, 1.5rem);
-    line-height: 1.25;
+    font-size: clamp(1.5rem, 1.2rem + 1.1vw, 2.25rem);
+    line-height: 1.12;
     letter-spacing: -0.015em;
   }
 
   .h4 {
+    font-family: var(--font-sans);
+    font-variation-settings: "wdth" 100, "wght" 600;
     font-weight: 600;
-    font-size: 1.125rem;
+    font-size: clamp(1.375rem, 1.2rem + 0.5vw, 1.75rem);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  /* Title of a list row that links somewhere: workflows, services, insights. Not a heading step. */
+  .row-title {
+    font-size: 1.25rem;
+    font-weight: 500;
     line-height: 1.35;
   }
 
@@ -224,38 +242,6 @@ html[data-modality="pointer"] :focus-visible {
     border: 1px solid var(--line);
     border-radius: 8px;
     box-shadow: var(--shadow-console);
-  }
-
-  .flow-canvas {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 28rem;
-    padding: 2.5rem 1.5rem;
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    background-color: var(--well);
-    background-image: radial-gradient(rgb(247 244 236 / 0.22) 1px, transparent 1px);
-    background-size: 16px 16px;
-  }
-
-  .flow-node {
-    width: 100%;
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    background: var(--obsidian);
-    padding: 0.7rem 0.9rem;
-    color: var(--ivory);
-    font-size: 0.95rem;
-    font-weight: 600;
-    line-height: 1.3;
-    text-align: center;
-  }
-
-  .flow-approve {
-    border-color: var(--gold);
-    background: var(--gold);
-    color: var(--obsidian);
   }
 
   .btn {
@@ -359,180 +345,595 @@ html[data-modality="pointer"] :focus-visible {
     border-width: 2px;
   }
 
-  .scene {
-    overflow-x: clip;
+  /*
+   * Workflow diagram (components/workflow/flow). The default is the vertical list; the
+   * horizontal stage switches on with one container query further down. .flow-q is the query
+   * container: its end padding (--q-pad) raises the width at which the stage appears, so one
+   * rule serves every variant: 880px for up to 5 columns, 1040px for 6, 680px for the compact
+   * variant. .flow-frame takes the padding back so the drawing still uses the full width.
+   */
+  .flow {
+    --q-pad: 200px;
+    --pad: 40px;
+    --card: 64px;
+    --ai-w: 208px;
+    --tool: 40px;
+    --ai-size: 14px;
+    --label-size: 13px;
+    --label-lh: 17px;
+    --mono-size: 12px;
+    --mono-lh: 16px;
+    --small-size: 12px;
+    --small-lh: 16px;
+    --tool-text-gap: 8px;
+    --v-card: 48px;
+    --v-tool: 32px;
+    --edge: rgb(247 244 236 / 0.48);
+    --ring: rgb(247 244 236 / 0.16);
+    min-width: 0;
+    margin: 0;
   }
 
-  .stage {
-    background: var(--well);
+  .flow[data-cols="6"] {
+    --q-pad: 360px;
   }
 
-  .stage-window {
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    box-shadow: var(--shadow-console);
+  .flow[data-variant="compact"] {
+    --q-pad: 0px;
+    --pad: 24px 16px;
+    --card: 48px;
+    --ai-w: 160px;
+    --tool: 32px;
+    --ai-size: 12px;
+    --label-size: 12px;
+    --label-lh: 16px;
+    --mono-size: 11px;
+    --mono-lh: 15px;
+    --small-size: 11px;
+    --small-lh: 15px;
+    --tool-text-gap: 6px;
+    --v-card: 40px;
+    --v-tool: 28px;
   }
 
-  .stage-fill {
-    animation: stage-fill var(--step) linear both;
+  /* The hairline is drawn inside the box, so the full 880px fits a 1024px window. */
+  /* A dark well lit softly from above: depth without a pattern. */
+  .flow-canvas {
+    container: flow-canvas / inline-size;
+    padding: var(--pad);
+    border-radius: 12px;
+    box-shadow:
+      inset 0 0 0 1px rgb(247 244 236 / 0.08),
+      inset 0 1px 0 rgb(247 244 236 / 0.06),
+      0 30px 60px -36px rgb(0 0 0 / 0.7);
+    background-color: var(--well);
+    background-image:
+      radial-gradient(120% 90% at 50% -10%, rgb(36 84 61 / 0.42), transparent 60%),
+      radial-gradient(70% 60% at 85% 110%, rgb(197 168 105 / 0.06), transparent 70%);
   }
 
-  [data-motion="on"] .stage-spin {
-    animation: spin 900ms linear infinite;
+  .flow-q {
+    container: flow / inline-size;
   }
 
-  .scene-rise {
-    opacity: 0;
-    visibility: hidden;
-    transform: translate3d(0, 12px, 0);
+  .flow[data-layout="vertical"] .flow-q {
+    container-type: normal;
   }
 
-  .scene-rise-on {
-    opacity: 1;
-    visibility: visible;
-    transform: translate3d(0, 0, 0);
+  /* Only on a canvas wide enough to hold the padding; narrower ones are vertical anyway. */
+  @container flow-canvas (min-width: 680px) {
+    .flow-q {
+      padding-inline-end: var(--q-pad);
+    }
+
+    .flow-frame {
+      margin-inline-end: calc(-1 * var(--q-pad));
+    }
   }
 
-  .stage-compact .scene-reserve {
-    min-height: 0;
+  .flow-stage {
+    position: relative;
+    max-width: 1120px;
+    margin-inline: auto;
   }
 
-  .scene-word {
-    opacity: 0;
+  .flow-caption {
+    margin-top: 0.75rem;
+    max-width: 68ch;
+    color: var(--ivory-64);
+    font-size: 0.875rem;
+    line-height: 1.5;
   }
 
-  .scene-word-on {
-    opacity: 1;
+  /* Vertical list: every phone, and any column too narrow for the stage. */
+  .flow-edges,
+  .flow-port,
+  .flow-port-label {
+    display: none;
   }
 
-  .scene-open {
+  .flow-spine,
+  .flow-tools {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .flow-spine {
     display: grid;
-    grid-template-rows: 0fr;
-    visibility: hidden;
+    gap: 16px;
   }
 
-  .scene-open > * {
-    overflow: hidden;
-    padding-block: 0;
+  .flow-item {
+    position: relative;
   }
 
-  .scene-open-on {
-    grid-template-rows: 1fr;
-    visibility: visible;
-  }
-
-  .scene-open-on > * {
-    padding-block: 0.5rem;
-  }
-
-  [data-motion="on"] .scene-dot {
-    animation: dot 900ms ease-in-out infinite alternate;
-  }
-
-  [data-motion="on"] .scene-rise {
-    transition:
-      opacity 420ms var(--ease),
-      transform 420ms var(--ease);
-  }
-
-  [data-motion="on"] .scene-word {
-    transition: opacity 180ms ease-out var(--delay, 0ms);
-  }
-
-
-  .sx {
-    opacity: 0;
-    transform: translate3d(0, 8px, 0);
-    visibility: hidden;
-  }
-
-  .sx-on {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-    visibility: visible;
-  }
-
-  .scene-mark {
-    background: linear-gradient(rgb(19 50 36 / 0.22), rgb(19 50 36 / 0.22)) no-repeat 0 92% / 0% 2px;
-    -webkit-box-decoration-break: clone;
-    box-decoration-break: clone;
-  }
-
-  .scene-mark-on {
-    background-size: 100% 2px;
-  }
-
-  .scene-stamp {
+  .flow-item:not(:last-child)::before {
+    content: "";
     position: absolute;
-    right: 0.5rem;
-    bottom: 0.5rem;
-    border: 1px solid var(--forest);
-    border-radius: 6px;
-    background: var(--ivory);
-    padding: 0.35rem 0.7rem;
-    color: var(--forest);
-    font-weight: 600;
-    opacity: 0;
-    transform: scale(1.04);
-    visibility: hidden;
+    top: calc(var(--v-card) / 2);
+    bottom: calc(-16px - var(--v-card) / 2);
+    left: calc(var(--v-card) / 2 - 0.75px);
+    width: 1.5px;
+    background: var(--edge);
   }
 
-  .scene-stamp-on {
-    opacity: 1;
-    transform: scale(1);
-    visibility: visible;
-  }
-
-  .scene-draw {
-    stroke-dasharray: 1;
-    stroke-dashoffset: 1;
-  }
-
-  .scene-draw-on {
-    stroke-dashoffset: 0;
-  }
-
-  .scene-tile {
-    background: var(--ivory);
-    color: var(--slate);
-  }
-
-  .scene-tile-on {
-    background: var(--forest);
+  .flow-node {
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--v-card) minmax(0, 1fr);
+    column-gap: 14px;
+    align-items: start;
     color: var(--ivory);
+    text-decoration: none;
   }
 
-  .scene-redact-on {
-    background: var(--ink);
-    color: var(--ink);
-  }
-
-  .scene-scan {
-    position: absolute;
-    inset-inline: 0;
-    top: 50%;
+  .flow-card {
+    position: relative;
     z-index: 1;
-    height: 2px;
+    display: grid;
+    place-items: center;
+    width: var(--v-card);
+    height: var(--v-card);
+    border: 1px solid var(--ring);
     background: var(--forest);
+    color: var(--ivory-64);
   }
 
-  [data-motion="on"] .sx,
-  [data-motion="on"] .scene-fade,
-  [data-motion="on"] .scene-tile {
+  .flow-card-ai {
+    grid-column: 1 / -1;
+    width: auto;
+    height: auto;
+    min-height: var(--v-card);
+    place-items: center start;
+    padding: 8px 14px;
+  }
+
+  .flow-ai-label {
+    color: var(--ivory);
+    font-size: var(--ai-size);
+    font-variation-settings: "wdth" 100, "wght" 600;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+
+  .flow-card {
+    border-radius: 6px;
+    background: linear-gradient(180deg, #17402e, #0f2a1e);
+    box-shadow:
+      inset 0 1px 0 rgb(247 244 236 / 0.08),
+      0 8px 18px -10px rgb(0 0 0 / 0.8);
+  }
+
+  .flow-card-ai {
+    border-color: rgb(247 244 236 / 0.22);
+    background: linear-gradient(180deg, #1d4a36, #123526);
+    box-shadow:
+      inset 0 1px 0 rgb(247 244 236 / 0.12),
+      0 0 0 4px rgb(36 84 61 / 0.25),
+      0 10px 24px -12px rgb(0 0 0 / 0.85);
+  }
+
+  .flow-card-gold {
+    border-color: transparent;
+    border-radius: 6px;
+    background: linear-gradient(180deg, #d6bc82, var(--gold));
+    box-shadow:
+      inset 0 1px 0 rgb(247 244 236 / 0.55),
+      0 0 0 5px rgb(197 168 105 / 0.12),
+      0 0 28px -4px rgb(197 168 105 / 0.45);
+    color: var(--obsidian);
+  }
+
+  /* A slow light runs along the main line, only when motion is on. */
+  .flow-edge-run {
+    display: none;
+    fill: none;
+    stroke: var(--ivory);
+    stroke-width: 2px;
+    stroke-linecap: round;
+    stroke-dasharray: 2 46;
+    stroke-opacity: 0.85;
+  }
+
+  html[data-motion="on"] .flow-edge-run {
+    display: inline;
+    animation: flow-run 2.4s linear infinite;
+  }
+
+  .flow-text,
+  .flow-tool-text {
+    display: grid;
+    min-width: 0;
+    align-content: start;
+  }
+
+  .flow-text {
+    grid-column: 2;
+    padding-top: 2px;
+  }
+
+  .flow-label,
+  .flow-exit {
+    text-wrap: balance;
+  }
+
+  .flow-label {
+    display: block;
+    color: var(--ivory);
+    font-size: var(--label-size);
+    font-variation-settings: "wdth" 100, "wght" 500;
+    font-weight: 500;
+    line-height: var(--label-lh);
+  }
+
+  .flow-mono {
+    display: block;
+    color: var(--ivory-64);
+    font-family: var(--font-mono);
+    font-size: var(--mono-size);
+    line-height: var(--mono-lh);
+    overflow-wrap: anywhere;
+  }
+
+  .flow-note,
+  .flow-exit,
+  .flow-port-label {
+    color: var(--ivory-64);
+    font-size: var(--small-size);
+    line-height: var(--small-lh);
+  }
+
+  .flow-note {
+    display: block;
+    margin-top: 2px;
+  }
+
+  .flow-exit {
+    display: block;
+    grid-column: 2;
+    margin-top: 4px;
+  }
+
+  .flow-exit::before {
+    content: "";
+    display: inline-block;
+    width: 12px;
+    margin-right: 6px;
+    border-top: 1px dashed var(--ivory-64);
+    vertical-align: middle;
+  }
+
+  .flow-tools {
+    display: grid;
+    gap: 10px;
+    margin: 12px 0 0 calc(var(--v-card) + 14px);
+    padding: 2px 0 2px 14px;
+    border-left: 1px dashed var(--ivory-64);
+  }
+
+  .flow-tool,
+  .flow-tool-link {
+    display: grid;
+    grid-template-columns: var(--v-tool) minmax(0, 1fr);
+    column-gap: 10px;
+    align-items: center;
+  }
+
+  .flow-tool-link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* Linked nodes and circles: the ring brightens and the label underlines on hover or focus. */
+  [data-link] {
+    cursor: pointer;
+  }
+
+  [data-link] .flow-card,
+  [data-link] .flow-disc {
     transition:
-      opacity 420ms var(--ease),
-      transform 420ms var(--ease);
-    transition-delay: var(--delay, 0ms);
+      border-color 160ms ease-out,
+      background-color 160ms ease-out,
+      filter 160ms ease-out;
   }
 
-  [data-motion="on"] .scene-grow {
-    transition: transform 500ms var(--ease);
+  [data-link]:is(:hover, :focus-visible) .flow-card:not(.flow-card-gold),
+  [data-link]:is(:hover, :focus-visible) .flow-disc {
+    border-color: rgb(247 244 236 / 0.64);
+    background-color: #1d3a2c;
   }
 
-  [data-motion="on"] .scene-stamp {
-    transition:
-      opacity 180ms ease-in,
-      transform 260ms var(--ease);
+  [data-link]:is(:hover, :focus-visible) .flow-card-gold {
+    filter: brightness(1.08);
+  }
+
+  [data-link]:is(:hover, :focus-visible) .flow-label,
+  [data-link]:is(:hover, :focus-visible) .flow-ai-label {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+
+  /* A circle marks a tool or port in a workflow drawing. It is a shape, not a corner radius. */
+  .flow-disc {
+    display: grid;
+    place-items: center;
+    width: var(--v-tool);
+    height: var(--v-tool);
+    border: 1px solid var(--ring);
+    border-radius: 9999px;
+    background: radial-gradient(circle at 50% 30%, #1d4a36, var(--forest));
+    box-shadow: 0 6px 14px -8px rgb(0 0 0 / 0.8);
+    color: var(--ivory-64);
+  }
+
+  .flow-disc:has(.flow-mark[data-light]) {
+    background: var(--ivory);
+  }
+
+  .flow-mark {
+    display: grid;
+    place-items: center;
+  }
+
+  .flow-mark img {
+    display: block;
+    width: var(--mark);
+    height: var(--mark);
+  }
+
+  .flow-card .flow-mark[data-light] {
+    padding: 5px;
+    border: 1px solid var(--ring);
+    border-radius: 9999px;
+    background: var(--ivory);
+  }
+
+  .flow-card .flow-mark img,
+  .flow-card .flow-glyph svg {
+    width: calc(var(--v-card) / 2);
+    height: calc(var(--v-card) / 2);
+  }
+
+  .flow-disc .flow-mark img,
+  .flow-disc .flow-glyph svg {
+    width: calc(var(--v-tool) * 0.6);
+    height: calc(var(--v-tool) * 0.6);
+  }
+
+  .flow-card-gold svg {
+    width: calc(var(--v-card) * 0.42);
+    height: calc(var(--v-card) * 0.42);
+  }
+
+  /* Lines. Hovering or focusing a step brightens its lines; with motion on, the dashes move once. */
+  .flow-edge {
+    fill: none;
+    stroke: var(--ivory);
+    stroke-opacity: 0.48;
+    stroke-width: 1.5px;
+    transition: stroke-opacity 200ms ease-out;
+  }
+
+  .flow-edge-dash {
+    stroke-dasharray: 4 4;
+  }
+
+  .flow-stub {
+    stroke-opacity: 0.64;
+    stroke-width: 1px;
+  }
+
+  .flow-stage:has(> .flow-spine > [data-k="s0"]:is(:hover, :focus-within)) .flow-edge[data-k~="s0"],
+  .flow-stage:has(> .flow-spine > [data-k="s1"]:is(:hover, :focus-within)) .flow-edge[data-k~="s1"],
+  .flow-stage:has(> .flow-spine > [data-k="s2"]:is(:hover, :focus-within)) .flow-edge[data-k~="s2"],
+  .flow-stage:has(> .flow-spine > [data-k="s3"]:is(:hover, :focus-within)) .flow-edge[data-k~="s3"],
+  .flow-stage:has(> .flow-spine > [data-k="s4"]:is(:hover, :focus-within)) .flow-edge[data-k~="s4"],
+  .flow-stage:has(> .flow-spine > [data-k="s5"]:is(:hover, :focus-within)) .flow-edge[data-k~="s5"],
+  .flow-stage:has(> .flow-spine > [data-k="s6"]:is(:hover, :focus-within)) .flow-edge[data-k~="s6"],
+  .flow-stage:has(> .flow-spine > [data-k="s7"]:is(:hover, :focus-within)) .flow-edge[data-k~="s7"] {
+    stroke-opacity: 0.8;
+  }
+
+  html[data-motion="on"] .flow-stage:has(> .flow-spine > [data-k="s0"]:is(:hover, :focus-within)) .flow-edge-dash[data-k~="s0"],
+  html[data-motion="on"] .flow-stage:has(> .flow-spine > [data-k="s1"]:is(:hover, :focus-within)) .flow-edge-dash[data-k~="s1"],
+  html[data-motion="on"] .flow-stage:has(> .flow-spine > [data-k="s2"]:is(:hover, :focus-within)) .flow-edge-dash[data-k~="s2"],
+  html[data-motion="on"] .flow-stage:has(> .flow-spine > [data-k="s3"]:is(:hover, :focus-within)) .flow-edge-dash[data-k~="s3"],
+  html[data-motion="on"] .flow-stage:has(> .flow-spine > [data-k="s4"]:is(:hover, :focus-within)) .flow-edge-dash[data-k~="s4"],
+  html[data-motion="on"] .flow-stage:has(> .flow-spine > [data-k="s5"]:is(:hover, :focus-within)) .flow-edge-dash[data-k~="s5"],
+  html[data-motion="on"] .flow-stage:has(> .flow-spine > [data-k="s6"]:is(:hover, :focus-within)) .flow-edge-dash[data-k~="s6"],
+  html[data-motion="on"] .flow-stage:has(> .flow-spine > [data-k="s7"]:is(:hover, :focus-within)) .flow-edge-dash[data-k~="s7"] {
+    animation: flow-dash 600ms var(--ease) 1;
+  }
+
+  @container flow-canvas (min-width: 520px) {
+    .flow-tools {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* Horizontal stage. Positions come from layoutFlow() as custom properties on each element. */
+  @container flow (min-width: 680px) {
+    .flow-stage {
+      height: var(--stage-h);
+    }
+
+    .flow-edges {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      width: 100%;
+      height: var(--stage-h);
+      overflow: visible;
+    }
+
+    .flow-spine,
+    .flow-tools {
+      display: block;
+    }
+
+    .flow-item:not(:last-child)::before {
+      display: none;
+    }
+
+    .flow-node {
+      position: absolute;
+      top: var(--y);
+      left: var(--x);
+      display: block;
+      width: var(--w);
+      height: var(--h);
+    }
+
+    .flow-card {
+      position: absolute;
+      top: 0;
+      left: var(--card-l);
+      width: var(--card);
+      height: var(--card);
+    }
+
+    .flow-card-ai {
+      width: var(--ai-w);
+      place-items: center;
+      padding: 0 16px;
+      text-align: center;
+    }
+
+    .flow-card[data-in]::before,
+    .flow-card[data-out]::after,
+    .flow-port {
+      content: "";
+      position: absolute;
+      display: block;
+      width: 8px;
+      height: 8px;
+      border-radius: 9999px;
+      background: var(--ivory-64);
+    }
+
+    .flow-card[data-in]::before {
+      top: calc(50% - 4px);
+      left: -5px;
+    }
+
+    .flow-card[data-out]::after {
+      top: calc(50% - 4px);
+      right: -5px;
+    }
+
+    .flow-port {
+      bottom: -5px;
+      left: calc(var(--p) - 5px);
+    }
+
+    .flow-text,
+    .flow-exit,
+    .flow-port-label {
+      position: absolute;
+      top: var(--t);
+      left: var(--l);
+      margin: 0;
+      padding: 0;
+    }
+
+    .flow-text,
+    .flow-exit {
+      display: block;
+      width: var(--tw);
+      text-align: center;
+    }
+
+    .flow-mono > span {
+      white-space: nowrap;
+    }
+
+    /* A "Calls" line runs down through its own step's text; the text sits on the well. */
+    .flow-item:has(> .flow-tools) .flow-text {
+      background: var(--well);
+    }
+
+    .flow-exit::before {
+      display: none;
+    }
+
+    .flow-port-label {
+      display: block;
+      white-space: nowrap;
+    }
+
+    .flow-tools {
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+
+    .flow-tool {
+      position: absolute;
+      top: var(--y);
+      left: var(--x);
+      display: block;
+      width: var(--w);
+      text-align: center;
+    }
+
+    .flow-tool-link {
+      display: block;
+    }
+
+    .flow-disc {
+      width: var(--tool);
+      height: var(--tool);
+      margin-inline: auto;
+    }
+
+    .flow-tool-text {
+      display: block;
+      margin-top: var(--tool-text-gap);
+    }
+
+    .flow-card .flow-mark img,
+    .flow-disc .flow-mark img {
+      width: var(--mark);
+      height: var(--mark);
+    }
+
+    .flow-card .flow-glyph svg {
+      width: calc(var(--card) * 0.44);
+      height: calc(var(--card) * 0.44);
+    }
+
+    .flow-disc .flow-glyph svg {
+      width: calc(var(--tool) * 0.5);
+      height: calc(var(--tool) * 0.5);
+    }
+
+    .flow-card-gold svg {
+      width: calc(var(--card) * 0.38);
+      height: calc(var(--card) * 0.38);
+    }
   }
 
   .packet-track {
@@ -562,10 +963,9 @@ html[data-modality="pointer"] :focus-visible {
 }
 
 @media (max-width: 39.9375rem) {
-  .scene-stamp {
-    position: static;
-    width: fit-content;
-    margin-top: 0.5rem;
+  .flow-canvas {
+    padding: 20px 16px;
+    background-image: none;
   }
 }
 
@@ -611,21 +1011,21 @@ html[data-modality="pointer"] :focus-visible {
   animation-timing-function: var(--ease);
 }
 
-@keyframes stage-fill {
+@keyframes flow-run {
   from {
-    transform: scaleX(0);
+    stroke-dashoffset: 48;
   }
-}
-
-@keyframes spin {
   to {
-    transform: rotate(360deg);
+    stroke-dashoffset: 0;
   }
 }
 
-@keyframes dot {
+@keyframes flow-dash {
   from {
-    opacity: 0.25;
+    stroke-dashoffset: 8;
+  }
+  to {
+    stroke-dashoffset: 0;
   }
 }
 
@@ -727,6 +1127,12 @@ input[type="range"]::-moz-range-thumb {
   .display {
     animation: none;
     transition: none;
+  }
+
+  /* Diagram lines change opacity only, with no transition. */
+  .flow-edge {
+    animation: none !important;
+    transition: none !important;
   }
 
   ::view-transition-old(*),

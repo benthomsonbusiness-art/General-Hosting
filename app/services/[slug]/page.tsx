@@ -5,12 +5,14 @@ import { Faq } from "@/components/content/Blocks";
 import { StageDiagram } from "@/components/content/Diagrams";
 import { Estimator } from "@/components/content/Estimator";
 import { SubServiceScenes } from "@/components/content/SubServiceScenes";
+import { ClosingCta } from "@/components/layout/ClosingCta";
 import { Container, Section } from "@/components/layout/Section";
 import { Breadcrumbs } from "@/components/nav/Breadcrumbs";
 import { JsonLd } from "@/components/util/JsonLd";
-import { getService, SERVICES, SUB_SERVICES, serviceHref } from "@/content/services";
-import { workflowsById } from "@/content/workflows";
+import { BUILD_TYPES, getService, INTEGRATIONS, SERVICES, SUB_SERVICES, serviceHref } from "@/content/services";
+import { WORKFLOWS, workflowsById } from "@/content/workflows";
 import { pageMetadata, serviceJsonLd } from "@/lib/seo";
+import { appsByCategory, showMark, usedAppSlugs } from "@/lib/used-apps";
 
 export const dynamicParams = false;
 
@@ -36,6 +38,7 @@ export default async function ServicePage({ params }: Props) {
   const flagship = service.kind === "flagship";
   const workflows = workflowsById(service.workflowIds);
   const path = serviceHref(service.slug);
+  const tools = flagship ? appsByCategory(usedAppSlugs(WORKFLOWS)) : [];
 
   return (
     <>
@@ -62,13 +65,9 @@ export default async function ServicePage({ params }: Props) {
         <Section surface="forest" labelledBy="services">
           <Container>
             <h2 id="services" className="h2">
-              Five ways in
+              What we build
             </h2>
-            <p className="measure mt-4 text-ivory/80">
-              Every workflow engagement starts from the documents and tools already in use, then isolates what can run
-              without manual copying.
-            </p>
-            <SubServiceScenes items={SUB_SERVICES} />
+            <SubServiceScenes items={SUB_SERVICES.filter((item) => BUILD_TYPES.includes(item.slug))} />
           </Container>
         </Section>
       ) : (
@@ -80,7 +79,7 @@ export default async function ServicePage({ params }: Props) {
             <dl className="mt-8 divide-y divide-ink/12 border-y border-ink/12">
               {service.areas.map((area) => (
                 <div key={area.title} className="grid gap-2 py-6 md:grid-cols-12">
-                  <dt className="h3 md:col-span-5">{area.title}</dt>
+                  <dt className="h4 md:col-span-5">{area.title}</dt>
                   <dd className="text-slate md:col-span-7">{area.body}</dd>
                 </div>
               ))}
@@ -93,17 +92,14 @@ export default async function ServicePage({ params }: Props) {
         <Section labelledBy="try">
           <Container>
             <h2 id="try" className="h2">
-              Examples
+              Example workflows
             </h2>
-            <p className="mt-3 text-muted">Each one is drawn as the steps it follows.</p>
-            <ul className="mt-6 divide-y divide-line border-y border-line">
+            <ul className="mt-8 divide-y divide-line border-y border-line">
               {workflows.map((workflow) => (
                 <li key={workflow.id}>
-                  <Link href={`/workflows/${workflow.id}`} className="block py-4">
-                    <span>
-                      <span className="card-title block text-[1.25rem]">{workflow.title}</span>
-                      <span className="block text-muted">{workflow.summary.split(". ")[0]}.</span>
-                    </span>
+                  <Link href={`/workflows/${workflow.id}`} className="group block py-5">
+                    <span className="card-title row-title block">{workflow.title}</span>
+                    <span className="mt-1 block text-muted">{workflow.summary.split(". ")[0]}.</span>
                   </Link>
                 </li>
               ))}
@@ -112,10 +108,39 @@ export default async function ServicePage({ params }: Props) {
         </Section>
       ) : null}
 
+      {tools.length > 0 ? (
+        <Section labelledBy="tools" className="border-t border-line">
+          <Container>
+            <h2 id="tools" className="h2 max-w-[18ch]">
+              {INTEGRATIONS.heading}
+            </h2>
+            <div className="mt-8 grid gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
+              {tools.map((group) => (
+                <div key={group.category}>
+                  <h3 className="small text-muted">{group.label}</h3>
+                  <ul className="mt-3 space-y-2">
+                    {group.apps.map((app) => (
+                      <li key={app.slug} className="flex min-h-8 items-center gap-3">
+                        {showMark(app.slug) ? (
+                          // eslint-disable-next-line @next/next/no-img-element -- official SVG artwork, drawn as is
+                          <img src={`/logos/${app.slug}.svg`} alt="" width={24} height={24} className="h-6 w-6" />
+                        ) : null}
+                        <span>{app.name}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+            <p className="small mt-8 max-w-[44rem] text-muted">{INTEGRATIONS.note}</p>
+          </Container>
+        </Section>
+      ) : null}
+
       <Section surface="ivory" labelledBy="runs">
         <Container>
           <h2 id="runs" className="h2">
-            How it runs
+            {flagship ? "How the work is scoped" : "How it runs"}
           </h2>
           <div className="mt-8">
             {flagship ? (
@@ -124,7 +149,7 @@ export default async function ServicePage({ params }: Props) {
               <ul className="divide-y divide-ink/12 border-y border-ink/12">
                 {service.steps?.map((step) => (
                   <li key={step.title} className="grid gap-2 py-6 md:grid-cols-12 md:items-baseline">
-                    <h3 className="h3 md:col-span-4">{step.title}</h3>
+                    <h3 className="h4 md:col-span-4">{step.title}</h3>
                     <p className="text-slate md:col-span-8">{step.body}</p>
                   </li>
                 ))}
@@ -138,7 +163,7 @@ export default async function ServicePage({ params }: Props) {
         <Section labelledBy="hours">
           <Container>
             <h2 id="hours" className="h2 max-w-[16ch]">
-              An illustrative reading of the hours
+              Hours this task takes a year
             </h2>
             <div className="mt-8">
               <Estimator />
@@ -157,6 +182,8 @@ export default async function ServicePage({ params }: Props) {
           </div>
         </Container>
       </Section>
+
+      <ClosingCta label={service.cta.label} href={service.cta.href} />
     </>
   );
 }

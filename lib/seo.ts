@@ -28,7 +28,7 @@ export function pageMetadata({
   noindex?: boolean;
   article?: { publishedTime: string };
 }): Metadata {
-  const full = absoluteTitle ? title : `${title} — ${SITE_NAME}`;
+  const full = absoluteTitle ? title : `${title} | ${SITE_NAME}`;
   const url = absolute(path);
   return {
     title: absoluteTitle ? { absolute: title } : title,

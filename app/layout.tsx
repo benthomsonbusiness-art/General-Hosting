@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { Cormorant_Garamond, IBM_Plex_Mono, Mona_Sans } from "next/font/google";
-import localFont from "next/font/local";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { InputModality } from "@/components/util/InputModality";
@@ -27,15 +26,6 @@ const cormorantWordmark = Cormorant_Garamond({
   display: "swap",
 });
 
-// Wordmark ampersand subset from Cormorant Garamond Italic 500 (SIL Open Font License).
-const ampersand = localFont({
-  src: "./fonts/cormorant-italic-ampersand.woff2",
-  weight: "500",
-  style: "italic",
-  variable: "--font-ampersand",
-  display: "swap",
-});
-
 // Used for payloads and coordinate labels, not preloaded on every route.
 const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
@@ -45,11 +35,11 @@ const plexMono = IBM_Plex_Mono({
   preload: false,
 });
 
-const title = `${SITE_NAME} — AI Workflow Automation`;
+const title = `${SITE_NAME} | AI Workflow Automation`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: { default: title, template: `%s — ${SITE_NAME}` },
+  title: { default: title, template: `%s | ${SITE_NAME}` },
   description: HOME.metaDescription,
   applicationName: SITE_NAME,
   openGraph: {
@@ -83,10 +73,11 @@ const organization = {
   image: `${SITE_URL}${DEFAULT_SHARE_IMAGE.url}`,
   address: {
     "@type": "PostalAddress",
-    addressLocality: "Bloomington",
-    addressRegion: "IN",
+    addressLocality: "Morristown",
+    addressRegion: "NJ",
     addressCountry: "US",
   },
+  founder: { "@type": "Person", name: "Ben Thomson", jobTitle: "Founder" },
   knowsAbout: [
     "AI workflow automation",
     "Business process automation",
@@ -103,7 +94,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${mona.variable} ${cormorantWordmark.variable} ${ampersand.variable} ${plexMono.variable} h-full antialiased`}
+      className={`${mona.variable} ${cormorantWordmark.variable} ${plexMono.variable} h-full antialiased`}
     >
       <body data-surface="dark" className="flex min-h-full flex-col">
         <InputModality />

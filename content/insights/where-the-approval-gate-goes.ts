@@ -61,7 +61,7 @@ const body: Block[] = [
   },
   {
     type: "p",
-    text: "Put the message where the person already works. For a sales lead that may be a chat message with buttons. For a controller it is the approval step inside the accounting system. A separate approvals website is one more place to forget.",
+    text: "Put the message where the person already works. For a sales lead that may be a chat message with buttons. For a controller it is the approval step inside the accounting or bill-pay system. A separate approvals website is one more place to forget.",
   },
   { type: "h2", id: "expiry", text: "What expiry should do" },
   {

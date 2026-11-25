@@ -17,7 +17,7 @@ const valid = {
 
 function post(body: unknown, headers: Record<string, string> = {}) {
   return handleInquiry(
-    new Request("https://valentiniandco.com/api/inquiry", {
+    new Request("https://valentinisystems.com/api/inquiry", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -63,8 +63,8 @@ test("X-Forwarded-Host cannot widen the origin check in production", async () =>
 
 test("site, www and preview origins pass", async () => {
   for (const host of [
-    "valentiniandco.com",
-    "www.valentiniandco.com",
+    "valentinisystems.com",
+    "www.valentinisystems.com",
     "valentini-next.benthomsonbusiness.workers.dev",
   ]) {
     assert.equal((await post(valid, { origin: `https://${host}` })).status, 503);
@@ -92,7 +92,58 @@ test("honeypot is a silent 200", async () => {
 test("production without a channel is 503", async () => {
   const response = await post(valid);
   assert.equal(response.status, 503);
-  assert.match(((await response.json()) as { error: string }).error, /offline/);
+  assert.match(((await response.json()) as { error: string }).error, /nothing was sent/);
+});
+
+function postForm(body: Record<string, string>, headers: Record<string, string> = {}) {
+  return handleInquiry(
+    new Request("https://valentinisystems.com/api/inquiry", {
+      method: "POST",
+      headers: {
+        "content-type": "application/x-www-form-urlencoded",
+        "cf-connecting-ip": `192.0.2.${ip}`,
+        ...headers,
+      },
+      body: new URLSearchParams(body).toString(),
+    }),
+  );
+}
+
+test("form post without a channel redirects to sent=0", async () => {
+  const response = await postForm(valid, { origin: "https://valentinisystems.com" });
+  assert.equal(response.status, 303);
+  assert.equal(response.headers.get("location"), "/contact?sent=0");
+});
+
+test("invalid form post redirects to sent=0 and never echoes fields", async () => {
+  const response = await postForm({ ...valid, email: "nope" });
+  assert.equal(response.status, 303);
+  assert.equal(response.headers.get("location"), "/contact?sent=0");
+});
+
+test("form post from an unknown origin redirects to sent=0", async () => {
+  const response = await postForm(valid, { origin: "https://evil.example" });
+  assert.equal(response.status, 303);
+  assert.equal(response.headers.get("location"), "/contact?sent=0");
+});
+
+test("form post honeypot redirects to sent=1 silently", async () => {
+  const response = await postForm({ ...valid, fax_number: "1" });
+  assert.equal(response.headers.get("location"), "/contact?sent=1");
+});
+
+test("delivered form post redirects to sent=1", async () => {
+  const original = globalThis.fetch;
+  env.WEBHOOK_URL = "https://hook.example/in";
+  try {
+    globalThis.fetch = async () => new Response("ok");
+    const response = await postForm(valid);
+    assert.equal(response.status, 303);
+    assert.equal(response.headers.get("location"), "/contact?sent=1");
+  } finally {
+    globalThis.fetch = original;
+    delete env.WEBHOOK_URL;
+  }
 });
 
 test("sixth request in the window is 429", async () => {
