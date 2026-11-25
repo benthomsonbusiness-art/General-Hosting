@@ -34,6 +34,10 @@ Simple Icons files are a single path filled with the brand color listed in that 
 | `xero.svg` | @iconify-json/logos (SVG Logos by Gil Barbara) | `xero` | 1.2.21 | CC0-1.0 | https://www.xero.com/uk/about/media/downloads |
 | `zendesk.svg` | @iconify-json/logos (SVG Logos by Gil Barbara) | `zendesk-icon` | 1.2.21 | CC0-1.0 | https://brandland.zendesk.com |
 | `zoom.svg` | @iconify-json/logos (SVG Logos by Gil Barbara) | `zoom-icon` | 1.2.21 | CC0-1.0 | https://brand.zoom.us/usage-legal/ |
+| `googlesheets.svg` | Wikimedia Commons | `Google Sheets 2020 Logo.svg` | n/a | Public domain | https://partnermarketinghub.withgoogle.com/brands/google/ |
+| `outlook.svg` | @iconify-json/vscode-icons | `file-type-outlook` | 1.2.100 | MIT | https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general.aspx |
+| `excel.svg` | @iconify-json/vscode-icons | `file-type-excel2` | 1.2.100 | MIT | https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general.aspx |
+| `quickbooks.svg` | simple-icons, over a white disc | `quickbooks`, fill #2CA01C | 16.38.1 | CC0-1.0 | https://design.intuit.com/quickbooks/brand |
 
 ## Drawn on a light disc
 
@@ -45,11 +49,9 @@ These apps show the name and glyph:
 
 | App | Why |
 |---|---|
-| googlesheets, googledocs | Not in SVG Logos; the marks are multicolor, so a Simple Icons single-color fill would alter them. |
-| outlook, excel | Not in either package. |
 | apollo | Not in either package. SVG Logos `apollostack` is Apollo GraphQL, a different company. |
 | docusign, pandadoc, billcom, ramp | Not in either package. |
-| quickbooks | Not in SVG Logos; the mark is two colors (green disc, white letters). |
+| googledocs | Not in SVG Logos; the Commons file could not be retrieved. |
 | calendly | Not in SVG Logos; the current mark uses more than one color. |
 | pipedrive | SVG Logos has only the wide wordmark; not in Simple Icons. |
 | gusto | Both packages have only the wide wordmark. |
