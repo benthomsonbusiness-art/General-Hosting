@@ -1,7 +1,8 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { JsonLd } from "@/components/util/JsonLd";
-import { Thumb } from "@/components/workflow/Thumb";
+import { WORKFLOW_MEDIA } from "@/components/workflow/media";
 import type { Faq as FaqItem } from "@/content/approach";
 import { getWorkflow } from "@/content/workflows";
 import type { Block } from "@/content/insights";
@@ -14,13 +15,13 @@ export function Faq({ items, jsonLd = true }: { items: FaqItem[]; jsonLd?: boole
       {items.map((item) => (
         <details key={item.q} className="group/faq">
           <summary className="flex min-h-14 items-center justify-between gap-6 py-4">
-            <h3 className="font-display text-[1.7rem] leading-tight font-medium">{item.q}</h3>
+            <h3 className="font-display text-[1.5rem] leading-tight font-medium md:text-[1.65rem]">{item.q}</h3>
             <span aria-hidden className="relative h-4 w-4 shrink-0">
-              <span className="absolute inset-x-0 top-1/2 h-0.5 -translate-y-1/2 bg-accent" />
-              <span className="absolute inset-y-0 left-1/2 w-0.5 -translate-x-1/2 bg-accent group-open/faq:hidden" />
+              <span className="absolute inset-x-0 top-1/2 h-0.5 -translate-y-1/2 bg-forest" />
+              <span className="absolute inset-y-0 left-1/2 w-0.5 -translate-x-1/2 bg-forest group-open/faq:hidden" />
             </span>
           </summary>
-          <p className="max-w-[44rem] pb-6">{item.a}</p>
+          <p className="max-w-[44rem] pb-6 text-slate">{item.a}</p>
         </details>
       ))}
     </div>
@@ -29,9 +30,9 @@ export function Faq({ items, jsonLd = true }: { items: FaqItem[]; jsonLd?: boole
 
 export function Callout({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <aside className="my-8 border-l-2 border-gold-ink bg-stone px-6 py-5">
-      <p className="font-bold text-forest">{title}</p>
-      <p className="mt-1.5">{children}</p>
+    <aside className="my-8 border-l-2 border-forest bg-ivory px-6 py-5">
+      <p className="font-semibold text-forest">{title}</p>
+      <p className="mt-1.5 text-ink">{children}</p>
     </aside>
   );
 }
@@ -39,7 +40,7 @@ export function Callout({ title, children }: { title: string; children: ReactNod
 /** Quotes the article itself. Never attributed to a person. */
 export function PullQuote({ children }: { children: ReactNode }) {
   return (
-    <p className="my-10 border-y border-rule py-7 font-display-italic text-[clamp(1.6rem,1.3rem+1.2vw,2.15rem)] leading-[1.2] font-medium text-forest italic">
+    <p className="my-12 border-y border-ink/15 py-8 font-display text-[clamp(1.65rem,1.3rem+1.3vw,2.2rem)] leading-[1.14] font-medium tracking-[-0.02em] text-forest">
       {children}
     </p>
   );
@@ -47,16 +48,48 @@ export function PullQuote({ children }: { children: ReactNode }) {
 
 export function WorkflowEmbed({ id }: { id: string }) {
   const workflow = getWorkflow(id);
+  const media = WORKFLOW_MEDIA[id];
   if (!workflow) return null;
   return (
-    <aside data-surface="dark" className="my-10 bg-forest p-6 md:p-8">
-      <Thumb id={id} className="h-16 w-28 text-ivory/80" />
-      <p className="mt-5 font-display text-[2rem] leading-none text-heading">{workflow.title}</p>
-      <p className="mt-3">{workflow.summary.split(". ")[0]}.</p>
-      <p className="small mt-5 text-muted">Simulation with sample data.</p>
-      <Link href={`/workflows/${workflow.id}`} className="arrow-link mt-2 min-h-11 items-center">
-        Try this workflow
-      </Link>
+    <aside data-surface="dark" className="relative my-10 overflow-hidden bg-obsidian p-7 md:p-9">
+      {media ? (
+        <>
+          <Image
+            src={media.envSrc}
+            alt=""
+            fill
+            sizes="(min-width: 768px) 44rem, 100vw"
+            className="object-cover opacity-55"
+            style={{ objectPosition: media.envPosition }}
+          />
+          <span
+            aria-hidden
+            className="pointer-events-none absolute inset-0 bg-gradient-to-r from-obsidian via-obsidian/85 to-obsidian/45"
+          />
+        </>
+      ) : null}
+      <div className="relative z-10 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+        <div className="max-w-lg">
+          <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-ivory/70">Interactive run</p>
+          <p className="mt-2 font-display text-[1.9rem] leading-none font-medium text-ivory">{workflow.title}</p>
+          <p className="mt-3 text-ivory/85">{workflow.summary.split(". ")[0]}.</p>
+          <p className="mt-4 font-mono text-[12px] text-ivory/65">Simulation with sample data</p>
+          <Link href={`/workflows/${workflow.id}`} className="arrow-link mt-2 min-h-11 items-center text-ivory">
+            Try this workflow
+          </Link>
+        </div>
+        {media ? (
+          <div className="relative hidden h-32 w-24 shrink-0 sm:block">
+            <Image
+              src={media.cutoutSrc}
+              alt=""
+              fill
+              sizes="96px"
+              className="object-contain drop-shadow-[0_14px_20px_rgba(11,31,22,0.65)]"
+            />
+          </div>
+        ) : null}
+      </div>
     </aside>
   );
 }
@@ -94,7 +127,7 @@ export function Prose({ blocks }: { blocks: Block[] }) {
                 key={index}
                 id={block.id}
                 tabIndex={-1}
-                className="mt-14 mb-4 text-[clamp(1.5rem,1.3rem+0.8vw,1.9rem)] leading-tight font-bold tracking-[-0.01em] outline-none first:mt-0"
+                className="mt-14 mb-4 font-display text-[clamp(1.6rem,1.3rem+0.9vw,2.05rem)] leading-[1.12] font-medium tracking-[-0.02em] outline-none first:mt-0"
               >
                 {block.text}
               </h2>
@@ -107,7 +140,7 @@ export function Prose({ blocks }: { blocks: Block[] }) {
             );
           case "ul":
             return (
-              <ul key={index} className="mt-5 list-disc space-y-2.5 pl-5 marker:text-gold-ink">
+              <ul key={index} className="mt-5 list-disc space-y-2.5 pl-5 marker:text-forest">
                 {block.items.map((item) => (
                   <li key={item}>{inline(item)}</li>
                 ))}
@@ -115,7 +148,7 @@ export function Prose({ blocks }: { blocks: Block[] }) {
             );
           case "ol":
             return (
-              <ol key={index} className="mt-5 list-decimal space-y-2.5 pl-6 marker:font-semibold marker:text-gold-ink">
+              <ol key={index} className="mt-5 list-decimal space-y-2.5 pl-6 marker:font-semibold marker:text-forest">
                 {block.items.map((item) => (
                   <li key={item}>{inline(item)}</li>
                 ))}
@@ -133,8 +166,8 @@ export function Prose({ blocks }: { blocks: Block[] }) {
             return <WorkflowEmbed key={index} id={block.id} />;
           case "checklist":
             return (
-              <div key={index} className="mt-6 border border-rule bg-stone/50 px-6 py-5 break-inside-avoid">
-                <p className="font-bold text-forest">{block.title}</p>
+              <div key={index} className="mt-6 border border-ink/15 bg-ivory px-6 py-5 break-inside-avoid">
+                <p className="font-semibold text-forest">{block.title}</p>
                 <ul className="mt-3 space-y-2.5">
                   {block.items.map((item) => (
                     <li key={item} className="flex gap-3">

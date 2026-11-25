@@ -48,47 +48,51 @@ export const WORKFLOWS_PAGE = {
 export const INSIGHTS_HUB = {
   metaDescription:
     "Guides, articles, checklists and illustrative blueprints on approval gates, deterministic steps, workflow audits and reporting for owner-led companies.",
-  dek: "Field notes on building workflows that hold up.",
+  dek: "Field notes on building operations software that holds up under real work.",
 };
 
 export const APPROACH_PAGE = {
   metaDescription:
     "How Valentini & Co. works: map the process, design the data contract and gates, build and shadow-test, then hand over code, accounts, logs and runbooks.",
-  dek: "Map it. Design it. Run it beside the manual process. Hand it over.",
+  dek: "We follow real items across your tools, put the contract on paper, run the build beside your team before anything sends, and hand over the repository.",
 };
 
 export const ABOUT = {
   metaDescription:
     "Valentini & Co. is an advisory firm in Bloomington, Indiana. How we think about deterministic code, human approval and who should own the finished work.",
-  dek: "A private advisory firm. We build the automations that should exist between a company's tools.",
+  dek: "A private advisory firm building the operational connections between the software your company already runs.",
   beliefs: [
     {
-      title: "Keep the tools you have.",
-      body: "Your systems hold the history of the company. We build the part between them.",
+      title: "Keep the software that holds your history",
+      body: "Your CRM, ledger, and inbox already contain years of context. We build the reliable routing and checks between them instead of asking your staff to learn another workspace.",
     },
     {
-      title: "Write the rule down first.",
-      body: "Most steps are rules, even when nobody has written them. Rules become code.",
+      title: "Write every business rule down first",
+      body: "Most delays come from routing logic nobody has written down. Once those thresholds and rules are explicit on paper, ordinary deterministic code handles them cleanly.",
     },
     {
-      title: "Put a person behind every send.",
-      body: "A message carries your name. Someone should have seen it and chosen to send it.",
+      title: "Keep a person behind every external send",
+      body: "A quote, reply, or payment run carries the reputation of your company. Someone on your staff should see the draft beside its source and click approve before it leaves.",
     },
     {
-      title: "Own all of it.",
-      body: "Code, accounts, logs and runbook are yours from the first day.",
+      title: "Leave the repository and keys in your name",
+      body: "Every workflow runs inside your own accounts from your own repository, with audit logs and runbooks written for the person who operates it next.",
     },
   ],
   name: "Valentini is a family name.",
-  where: "Bloomington, Indiana. Working with clients remotely.",
+  where: "Based in Bloomington, Indiana, working remotely with owner-led companies.",
 };
 
 export const CONTACT = {
   metaDescription:
     "Tell Valentini & Co. which process is slowing the team down. Request a Workflow Audit, or a consultation on Meta advertising or strategy, by form or email.",
-  dek: "Which process is slowing the team down?",
+  dek: "Tell us which workflow is eating up your week and where handoffs tend to stall.",
   guidance: "Please do not send passwords, client records or other confidential material.",
-  next: ["A person reads your note.", "We reply by email with a few questions.", "We have a first conversation."],
+  next: [
+    "An engineer reads your note rather than an automated responder.",
+    "We reply from inquiries@valentiniandco.com with two or three clarifying questions.",
+    "We schedule a first conversation to trace the steps on screen.",
+  ],
 };
 
 export const SEARCH_PAGE = {

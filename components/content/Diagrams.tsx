@@ -27,21 +27,32 @@ export function PathDiagram() {
   );
 }
 
-/** The three engagement stages as widths, not a table. */
+/** The three engagement stages as widths, without decorative slants. */
 export function StageDiagram() {
   const widths = ["lg:col-span-3", "lg:col-span-5", "lg:col-span-4"];
+  const surfaces = [
+    "bg-ivory border border-ink/15",
+    "bg-forest text-ivory",
+    "bg-obsidian text-ivory",
+  ];
   return (
-    <ol className="grid gap-3 lg:grid-cols-12">
+    <ol className="grid gap-4 lg:grid-cols-12">
       {ENGAGEMENTS.stages.map((stage, index) => (
         <li
           key={stage.id}
-          data-surface={index === 1 ? "dark" : "light"}
-          className={`${widths[index]} ${index === 1 ? "bg-forest" : "bg-stone"} px-7 py-9 lg:px-12 lg:py-12 lg:[clip-path:polygon(2.5rem_0,100%_0,calc(100%-2.5rem)_100%,0_100%)]`}
+          data-surface={index === 0 ? "light" : "dark"}
+          className={`${widths[index]} ${surfaces[index]} flex flex-col justify-between px-7 py-8 lg:px-10 lg:py-11`}
         >
-          <h3 className="font-display text-[2rem] leading-none font-medium">{stage.name}</h3>
-          <p className="mt-3 text-[15px] font-semibold text-accent">{stage.shape}</p>
-          <p className="mt-4">{stage.delivers}</p>
-          <p className="small mt-4 text-muted">{stage.pricing}</p>
+          <div>
+            <p className={`font-mono text-[11px] uppercase tracking-[0.16em] ${index === 0 ? "text-moss" : "text-ivory/65"}`}>
+              0{index + 1} · {stage.shape}
+            </p>
+            <h3 className="mt-3 font-display text-[2.1rem] leading-none font-medium">{stage.name}</h3>
+            <p className={`mt-4 ${index === 0 ? "text-ink" : "text-ivory/90"}`}>{stage.delivers}</p>
+          </div>
+          <p className={`mt-6 border-t pt-4 font-mono text-[12px] ${index === 0 ? "border-ink/12 text-slate" : "border-ivory/15 text-ivory/75"}`}>
+            {stage.pricing}
+          </p>
         </li>
       ))}
     </ol>

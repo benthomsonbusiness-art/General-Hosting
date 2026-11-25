@@ -4,9 +4,24 @@ export type Photo = { src: string; alt: string; position: string };
 
 export const PHOTOS = {
   hero: {
-    src: "/images/hero-architecture.jpg",
-    alt: "Green marble and walnut slats beside a window onto a city at twilight.",
-    position: "64% center",
+    src: "/images/hero-paper-fall.jpg",
+    alt: "Thick cotton sheets, envelopes, and ruled forms suspended above a dark forest-green desk.",
+    position: "center",
+  },
+  invoices: {
+    src: "/images/wf-invoice.jpg",
+    alt: "Stacked ruled supplier invoices on dark green wood with one sheet pulled out in raking light.",
+    position: "center",
+  },
+  envelope: {
+    src: "/images/wf-lead.jpg",
+    alt: "An open cream correspondence envelope with a folded sheet emerging across green baize.",
+    position: "center",
+  },
+  stamp: {
+    src: "/images/gate-detail.jpg",
+    alt: "A walnut and brass rubber stamp hovering millimeters above textured cotton paper.",
+    position: "center",
   },
   fins: {
     src: "/images/systems-geometry.jpg",
@@ -63,9 +78,9 @@ export const SERVICES: Service[] = [
     metaDescription:
       "We map how leads, documents and approvals move through your company, then automate the steps that do not need a person, inside the tools you already use.",
     h1: "Automate the steps that don't need a person",
-    dek: "Inside the tools you already use. Your team approves anything that leaves the company.",
+    dek: "Built inside the tools your team already uses, pausing wherever someone needs to approve what goes out.",
     cta: { label: "Request a Workflow Audit", href: "/contact" },
-    photo: PHOTOS.fins,
+    photo: PHOTOS.invoices,
     areas: [],
     workflowIds: ["lead-triage", "proposal-ops", "ap-intake"],
     faqs: [
@@ -101,9 +116,9 @@ export const SERVICES: Service[] = [
     metaDescription:
       "Account structure, tracking checks, a written testing cadence, budget pacing rules and automated reporting for companies that run Meta advertising in-house.",
     h1: "Meta advertising, run as a system",
-    dek: "So spend decisions rest on numbers you trust. Your team keeps running the account.",
+    dek: "Clean conversion tracking and automated weekly reporting so spend decisions rest on numbers your team trusts.",
     cta: { label: "Request a consultation", href: "/contact?practice=meta-ads" },
-    photo: { ...PHOTOS.fins, position: "78% center" },
+    photo: PHOTOS.stamp,
     areas: [
       { title: "Tracking", body: "Pixel, Conversions API and GA4 compared event by event." },
       { title: "Testing", body: "One hypothesis per test, with the stopping rule written first." },
@@ -112,9 +127,9 @@ export const SERVICES: Service[] = [
       { title: "Handover", body: "A guide the next buyer can read in an afternoon." },
     ],
     steps: [
-      { title: "Read", body: "Read-only access. A written list of what is leaking." },
-      { title: "Rebuild", body: "Structure, testing ledger and the report." },
-      { title: "Hand off", body: "Your team runs it." },
+      { title: "Audit the tracking", body: "We inspect Pixel, Conversions API, and GA4 under read-only access to list every gap." },
+      { title: "Rebuild the cadence", body: "We set the campaign structure, written testing log, and weekly automated brief." },
+      { title: "Hand it to your buyer", body: "Your in-house team or agency runs daily spend inside clear pacing limits." },
     ],
     workflowIds: ["meta-ads-reporting"],
     faqs: [
@@ -139,9 +154,9 @@ export const SERVICES: Service[] = [
     metaDescription:
       "Operating-model review, decision rights, automation priorities, tool selection and owner-level reporting for founders, COOs and managing principals.",
     h1: "Strategy that ends in a decision someone owns",
-    dek: "For founders and COOs who need a clear account of what to change first.",
+    dek: "Clear operating-model priorities for founders and COOs deciding what to fix before buying new software.",
     cta: { label: "Request a consultation", href: "/contact?practice=strategy" },
-    photo: { ...PHOTOS.room, position: "center 18%" },
+    photo: PHOTOS.envelope,
     areas: [
       { title: "Operating model", body: "Who does what, and where handoffs stall." },
       { title: "Decision rights", body: "Who decides, to what limit, and when it escalates." },
@@ -150,9 +165,9 @@ export const SERVICES: Service[] = [
       { title: "Owner reporting", body: "The few figures that would change a decision." },
     ],
     steps: [
-      { title: "Frame", body: "The problem in writing, short enough to argue with." },
-      { title: "Decide", body: "A small set of choices, each with an owner." },
-      { title: "Install", body: "The meeting and the report that keep it alive." },
+      { title: "Frame the constraint", body: "Put the operational bottleneck in writing, short enough for the leadership team to test." },
+      { title: "Assign the decisions", body: "Set a small list of priorities and limits, each tied to one named owner." },
+      { title: "Install the cadence", body: "Establish the weekly meeting and exception report that keep the plan alive." },
     ],
     workflowIds: [],
     faqs: [

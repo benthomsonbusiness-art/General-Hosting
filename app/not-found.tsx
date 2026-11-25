@@ -6,7 +6,7 @@ export const metadata: Metadata = { title: "Page not found" };
 
 export default function NotFound() {
   return (
-    <Section surface="stone" className="min-h-[60vh]">
+    <Section surface="paper" className="min-h-[60vh]">
       <Container>
         <h1 className="h1">We can&apos;t find that page</h1>
         <p className="lead mt-5 max-w-[36rem] text-muted">

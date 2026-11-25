@@ -5,7 +5,6 @@ import { notFound } from "next/navigation";
 import { InsightCard, insightMeta } from "@/components/cards/Cards";
 import { Prose } from "@/components/content/Blocks";
 import { ShareLinks } from "@/components/content/ShareLinks";
-import { CtaBand } from "@/components/layout/CtaBand";
 import { Container, Section, SectionHeading } from "@/components/layout/Section";
 import { Breadcrumbs } from "@/components/nav/Breadcrumbs";
 import { InPageIndex } from "@/components/nav/InPageIndex";
@@ -61,8 +60,8 @@ export default async function InsightPage({ params }: Props) {
           publisher,
         }}
       />
-      <article>
-        <header data-surface="light" className="wrap pt-10 pb-10 md:pt-14">
+      <article className="bg-paper">
+        <header data-surface="light" className="wrap border-b border-ink/15 pt-10 pb-12 md:pt-14 md:pb-16">
           <Breadcrumbs
             items={[
               { name: "Insights", path: "/insights" },
@@ -70,24 +69,27 @@ export default async function InsightPage({ params }: Props) {
             ]}
           />
           <div className="mt-8 grid items-end gap-x-12 gap-y-8 lg:grid-cols-12">
-            <div className="lg:col-span-8">
-              <p className="eyebrow">{INSIGHT_TYPES[insight.type]}</p>
-              <h1 className="mt-3 text-[clamp(2.1rem,1.5rem+2.5vw,3.4rem)] leading-[1.1] font-bold tracking-[-0.02em]">
+            <div className="lg:col-span-7">
+              <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-moss">
+                {INSIGHT_TYPES[insight.type]}
+              </p>
+              <h1 className="mt-3 font-display text-[clamp(2.35rem,1.5rem+2.8vw,3.9rem)] leading-[1] font-medium tracking-[-0.03em] text-ink">
                 {insight.title}
               </h1>
-              <p className="lead mt-5 max-w-[42rem] text-muted">{insight.dek}</p>
-              <p className="small mt-6 text-muted">
-                {SITE_NAME} | {insightMeta(insight)}
+              <p className="mt-5 max-w-[42rem] text-[1.15rem] leading-relaxed text-slate">{insight.dek}</p>
+              <p className="mt-6 font-mono text-[12px] text-slate">
+                {SITE_NAME} · {insightMeta(insight)}
               </p>
             </div>
-            <div className="hidden lg:col-span-4 lg:block" data-print="hide">
+            <div className="lg:col-span-5" data-print="hide">
               <ViewTransition name={`insight-${insight.slug}`} share="morph" default="none">
-                <div className="relative aspect-[4/3] overflow-hidden bg-forest">
+                <div className="relative aspect-[16/10] overflow-hidden bg-obsidian">
                   <Image
                     src={insight.image.src}
                     alt={insight.image.alt}
                     fill
-                    sizes="(min-width: 1024px) 30vw, 100vw"
+                    loading="eager"
+                    sizes="(min-width: 1024px) 38vw, 100vw"
                     className="object-cover"
                     style={{ objectPosition: insight.image.position }}
                   />
@@ -96,14 +98,14 @@ export default async function InsightPage({ params }: Props) {
             </div>
           </div>
           {insight.type === "blueprint" ? (
-            <p className="mt-9 border-l-4 border-gold-ink bg-stone px-6 py-4 font-semibold text-forest">
+            <p className="mt-9 border-l-2 border-forest bg-ivory px-6 py-4 font-semibold text-forest">
               Illustrative scenario — not a client engagement.
             </p>
           ) : null}
         </header>
 
-        <div data-surface="light" className="wrap pb-20 md:pb-28">
-          <div className="grid gap-x-12 gap-y-8 pt-4 lg:grid-cols-12">
+        <div data-surface="light" className="wrap pt-12 pb-20 md:pt-16 md:pb-28">
+          <div className="grid gap-x-12 gap-y-8 lg:grid-cols-12">
             <div className="lg:col-span-3">
               <InPageIndex items={index} />
             </div>
@@ -117,26 +119,27 @@ export default async function InsightPage({ params }: Props) {
         </div>
       </article>
 
-      <Section surface="stone" labelledBy="related">
+      <Section surface="ivory" labelledBy="related">
         <Container>
           <SectionHeading id="related" title="Related insights" />
-          <div className="mt-8">
-            <ul className="grid gap-x-8 gap-y-12 md:grid-cols-3">
+          <div className="mt-10">
+            <ul className="grid gap-x-8 gap-y-12 md:grid-cols-12">
               {relatedInsights(
                 (item) => item.topics.some((topic) => insight.topics.includes(topic)),
                 3,
                 insight.slug,
-              ).map((item) => (
-                <li key={item.slug}>
-                  <InsightCard insight={item} />
+              ).map((item, idx) => (
+                <li
+                  key={item.slug}
+                  className={idx === 0 ? "md:col-span-5" : idx === 1 ? "md:col-span-4" : "md:col-span-3"}
+                >
+                  <InsightCard insight={item} tall={idx === 0} />
                 </li>
               ))}
             </ul>
           </div>
         </Container>
       </Section>
-
-      <CtaBand />
     </>
   );
 }

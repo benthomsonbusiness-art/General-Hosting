@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { SearchResults } from "@/components/content/SearchResults";
-import { HeroPlain } from "@/components/layout/Heroes";
 import { Container, Section } from "@/components/layout/Section";
 import { SEARCH_PAGE } from "@/content/pages";
 import { pageMetadata } from "@/lib/seo";
@@ -14,11 +13,21 @@ export const metadata = pageMetadata({
 export default function SearchPage() {
   return (
     <>
-      <HeroPlain
-        title="Search"
-        crumbs={[{ name: "Search", path: "/search" }]}
-      />
-      <Section flush className="pb-20 md:pb-28">
+      <section data-surface="light" className="bg-paper pt-12 pb-6 md:pt-16 md:pb-8">
+        <Container className="max-w-[60rem]">
+          <nav aria-label="Breadcrumb" className="mb-7 flex items-center gap-2 font-mono text-[12px] text-slate">
+            <Link href="/" className="hover:text-forest">
+              Home
+            </Link>
+            <span aria-hidden>/</span>
+            <span className="text-ink">Search</span>
+          </nav>
+          <h1 className="font-display text-[clamp(2.8rem,1.9rem+3.4vw,4.5rem)] leading-[0.96] font-medium tracking-[-0.03em] text-ink">
+            Search
+          </h1>
+        </Container>
+      </section>
+      <Section flush className="pt-2 pb-20 md:pb-28">
         <Container className="max-w-[60rem]">
           <SearchResults />
           <noscript>

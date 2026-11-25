@@ -10,7 +10,7 @@ export default function ErrorPage({ error, retry }: { error: unknown; retry: () 
   }, [error]);
 
   return (
-    <Section surface="stone" className="min-h-[60vh]">
+    <Section surface="paper" className="min-h-[60vh]">
       <Container>
         <h1 className="h1">This page did not load</h1>
         <p className="lead mt-5 max-w-[36rem] text-muted">
