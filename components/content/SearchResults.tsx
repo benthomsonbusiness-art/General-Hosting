@@ -63,13 +63,13 @@ function FromQuery() {
 
       {query !== "" && index !== null && results.length === 0 ? (
         <p className="mt-4 max-w-[40rem]">
-          Nothing matched. The{" "}
+          Nothing matched. See the{" "}
           <Link href="/workflows" className="text-link">
-            workflow explorer
-          </Link>{" "}
-          covers the most common processes, or you can{" "}
+            example workflows
+          </Link>
+          , or{" "}
           <Link href="/contact" className="text-link">
-            describe yours to the firm
+            tell us about your process
           </Link>
           .
         </p>
@@ -80,7 +80,7 @@ function FromQuery() {
         if (entries.length === 0) return null;
         return (
           <section key={group.type} aria-labelledby={`group-${group.type}`} className="mt-10">
-            <h2 id={`group-${group.type}`} className="h3">
+            <h2 id={`group-${group.type}`} className="h4">
               {group.heading}
             </h2>
             <ul className="mt-3 border-t border-rule">

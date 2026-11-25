@@ -20,7 +20,7 @@ export function InsightExplorer({ insights }: { insights: Insight[] }) {
             </span>
             <span className="lg:col-span-8">
               <span className="text-[15px] text-muted">{INSIGHT_TYPES[insight.type]}</span>
-              <span className="card-title mt-2 block text-[clamp(1.5rem,1.2rem+1vw,2.1rem)] leading-tight">
+              <span className="card-title h3 mt-2 block">
                 {insight.title}
               </span>
               <span className="mt-2 block text-muted">{insight.dek}</span>

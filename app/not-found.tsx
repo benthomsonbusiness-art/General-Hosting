@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Container, Section } from "@/components/layout/Section";
+import { CTA_HREF, CTA_LABEL } from "@/lib/site";
 
 export const metadata: Metadata = { title: "Page not found" };
 
@@ -18,6 +19,11 @@ export default function NotFound() {
           <li>
             <Link href="/workflows" className="text-link inline-flex min-h-11 items-center">
               Workflows
+            </Link>
+          </li>
+          <li>
+            <Link href={CTA_HREF} className="text-link inline-flex min-h-11 items-center">
+              {CTA_LABEL}
             </Link>
           </li>
         </ul>

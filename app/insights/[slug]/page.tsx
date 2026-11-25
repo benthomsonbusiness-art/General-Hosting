@@ -1,6 +1,7 @@
 import { ViewTransition } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { ClosingCta } from "@/components/layout/ClosingCta";
 import { HardwareFrame } from "@/components/media/HardwareFrame";
 import { InsightCard, insightMeta } from "@/components/cards/Cards";
 import { Prose } from "@/components/content/Blocks";
@@ -15,6 +16,9 @@ import { absolute, pageMetadata } from "@/lib/seo";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 
 export const dynamicParams = false;
+
+/** Byline on every article. */
+const AUTHOR = "Ben Thomson";
 
 export function generateStaticParams() {
   return INSIGHTS.map((item) => ({ slug: item.slug }));
@@ -42,6 +46,7 @@ export default async function InsightPage({ params }: Props) {
     block.type === "h2" ? [{ id: block.id, label: block.text }] : [],
   );
   const publisher = { "@type": "Organization", name: SITE_NAME, url: SITE_URL };
+  const author = { "@type": "Person", name: AUTHOR };
 
   return (
     <>
@@ -56,7 +61,7 @@ export default async function InsightPage({ params }: Props) {
           url: absolute(path),
           mainEntityOfPage: absolute(path),
           image: absolute(insight.image.src),
-          author: publisher,
+          author,
           publisher,
         }}
       />
@@ -71,10 +76,10 @@ export default async function InsightPage({ params }: Props) {
           <div className="mt-8 grid items-end gap-x-12 gap-y-8 lg:grid-cols-12">
             <div className="lg:col-span-7">
               <p className="text-slate">{INSIGHT_TYPES[insight.type]}</p>
-              <h1 className="h2 mt-3 text-ink">{insight.title}</h1>
-              <p className="measure mt-5 text-[1.15rem] leading-relaxed text-slate">{insight.dek}</p>
+              <h1 className="h1 mt-3 text-ink">{insight.title}</h1>
+              <p className="lead measure mt-5 text-slate">{insight.dek}</p>
               <p className="mt-6 text-slate">
-                {SITE_NAME}. {insightMeta(insight)}
+                {AUTHOR}. {insightMeta(insight)}
               </p>
             </div>
             <div className="lg:col-span-5" data-print="hide">
@@ -91,7 +96,7 @@ export default async function InsightPage({ params }: Props) {
           </div>
           {insight.type === "blueprint" ? (
             <p className="mt-9 border-l-2 border-forest bg-ivory px-6 py-4 font-semibold text-forest">
-              Illustrative scenario — not a client engagement.
+              Illustrative scenario, not a client engagement.
             </p>
           ) : null}
         </header>
@@ -132,6 +137,8 @@ export default async function InsightPage({ params }: Props) {
           </div>
         </Container>
       </Section>
+
+      <ClosingCta heading="Want this mapped for your company?" />
     </>
   );
 }

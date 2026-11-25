@@ -39,7 +39,7 @@ export const INSIGHTS: Insight[] = [
   {
     slug: "where-the-approval-gate-goes",
     type: "guide",
-    title: "Where the approval gate goes in an automated workflow",
+    title: "Where your approval goes in an automated workflow",
     dek: "Which steps need a person, what the approval message should show, and what happens when nobody answers.",
     metaDescription:
       "A practical guide to placing approval gates: which steps need a person, what the message should show, how expiry should work and what to write in the log.",
@@ -58,8 +58,8 @@ export const INSIGHTS: Insight[] = [
   {
     slug: "deterministic-first",
     type: "article",
-    title: "Deterministic first: when a workflow step needs a model",
-    dek: "Rules, lookups and arithmetic belong in code. Reading and drafting can use a model, inside a schema and under a threshold.",
+    title: "Rules first: when a workflow step needs AI",
+    dek: "Rules, lookups and math belong in plain code. Reading and drafting can use AI, with checks on what it returns.",
     metaDescription:
       "How to decide whether a workflow step needs a language model or ordinary code, with a decision table, confidence thresholds and manual review queues.",
     date: "2026-11-24",

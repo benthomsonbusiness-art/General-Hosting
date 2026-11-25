@@ -22,7 +22,7 @@ export const ENGAGEMENTS: { status: "proposed" | "confirmed"; stages: Engagement
       shape: "Fixed scope, 1 to 2 weeks",
       delivers:
         "A map of the work and a ranked roadmap.",
-      pricing: "Request a proposal",
+      pricing: "Request a workflow audit",
       href: "/services/ai-workflow-automation#workflow-audit",
     },
     {

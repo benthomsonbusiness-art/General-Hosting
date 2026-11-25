@@ -13,13 +13,13 @@ export function Faq({ items, jsonLd = true }: { items: FaqItem[]; jsonLd?: boole
       {items.map((item) => (
         <details key={item.q} className="group/faq">
           <summary className="flex min-h-14 items-center justify-between gap-6 py-4">
-            <h3 className="font-display text-[1.5rem] leading-tight font-medium md:text-[1.65rem]">{item.q}</h3>
+            <span className="h4">{item.q}</span>
             <span aria-hidden className="relative h-4 w-4 shrink-0">
-              <span className="absolute inset-x-0 top-1/2 h-0.5 -translate-y-1/2 bg-forest" />
-              <span className="absolute inset-y-0 left-1/2 w-0.5 -translate-x-1/2 bg-forest group-open/faq:hidden" />
+              <span className="absolute inset-x-0 top-1/2 h-0.5 -translate-y-1/2 bg-current" />
+              <span className="absolute inset-y-0 left-1/2 w-0.5 -translate-x-1/2 bg-current group-open/faq:hidden" />
             </span>
           </summary>
-          <p className="max-w-[44rem] pb-6 text-slate">{item.a}</p>
+          <p className="max-w-[44rem] pb-6 text-muted">{item.a}</p>
         </details>
       ))}
     </div>
@@ -38,7 +38,7 @@ export function Callout({ title, children }: { title: string; children: ReactNod
 /** Quotes the article itself. Never attributed to a person. */
 export function PullQuote({ children }: { children: ReactNode }) {
   return (
-    <p className="my-12 border-y border-ink/15 py-8 font-display text-[clamp(1.65rem,1.3rem+1.3vw,2.2rem)] leading-[1.14] font-medium tracking-[-0.02em] text-forest">
+    <p className="h3 my-12 border-y border-ink/15 py-8 text-forest">
       {children}
     </p>
   );
@@ -49,10 +49,10 @@ export function WorkflowEmbed({ id }: { id: string }) {
   if (!workflow) return null;
   return (
     <aside data-surface="dark" className="console my-10 p-6 text-ivory">
-      <p className="text-[1.4rem] leading-tight">{workflow.title}</p>
-      <p className="mt-1 text-[15px] text-ivory/75">{`${workflow.summary.split(". ")[0]}.`}</p>
+      <p className="h4">{workflow.title}</p>
+      <p className="small mt-1 text-muted">{`${workflow.summary.split(". ")[0]}.`}</p>
       <Link href={`/workflows/${workflow.id}`} className="text-link mt-2 inline-flex min-h-11 items-center">
-        Read the steps
+        Open this workflow
       </Link>
     </aside>
   );
@@ -76,7 +76,7 @@ function inline(text: string): ReactNode[] {
 
 export function Prose({ blocks }: { blocks: Block[] }) {
   return (
-    <div className="measure text-[17px] leading-[1.6]">
+    <div className="measure">
       {blocks.map((block, index) => {
         switch (block.type) {
           case "p":
@@ -91,7 +91,7 @@ export function Prose({ blocks }: { blocks: Block[] }) {
                 key={index}
                 id={block.id}
                 tabIndex={-1}
-                className="mt-14 mb-4 font-display text-[clamp(1.6rem,1.3rem+0.9vw,2.05rem)] leading-[1.12] font-medium tracking-[-0.02em] outline-none first:mt-0"
+                className="h3 mt-14 mb-4 outline-none first:mt-0"
               >
                 {block.text}
               </h2>

@@ -12,7 +12,7 @@ export const INDUSTRIES: Industry[] = [
   {
     slug: "professional-services",
     name: "Professional Services",
-    line: "Senior time goes to assembling documents that were sold weeks ago.",
+    line: "Senior people spend hours assembling proposals and status reports.",
     hours: ["Proposals", "Client intake", "Time entries", "Project setup", "Status reports"],
     workflowIds: ["proposal-ops", "client-onboarding", "recruiting-screen"],
     stays: "Advice, conflict decisions and anything privileged.",
@@ -20,11 +20,11 @@ export const INDUSTRIES: Industry[] = [
   },
   {
     slug: "health-wellness-fitness",
-    name: "Health & Wellness / Fitness",
+    name: "Health, Wellness & Fitness",
     line: "The front desk is also the operations team.",
-    hours: ["Membership onboarding", "Schedule changes", "Lapsed members", "Five inboxes"],
+    hours: ["Membership onboarding", "Schedule changes", "Lapsed members", "Messages across several inboxes"],
     workflowIds: ["client-onboarding", "support-routing", "meta-ads-reporting"],
-    stays: "Health guidance, unapproved outreach and protected records.",
+    stays: "Health advice, member messages and protected health records.",
     keywords: ["gym", "studio", "clinic", "membership", "fitness", "wellness", "scheduling"],
   },
   {
@@ -57,8 +57,8 @@ export const INDUSTRIES: Industry[] = [
   {
     slug: "financial-accounting-firms",
     name: "Financial & Accounting Firms",
-    line: "Reviewers spend evenings on matching that could have been done earlier.",
-    hours: ["Document intake", "Engagement letters", "Matching", "Open-item chasing", "Deadlines"],
+    line: "Reviewers spend evenings matching documents that software could match first.",
+    hours: ["Document intake", "Engagement letters", "Transaction matching", "Open-item chasing", "Deadlines"],
     workflowIds: ["ap-intake", "proposal-ops", "daily-brief"],
     stays: "Judgments, filings and the sign-off.",
     keywords: ["accounting", "bookkeeping", "tax", "advisory", "engagement letter", "matching"],
