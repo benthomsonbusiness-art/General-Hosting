@@ -1,18 +1,26 @@
 "use client";
 
+import { useEffect } from "react";
 import { useMotion } from "@/components/workflow/hooks";
 
-/** The only Motion switch. An icon button. The choice is saved in localStorage. */
+/**
+ * The only Motion switch. An icon button; aria-checked carries the state. The choice is saved
+ * in localStorage and mirrored to <html data-motion>, which the CSS reads: the home packet and
+ * the diagram's hover animation run only when it is "on".
+ */
 export function MotionSwitch() {
   const [motion, setMotion] = useMotion();
-  const label = motion ? "Motion: on" : "Motion: off";
+
+  useEffect(() => {
+    document.documentElement.dataset.motion = motion ? "on" : "off";
+  }, [motion]);
 
   return (
     <button
       type="button"
       role="switch"
       aria-checked={motion}
-      aria-label={label}
+      aria-label="Motion"
       onClick={() => setMotion(!motion)}
       className="flex h-11 w-11 items-center justify-center text-ivory"
     >

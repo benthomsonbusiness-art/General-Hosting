@@ -2,11 +2,12 @@ import Link from "next/link";
 import { Stations } from "@/components/home/Stations";
 import { ClosingCta } from "@/components/layout/ClosingCta";
 import { HardwareFrame } from "@/components/media/HardwareFrame";
-import { ExampleFlow } from "@/components/workflow/ExampleFlow";
-import { flowExamples } from "@/components/workflow/examples";
+import { RowLink } from "@/components/cards/RowLink";
+import { flowExample } from "@/components/workflow/examples";
+import { FlowDiagram } from "@/components/workflow/flow/FlowDiagram";
 import { ENGAGEMENTS } from "@/content/engagements";
-import { HOME } from "@/content/pages";
-import { getWorkflow, type Workflow } from "@/content/workflows";
+import { HOME, WORKFLOWS_PAGE } from "@/content/pages";
+import { getWorkflow } from "@/content/workflows";
 import { pageMetadata } from "@/lib/seo";
 import { CTA_HREF, CTA_LABEL, SITE_NAME } from "@/lib/site";
 
@@ -19,6 +20,9 @@ export const metadata = pageMetadata({
 
 const FIRST = ["lead-triage", "ap-intake", "daily-brief"] as const;
 
+/** The one workflow drawn on the first screen. Browsing the rest happens on /workflows. */
+const HERO_FLOW = flowExample("lead-triage");
+
 const TREE = `your-company/automations
   workflows/lead-triage/
   workflows/ap-intake/
@@ -26,30 +30,42 @@ const TREE = `your-company/automations
   audit-log/
   RUNBOOK.md`;
 
-function facts(workflow: Workflow) {
-  const gates = workflow.nodes.filter((node) => node.kind === "human").length;
-  return `${workflow.nodes.length} steps. ${gates} approval ${gates === 1 ? "gate" : "gates"}.`;
-}
-
 export default function HomePage() {
   return (
     <>
       <section data-surface="dark" className="bg-obsidian">
-        <div className="wrap py-8 lg:py-12">
-          <h1 className="display max-w-[12ch]">Your back office runs on its own until it needs your approval.</h1>
-          <p className="lead mt-5 max-w-[34rem] text-muted">
-            We map how work moves through your company, then build the automations inside the tools you already use.
-          </p>
-          <div className="mt-6 flex flex-col items-start gap-1">
-            <Link href={CTA_HREF} className="btn btn-primary">
-              {CTA_LABEL}
-            </Link>
-            <Link href="/workflows" className="text-link inline-flex min-h-11 items-center">
-              Read the workflows
-            </Link>
+        <div className="wrap grid items-start gap-x-8 gap-y-10 py-8 lg:grid-cols-12 lg:py-12">
+          <div className="lg:col-span-5">
+            <h1 className="display max-w-[12ch]">Your back office runs on its own until it needs your approval.</h1>
+            <p className="lead mt-5 max-w-[34rem] text-muted">
+              We map how work moves through your company, then build the automations inside the tools you already use.
+            </p>
+            <div className="mt-6 flex flex-col items-start gap-1">
+              <Link href={CTA_HREF} className="btn btn-primary">
+                {CTA_LABEL}
+              </Link>
+              <Link href="/workflows" className="text-link inline-flex min-h-11 items-center">
+                See example workflows
+              </Link>
+            </div>
           </div>
-          <div className="mt-10">
-            <ExampleFlow examples={flowExamples()} />
+          <div className="min-w-0 lg:col-span-7">
+            <p id="hero-flow" className="small mb-3 text-muted">
+              {HERO_FLOW.title}
+            </p>
+            <FlowDiagram
+              id="hero-flow-diagram"
+              title={HERO_FLOW.title}
+              nodes={HERO_FLOW.nodes}
+              variant="compact"
+              labelledBy="hero-flow"
+              eager
+              footer={
+                <Link href={`/workflows/${HERO_FLOW.id}`} className="text-link inline-flex min-h-11 items-center">
+                  {WORKFLOWS_PAGE.open}
+                </Link>
+              }
+            />
           </div>
         </div>
       </section>
@@ -65,12 +81,7 @@ export default function HomePage() {
               if (!workflow || !FIRST.includes(problem.workflowId as (typeof FIRST)[number])) return null;
               return (
                 <li key={problem.workflowId} className="border-b border-line">
-                  <Link href={`/workflows/${workflow.id}`} className="block py-5">
-                    <span className="block text-[1.2rem] leading-snug">{problem.q}</span>
-                    <span className="mt-1 block text-muted">
-                      {workflow.title}. {facts(workflow)}
-                    </span>
-                  </Link>
+                  <RowLink href={`/workflows/${workflow.id}`} title={problem.q} line={workflow.title} />
                 </li>
               );
             })}
@@ -85,7 +96,7 @@ export default function HomePage() {
         <div className="grid items-stretch lg:grid-cols-2">
           <div className="px-5 py-14 sm:px-8 lg:py-20 lg:pr-12 lg:pl-[max(3rem,calc((100vw-84rem)/2+3rem))]">
             <h2 id="built" className="h2">
-              How a run is built
+              What happens to each item
             </h2>
             <div className="mt-10">
               <Stations />
