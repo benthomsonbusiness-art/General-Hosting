@@ -1,3 +1,17 @@
+# HANDOFF: Valentini Systems rename and workflow polish
+
+Last updated: Nov 25, 2026 · Merged into `cursor/valentini-platform-v6` from `claude/peaceful-cannon-66jdb5`
+
+- **Name and domain:** Valentini Systems, `valentinisystems.com` (`lib/site.ts`). Wordmark reads VALENTINI SYSTEMS; the V mark is unchanged. `public/brand/logo.svg` was redrawn with Cormorant Garamond 500 outlines. The ampersand font was removed.
+- **Location:** Morristown, New Jersey (`SITE_LOCALITY`, About copy, JSON-LD).
+- **Indexing:** the `X-Robots-Tag: noindex` header for non-production hosts was removed at Ben's request.
+- **Workflow drawings:** every node and tool circle links to `/workflows/{id}#step-{node}` and the step opens on arrival (`OpenStepFromHash`). `SHOW_APP_LINE` and `SHOW_EXITS` in `layout.ts` are off: no "App: Operation" lines and no exit notes. No dot grid, no per-drawing caption. Cards, the approval key and a moving light on the spine (motion on only) are in `globals.css`.
+- **Pages:** new `/testimonials` (reads `content/testimonials.ts`, empty state until real, permitted quotes exist). Services hub shows titles only. `HelpCta` puts a request button near the top of most pages; every page ends on the default closing band.
+- **Header:** wordmark text hides between 1024 and 1279px so the five nav links fit.
+- **Checks:** 155 tests, tsc, lint, build pass; no sideways scroll on 10 pages at 390, 768, 1024, 1280.
+
+---
+
 # HANDOFF — Valentini platform v6
 
 Last updated: Nov 25, 2026 · Branch: `cursor/valentini-platform-v6` · Base: `cursor/valentini-platform-v5` (`584e19e`)

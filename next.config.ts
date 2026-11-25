@@ -76,7 +76,7 @@ const nextConfig: NextConfig = {
             key: "Permissions-Policy",
             value: "camera=(), microphone=(), geolocation=()",
           },
-          // TODO: When https://valentiniandco.com is the live host, also send
+          // TODO: When https://valentinisystems.com is the live host, also send
           // Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
         ],
       },
