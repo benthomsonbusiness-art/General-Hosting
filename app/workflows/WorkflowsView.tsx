@@ -29,9 +29,9 @@ export function WorkflowsIndex() {
             return (
               <li
                 key={workflow.id}
-                className="grid gap-x-8 gap-y-2 border-b border-line pb-10 min-[90rem]:grid-cols-12 min-[90rem]:pt-5"
+                className="grid gap-y-4 border-b border-line pb-10"
               >
-                <div className="min-[90rem]:col-span-4">
+                <div className="max-w-[44rem]">
                   <RowLink
                     href={`/workflows/${workflow.id}`}
                     title={workflow.title}
@@ -39,12 +39,13 @@ export function WorkflowsIndex() {
                     titleId={titleId}
                   />
                 </div>
-                <div className="min-w-0 min-[90rem]:col-span-8 min-[90rem]:pt-5">
+                <div className="min-w-0">
                   <FlowDiagram
                     id={`flow-${workflow.id}`}
                     title={workflow.title}
                     nodes={toFlowNodes(workflow)}
                     variant="compact"
+                    stepsHref={`/workflows/${workflow.id}`}
                     labelledBy={titleId}
                     eager={index === 0}
                   />

@@ -404,8 +404,6 @@ html[data-modality="pointer"] :focus-visible {
     border-radius: 8px;
     box-shadow: inset 0 0 0 1px var(--line);
     background-color: var(--well);
-    background-image: radial-gradient(rgb(247 244 236 / 0.14) 1px, transparent 1px);
-    background-size: 16px 16px;
   }
 
   .flow-q {
@@ -592,11 +590,47 @@ html[data-modality="pointer"] :focus-visible {
     border-left: 1px dashed var(--ivory-64);
   }
 
-  .flow-tool {
+  .flow-tool,
+  .flow-tool-link {
     display: grid;
     grid-template-columns: var(--v-tool) minmax(0, 1fr);
     column-gap: 10px;
     align-items: center;
+  }
+
+  .flow-tool-link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* Linked nodes and circles: the ring brightens and the label underlines on hover or focus. */
+  [data-link] {
+    cursor: pointer;
+  }
+
+  [data-link] .flow-card,
+  [data-link] .flow-disc {
+    transition:
+      border-color 160ms ease-out,
+      background-color 160ms ease-out,
+      filter 160ms ease-out;
+  }
+
+  [data-link]:is(:hover, :focus-visible) .flow-card:not(.flow-card-gold),
+  [data-link]:is(:hover, :focus-visible) .flow-disc {
+    border-color: rgb(247 244 236 / 0.64);
+    background-color: #1d3a2c;
+  }
+
+  [data-link]:is(:hover, :focus-visible) .flow-card-gold {
+    filter: brightness(1.08);
+  }
+
+  [data-link]:is(:hover, :focus-visible) .flow-label,
+  [data-link]:is(:hover, :focus-visible) .flow-ai-label {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
   }
 
   /* A circle marks a tool or port in a workflow drawing. It is a shape, not a corner radius. */
@@ -820,6 +854,10 @@ html[data-modality="pointer"] :focus-visible {
       display: block;
       width: var(--w);
       text-align: center;
+    }
+
+    .flow-tool-link {
+      display: block;
     }
 
     .flow-disc {

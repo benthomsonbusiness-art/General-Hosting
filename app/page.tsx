@@ -58,6 +58,7 @@ export default function HomePage() {
               title={HERO_FLOW.title}
               nodes={HERO_FLOW.nodes}
               variant="compact"
+              stepsHref={`/workflows/${HERO_FLOW.id}`}
               labelledBy="hero-flow"
               eager
               footer={

@@ -129,6 +129,12 @@ export const PORT_LABEL: Record<Attachment["port"], string> = {
   calls: "Calls",
 };
 
+/**
+ * Whether the "App: Operation" line is drawn under each card and circle. Off: the logo and the
+ * step label say enough, and the app name is still read out to screen readers.
+ */
+export const SHOW_APP_LINE = false;
+
 const PORT_ORDER: Attachment["port"][] = ["model", "memory", "tools", "calls"];
 
 /** The "App: Operation" line under a card, or undefined when the node names no app. */
@@ -367,7 +373,7 @@ export function layoutFlow(
       const textR = offsets.length ? Math.max(0, ...offsets.map((_, k) => reach(k))) : 0;
       return { cardW, wrapW: cardW, label: [], textL, textR, exit, exitW, ports, shares };
     }
-    const mono = monoOf(node);
+    const mono = SHOW_APP_LINE ? monoOf(node) : undefined;
     const monoLines = mono ? monoParts(mono, m.monoWraps) : undefined;
     const noteText = noteFor(node, !hasHuman && index === lastIndex);
     const wrapW = Math.max(
@@ -537,7 +543,7 @@ export function layoutFlow(
         m.tool,
         m.toolTextMin,
         longestWord(item.label, m.labelChar),
-        ...monoParts(monoLine(item) ?? "", m.monoWraps).map((part) => textWidth(part, m.monoChar)),
+        ...(SHOW_APP_LINE ? monoParts(monoLine(item) ?? "", m.monoWraps) : []).map((part) => textWidth(part, m.monoChar)),
       ),
     );
     const span = widths.reduce((sum, w) => sum + w, 0) + m.toolGap * Math.max(0, items.length - 1);
@@ -573,7 +579,7 @@ export function layoutFlow(
   const tools: LaidTool[] = pending.map((entry, i) => {
     const cx = xs[i];
     const label = wrapLines(entry.item.label, entry.w, m.labelChar);
-    const mono = monoParts(monoLine(entry.item) ?? "", m.monoWraps);
+    const mono = SHOW_APP_LINE ? monoParts(monoLine(entry.item) ?? "", m.monoWraps) : [];
     const circle: Rect = { x: cx - m.tool / 2, y: toolTop, w: m.tool, h: m.tool };
     const textRect: Rect = {
       x: cx - entry.w / 2,

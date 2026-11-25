@@ -10,6 +10,7 @@ import {
   METRICS,
   monoLine,
   PORT_LABEL,
+  SHOW_APP_LINE,
   spineColumns,
   type FlowLayout,
   type FlowNodeInput,
@@ -30,6 +31,8 @@ const px = (value: number) => `${Math.round(value * 100) / 100}px`;
 /** "App: Operation" as two unbreakable halves, so a narrow box can only wrap after the colon. */
 function Mono({ line }: { line?: string }) {
   if (!line) return null;
+  // Hidden from sight, kept for screen readers: the logo alone carries the app visually.
+  if (!SHOW_APP_LINE) return <span className="sr-only">{`, ${line}`}</span>;
   const at = line.indexOf(": ");
   return (
     <span className="flow-mono">
@@ -137,6 +140,7 @@ export function FlowDiagram({
   nodes,
   variant = "full",
   linkSteps = false,
+  stepsHref,
   labelledBy,
   eager = false,
   footer,
@@ -148,6 +152,11 @@ export function FlowDiagram({
   variant?: FlowVariant;
   /** Detail pages: each spine node links to its step in the text version (#step-{id}). */
   linkSteps?: boolean;
+  /**
+   * Page that holds the step text, e.g. "/workflows/lead-triage". Every node and tool circle
+   * links to `${stepsHref}#step-{id}`. linkSteps is the same with the current page.
+   */
+  stepsHref?: string;
   /** Id of a visible heading that names the figure. Without it a hidden title is rendered. */
   labelledBy?: string;
   /** Load the marks of this figure right away (the first figure on the home page). */
@@ -161,6 +170,8 @@ export function FlowDiagram({
   const size = SIZES[variant];
   const { columns } = spineColumns(nodes);
   const titleId = labelledBy ?? `${id}-title`;
+  const base = stepsHref ?? (linkSteps ? "" : undefined);
+  const stepHref = (nodeId: string) => (base === undefined ? undefined : `${base}#step-${nodeId}`);
 
   const stageStyle: Vars | undefined = layout ? { "--stage-h": px(layout.height) } : undefined;
 
@@ -256,8 +267,8 @@ export function FlowDiagram({
                   const items = node.attached ?? [];
                   return (
                     <li key={node.id} className="flow-item" data-k={`s${index}`} data-kind={node.kind}>
-                      {linkSteps ? (
-                        <a className="flow-node" href={`#step-${node.id}`} style={boxStyle}>
+                      {base !== undefined ? (
+                        <a className="flow-node" data-link="" href={stepHref(node.id)} style={boxStyle}>
                           {inner}
                         </a>
                       ) : (
@@ -277,8 +288,8 @@ export function FlowDiagram({
                                     "--w": px(tool.box.w),
                                   }
                                 : undefined;
-                            return (
-                              <li key={item.id} className="flow-tool" style={toolStyle}>
+                            const content = (
+                              <>
                                 <span className="flow-disc">
                                   <AppMark app={item.app} mark={size.toolMark} glyph={size.toolGlyph} eager={eager} />
                                 </span>
@@ -287,6 +298,17 @@ export function FlowDiagram({
                                   <span className="flow-label">{item.label}</span>
                                   <Mono line={monoLine(item)} />
                                 </span>
+                              </>
+                            );
+                            return (
+                              <li key={item.id} className="flow-tool" style={toolStyle}>
+                                {base !== undefined ? (
+                                  <a className="flow-tool-link" data-link="" href={stepHref(node.id)}>
+                                    {content}
+                                  </a>
+                                ) : (
+                                  content
+                                )}
                               </li>
                             );
                           })}
