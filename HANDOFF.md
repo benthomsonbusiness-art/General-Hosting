@@ -5,7 +5,7 @@ Deployed commit: `ab5a4bb` (later commits change documentation only)
 
 ## v3 redesign (branch `cursor/valentini-platform-v3`, pushed and deployed to `valentini-next`)
 
-The preview URL below now serves v3. PR #5 still contains v2 only; v3 has no PR yet. `valentini-preview` and `main` were not touched.
+The preview URL below now serves v3. PR #5 contains v2 only. v3 is PR #6 (https://github.com/benthomsonbusiness-art/General-Hosting/pull/6), based on the v2 branch, so merge #5 first. `valentini-preview` and `main` were not touched.
 
 Ben asked for a whole redesign: minimalist, visual, interactive workflows. The sections below this one describe v2 and still apply to the API, deploy steps and open decisions.
 
