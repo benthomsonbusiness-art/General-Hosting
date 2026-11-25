@@ -21,13 +21,11 @@ export default function ContactPage() {
             Tell us which process slows your week down.
           </h1>
           <p className="mt-4 text-muted">{CONTACT.dek}</p>
-          <ol className="mt-8 space-y-3 text-[15px] text-ivory/80">
-            {CONTACT.next.map((step, index) => (
-              <li key={step}>
-                {index + 1}. {step}
-              </li>
+          <ul className="mt-8 space-y-3 text-[15px] text-ivory/80">
+            {CONTACT.next.map((step) => (
+              <li key={step}>{step}</li>
             ))}
-          </ol>
+          </ul>
           <p className="mt-8 text-[15px] text-muted">{SITE_LOCALITY}</p>
           <div className="mt-8">
             <HardwareFrame

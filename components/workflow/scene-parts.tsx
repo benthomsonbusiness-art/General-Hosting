@@ -126,9 +126,9 @@ export function Confidence({ value, on }: { value: number; on: boolean }) {
 
 export function Stamp({ on, children }: { on: boolean; children: ReactNode }) {
   return (
-    <div aria-hidden={!on} className={`scene-stamp ${on ? "scene-stamp-on" : ""}`}>
+    <p aria-hidden={!on} className={`mt-3 text-[14px] font-semibold ${on ? "" : "invisible"}`}>
       {children}
-    </div>
+    </p>
   );
 }
 

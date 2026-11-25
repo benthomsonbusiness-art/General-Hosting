@@ -34,7 +34,7 @@ export function Progress({ player }: { player: Player }) {
           return (
             <span
               key={node.id}
-              className={`h-2.5 w-4 shrink-0 rounded-[2px] border border-current ${
+              className={`h-2.5 w-4 shrink-0 border border-current ${
                 at === "complete" || at === "awaiting" ? "bg-current" : ""
               }`}
             />
@@ -100,7 +100,7 @@ export function Stage({
       className={`stage console relative flex flex-col overflow-hidden ${compact ? "stage-compact" : ""}`}
     >
       <div className="flex min-h-11 flex-wrap items-center justify-between gap-x-4 px-4 text-[14px] text-ivory sm:px-5">
-        <p>Simulation, sample data</p>
+        {compact ? <span /> : <p>Simulation, sample data</p>}
         <p className="text-muted">{look.place}</p>
       </div>
 

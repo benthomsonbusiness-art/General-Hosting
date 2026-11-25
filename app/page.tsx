@@ -82,7 +82,7 @@ export default function HomePage() {
                     >
                       <p className="text-[14px]">{gate?.label ?? "Approval"}</p>
                       <div className="mt-3 flex items-center justify-between gap-3">
-                        <p className="font-mono text-[12px] text-ivory/70">Waiting at the gate</p>
+                        <p className="text-[12px] text-ivory/70">Waiting at the gate</p>
                         <span className="btn btn-approve min-h-9 px-3 text-[14px]">Approve</span>
                       </div>
                     </div>

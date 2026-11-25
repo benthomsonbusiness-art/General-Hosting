@@ -135,7 +135,7 @@ function IndustryTabs({ industries, initial }: { industries: IndustryView[]; ini
               <h3 className="h3">{current.name}</h3>
               <p className="mt-3 text-muted">{current.line}</p>
               <p className="mt-6 text-[15px]">Systems that usually sit in the path</p>
-              <ul className="mt-2 font-mono text-[13px] leading-relaxed text-ivory/80">
+              <ul className="mt-2 text-[15px] leading-relaxed text-ivory/80">
                 {current.hours.map((hour) => (
                   <li key={hour}>{hour}</li>
                 ))}

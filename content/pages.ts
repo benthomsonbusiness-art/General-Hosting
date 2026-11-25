@@ -54,7 +54,7 @@ export const INSIGHTS_HUB = {
 export const APPROACH_PAGE = {
   metaDescription:
     "How Valentini & Co. works: map the process, design the data contract and gates, build and shadow-test, then hand over code, accounts, logs and runbooks.",
-  dek: "We follow real items across your tools, put the contract on paper, run the build beside your team before anything sends, and hand over the repository.",
+  dek: "We follow real items across your tools, write the data contract, run the build beside your team before anything sends, and hand over the repository.",
 };
 
 export const ABOUT = {
@@ -68,7 +68,7 @@ export const ABOUT = {
     },
     {
       title: "Write every business rule down first",
-      body: "Most delays come from routing logic nobody has written down. Once those thresholds and rules are explicit on paper, ordinary deterministic code handles them cleanly.",
+      body: "Most delays come from routing logic nobody has written down. Once those thresholds and rules are explicit, ordinary deterministic code handles them cleanly.",
     },
     {
       title: "Keep a person behind every external send",

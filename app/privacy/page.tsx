@@ -1,6 +1,5 @@
 import { LegalFrame, LegalSection } from "@/components/layout/LegalFrame";
 import { pageMetadata } from "@/lib/seo";
-import { INQUIRY_EMAIL } from "@/lib/site";
 
 const title = "Privacy";
 const description = "Placeholder privacy notice for the Valentini & Co. website. Not in effect.";
@@ -44,7 +43,7 @@ export default function PrivacyPage() {
       <LegalSection heading="Requests">
         <p>
           A contact for access, correction, and deletion requests will be published with the final
-          notice. Write to {INQUIRY_EMAIL} in the meantime. No retention rule is in
+          notice. Until then, use the inquiry form. No retention rule is in
           effect on this draft.
         </p>
       </LegalSection>

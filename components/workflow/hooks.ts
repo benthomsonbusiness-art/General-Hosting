@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useReducer, useRef, useState, useSyncExternalStore, type RefObject } from "react";
+import { useEffect, useLayoutEffect, useReducer, useRef, useState, useSyncExternalStore, type RefObject } from "react";
 import { SCENARIOS, stopsFor } from "@/content/scenarios";
 import type { Workflow } from "@/content/workflows";
 import { initialRun, runReducer } from "@/lib/run-machine";
@@ -73,8 +73,19 @@ function gateAt(workflow: Workflow): number {
   return workflow.nodes.find((node) => node.confidence)?.confidence?.threshold ?? 0.8;
 }
 
+type PlayerOptions = {
+  /** Home only. Starts the run when the stage is in view and motion is on. */
+  autoplay?: boolean;
+  /** Home only. With motion off, open already waiting at the approval gate. */
+  openAtGate?: boolean;
+};
+
 /** Everything one stage needs: the run, the sample input, the draft, and playback. */
-export function usePlayer(workflow: Workflow, rootRef: RefObject<HTMLDivElement | null>) {
+export function usePlayer(
+  workflow: Workflow,
+  rootRef: RefObject<HTMLDivElement | null>,
+  options: PlayerOptions = {},
+) {
   const scenarios = SCENARIOS[workflow.id];
   const [motion, setMotion] = useMotion();
   const [paused, setPaused] = useState(false);
@@ -87,10 +98,13 @@ export function usePlayer(workflow: Workflow, rootRef: RefObject<HTMLDivElement 
   const scenario = scenarios[choice];
   const awaiting = state.status === "awaiting";
 
-  // Plays once per workflow, when the stage is on screen and motion is on.
+  const autoplay = options.autoplay ?? false;
+  const openAtGate = options.openAtGate ?? false;
+
+  // Home only. Other stages stay put until the visitor steps them.
   useEffect(() => {
     const root = rootRef.current;
-    if (!motion || !root) return;
+    if (!autoplay || !motion || !root) return;
     let timer = 0;
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -105,7 +119,24 @@ export function usePlayer(workflow: Workflow, rootRef: RefObject<HTMLDivElement 
       observer.disconnect();
       window.clearTimeout(timer);
     };
-  }, [motion, workflow, dispatch, rootRef]);
+  }, [autoplay, motion, workflow, dispatch, rootRef]);
+
+  // Motion off on the home console: land on the gate before paint, without moving focus.
+  useLayoutEffect(() => {
+    if (!openAtGate || motion || state.status !== "ready") return;
+    const stops = stopsFor(workflow.nodes, scenarios[choice], threshold);
+    const reduce = runReducer(workflow);
+    let sim = reduce(initialRun(), { type: "SET_STOPS", ids: stops });
+    sim = reduce(sim, { type: "START", mode: "step" });
+    dispatch({ type: "SET_STOPS", ids: stops });
+    dispatch({ type: "START", mode: "step" });
+    let guard = 0;
+    while (sim.status === "running" && !sim.traveling && guard < 24) {
+      dispatch({ type: "STEP" });
+      sim = reduce(sim, { type: "STEP" });
+      guard += 1;
+    }
+  }, [openAtGate, motion, state.status, workflow, scenarios, choice, threshold, dispatch]);
 
   useEffect(() => {
     if (!awaiting || !acted.current) return;

@@ -45,7 +45,7 @@ export function ApproachStages() {
                 active === idx ? "bg-ivory text-obsidian" : "text-ivory/80"
               }`}
             >
-              {idx + 1} {step.title}
+              {step.title}
             </button>
           ))}
         </div>
@@ -62,7 +62,7 @@ export function ApproachStages() {
                 className={`border-l py-3 pl-5 ${isActive ? "border-ivory" : "border-line"}`}
               >
                 <h3 className="h2">
-                  {idx + 1} {step.title}
+                  {step.title}
                 </h3>
                 <p className="mt-3 text-ivory/80">{step.line}</p>
                 <p className="mt-4 text-[1.05rem] leading-relaxed">{step.happens}</p>
@@ -87,7 +87,7 @@ export function ApproachStages() {
             <ol className="grid grid-cols-4 gap-3">
               {METHOD.map((step, idx) => (
                 <li key={step.title} className={`border px-2 py-4 text-[14px] ${idx === active ? "border-ivory" : "border-line text-ivory/60"}`}>
-                  {idx + 1} {step.title}
+                  {step.title}
                 </li>
               ))}
             </ol>

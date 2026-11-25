@@ -104,7 +104,7 @@ export default async function InsightPage({ params }: Props) {
             <div className="min-w-0 lg:col-span-9">
               <Prose blocks={blocks} />
               <div className="max-w-[44rem]">
-                <ShareLinks url={absolute(path)} title={insight.title} />
+                <ShareLinks url={absolute(path)} />
               </div>
             </div>
           </div>

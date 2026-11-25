@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 /** Plain links and the clipboard. No third-party share scripts. */
-export function ShareLinks({ url, title }: { url: string; title: string }) {
+export function ShareLinks({ url }: { url: string }) {
   const [state, setState] = useState<"idle" | "copied" | "failed">("idle");
 
   async function copy() {
@@ -31,12 +31,6 @@ export function ShareLinks({ url, title }: { url: string; title: string }) {
         rel="noopener noreferrer"
       >
         LinkedIn<span className="sr-only"> (opens in a new tab)</span>
-      </a>
-      <a
-        className={link}
-        href={`mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(url)}`}
-      >
-        Email
       </a>
     </div>
   );

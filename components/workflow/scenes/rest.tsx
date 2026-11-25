@@ -175,7 +175,7 @@ function BriefScene({ state, scenario }: SceneProps) {
                     style={{
                       height: `${height}%`,
                       transform: `scaleY(${r(1) && !off ? 1 : 0.04})`,
-                      background: r(2) && i === source.flag ? "#C5A869" : "#133224",
+                      background: r(2) && i === source.flag ? "#1A1E1B" : "#133224",
                     }}
                   />
                 ))}
@@ -334,7 +334,7 @@ function AdsScene({ state, scenario }: SceneProps) {
     <div className="relative">
       <Label>Cost per result, sample account</Label>
       <svg viewBox="0 20 480 120" aria-hidden className="mt-1 w-full">
-        <path d="M0 134L480 118V82L0 98Z" fill="#C5A869" opacity={r(1) ? 0.35 : 0} className="scene-fade" />
+        <path d="M0 134L480 118V82L0 98Z" fill="#133224" opacity={r(1) ? 0.18 : 0} className="scene-fade" />
         <path
           d={spike ? SPIKE : STEADY}
           fill="none"

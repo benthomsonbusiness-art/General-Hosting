@@ -98,7 +98,7 @@ export function WorkflowExplorer({ initialId, heading }: { initialId: string; he
                     }`}
                     onClick={() => choose(at)}
                   >
-                    <Thumb id={item.id} className="h-8 w-12 shrink-0 short:h-6 short:w-10" />
+                    <Thumb id={item.id} className="h-11 w-[7.5rem] shrink-0" />
                     <span className="min-w-0 flex-1">
                       <span className="block truncate text-[15px] leading-tight font-semibold">{item.title}</span>
                       <span className={`mt-0.5 block truncate text-[13px] ${active ? "text-ivory/75" : "text-muted"}`}>
@@ -233,7 +233,7 @@ function TryIt({ player, onDetail }: { player: Player; onDetail: (id: string) =>
                   <span
                     aria-hidden
                     className={`h-2.5 shrink-0 border border-current ${
-                      item.kind === "human" ? "w-4 rounded-[2px]" : "w-2.5 rounded-full"
+                      item.kind === "human" ? "w-4" : "w-2.5"
                     }`}
                   />
                   {item.label}

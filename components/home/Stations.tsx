@@ -36,7 +36,7 @@ export function Stations() {
               <span
                 aria-hidden
                 className={`mb-4 grid h-6 w-8 place-items-center ${
-                  person ? "rounded-[3px] bg-gold shadow-[inset_0_1px_0_rgb(247_244_236_/_0.55)]" : "border border-line"
+                  person ? "rounded-[6px] bg-gold shadow-[inset_0_1px_0_rgb(247_244_236_/_0.55)]" : "border border-line"
                 }`}
               />
               <h3 className="h3">

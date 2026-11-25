@@ -13,9 +13,9 @@ export function PathDiagram() {
             <div aria-hidden className="relative mb-6 hidden h-16 md:block">
               <span className={`absolute top-1/2 left-0 h-px ${index === 3 ? "w-12" : "w-full"} bg-ivory/35`} />
               {person ? (
-                <span className="absolute top-0 left-5 h-6 w-8 rounded-[3px] bg-gold shadow-[inset_0_1px_0_rgb(247_244_236_/_0.55)]" />
+                <span className="absolute top-0 left-5 h-6 w-8 rounded-[6px] bg-gold shadow-[inset_0_1px_0_rgb(247_244_236_/_0.55)]" />
               ) : (
-                <span className="absolute top-1/2 left-0 h-4 w-4 -translate-y-1/2 rounded-full border-2 border-ivory/70 bg-forest" />
+                <span className="absolute top-1/2 left-0 h-3 w-3 -translate-y-1/2 border border-ivory/70 bg-forest" />
               )}
             </div>
             <h3 className="font-display text-[2.1rem] leading-none font-medium">{step.title}</h3>
