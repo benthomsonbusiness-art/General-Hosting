@@ -3,7 +3,7 @@ import { pageMetadata } from "@/lib/seo";
 import { WorkflowsView } from "./WorkflowsView";
 
 export const metadata = pageMetadata({
-  title: "Workflow blueprints",
+  title: "Example workflows",
   description: WORKFLOWS_PAGE.metaDescription,
   path: "/workflows",
 });

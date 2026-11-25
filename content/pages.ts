@@ -39,10 +39,10 @@ export const INDUSTRIES_HUB = {
 
 export const WORKFLOWS_PAGE = {
   metaDescription:
-    "Run eight illustrative workflows and watch one sample item change at each step. Set the threshold, edit the draft and decide at the approval gate yourself.",
-  title: "Watch a workflow run and wait for your decision",
-  dek: "Eight everyday processes running on sample data until a person needs to step in.",
-  note: "Simulation with sample data. Timings are illustrative. Vendor names are example integrations, not partnerships.",
+    "Three example workflows drawn as the steps they follow. A person approves anything that leaves the company. The other five are written out the same way.",
+  title: "Example workflows",
+  dek: "Three of them are drawn here. Approval is a labeled step in the path.",
+  note: "The step names are the workflow's own. These are examples, not measured results.",
 };
 
 export const INSIGHTS_HUB = {

@@ -1,7 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { JsonLd } from "@/components/util/JsonLd";
-import { Thumb } from "@/components/workflow/Thumb";
 import type { Faq as FaqItem } from "@/content/approach";
 import { getWorkflow } from "@/content/workflows";
 import type { Block } from "@/content/insights";
@@ -50,16 +49,10 @@ export function WorkflowEmbed({ id }: { id: string }) {
   if (!workflow) return null;
   return (
     <aside data-surface="dark" className="console my-10 p-6 text-ivory">
-      <div className="flex items-center gap-4">
-        <Thumb id={workflow.id} className="h-10 w-16 shrink-0" />
-        <div>
-          <p className="text-[1.4rem] leading-tight">{workflow.title}</p>
-          <p className="mt-1 text-[15px] text-ivory/75">{workflow.summary.split(". ")[0]}.</p>
-        </div>
-      </div>
-      <p className="mt-4 text-[15px] text-ivory/70">Simulation, sample data</p>
+      <p className="text-[1.4rem] leading-tight">{workflow.title}</p>
+      <p className="mt-1 text-[15px] text-ivory/75">{`${workflow.summary.split(". ")[0]}.`}</p>
       <Link href={`/workflows/${workflow.id}`} className="text-link mt-2 inline-flex min-h-11 items-center">
-        Try this workflow
+        Read the steps
       </Link>
     </aside>
   );

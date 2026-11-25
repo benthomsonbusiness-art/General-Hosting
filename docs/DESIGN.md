@@ -21,12 +21,12 @@ The memorable element is the approval key: a gold control in the interface, and 
 | `--ivory-64` | `rgb(247 244 236 / 0.64)` | Secondary text on dark (about 7:1 on obsidian) |
 | `--line` | `rgb(247 244 236 / 0.10)` | Hairline on dark |
 | `--line-light` | `rgb(26 30 27 / 0.12)` | Hairline on ivory |
-| `--gold` | `#C5A869` | Approve control on dark |
-| `--gold-ink` | `#7D6128` | Approve control on ivory |
+| `--gold` | `#C5A869` | Approval node on dark |
+| `--gold-ink` | `#7D6128` | Approval node on ivory |
 | `--error-dark` | `#E8A090` | Errors on obsidian (about 8:1) |
 | `--error-light` | `#8A2E1B` | Errors on ivory |
 
-The logo mark keeps its gold stroke. That geometry is unchanged. Everywhere else, gold is the Approve key.
+The logo mark keeps its gold stroke. That geometry is unchanged. Elsewhere, gold marks the approval node in a workflow drawing and the person station.
 
 Primary actions are ivory on dark and obsidian on ivory. They are not gold.
 

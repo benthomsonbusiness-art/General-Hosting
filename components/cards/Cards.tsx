@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { formatDate, INSIGHT_TYPES, type Insight } from "@/content/insights";
 import type { Workflow } from "@/content/workflows";
-import { Thumb } from "@/components/workflow/Thumb";
 
 export function insightMeta(insight: Insight) {
   return `${formatDate(insight.date)}. ${insight.readMinutes} min read`;
@@ -28,8 +27,7 @@ export function WorkflowTile({
   wide?: boolean;
 }) {
   return (
-    <Link href={`/workflows/${workflow.id}`} className="group flex min-h-16 items-center gap-4 py-3">
-      <Thumb id={workflow.id} className="h-8 w-14 shrink-0" />
+    <Link href={`/workflows/${workflow.id}`} className="group flex min-h-16 items-center py-3">
       <span className="card-title text-[1.2rem]">{line ?? workflow.title}</span>
     </Link>
   );

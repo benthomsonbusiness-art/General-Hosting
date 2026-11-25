@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useRef, useState, type KeyboardEvent } from "react";
 import { HardwareFrame } from "@/components/media/HardwareFrame";
-import { Thumb } from "@/components/workflow/Thumb";
 import type { Industry } from "@/content/industries";
 
 const INDUSTRY_PHOTO: Record<string, { src: string; alt: string }> = {
@@ -142,8 +141,7 @@ function IndustryTabs({ industries, initial }: { industries: IndustryView[]; ini
               <ul className="mt-4 divide-y divide-line border-y border-line">
                 {current.workflows.map((workflow) => (
                   <li key={workflow.id}>
-                    <Link href={`/workflows/${workflow.id}`} className="flex min-h-14 items-center gap-4 py-2">
-                      <Thumb id={workflow.id} className="h-8 w-14 shrink-0" />
+                    <Link href={`/workflows/${workflow.id}`} className="flex min-h-14 items-center py-2">
                       <span className="card-title text-[1.15rem]">{workflow.title}</span>
                     </Link>
                   </li>

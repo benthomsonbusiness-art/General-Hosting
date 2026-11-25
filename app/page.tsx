@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { Stations } from "@/components/home/Stations";
 import { HardwareFrame } from "@/components/media/HardwareFrame";
-import { HeroPlayer } from "@/components/workflow/HeroPlayer";
+import { ExampleFlow } from "@/components/workflow/ExampleFlow";
+import { flowExamples } from "@/components/workflow/examples";
 import { ENGAGEMENTS } from "@/content/engagements";
 import { CTA, HOME } from "@/content/pages";
-import { getWorkflow, WORKFLOWS, type Workflow } from "@/content/workflows";
+import { getWorkflow, type Workflow } from "@/content/workflows";
 import { pageMetadata } from "@/lib/seo";
 import { CTA_HREF, CTA_LABEL, SITE_NAME } from "@/lib/site";
 
@@ -30,29 +31,24 @@ function facts(workflow: Workflow) {
 }
 
 export default function HomePage() {
-  const lead = getWorkflow("lead-triage") ?? WORKFLOWS[0];
-
   return (
     <>
       <section data-surface="dark" className="bg-obsidian">
-        <div className="wrap grid items-start gap-8 py-8 lg:grid-cols-12 lg:py-12">
-          <div className="lg:col-span-5">
-            <h1 className="display max-w-[12ch]">Your back office runs on its own until it needs your approval.</h1>
-            <p className="lead mt-5 max-w-[34rem] text-muted">
-              We map how work moves through your company, then build the automations inside the tools you already use.
-            </p>
-            <div className="mt-6 flex flex-col items-start gap-1">
-              <Link href={CTA_HREF} className="btn btn-primary">
-                {CTA_LABEL}
-              </Link>
-              <Link href="/workflows" className="text-link inline-flex min-h-11 items-center">
-                Watch all eight workflows run
-              </Link>
-            </div>
+        <div className="wrap py-8 lg:py-12">
+          <h1 className="display max-w-[12ch]">Your back office runs on its own until it needs your approval.</h1>
+          <p className="lead mt-5 max-w-[34rem] text-muted">
+            We map how work moves through your company, then build the automations inside the tools you already use.
+          </p>
+          <div className="mt-6 flex flex-col items-start gap-1">
+            <Link href={CTA_HREF} className="btn btn-primary">
+              {CTA_LABEL}
+            </Link>
+            <Link href="/workflows" className="text-link inline-flex min-h-11 items-center">
+              Read the workflows
+            </Link>
           </div>
-          <div className="lg:col-span-7">
-            <HeroPlayer workflow={lead} />
-            <p className="mt-3 text-[15px] text-muted">Simulation, sample data</p>
+          <div className="mt-10">
+            <ExampleFlow examples={flowExamples()} />
           </div>
         </div>
       </section>
@@ -66,27 +62,14 @@ export default function HomePage() {
             {HOME.problems.map((problem) => {
               const workflow = getWorkflow(problem.workflowId);
               if (!workflow || !FIRST.includes(problem.workflowId as (typeof FIRST)[number])) return null;
-              const gate = workflow.nodes.find((node) => node.kind === "human");
               return (
-                <li key={problem.workflowId} className="group border-b border-line">
-                  <div className="grid items-center gap-4 py-2 lg:grid-cols-12">
-                    <Link href={`/workflows/${workflow.id}`} className="block py-3 lg:col-span-8">
-                      <span className="block text-[1.2rem] leading-snug">{problem.q}</span>
-                      <span className="mt-1 block text-muted">
-                        {workflow.title}. {facts(workflow)}
-                      </span>
-                    </Link>
-                    <div
-                      aria-hidden
-                      className="console hidden p-4 opacity-0 transition-opacity duration-150 group-focus-within:opacity-100 group-hover:opacity-100 lg:col-span-4 lg:block"
-                    >
-                      <p className="text-[14px]">{gate?.label ?? "Approval"}</p>
-                      <div className="mt-3 flex items-center justify-between gap-3">
-                        <p className="text-[12px] text-ivory/70">Waiting at the gate</p>
-                        <span className="btn btn-approve min-h-9 px-3 text-[14px]">Approve</span>
-                      </div>
-                    </div>
-                  </div>
+                <li key={problem.workflowId} className="border-b border-line">
+                  <Link href={`/workflows/${workflow.id}`} className="block py-5">
+                    <span className="block text-[1.2rem] leading-snug">{problem.q}</span>
+                    <span className="mt-1 block text-muted">
+                      {workflow.title}. {facts(workflow)}
+                    </span>
+                  </Link>
                 </li>
               );
             })}

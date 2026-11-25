@@ -8,7 +8,6 @@ import { SubServiceScenes } from "@/components/content/SubServiceScenes";
 import { Container, Section } from "@/components/layout/Section";
 import { Breadcrumbs } from "@/components/nav/Breadcrumbs";
 import { JsonLd } from "@/components/util/JsonLd";
-import { Thumb } from "@/components/workflow/Thumb";
 import { getService, SERVICES, SUB_SERVICES, serviceHref } from "@/content/services";
 import { workflowsById } from "@/content/workflows";
 import { pageMetadata, serviceJsonLd } from "@/lib/seo";
@@ -94,14 +93,13 @@ export default async function ServicePage({ params }: Props) {
         <Section labelledBy="try">
           <Container>
             <h2 id="try" className="h2">
-              Try one
+              Examples
             </h2>
-            <p className="mt-3 text-muted">Simulations run in the browser with sample records.</p>
+            <p className="mt-3 text-muted">Each one is drawn as the steps it follows.</p>
             <ul className="mt-6 divide-y divide-line border-y border-line">
               {workflows.map((workflow) => (
                 <li key={workflow.id}>
-                  <Link href={`/workflows/${workflow.id}`} className="flex min-h-16 items-center gap-4 py-3">
-                    <Thumb id={workflow.id} className="h-8 w-14 shrink-0" />
+                  <Link href={`/workflows/${workflow.id}`} className="block py-4">
                     <span>
                       <span className="card-title block text-[1.25rem]">{workflow.title}</span>
                       <span className="block text-muted">{workflow.summary.split(". ")[0]}.</span>
