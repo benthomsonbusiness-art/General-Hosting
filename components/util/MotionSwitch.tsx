@@ -2,38 +2,36 @@
 
 import { useMotion } from "@/components/workflow/hooks";
 
-/** Site-wide Motion switch persisted under valentini-motion. */
-export function MotionSwitch({
-  tone = "light",
-  compact = false,
-}: {
-  tone?: "light" | "dark";
-  compact?: boolean;
-}) {
+/** The only Motion switch. An icon button. The choice is saved in localStorage. */
+export function MotionSwitch() {
   const [motion, setMotion] = useMotion();
-  const dark = tone === "dark";
+  const label = motion ? "Motion: on" : "Motion: off";
 
   return (
     <button
       type="button"
       role="switch"
       aria-checked={motion}
+      aria-label={label}
       onClick={() => setMotion(!motion)}
-      className={`inline-flex min-h-11 items-center gap-2.5 text-[14px] font-semibold transition-colors duration-150 ${
-        dark ? "text-ivory/85 hover:text-ivory" : "text-forest hover:text-obsidian"
-      }`}
+      className="flex h-11 w-11 items-center justify-center text-ivory"
     >
-      <span>{compact ? "Motion" : "Motion"}</span>
-      <span
-        aria-hidden
-        className={`relative h-5 w-9 border ${dark ? "border-ivory/70" : "border-forest"}`}
-      >
-        <span
-          className={`absolute top-0.5 h-3.5 w-3.5 transition-transform duration-150 ${
-            dark ? "bg-ivory" : "bg-forest"
-          } ${motion ? "translate-x-4" : "translate-x-0.5"}`}
+      <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden fill="none">
+        <path
+          d="M4 15.5c2.2-1.2 3.4-3.4 3.4-6.2S6.2 4.2 4 3"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          opacity={motion ? 0.45 : 1}
         />
-      </span>
+        <path d="M8.2 17.5c2.8-1.6 4.4-4.4 4.4-8.2S11 2.6 8.2 1" stroke="currentColor" strokeWidth="1.5" />
+        <path
+          d="M12.4 19c3.4-2 5.2-5.4 5.2-9.6S15.8 1.8 12.4 0"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          opacity={motion ? 1 : 0.35}
+          transform="translate(0 1.5)"
+        />
+      </svg>
     </button>
   );
 }

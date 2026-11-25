@@ -17,7 +17,7 @@ export function LegalFrame({
   children: ReactNode;
 }) {
   return (
-    <Section>
+    <Section surface="ivory">
       <article className="wrap max-w-[52rem]">
         <Breadcrumbs items={[{ name: title, path }]} className="mb-6" />
         <h1 className="h1">{title}</h1>
