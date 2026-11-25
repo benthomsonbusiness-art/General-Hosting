@@ -1,14 +1,14 @@
 "use client";
 
-import Image from "next/image";
 import { ViewTransition, startTransition, useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
 import { WORKFLOWS } from "@/content/workflows";
 import { SITE_NAME } from "@/lib/site";
 import { DetailsDialog } from "./DetailsDialog";
 import { usePlayer, type Player } from "./hooks";
-import { WORKFLOW_MEDIA } from "./media";
 import { SCENES } from "./scenes/rest";
 import { Progress, Stage } from "./Stage";
+import { Thumb } from "./Thumb";
+import { WorkflowText } from "./WorkflowText";
 
 /** Tactile photographic image strips on the left, morphing photographic workflow stage on the right. */
 export function WorkflowExplorer({ initialId, heading }: { initialId: string; heading: ReactNode }) {
@@ -67,7 +67,7 @@ export function WorkflowExplorer({ initialId, heading }: { initialId: string; he
   }
 
   return (
-    <div ref={rootRef} data-motion={player.motion ? "on" : "off"} className="scene bg-paper">
+    <div ref={rootRef} data-motion={player.motion ? "on" : "off"} className="scene bg-obsidian">
       <div className="wrap grid gap-x-10 gap-y-5 pt-5 pb-10 lg:grid-cols-12 short:pt-3 short:pb-6">
         <div className="min-w-0 lg:col-span-5">
           {heading}
@@ -80,9 +80,9 @@ export function WorkflowExplorer({ initialId, heading }: { initialId: string; he
           >
             {WORKFLOWS.map((item, at) => {
               const active = item.id === workflow.id;
-              const media = WORKFLOW_MEDIA[item.id];
+              const gates = item.nodes.filter((node) => node.kind === "human").length;
               return (
-                <div key={item.id} role="presentation" className="shrink-0 snap-start max-lg:w-auto">
+                <div key={item.id} role="presentation" className="shrink-0 snap-start max-lg:w-[16rem]">
                   <button
                     ref={(element) => {
                       tabs.current[at] = element;
@@ -93,41 +93,16 @@ export function WorkflowExplorer({ initialId, heading }: { initialId: string; he
                     aria-selected={active}
                     aria-controls="workflow-panel"
                     tabIndex={active ? 0 : -1}
-                    className={`group relative flex min-h-12 w-full items-center gap-3 overflow-hidden border px-3 py-2 text-left transition-colors duration-150 short:min-h-10 short:py-1 ${
-                      active
-                        ? "border-forest bg-forest text-paper"
-                        : "border-ink/12 bg-ivory/65 text-ink hover:border-forest/40 hover:bg-ivory"
+                    className={`group relative flex min-h-12 w-full items-center gap-3 overflow-hidden border px-3 py-2 text-left transition-colors duration-150 short:min-h-11 short:py-1 ${
+                      active ? "border-forest bg-forest text-ivory" : "border-line text-ivory hover:border-ivory/30"
                     }`}
                     onClick={() => choose(at)}
                   >
-                    {media ? (
-                      <span className="relative h-9 w-12 shrink-0 overflow-hidden bg-obsidian short:h-7 short:w-10">
-                        <Image
-                          src={media.envSrc}
-                          alt=""
-                          fill
-                          sizes="64px"
-                          className="object-cover opacity-85 transition-transform duration-300 group-hover:scale-105"
-                          style={{ objectPosition: media.envPosition }}
-                        />
-                        <Image
-                          src={media.cutoutSrc}
-                          alt=""
-                          width={960}
-                          height={1200}
-                          sizes="32px"
-                          className="relative z-10 m-auto h-8 w-auto object-contain drop-shadow"
-                        />
-                      </span>
-                    ) : null}
+                    <Thumb id={item.id} className="h-8 w-12 shrink-0 short:h-6 short:w-10" />
                     <span className="min-w-0 flex-1">
-                      <span className="block whitespace-nowrap text-[15px] leading-tight font-semibold">{item.title}</span>
-                      <span
-                        className={`mt-0.5 block truncate font-mono text-[11px] uppercase ${
-                          active ? "text-ivory/75" : "text-slate"
-                        }`}
-                      >
-                        {media?.shortLabel ?? item.nodes[0]?.timingLabel}
+                      <span className="block truncate text-[15px] leading-tight font-semibold">{item.title}</span>
+                      <span className={`mt-0.5 block truncate text-[13px] ${active ? "text-ivory/75" : "text-muted"}`}>
+                        {item.nodes.length} steps, {gates} {gates === 1 ? "gate" : "gates"}
                       </span>
                     </span>
                   </button>
@@ -149,6 +124,12 @@ export function WorkflowExplorer({ initialId, heading }: { initialId: string; he
             />
           </ViewTransition>
           <TryIt player={player} onDetail={setDetail} />
+          <details className="mt-3 border-t border-line">
+            <summary className="flex min-h-11 items-center font-semibold underline-offset-4 hover:underline">
+              Every step, in writing
+            </summary>
+            <WorkflowText workflows={[workflow]} />
+          </details>
         </div>
       </div>
       <DetailsDialog
@@ -166,11 +147,11 @@ export function WorkflowExplorer({ initialId, heading }: { initialId: string; he
 function Now({ player, label, does, className }: { player: Player; label: string; does: string; className: string }) {
   const started = player.state.index >= 0;
   return (
-    <div aria-hidden className={`border-x border-b border-forest/20 bg-ivory/70 px-3.5 pt-2.5 pb-3 short:pt-1.5 short:pb-2 ${className}`}>
-      <p className="min-h-[3.2em] text-[14px] leading-snug text-ink short:min-h-[2.4em] short:text-[13px]">
+    <div aria-hidden className={`border-x border-b border-line bg-well px-3.5 pt-2.5 pb-3 text-ivory short:pt-1.5 short:pb-2 ${className}`}>
+      <p className="min-h-[3.2em] text-[14px] leading-snug short:min-h-[2.4em] short:text-[13px]">
         {started ? (
           <>
-            <span className="font-semibold text-forest">{label}.</span> {does}
+            <span className="font-semibold">{label}.</span> {does}
           </>
         ) : (
           player.workflow.summary.split(". ")[0] + "."
@@ -189,13 +170,10 @@ function TryIt({ player, onDetail }: { player: Player; onDetail: (id: string) =>
   const tool = "btn btn-secondary min-h-11 px-4 py-2 text-[15px]";
   return (
     <details className="group/try mt-3">
-      <summary className="inline-flex min-h-11 items-center gap-2 font-semibold text-forest underline-offset-4 hover:underline">
-        Change the sample and inspect the steps
-        <span aria-hidden className="group-open/try:rotate-180">
-          ↓
-        </span>
+      <summary className="inline-flex min-h-11 items-center font-semibold underline-offset-4 hover:underline">
+        Change the sample
       </summary>
-      <div className="grid gap-x-12 gap-y-8 border border-ink/12 bg-ivory/40 p-5 pt-4 md:grid-cols-2">
+      <div className="grid gap-x-12 gap-y-8 border border-line p-5 pt-4 md:grid-cols-2">
         <div>
           <h3 className="font-semibold">Sample input</h3>
           <div role="group" aria-label="Sample input" className="mt-3 flex flex-wrap gap-2">
@@ -204,8 +182,8 @@ function TryIt({ player, onDetail }: { player: Player; onDetail: (id: string) =>
                 key={item.id}
                 type="button"
                 aria-pressed={index === choice}
-                className={`min-h-11 px-4 text-[15px] font-semibold ${
-                  index === choice ? "bg-forest text-paper" : "border border-ink/15 bg-paper text-forest hover:bg-forest/10"
+                className={`min-h-11 rounded-[6px] px-4 text-[15px] font-semibold ${
+                  index === choice ? "bg-ivory text-obsidian" : "border border-line text-ivory"
                 }`}
                 onClick={() => player.choose(index)}
               >
@@ -254,8 +232,8 @@ function TryIt({ player, onDetail }: { player: Player; onDetail: (id: string) =>
                 >
                   <span
                     aria-hidden
-                    className={`h-2.5 w-2.5 shrink-0 border-2 ${
-                      item.kind === "human" ? "rotate-45 border-gold-ink" : "rounded-full border-forest"
+                    className={`h-2.5 shrink-0 border border-current ${
+                      item.kind === "human" ? "w-4 rounded-[2px]" : "w-2.5 rounded-full"
                     }`}
                   />
                   {item.label}

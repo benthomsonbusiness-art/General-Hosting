@@ -64,7 +64,7 @@ function ProposalScene({ state, scenario }: SceneProps) {
         <div className="mt-3">
           {lines.map((line, i) => (
             <Show key={line.item} on={r(1)} delay={i * 350} className="flex min-h-10 items-baseline gap-4 py-1.5">
-              <span className="text-[14px] text-gold-ink">{line.time}</span>
+              <span className="text-[14px] text-forest">{line.time}</span>
               <span className="text-[17px]">{line.item}</span>
               <Show on={r(2)} delay={i * 200} className="ml-auto shrink-0 font-semibold whitespace-nowrap text-forest">
                 {line.units}
@@ -78,10 +78,10 @@ function ProposalScene({ state, scenario }: SceneProps) {
           <Label>Margin</Label>
           <div className="relative mt-1.5 h-6 bg-ink/10">
             <div
-              className={`scene-grow h-full origin-left ${thin ? "bg-gold" : "bg-forest"}`}
+              className={`scene-grow h-full origin-left ${thin ? "bg-forest" : "bg-forest"}`}
               style={{ transform: `scaleX(${r(2) ? (thin ? 0.28 : 0.72) : 0})` }}
             />
-            <span aria-hidden className="absolute -inset-y-1 left-[42%] w-0.5 bg-gold-ink" />
+            <span aria-hidden className="absolute -inset-y-1 left-[42%] w-0.5 bg-forest" />
           </div>
           <p className="mt-1 pl-[42%] text-[13px] text-slate">Floor</p>
         </div>
@@ -194,7 +194,7 @@ function BriefScene({ state, scenario }: SceneProps) {
         <div className="mt-3 sm:pl-14">
           {during(state, 1) || during(state, 2) ? <Dots /> : null}
           {r(3) ? (
-            <div className="space-y-2 bg-stone px-4 py-3">
+            <div className="space-y-2 bg-ink/5 px-4 py-3">
               <Typed
                 on
                 text={down ? "CRM did not load. Pipeline was not checked." : "All three sources loaded."}
@@ -202,7 +202,7 @@ function BriefScene({ state, scenario }: SceneProps) {
               />
               <p>
                 <Mark on>One invoice passed its due date.</Mark>{" "}
-                <span className="text-[14px] text-gold-ink">Accounting, row 41</span>
+                <span className="text-[14px] text-forest">Accounting, row 41</span>
               </p>
             </div>
           ) : null}
@@ -237,7 +237,7 @@ function InvoiceScene({ state, scenario }: SceneProps) {
             <div key={line.item}>
               <div
                 className={`scene-fade flex min-h-11 items-center justify-between gap-3 px-3 text-[17px] ${
-                  bad ? (resolved ? "bg-forest/10" : "bg-gold/45") : ""
+                  bad ? (resolved ? "bg-forest/10" : "bg-ink/10") : ""
                 }`}
               >
                 <Mark on={r(1) && !poor && !bad}>{line.item}</Mark>
@@ -246,7 +246,7 @@ function InvoiceScene({ state, scenario }: SceneProps) {
               </div>
               {i === 1 ? (
                 <div aria-hidden={!caught} className={`scene-open ${caught ? "scene-open-on" : ""}`}>
-                  <p className={`px-3 text-[15px] font-semibold ${resolved ? "bg-forest/10 text-forest" : "bg-gold/45 text-obsidian"}`}>
+                  <p className={`px-3 text-[15px] font-semibold ${resolved ? "bg-forest/10 text-forest" : "bg-ink/10 text-obsidian"}`}>
                     {resolved ? "Exception resolved by you" : "Ordered 10, received 9"}
                   </p>
                 </div>
@@ -284,7 +284,7 @@ function SupportScene({ state, scenario, draft, onDraft }: SceneProps) {
           <p
             key={lane}
             className={`scene-fade flex min-h-11 items-center justify-center px-1 text-center text-[14px] font-semibold sm:text-[15px] ${
-              r(1) && i === target ? "bg-forest text-ivory" : "bg-stone text-slate"
+              r(1) && i === target ? "bg-forest text-ivory" : "bg-ink/5 text-slate"
             }`}
           >
             {lane}
@@ -361,7 +361,7 @@ function AdsScene({ state, scenario }: SceneProps) {
         {[0, 1, 2, 3].map((i) => (
           <span
             key={i}
-            className={`scene-fade h-9 ${i === 2 && spike && r(2) ? "bg-gold" : "bg-stone"}`}
+            className={`scene-fade h-9 ${i === 2 && spike && r(2) ? "bg-forest" : "bg-ink/5"}`}
             style={{ clipPath: "polygon(12% 0,100% 0,88% 100%,0 100%)" }}
           />
         ))}
@@ -369,8 +369,8 @@ function AdsScene({ state, scenario }: SceneProps) {
       <Show on={r(2)} className="mt-1.5 text-[14px] text-slate">
         {spike ? "One ad is wearing out. Nothing was paused." : "No ad needs review."}
       </Show>
-      <div className="mt-3 min-h-[5.5rem] border-l-4 border-gold bg-stone px-4 py-3">
-        <p className="text-[14px] font-semibold text-gold-ink">Weekly brief</p>
+      <div className="mt-3 min-h-[5.5rem] border-l-4 border-forest bg-ink/5 px-4 py-3">
+        <p className="text-[14px] font-semibold text-forest">Weekly brief</p>
         <Typed
           on={r(3)}
           text={

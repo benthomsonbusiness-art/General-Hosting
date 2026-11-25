@@ -74,7 +74,7 @@ export function From({ name, meta }: { name: string; meta: string }) {
     <div className="flex items-center gap-3">
       <span
         aria-hidden
-        className="grid h-10 w-10 shrink-0 place-items-center bg-forest font-mono text-[13px] font-semibold text-paper"
+        className="grid h-10 w-10 shrink-0 place-items-center bg-forest text-[13px] font-semibold text-ivory"
       >
         {initials}
       </span>
@@ -108,7 +108,7 @@ export function Fact({
       on={on}
       delay={delay}
       className={`px-3 py-1.5 text-[14px] leading-snug font-semibold ${
-        tone === "gold" ? "bg-gold text-obsidian" : "bg-stone text-forest"
+        tone === "gold" ? "border border-ink/20 bg-ivory text-ink" : "bg-ink/5 text-forest"
       }`}
     >
       {children}
@@ -148,7 +148,7 @@ export function Typed({ on, text, className = "" }: { on: boolean; text: string;
 /** Three dots while a message is being written. */
 export function Dots() {
   return (
-    <span aria-hidden className="inline-flex gap-1.5 bg-stone px-4 py-3.5">
+    <span aria-hidden className="inline-flex gap-1.5 bg-ink/5 px-4 py-3.5">
       {[0, 1, 2].map((i) => (
         <span key={i} className="scene-dot h-2 w-2 rounded-full bg-slate" style={{ animationDelay: `${i * 160}ms` }} />
       ))}
@@ -181,8 +181,8 @@ export function Draft({
       />
     </label>
   ) : (
-    <div className="border-l-4 border-gold bg-stone px-4 py-3">
-      <p className="text-[14px] font-semibold text-gold-ink">{finished(state) ? sent : "Draft"}</p>
+    <div className="border-l-2 border-forest bg-ink/5 px-4 py-3">
+      <p className="text-[14px] font-semibold">{finished(state) ? sent : "Draft"}</p>
       <p className="mt-1 font-display text-[1.3rem] leading-snug break-words text-forest">{draft}</p>
     </div>
   );
@@ -196,7 +196,7 @@ export function Week({ on, day = 3 }: { on: boolean; day?: number }) {
         <span
           key={name}
           className={`scene-fade grid h-11 place-items-center text-[14px] ${
-            on && i === day ? "bg-forest font-bold text-ivory" : "bg-stone text-slate"
+            on && i === day ? "bg-forest font-bold text-ivory" : "bg-ink/5 text-slate"
           }`}
         >
           {name}

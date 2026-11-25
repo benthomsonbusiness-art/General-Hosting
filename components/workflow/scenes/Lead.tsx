@@ -32,7 +32,7 @@ export function LeadScene({ state, scenario, draft, onDraft }: SceneProps) {
         <Fact on={reached(state, 3)}>CRM updated</Fact>
         <Confidence value={scenario.confidence} on={scored} />
       </div>
-      <Rise on={reached(state, 4)} className="mt-4 min-h-[9.6rem] sm:min-h-[7.6rem]">
+      <Rise on={reached(state, 4)} className="scene-reserve mt-4 min-h-[9.6rem] sm:min-h-[7.6rem]">
         <Draft
           state={state}
           draft={draft}

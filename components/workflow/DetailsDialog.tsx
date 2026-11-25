@@ -71,7 +71,7 @@ export function DetailsDialog({
           <dl className="mt-7 space-y-5">
             {rows.map((row) => (
               <div key={row.term}>
-                <dt className="text-[14px] font-semibold text-gold-ink">{row.term}</dt>
+                <dt className="text-[14px] font-semibold text-slate">{row.term}</dt>
                 <dd className="mt-0.5">{row.text}</dd>
               </div>
             ))}
@@ -83,7 +83,7 @@ export function DetailsDialog({
             <pre
               tabIndex={0}
               aria-label="Sample payload"
-              className="mt-2 max-h-72 overflow-auto bg-stone p-4 font-mono text-[13px] leading-[1.6]"
+              className="mt-2 max-h-72 overflow-auto bg-well p-4 font-mono text-[13px] leading-[1.6] text-ivory"
             >
               {livePayload(node.payload, state.nodes[node.id])}
             </pre>
