@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { Stations } from "@/components/home/Stations";
+import { ClosingCta } from "@/components/layout/ClosingCta";
 import { HardwareFrame } from "@/components/media/HardwareFrame";
 import { ExampleFlow } from "@/components/workflow/ExampleFlow";
 import { flowExamples } from "@/components/workflow/examples";
 import { ENGAGEMENTS } from "@/content/engagements";
-import { CTA, HOME } from "@/content/pages";
+import { HOME } from "@/content/pages";
 import { getWorkflow, type Workflow } from "@/content/workflows";
 import { pageMetadata } from "@/lib/seo";
 import { CTA_HREF, CTA_LABEL, SITE_NAME } from "@/lib/site";
@@ -135,16 +136,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section data-surface="dark" aria-labelledby="close" className="border-t border-line bg-forest">
-        <div className="wrap py-16 lg:py-24">
-          <h2 id="close" className="h2 max-w-[18ch]">
-            {CTA.headline[0]}
-          </h2>
-          <Link href={CTA_HREF} className="btn btn-primary mt-8">
-            {CTA_LABEL}
-          </Link>
-        </div>
-      </section>
+      <ClosingCta />
     </>
   );
 }
