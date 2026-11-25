@@ -294,7 +294,11 @@ function sortedAttachments(node: FlowNodeInput): Attachment[] {
 }
 
 function noteFor(node: FlowNodeInput, internalOnly: boolean): string | undefined {
-  if (node.kind === "human") return node.gate?.approver;
+  if (node.kind === "human") {
+    // Approval labels usually lead with the role ("Controller approves batch"); print it only when they don't.
+    const role = node.gate?.approver;
+    return role && !node.label.toLowerCase().startsWith(role.toLowerCase()) ? role : undefined;
+  }
   if (internalOnly) return WORKFLOWS_PAGE.internalOnly;
   return undefined;
 }

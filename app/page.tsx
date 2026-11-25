@@ -36,7 +36,7 @@ export default function HomePage() {
       <section data-surface="dark" className="bg-obsidian">
         <div className="wrap grid items-start gap-x-8 gap-y-10 py-8 lg:grid-cols-12 lg:py-12">
           <div className="lg:col-span-5">
-            <h1 className="display max-w-[12ch]">Your back office runs on its own until it needs your approval.</h1>
+            <h1 className="h1">Your back office runs on its own until it needs your approval.</h1>
             <p className="lead mt-5 max-w-[34rem] text-muted">
               We map how work moves through your company, then build the automations inside the tools you already use.
             </p>

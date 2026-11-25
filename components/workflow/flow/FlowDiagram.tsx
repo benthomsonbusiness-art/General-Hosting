@@ -198,7 +198,7 @@ export function FlowDiagram({
                         }
                       : undefined;
                   const mono = node.kind === "human" ? gateLine(node) : monoLine(node.app);
-                  const note = laid?.text?.note ? laid.text.note.join(" ") : node.kind === "human" ? node.gate?.approver : undefined;
+                  const note = laid?.text?.note ? laid.text.note.join(" ") : undefined;
                   const exit = laid?.exit;
                   const inner = (
                     <>
