@@ -6,7 +6,7 @@ The site is a console for a back office. Dark, left-aligned, and exact. Gold app
 
 A small firm builds automations for owner-led companies. Code does the routine work, a model handles judgment under a schema, and a person approves anything that leaves. The client owns the code, the accounts, and the logs.
 
-The memorable element is the approval key: a gold control in the interface, and the gold push key in the photographs. The only autoplaying motion is the home console, which runs one lead-triage sample and waits at that key.
+The memorable element is the approval key: a gold control in the interface, and the gold push key in the photographs. The only autoplaying motion is the packet on the home stations line, which runs only when motion is on and stops at that key.
 
 ## Color
 
@@ -32,7 +32,7 @@ Primary actions are ivory on dark and obsidian on ivory. They are not gold.
 
 ## Type
 
-Mona Sans for everything a person reads. IBM Plex Mono for machine output only: log lines, payloads, field values, and the deliverable tree. Cormorant Garamond and the ampersand subset stay inside the wordmark.
+Mona Sans for everything a person reads. IBM Plex Mono for machine output only: log lines, payloads, field values, the deliverable tree, and the "App: Operation" line under each step in a workflow drawing (it names the API call the step makes). Cormorant Garamond and the ampersand subset stay inside the wordmark.
 
 | Style | Settings |
 |---|---|
@@ -50,9 +50,23 @@ Sentence case. No capital-letter labels. No italic word inside a headline.
 
 Console windows are 8px. Buttons and inputs are 6px. The Approve key is 6px with a 1px inner highlight. Everything else is square. One soft shadow sits under console windows.
 
+Circles mark a tool or port in a workflow drawing. They are a shape, not a radius.
+
+## Workflow drawings
+
+One component draws every workflow: `components/workflow/flow/` (`layout.ts` is the pure, tested layout; `FlowDiagram.tsx` renders it on the server with no client JavaScript; `AppMark.tsx` draws an app's mark or a neutral glyph).
+
+- The canvas is a console window: `--well`, an inner 1px `--line` hairline, 8px radius, a 16px dot grid at ivory 0.14 (none below 640px). It spans the full content width; text and links sit above or below it, never beside it.
+- The spine runs left to right. Trigger, rule and result cards are 64px squares in `--forest` with a 0.16 ivory border and the app's mark. The AI card is 208 by 64 with its label inside and no glyph. The approval card is the Approve key: gold, 6px, a person-check glyph, and never a third-party mark.
+- Under each card: the label (13px Mona Sans 500) and the mono line (12px Plex Mono, `--ivory-64`). Approval cards add the approver role.
+- Tools hang below the AI card's Model and Tools ports, and below a rule step's Calls port, as 40px circles on dashed S-curves. Exits rise above the spine as dashed stubs with one muted line. Two outputs after one approval stack in the last column.
+- Lines are ivory at 0.48, 1.5px. Gold appears only on approval cards.
+- The stage is horizontal when the canvas is at least 880px wide (up to five columns) or 1040px (six columns), and at least 680px for the compact variant used on home and the workflow index. Below that the same HTML becomes a vertical list. Nothing scrolls sideways.
+- A caption under every drawing says it is an example with sample data and that product names and logos belong to their owners.
+
 ## Motion
 
-One Motion switch in the header. The choice follows the system setting until the visitor changes it, then it is saved in `localStorage`. The home console autoplays only when motion is on, and it stops at the gate. Reduced motion shows the inbox item and waits for a step. Other motion answers a click, a key, or a scroll position that changes meaning.
+One Motion switch in the header, labeled "Motion"; its checked state says whether it is on. The choice follows the system setting until the visitor changes it, then it is saved in `localStorage` and mirrored to `<html data-motion>`. Two things read it: the packet on the home stations line, which moves only when motion is on and stops at the approval key, and the workflow drawings, where hovering or focusing a step runs its dashed lines once (600ms, `--ease`). With motion off, the lines only brighten. With reduced motion, they brighten with no transition at all. Drawings have no ambient animation, and nothing draws itself on scroll. Other motion answers a click, a key, or a scroll position that changes meaning.
 
 ## Imagery
 
