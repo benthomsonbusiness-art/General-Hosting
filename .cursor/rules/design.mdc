@@ -1,0 +1,14 @@
+---
+description: Valentini visual design. Apply when changing layout, type, color, motion, or imagery.
+alwaysApply: true
+---
+
+Read `.agents/skills/frontend-design/SKILL.md` before visual work.
+
+The redesign brief is the source of truth:
+
+`/cursor/stores/bc-951a0dc4-7faa-4378-8b3c-2bee6d6bd403/internal/v5/VALENTINI-V5-REDESIGN-PROMPT.md`
+
+Where the skill and the brief disagree, the brief wins. Implemented tokens live in `app/globals.css` and `docs/DESIGN.md`.
+
+Gold is only the control a person presses to approve, plus the gold key in the logo geometry and the `key-hero` photograph. The site is an operator's console: dark, left-aligned, one autoplaying moment.

@@ -11,7 +11,7 @@ export type PracticeInterest = (typeof PRACTICE_INTERESTS)[number];
 export const HONEYPOT_FIELD = "fax_number";
 
 export const INQUIRY_OFFLINE_ERROR =
-  "Inquiries are offline right now. Please email us directly.";
+  "Sending is not set up yet, so inquiries are offline. Nothing was sent.";
 
 export type Inquiry = {
   fullName: string;

@@ -14,5 +14,5 @@ export const PREVIEW_HOSTS = [
   "valentini-next.benthomsonbusiness.workers.dev",
 ] as const;
 
-export const CTA_LABEL = "Request a Workflow Audit";
+export const CTA_LABEL = "Request a workflow audit";
 export const CTA_HREF = "/contact";

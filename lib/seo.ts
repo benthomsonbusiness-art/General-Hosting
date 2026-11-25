@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import { SITE_NAME, SITE_URL } from "./site.ts";
 
 export const DEFAULT_SHARE_IMAGE = {
-  url: "/images/hero-architecture.jpg",
-  width: 1280,
-  height: 720,
-  alt: "Green marble, walnut slats, and a city at twilight.",
+  url: "/images/og-share.jpg",
+  width: 1200,
+  height: 630,
+  alt: "A gold push key set into a forest-green machined panel, with empty dark metal beside it.",
 };
 
 export function absolute(path: string): string {

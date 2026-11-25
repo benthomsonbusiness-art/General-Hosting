@@ -1,8 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { JsonLd } from "@/components/util/JsonLd";
-import { WORKFLOW_MEDIA } from "@/components/workflow/media";
 import type { Faq as FaqItem } from "@/content/approach";
 import { getWorkflow } from "@/content/workflows";
 import type { Block } from "@/content/insights";
@@ -48,48 +46,14 @@ export function PullQuote({ children }: { children: ReactNode }) {
 
 export function WorkflowEmbed({ id }: { id: string }) {
   const workflow = getWorkflow(id);
-  const media = WORKFLOW_MEDIA[id];
   if (!workflow) return null;
   return (
-    <aside data-surface="dark" className="relative my-10 overflow-hidden bg-obsidian p-7 md:p-9">
-      {media ? (
-        <>
-          <Image
-            src={media.envSrc}
-            alt=""
-            fill
-            sizes="(min-width: 768px) 44rem, 100vw"
-            className="object-cover opacity-55"
-            style={{ objectPosition: media.envPosition }}
-          />
-          <span
-            aria-hidden
-            className="pointer-events-none absolute inset-0 bg-gradient-to-r from-obsidian via-obsidian/85 to-obsidian/45"
-          />
-        </>
-      ) : null}
-      <div className="relative z-10 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-        <div className="max-w-lg">
-          <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-ivory/70">Interactive run</p>
-          <p className="mt-2 font-display text-[1.9rem] leading-none font-medium text-ivory">{workflow.title}</p>
-          <p className="mt-3 text-ivory/85">{workflow.summary.split(". ")[0]}.</p>
-          <p className="mt-4 font-mono text-[12px] text-ivory/65">Simulation with sample data</p>
-          <Link href={`/workflows/${workflow.id}`} className="arrow-link mt-2 min-h-11 items-center text-ivory">
-            Try this workflow
-          </Link>
-        </div>
-        {media ? (
-          <div className="relative hidden h-32 w-24 shrink-0 sm:block">
-            <Image
-              src={media.cutoutSrc}
-              alt=""
-              fill
-              sizes="96px"
-              className="object-contain drop-shadow-[0_14px_20px_rgba(11,31,22,0.65)]"
-            />
-          </div>
-        ) : null}
-      </div>
+    <aside data-surface="dark" className="console my-10 p-6 text-ivory">
+      <p className="text-[1.4rem] leading-tight">{workflow.title}</p>
+      <p className="mt-1 text-[15px] text-ivory/75">{`${workflow.summary.split(". ")[0]}.`}</p>
+      <Link href={`/workflows/${workflow.id}`} className="text-link mt-2 inline-flex min-h-11 items-center">
+        Read the steps
+      </Link>
     </aside>
   );
 }
@@ -112,7 +76,7 @@ function inline(text: string): ReactNode[] {
 
 export function Prose({ blocks }: { blocks: Block[] }) {
   return (
-    <div className="max-w-[44rem] text-[1.0625rem] leading-[1.75]">
+    <div className="measure text-[17px] leading-[1.6]">
       {blocks.map((block, index) => {
         switch (block.type) {
           case "p":

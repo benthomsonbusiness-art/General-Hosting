@@ -1,43 +1,105 @@
-# Image Shotlist — Valentini & Co.
+# v5 image shot list
 
-Style across every shot: editorial still-life and macro photography, 85mm or 100mm macro lens, hard directional daylight with long crisp shadows, deep forest-green (`#133224`) or archival near-white (`#FCFBF7` / `#F7F4EC`) surfaces, visible material texture (cotton paper fibers, brass staples, folded creases, ink bleed), slight analog film grain, nothing glossy or rendered. No readable text, no logos, no brand names, no faces.
+Operator's console photographs. Originals live in `public/images/`. Sized WebP files are produced by `scripts/resize-images.mjs`. `about-founder.jpg` is not in this set. It has to be a real photograph of Ben Thomson.
 
-## Generated and active in `public/images/`
+The generator's frames were 1280×720 (16:9), 1152×864 (4:3), 864×1152 (3:4), and 1024×1024 (1:1). Frames that needed another ratio were center-cropped, then resized with Lanczos to the listed pixels. `texture-console.jpg` is the generated 1024×1024 frame, unchanged.
 
-| File | Ratio | Source width | Status | Prompt |
-| --- | --- | --- | --- | --- |
-| `hero-paper-fall.jpg` | 16:9 | 1376 | Generated | Dozens of thick cream and off-white archival cotton paper sheets, folded envelopes, and ruled accounting forms suspended mid-fall above a deep forest-green wool baize surface (`#133224`), hard directional daylight from upper left casting crisp long shadows. |
-| `cut-invoice.png` | 4:5 | 960 (alpha) | Generated + extracted | Top-down macro flat-lay of a single worn cream cotton invoice sheet with faint ruled ledger lines and a brass corner staple, transparent background, no baked shadow. |
-| `cut-letter.png` | 4:5 | 960 (alpha) | Generated + extracted | Top-down macro flat-lay of a crisp ivory cotton correspondence letter sheet folded cleanly in thirds horizontally, transparent background, no baked shadow. |
-| `cut-receipt.png` | 4:5 | 960 (alpha) | Generated + extracted | Top-down macro flat-lay of a narrow vertical cream paper receipt strip with serrated torn top and bottom edges, transparent background, no baked shadow. |
-| `cut-ticket.png` | 4:5 | 960 (alpha) | Generated + extracted | Top-down macro flat-lay of an ivory cardstock routing ticket with a perforated stub edge and punched brass eyelet hole, transparent background, no baked shadow. |
-| `cut-resume.png` | 4:5 | 960 (alpha) | Generated + extracted | Top-down macro flat-lay of a thick white cotton resume sheet with a strip of matte black masking tape redacting the top header band, transparent background, no baked shadow. |
-| `cut-contract.png` | 4:5 | 960 (alpha) | Generated + extracted | Top-down macro flat-lay of a multi-page thick cream contract stack bound on the edge with an antique brass prong fastener, transparent background, no baked shadow. |
-| `cut-notebook.png` | 4:5 | 960 (alpha) | Generated + extracted | Top-down macro flat-lay of an open dark-green clothbound field notebook with blank faint-ruled cream pages, transparent background, no baked shadow. |
-| `cut-envelope.png` | 4:5 | 960 (alpha) | Generated + extracted | Top-down macro flat-lay of a heavy warm cream paper envelope with its triangular flap open, transparent background, no baked shadow. |
-| `wf-lead.jpg` | 3:2 | 1264 | Generated | Open heavy cream correspondence envelope on deep green wool baize (`#133224`) with a folded ivory letter sheet sliding halfway out in hard raking morning daylight. |
-| `wf-invoice.jpg` | 3:2 | 1264 | Generated | Neat stack of thick cream ledger invoices with brass staples on a deep forest-green table, one middle invoice sheet pulled two inches out in raking daylight. |
-| `gate-detail.jpg` | 21:9 | 1376 | Generated + cropped | 100mm macro of a heavy turned walnut and brushed brass rubber stamp hovering two millimeters above textured cotton rag paper on a dark green desk, crisp shadow just before contact. |
-| `texture-green.jpg` | 1:1 | 1024 | Generated | Seamless top-down macro of deep dark forest-green (`#133224`) matte wool baize desk blotter texture with subtle woven grain. |
-| `texture-paper.jpg` | 1:1 | 1024 | Derived from `cut-letter` cotton surface | Seamless top-down macro of warm unbleached cotton archival paper fibers (`#F7F4EC`). |
+## key-hero.jpg
 
-## Generated and active — Wave 2 (16 still-life photographs)
+2400×1030, 21:9. Home "How a run is built", and the contact page side panel. From a 16:9 frame cropped to 21:9.
 
-| File | Ratio | Source width | Status | Prompt |
-| --- | --- | --- | --- | --- |
-| `wf-proposal.jpg` | 3:2, 2400 | Editorial still-life photography, 85mm lens. A solid brushed-brass fountain pen resting diagonally across an unsigned thick cream proposal sheet on dark forest-green wood (`#133224`), hard directional daylight, long crisp shadow, visible cotton paper fibers, slight grain, no readable text or logos. |
-| `wf-onboarding.jpg` | 3:2, 2400 | Editorial still-life photography, 85mm lens. Two heavy brass keys resting atop a thick dark-green and manila client folder bound with cotton tape, crisp morning window light casting sharp shadows on a dark wood surface, slight film grain, no readable text. |
-| `wf-brief.jpg` | 3:2, 2400 | Editorial still-life photography, 85mm lens. Early morning window sunlight cutting in sharp diagonal bands across a crisp folded cream editorial brief sheet on a dark obsidian-green desk (`#0B1F16`), visible paper tooth, slight grain, no readable text. |
-| `wf-support.jpg` | 3:2, 2400 | Editorial still-life photography, 85mm lens. A matte dark architectural desk telephone beside a neat stack of cream cardstock routing tickets on deep forest-green baize (`#133224`), hard directional side light casting long shadows, no readable text or logos. |
-| `wf-ads.jpg` | 3:2, 2400 | Macro editorial photography, 100mm lens. Overlapping torn matte heavy poster paper layers in deep forest green, warm cream, and muted terracotta (`#A84B2E`) in sharp raking daylight casting crisp edge shadows, real paper fibers, no readable text. |
-| `wf-recruiting.jpg` | 3:2, 2400 | Editorial still-life photography, 85mm lens. A neat stack of heavy white cotton resumes on a deep forest-green tabletop with a crisp strip of matte black masking tape across the top header band, hard directional daylight, slight film grain, no readable text. |
-| `ind-professional.jpg` | 4:5, 2000 | Editorial interior still-life, 85mm lens, no people. A dark walnut and forest-green leather advisory desk with stacked linen-tied paper briefs and an unlit brass desk lamp against dark green wall paneling in raking afternoon daylight, slight film grain, no readable text. |
-| `ind-wellness.jpg` | 4:5, 2000 | Editorial architectural photograph, 85mm lens, no people. An empty warm oak hardwood movement studio floor at dawn with long diagonal window shadow bars falling across the timber toward a matte botanical green wall, serene directional light, slight grain. |
-| `ind-realestate.jpg` | 4:5, 2000 | Editorial still-life photograph, 85mm lens, no people. A ring of heavy antique brass keys resting inside the mortise lock of a dark painted forest-green architectural wood door in crisp morning sunlight, sharp shadows, real wood and brass texture. |
-| `ind-retail.jpg` | 4:5, 2000 | Editorial still-life photograph, 85mm lens, no people. A clean timber packing workbench with neatly folded unbleached kraft boxes, a spool of cotton twine, brass shears, and stacked blank packing slips against a deep green plaster wall, hard directional daylight, no readable text. |
-| `ind-home.jpg` | 4:5, 2000 | Editorial still-life photograph, 85mm lens, no people. An impeccably organized dark-painted service van shelving bay holding brass pipe fittings, coiled copper, and a timber clipboard with blank cream job forms in crisp side daylight, no logos, no readable text. |
-| `ind-finance.jpg` | 4:5, 2000 | Editorial still-life photograph, 85mm lens, no people. A thick forest-green clothbound accounting ledger lying open beside stacked cream ruled forms beneath a warm glowing brass banker's lamp on dark walnut in raking light, slight film grain, no readable numbers or text. |
-| `approach-map.jpg` | 16:9, 2560 | Editorial still-life, 85mm lens, high three-quarter angle over a dark walnut workbench with deep green wall behind. Dozens of loose cream forms, envelopes, receipts, and tickets scattered across the wooden table in hard directional daylight casting long shadows, no readable text. |
-| `approach-design.jpg` | 16:9, 2560 | Same dark walnut workbench and exact camera angle as `approach-map.jpg`. The exact same cream forms, envelopes, and cardstock tickets now sorted into four parallel aligned lanes across the table with faint pencil grid marks, crisp raking daylight. |
-| `approach-build.jpg` | 16:9, 2560 | Same dark walnut workbench and exact camera angle as `approach-map.jpg`. The arranged paper stacks now joined cleanly across the table by taut linen string and small brass clips leading toward one central stack, crisp raking daylight. |
-| `approach-handover.jpg` | 16:9, 2560 | Same dark walnut workbench and exact camera angle as `approach-map.jpg`. All loose papers gone, replaced by one thick tidy forest-green clothbound manual book with brass corner rivets resting squarely in the center of the walnut table in raking daylight. |
+Studio product photography of precision hardware. Machined aluminum anodized deep forest green (#133224) and near-black green (#0B1F16), with bead-blasted matte texture and fine real-world micro-scratches. Soft large softbox key light with one thin hard rim light, shallow depth of field, 100mm macro lens, true-to-life color, slight sensor grain. No text, no numbers, no logos, no glowing LEDs, no neon, no holograms, no blue or purple light, no people. A single square push key, anodized brushed gold (#C5A869), a muted antique champagne gold rather than bright yellow, set flush into a large flat forest-green machined aluminum panel, three-quarter view from slightly above, the key slightly raised as if waiting to be pressed, a thin precise gap around it, the rest of the panel empty and calm with negative space on the left third. The key is a plain unmarked square metal button. Real photographed machined metal, not plastic, not a 3D render.
+
+## og-share.jpg
+
+1200×630, 1.91:1. Social share image. From a 16:9 frame cropped to 1.91:1. Second attempt. Reference image: the saved `key-hero` frame.
+
+Studio product photography of precision hardware. Machined aluminum anodized deep forest green (#133224) and near-black green (#0B1F16), with bead-blasted matte texture and fine real-world micro-scratches. Soft large softbox key light with one thin hard rim light, shallow depth of field, 100mm macro lens, true-to-life color, slight sensor grain. No text, no numbers, no logos, no glowing LEDs, no neon, no holograms, no blue or purple light, no people. The same gold push key in the same green panel, composed in the left third, the right two thirds an empty dark green surface for a wordmark to be added in code. Place the single square brushed antique-gold key entirely inside the left third of the frame, close to the left side, slightly raised, with a thin gap and no markings. Everything to the right of the key is only empty bead-blasted dark green aluminum.
+
+## station-code.jpg
+
+1600×1200, 4:3. Home station 1, Code.
+
+Studio product photography of precision hardware. Machined aluminum anodized deep forest green (#133224) and near-black green (#0B1F16), with bead-blasted matte texture and fine real-world micro-scratches. Soft large softbox key light with one thin hard rim light, shallow depth of field, 100mm macro lens, true-to-life color, slight sensor grain. No text, no numbers, no logos, no glowing LEDs, no neon, no holograms, no blue or purple light, no people. A row of eight identical small machined toggle switches in a forest-green aluminum panel, every switch in exactly the same position, perfect alignment, shot straight on at a low angle. Blank metal toggles with no labels, no legends, and no markings. Real photographed hardware with a matte bead-blasted finish, not plastic and not a render.
+
+## station-model.jpg
+
+1600×1200, 4:3. Home station 2, Model.
+
+Studio product photography of precision hardware. Machined aluminum anodized deep forest green (#133224) and near-black green (#0B1F16), with bead-blasted matte texture and fine real-world micro-scratches. Soft large softbox key light with one thin hard rim light, shallow depth of field, 100mm macro lens, true-to-life color, slight sensor grain. No text, no numbers, no logos, no glowing LEDs, no neon, no holograms, no blue or purple light, no people. A precision rotary dial in dark green anodized aluminum with fine engraved tick marks and two small mechanical end stops limiting its travel, close macro, the knurled edge catching the rim light. Tick marks are short unmarked lines only, with no numerals and no letters. Real machined metal, matte bead-blasted, not plastic and not a 3D render.
+
+## station-record.jpg
+
+1600×1200, 4:3. Home station 4, Record. Second attempt. Reference image: `station-code`.
+
+Studio product photography of precision hardware. Machined aluminum anodized deep forest green (#133224) and near-black green (#0B1F16), with bead-blasted matte texture and fine real-world micro-scratches. Soft large softbox key light with one thin hard rim light, shallow depth of field, 100mm macro lens, true-to-life color, slight sensor grain. No text, no numbers, no logos, no glowing LEDs, no neon, no holograms, no blue or purple light, no people. A neat stack of thin machined aluminum plates in alternating forest green and near-black green, seen edge-on, each layer perfectly registered, one plate slightly offset to show its depth. Eight thin plates. Odd plates are deep forest green and even plates are clearly darker, near-black green, so the alternation is visible. The third plate is shifted a few millimeters sideways. Sharp separate edges, real bead-blasted metal, no labels.
+
+## texture-console.jpg
+
+1024×1024, 1:1 seamless. Very subtle background on obsidian, under 0.15 opacity. Third attempt. A 2×2 tile of this frame shows no seam.
+
+Studio product photography of precision hardware. Machined aluminum anodized deep forest green (#133224) and near-black green (#0B1F16), with bead-blasted matte texture and fine real-world micro-scratches. Soft large softbox key light with one thin hard rim light, shallow depth of field, 100mm macro lens, true-to-life color, slight sensor grain. No text, no numbers, no logos, no glowing LEDs, no neon, no holograms, no blue or purple light, no people. Seamless tileable top-down macro of bead-blasted anodized near-black green aluminum (#0B1F16), even lighting, no edges, no objects. Flat copy-stand lighting, the same exposure in every corner, no falloff, no vignette, only fine random bead-blast grain filling the frame.
+
+## ins-approval-gate.jpg
+
+1920×1080, 16:9. Insight "Where the approval gate goes". Second attempt.
+
+Studio product photography of precision hardware. Machined aluminum anodized deep forest green (#133224) and near-black green (#0B1F16), with bead-blasted matte texture and fine real-world micro-scratches. Soft large softbox key light with one thin hard rim light, shallow depth of field, 100mm macro lens, true-to-life color, slight sensor grain. No text, no numbers, no logos, no glowing LEDs, no neon, no holograms, no blue or purple light, no people. A gold anodized push key beside a matte green aluminum guard rail that frames it, top-down, calm negative space. Camera is directly overhead. One square brushed antique-gold push key, slightly raised, sits in the middle of a low rectangular forest-green aluminum frame, like a flat picture frame surrounding the key on all four sides with a thin precise gap. Empty bead-blasted dark green panel outside the frame. No other buttons.
+
+## ins-deterministic-first.jpg
+
+1920×1080, 16:9. Insight "Deterministic first". Reference image: `station-model`.
+
+Studio product photography of precision hardware. Machined aluminum anodized deep forest green (#133224) and near-black green (#0B1F16), with bead-blasted matte texture and fine real-world micro-scratches. Soft large softbox key light with one thin hard rim light, shallow depth of field, 100mm macro lens, true-to-life color, slight sensor grain. No text, no numbers, no logos, no glowing LEDs, no neon, no holograms, no blue or purple light, no people. A precision-machined green aluminum gear train with a single small brass detent lever, macro, side light. Clean gear teeth with correct mechanical geometry, matte anodized forest-green gears, one small brass lever only. No numerals, no engravings that read as letters.
+
+## ins-audit-week-one.jpg
+
+1920×1080, 16:9. Insight "What a workflow audit maps in week one". Second attempt.
+
+Studio product photography of precision hardware. Machined aluminum anodized deep forest green (#133224) and near-black green (#0B1F16), with bead-blasted matte texture and fine real-world micro-scratches. Soft large softbox key light with one thin hard rim light, shallow depth of field, 100mm macro lens, true-to-life color, slight sensor grain. No text, no numbers, no logos, no glowing LEDs, no neon, no holograms, no blue or purple light, no people. A machinist's steel rule and a green anodized square laid on a flat dark green aluminum plate, top-down, perfectly aligned. The steel rule is one long thin blank metal straightedge, horizontal, much longer than it is wide, with no numerals and no letters. The square is an L-shaped engineer's try square in forest-green anodized aluminum, one long arm and one short arm meeting at a clean 90-degree corner, also completely blank. The L sits against the rule so the two tools are square to each other.
+
+## ins-daily-brief.jpg
+
+1920×1080, 16:9. Insight "A daily brief for a 40-person services company". Third attempt. Reference image: the second gauge frame, which had the three blank meters and no window light.
+
+Studio product photography of precision hardware. Machined aluminum anodized deep forest green (#133224) and near-black green (#0B1F16), with bead-blasted matte texture and fine real-world micro-scratches. Soft large softbox key light with one thin hard rim light, shallow depth of field, 100mm macro lens, true-to-life color, slight sensor grain. No text, no numbers, no logos, no glowing LEDs, no neon, no holograms, no blue or purple light, no people. Early morning window light falling in a hard diagonal across a dark green machined aluminum desk panel with three small identical analog gauges, needles at different positions, no numbers on the dials. Keep the three round blank gauges and their three different needle angles exactly as in the reference. Add a hard-edged diagonal band of warm morning sunlight from the upper left to the lower right across the panel. No digits, no words, no knobs, no gold key.
+
+## Industries
+
+Documentary architectural photography, after hours, empty workplace, practical lighting only, slight green cast in the shadows, 35mm lens, true-to-life color, calm and orderly. No people, no faces, no readable screens or signs, no logos, no text.
+
+### ind-professional.jpg
+
+1600×2000, 4:5. From a 3:4 frame cropped to 4:5.
+
+Documentary architectural photography, after hours, empty workplace, practical lighting only, slight green cast in the shadows, 35mm lens, true-to-life color, calm and orderly. No people, no faces, no readable screens or signs, no logos, no text. A small consulting office at dusk, a closed laptop and a single desk lamp on a dark green desk, glass meeting room behind. The laptop is shut. No papers with writing, no wall signage, no monitors showing content.
+
+### ind-wellness.jpg
+
+1600×2000, 4:5. From a 3:4 frame cropped to 4:5.
+
+Documentary architectural photography, after hours, empty workplace, practical lighting only, slight green cast in the shadows, 35mm lens, true-to-life color, calm and orderly. No people, no faces, no readable screens or signs, no logos, no text. The front desk of a boutique fitness studio after closing, a check-in tablet face down, rolled mats on shelves in soft light. Mats and walls are plain, with no brand marks and no lettering. The tablet screen is hidden face down.
+
+### ind-realestate.jpg
+
+1600×2000, 4:5. From a 3:4 frame cropped to 4:5.
+
+Documentary architectural photography, after hours, empty workplace, practical lighting only, slight green cast in the shadows, 35mm lens, true-to-life color, calm and orderly. No people, no faces, no readable screens or signs, no logos, no text. A property management office counter at night with a wall cabinet of labeled-free key hooks and a few keys hanging. The hooks and keys have no tags, no engraved numbers, and no labels. No signage on the walls.
+
+### ind-retail.jpg
+
+1600×2000, 4:5. From a 3:4 frame cropped to 4:5.
+
+Documentary architectural photography, after hours, empty workplace, practical lighting only, slight green cast in the shadows, 35mm lens, true-to-life color, calm and orderly. No people, no faces, no readable screens or signs, no logos, no text. An ecommerce packing room after hours, neat shelves of plain unbranded boxes, a label printer and a scale on a steel bench. Every box is blank cardboard. The printer has no printed label visible. The scale display is dark and shows no digits.
+
+### ind-home.jpg
+
+1600×2000, 4:5. From a 3:4 frame cropped to 4:5. Second attempt.
+
+Documentary architectural photography, after hours, empty workplace, practical lighting only, slight green cast in the shadows, 35mm lens, true-to-life color, calm and orderly. No people, no faces, no readable screens or signs, no logos, no text. The open side door of a service van at dusk showing an organized tool rack and parts bins, no branding. The door is the sliding side door, not the rear doors. Inside the cargo bay: a tool rack and plain gray parts bins with completely blank faces, no stickers, no labels, and no writing. No license plate and no lettering on the van.
+
+### ind-finance.jpg
+
+1600×2000, 4:5. From a 3:4 frame cropped to 4:5.
+
+Documentary architectural photography, after hours, empty workplace, practical lighting only, slight green cast in the shadows, 35mm lens, true-to-life color, calm and orderly. No people, no faces, no readable screens or signs, no logos, no text. A small accounting office at night, two monitors turned off, a document scanner and a tidy stack of folders on a dark green desk. The monitors are black and off. The folders and any paper are blank, with no visible writing, logos, or numbers.

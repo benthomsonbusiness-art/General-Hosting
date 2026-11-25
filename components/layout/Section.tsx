@@ -1,14 +1,15 @@
 import type { ReactNode } from "react";
 
-export type Surface = "paper" | "ivory" | "stone" | "forest" | "moss" | "obsidian";
+export type Surface = "paper" | "ivory" | "stone" | "forest" | "moss" | "obsidian" | "well";
 
 const FILL: Record<Surface, string> = {
-  paper: "bg-paper",
-  ivory: "bg-ivory",
-  stone: "bg-paper",
+  paper: "bg-obsidian",
+  ivory: "bg-ivory text-ink",
+  stone: "bg-obsidian",
   forest: "bg-forest",
-  moss: "bg-moss",
+  moss: "bg-forest",
   obsidian: "bg-obsidian",
+  well: "bg-well",
 };
 
 export function Container({ className = "", children }: { className?: string; children: ReactNode }) {
@@ -31,7 +32,7 @@ export function Section({
   flush?: boolean;
   children: ReactNode;
 }) {
-  const dark = surface === "forest" || surface === "moss" || surface === "obsidian";
+  const dark = surface !== "ivory";
   return (
     <section
       id={id}

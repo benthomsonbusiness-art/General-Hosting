@@ -3,49 +3,19 @@ import type { Faq } from "./approach.ts";
 export type Photo = { src: string; alt: string; position: string };
 
 export const PHOTOS = {
-  hero: {
-    src: "/images/hero-paper-fall.jpg",
-    alt: "Thick cotton sheets, envelopes, and ruled forms suspended above a dark forest-green desk.",
-    position: "center",
-  },
   invoices: {
-    src: "/images/wf-invoice.jpg",
-    alt: "Stacked ruled supplier invoices on dark green wood with one sheet pulled out in raking light.",
-    position: "center",
-  },
-  envelope: {
-    src: "/images/wf-lead.jpg",
-    alt: "An open cream correspondence envelope with a folded sheet emerging across green baize.",
-    position: "center",
-  },
-  stamp: {
-    src: "/images/gate-detail.jpg",
-    alt: "A walnut and brass rubber stamp hovering millimeters above textured cotton paper.",
-    position: "center",
-  },
-  fins: {
-    src: "/images/systems-geometry.jpg",
-    alt: "Vertical brass and dark stone fins crossed by diagonal sunlight.",
-    position: "22% center",
-  },
-  room: {
-    src: "/images/consultation-room.jpg",
-    alt: "A consultation room with forest-green paneling, a leather chair and linen curtains.",
-    position: "center 30%",
-  },
-  desk: {
-    src: "/images/editorial-workspace.jpg",
-    alt: "A wood desk in window light with a closed laptop, an open notebook and a brass pen.",
+    src: "/images/station-record.jpg",
+    alt: "A stack of thin forest-green and near-black aluminum plates, one plate offset.",
     position: "center",
   },
   ads: {
-    src: "/images/wf-ads.jpg",
-    alt: "Overlapping torn matte poster paper layers in deep forest green, cream, and terracotta in sharp raking daylight.",
+    src: "/images/station-model.jpg",
+    alt: "A dark green rotary dial with engraved tick marks and a knurled edge.",
     position: "center",
   },
   brief: {
-    src: "/images/wf-brief.jpg",
-    alt: "Early morning sunlight cutting in diagonal bands across a folded cream editorial brief sheet on a dark desk.",
+    src: "/images/ins-daily-brief.jpg",
+    alt: "Three blank analog gauges on a dark green panel, with morning light across them.",
     position: "center",
   },
 } satisfies Record<string, Photo>;
@@ -89,7 +59,7 @@ export const SERVICES: Service[] = [
       "We map how leads, documents and approvals move through your company, then automate the steps that do not need a person, inside the tools you already use.",
     h1: "Automate the steps that don't need a person",
     dek: "Built inside the tools your team already uses, pausing wherever someone needs to approve what goes out.",
-    cta: { label: "Request a Workflow Audit", href: "/contact" },
+    cta: { label: "Request a workflow audit", href: "/contact" },
     photo: PHOTOS.invoices,
     areas: [],
     workflowIds: ["lead-triage", "proposal-ops", "ap-intake"],

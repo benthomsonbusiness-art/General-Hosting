@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
-import { Bricolage_Grotesque, Cormorant_Garamond, IBM_Plex_Sans, JetBrains_Mono } from "next/font/google";
+import { Cormorant_Garamond, IBM_Plex_Mono, Mona_Sans } from "next/font/google";
 import localFont from "next/font/local";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
@@ -9,21 +9,13 @@ import { JsonLd } from "@/components/util/JsonLd";
 import { HOME } from "@/content/pages";
 import { NAV } from "@/content/site-nav";
 import { DEFAULT_SHARE_IMAGE } from "@/lib/seo";
-import { INQUIRY_EMAIL, SITE_NAME, SITE_URL } from "@/lib/site";
+import { SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
-const bricolage = Bricolage_Grotesque({
+const mona = Mona_Sans({
   subsets: ["latin"],
-  axes: ["opsz", "wdth"],
-  variable: "--font-bricolage",
-  display: "swap",
-});
-
-const plex = IBM_Plex_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
-  variable: "--font-plex",
+  axes: ["wdth"],
+  variable: "--font-mona",
   display: "swap",
 });
 
@@ -45,10 +37,10 @@ const ampersand = localFont({
 });
 
 // Used for payloads and coordinate labels, not preloaded on every route.
-const jetbrains = JetBrains_Mono({
+const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],
-  variable: "--font-jetbrains",
+  variable: "--font-plex-mono",
   display: "swap",
   preload: false,
 });
@@ -78,7 +70,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#FCFBF7",
+  themeColor: "#0B1F16",
 };
 
 const organization = {
@@ -88,7 +80,6 @@ const organization = {
   name: SITE_NAME,
   url: SITE_URL,
   description: HOME.metaDescription,
-  email: INQUIRY_EMAIL,
   image: `${SITE_URL}${DEFAULT_SHARE_IMAGE.url}`,
   address: {
     "@type": "PostalAddress",
@@ -112,9 +103,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${bricolage.variable} ${plex.variable} ${cormorantWordmark.variable} ${ampersand.variable} ${jetbrains.variable} h-full antialiased`}
+      className={`${mona.variable} ${cormorantWordmark.variable} ${ampersand.variable} ${plexMono.variable} h-full antialiased`}
     >
-      <body data-surface="light" className="flex min-h-full flex-col">
+      <body data-surface="dark" className="flex min-h-full flex-col">
         <InputModality />
         <JsonLd data={organization} />
         <a href="#main" className={skip}>

@@ -51,9 +51,9 @@ export function InPageIndex({ items }: { items: IndexItem[] }) {
             <a
               href={`#${item.id}`}
               aria-current={current ? "location" : undefined}
-              className={`-ml-px flex min-h-9 items-center border-l-2 py-1.5 pl-4 text-[14px] leading-snug ${
+              className={`-ml-px flex min-h-11 items-center border-l-2 py-1.5 pl-4 text-[14px] leading-snug ${
                 current
-                  ? "border-gold-ink font-semibold text-forest"
+                  ? "border-forest font-semibold text-forest"
                   : "border-transparent text-slate hover:text-forest"
               }`}
               onClick={() => moveFocus(item.id)}

@@ -17,7 +17,7 @@ export function LegalFrame({
   children: ReactNode;
 }) {
   return (
-    <Section>
+    <Section surface="ivory">
       <article className="wrap max-w-[52rem]">
         <Breadcrumbs items={[{ name: title, path }]} className="mb-6" />
         <h1 className="h1">{title}</h1>
@@ -28,7 +28,7 @@ export function LegalFrame({
         </p>
         <div className="mt-10">{children}</div>
         <p className="mt-10 border-t border-rule pt-6">
-          <Link href={other.href} className="text-link">
+          <Link href={other.href} className="text-link inline-flex min-h-11 items-center">
             {other.label}
           </Link>
         </p>

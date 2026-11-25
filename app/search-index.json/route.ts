@@ -20,7 +20,7 @@ export const dynamic = "force-static";
 function entries(): SearchEntry[] {
   return [
     { url: "/services", title: "Services", type: "Page", summary: SERVICES_HUB.dek, keywords: "practices consulting" },
-    { url: "/workflows", title: "Workflow blueprints", type: "Page", summary: WORKFLOWS_PAGE.dek, keywords: "explorer visualizer demo simulation" },
+    { url: "/workflows", title: "Example workflows", type: "Page", summary: WORKFLOWS_PAGE.dek, keywords: "flowchart steps approval" },
     { url: "/industries", title: "Industries", type: "Page", summary: INDUSTRIES_HUB.dek, keywords: "sectors" },
     { url: "/insights", title: "Insights", type: "Page", summary: INSIGHTS_HUB.dek, keywords: "articles guides blog" },
     { url: "/approach", title: "How we work", type: "Page", summary: APPROACH_PAGE.dek, keywords: "approach method process principles estimator hours faq" },

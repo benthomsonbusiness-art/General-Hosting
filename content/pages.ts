@@ -39,10 +39,10 @@ export const INDUSTRIES_HUB = {
 
 export const WORKFLOWS_PAGE = {
   metaDescription:
-    "Run eight illustrative workflows and watch one sample item change at each step. Set the threshold, edit the draft and decide at the approval gate yourself.",
-  title: "Watch a workflow run and wait for your decision",
-  dek: "Eight everyday processes running on sample data until a person needs to step in.",
-  note: "Simulation with sample data. Timings are illustrative. Vendor names are example integrations, not partnerships.",
+    "Three example workflows drawn as the steps they follow. A person approves anything that leaves the company. The other five are written out the same way.",
+  title: "Example workflows",
+  dek: "Three of them are drawn here. Approval is a labeled step in the path.",
+  note: "The step names are the workflow's own. These are examples, not measured results.",
 };
 
 export const INSIGHTS_HUB = {
@@ -54,7 +54,7 @@ export const INSIGHTS_HUB = {
 export const APPROACH_PAGE = {
   metaDescription:
     "How Valentini & Co. works: map the process, design the data contract and gates, build and shadow-test, then hand over code, accounts, logs and runbooks.",
-  dek: "We follow real items across your tools, put the contract on paper, run the build beside your team before anything sends, and hand over the repository.",
+  dek: "We follow real items across your tools, write the data contract, run the build beside your team before anything sends, and hand over the repository.",
 };
 
 export const ABOUT = {
@@ -68,7 +68,7 @@ export const ABOUT = {
     },
     {
       title: "Write every business rule down first",
-      body: "Most delays come from routing logic nobody has written down. Once those thresholds and rules are explicit on paper, ordinary deterministic code handles them cleanly.",
+      body: "Most delays come from routing logic nobody has written down. Once those thresholds and rules are explicit, ordinary deterministic code handles them cleanly.",
     },
     {
       title: "Keep a person behind every external send",
@@ -85,13 +85,13 @@ export const ABOUT = {
 
 export const CONTACT = {
   metaDescription:
-    "Tell Valentini & Co. which process is slowing the team down. Request a Workflow Audit, or a consultation on Meta advertising or strategy, by form or email.",
+    "Tell Valentini & Co. which process is slowing the team down. Request a workflow audit, or a consultation on Meta advertising or strategy, by form.",
   dek: "Tell us which workflow is eating up your week and where handoffs tend to stall.",
   guidance: "Please do not send passwords, client records or other confidential material.",
   next: [
-    "An engineer reads your note rather than an automated responder.",
-    "We reply from inquiries@valentiniandco.com with two or three clarifying questions.",
-    "We schedule a first conversation to trace the steps on screen.",
+    "Ben reads every note.",
+    "The form is the way to reach the firm.",
+    "A first conversation traces the steps on screen.",
   ],
 };
 

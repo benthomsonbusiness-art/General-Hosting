@@ -20,7 +20,7 @@ export function Breadcrumbs({ items, className = "" }: { items: Crumb[]; classNa
                 <>
                   <Link
                     href={item.path}
-                    className="inline-flex min-h-8 items-center underline-offset-4 hover:underline"
+                    className="text-link inline-flex min-h-11 items-center"
                   >
                     {item.name}
                   </Link>

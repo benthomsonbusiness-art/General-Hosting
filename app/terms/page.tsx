@@ -1,6 +1,5 @@
 import { LegalFrame, LegalSection } from "@/components/layout/LegalFrame";
 import { pageMetadata } from "@/lib/seo";
-import { INQUIRY_EMAIL } from "@/lib/site";
 
 const title = "Terms";
 const description = "Placeholder terms for the Valentini & Co. website. Not in effect.";
@@ -47,7 +46,7 @@ export default function TermsPage() {
       </LegalSection>
       <LegalSection heading="Contact">
         <p>
-          Questions about these terms can be sent to {INQUIRY_EMAIL}. The final text
+          Questions about these terms go through the inquiry form. The final text
           will be the governing contact statement.
         </p>
       </LegalSection>

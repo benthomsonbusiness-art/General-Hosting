@@ -6,26 +6,18 @@ export const metadata: Metadata = { title: "Page not found" };
 
 export default function NotFound() {
   return (
-    <Section surface="paper" className="min-h-[60vh]">
+    <Section className="min-h-[60vh]">
       <Container>
-        <h1 className="h1">We can&apos;t find that page</h1>
-        <p className="lead mt-5 max-w-[36rem] text-muted">
-          The address may have changed when the site was rebuilt. These are good places to start again.
-        </p>
-        <ul className="mt-8 flex flex-wrap gap-x-9 gap-y-2">
+        <h1 className="h1">That page is not on this site.</h1>
+        <ul className="mt-8 flex flex-wrap gap-x-8">
           <li>
-            <Link href="/" className="arrow-link min-h-11 items-center">
+            <Link href="/" className="text-link inline-flex min-h-11 items-center">
               Home
             </Link>
           </li>
           <li>
-            <Link href="/workflows" className="arrow-link min-h-11 items-center">
+            <Link href="/workflows" className="text-link inline-flex min-h-11 items-center">
               Workflows
-            </Link>
-          </li>
-          <li>
-            <Link href="/contact" className="arrow-link min-h-11 items-center">
-              Contact
             </Link>
           </li>
         </ul>

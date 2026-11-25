@@ -18,8 +18,8 @@ export const ENGAGEMENTS: { status: "proposed" | "confirmed"; stages: Engagement
   stages: [
     {
       id: "workflow-audit",
-      name: "Workflow Audit",
-      shape: "Fixed scope, 1–2 weeks",
+      name: "Workflow audit",
+      shape: "Fixed scope, 1 to 2 weeks",
       delivers:
         "A map of the work and a ranked roadmap.",
       pricing: "Request a proposal",
@@ -27,8 +27,8 @@ export const ENGAGEMENTS: { status: "proposed" | "confirmed"; stages: Engagement
     },
     {
       id: "build-and-deploy",
-      name: "Build & Deploy",
-      shape: "Fixed scope, 2–6 weeks",
+      name: "Build and deploy",
+      shape: "Fixed scope, 2 to 6 weeks",
       delivers:
         "Built in your accounts, tested beside the manual process, handed over.",
       pricing: "Scoped after the audit",
@@ -36,7 +36,7 @@ export const ENGAGEMENTS: { status: "proposed" | "confirmed"; stages: Engagement
     },
     {
       id: "retained-operations",
-      name: "Retained Operations",
+      name: "Retained operations",
       shape: "Monthly",
       delivers: "Monitoring, fixes, tested updates and new workflows.",
       pricing: "Scoped after the audit",
