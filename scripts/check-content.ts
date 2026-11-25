@@ -168,7 +168,7 @@ const described: { where: string; text: string }[] = [
   ...INSIGHTS.map((item) => ({ where: item.slug, text: item.metaDescription })),
   ...WORKFLOWS.map((item) => ({ where: item.id, text: item.metaDescription })),
   ...Object.entries(pages).flatMap(([name, value]) =>
-    "metaDescription" in value ? [{ where: name, text: value.metaDescription }] : [],
+    typeof value === "object" && "metaDescription" in value ? [{ where: name, text: value.metaDescription }] : [],
   ),
 ];
 for (const { where, text } of described) {

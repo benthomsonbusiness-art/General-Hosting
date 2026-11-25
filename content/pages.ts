@@ -10,10 +10,10 @@ export const HOME = {
   ],
   how: {
     steps: [
-      { title: "Code", body: "Lookups, routing rules, and invoice math. Runs the same way on every item." },
-      { title: "Model", body: "Reads messy notes and drafts a response. Output that fails its schema is dropped." },
-      { title: "Person", body: "Inspects the draft beside its source. Nothing goes out until someone clicks approve." },
-      { title: "Record", body: "Logs who reviewed the item, what changed in the draft, and the exact text sent." },
+      { title: "Rules", body: "Lookups, routing and invoice math. Same result every time." },
+      { title: "AI", body: "Reads messy emails and notes and drafts a reply. Drafts that fail a check are thrown out." },
+      { title: "Approval", body: "You see the draft next to the original. Nothing goes out until you click approve." },
+      { title: "Record", body: "Logs who approved it, what they changed and exactly what was sent." },
     ],
     own: "It runs in your accounts, from code in your repository. If we stop working together, it keeps running.",
   },
@@ -37,11 +37,45 @@ export const INDUSTRIES_HUB = {
 
 export const WORKFLOWS_PAGE = {
   metaDescription:
-    "Three example workflows drawn as the steps they follow. A person approves anything that leaves the company. The other five are written out the same way.",
+    "Eight example workflows for leads, proposals, onboarding, invoices, support, hiring and reporting. Each one shows every step and where a person approves.",
   title: "Example workflows",
-  dek: "Three of them are drawn here. Approval is a labeled step in the path.",
-  note: "The step names are the workflow's own. These are examples, not measured results.",
+  dek: "Pick one to see each step, the apps it connects, and where a person approves.",
+  listHeading: "All eight workflows",
+  open: "Open this workflow",
+  /** Exit text drawn above a card. A rule or AI step with its own stopLabel uses that instead. */
+  stubs: {
+    ai: "Unsure: goes to a person, nothing sent",
+    human: "Rejected or expired: nothing sent",
+  },
+  internalOnly: "Internal only, so no approval step.",
+  fits: "Fits:",
+  service: "Service:",
+  decides: {
+    heading: "Where a person decides",
+    expires: "Expires after",
+    closing: "Rejected, expired or unsure items send nothing.",
+  },
+  steps: {
+    heading: "Step by step",
+    check: "Check:",
+    alternatives: "Also works with:",
+    uses: "Uses:",
+  },
+  /** One sentence per exit the workflow has, then its ownership line. */
+  exits: {
+    manual: "If the AI is unsure, the item goes to a person instead.",
+    rejected: "If you reject it, nothing is sent.",
+    expired: "If nobody approves in time, nothing is sent and the item goes back to the queue.",
+  },
+  closing: "Want this in your company?",
+  previous: "Previous workflow",
+  next: "Next workflow",
+  all: "All workflows",
 };
+
+/** Under every workflow drawing. Product names and marks are examples, never a claim of partnership. */
+export const DIAGRAM_CAPTION =
+  "Example workflow with sample data. Product names and logos belong to their owners and show example integrations, not partnerships.";
 
 export const INSIGHTS_HUB = {
   metaDescription:
