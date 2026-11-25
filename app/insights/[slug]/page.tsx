@@ -1,7 +1,7 @@
 import { ViewTransition } from "react";
 import type { Metadata } from "next";
-import Image from "next/image";
 import { notFound } from "next/navigation";
+import { HardwareFrame } from "@/components/media/HardwareFrame";
 import { InsightCard, insightMeta } from "@/components/cards/Cards";
 import { Prose } from "@/components/content/Blocks";
 import { ShareLinks } from "@/components/content/ShareLinks";
@@ -60,8 +60,8 @@ export default async function InsightPage({ params }: Props) {
           publisher,
         }}
       />
-      <article className="bg-paper">
-        <header data-surface="light" className="wrap border-b border-ink/15 pt-10 pb-12 md:pt-14 md:pb-16">
+      <article data-surface="light" className="bg-ivory text-ink">
+        <header className="wrap border-b border-ink/12 pt-10 pb-12 md:pt-14 md:pb-16">
           <Breadcrumbs
             items={[
               { name: "Insights", path: "/insights" },
@@ -70,30 +70,22 @@ export default async function InsightPage({ params }: Props) {
           />
           <div className="mt-8 grid items-end gap-x-12 gap-y-8 lg:grid-cols-12">
             <div className="lg:col-span-7">
-              <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-moss">
-                {INSIGHT_TYPES[insight.type]}
-              </p>
-              <h1 className="mt-3 font-display text-[clamp(2.35rem,1.5rem+2.8vw,3.9rem)] leading-[1] font-medium tracking-[-0.03em] text-ink">
-                {insight.title}
-              </h1>
-              <p className="mt-5 max-w-[42rem] text-[1.15rem] leading-relaxed text-slate">{insight.dek}</p>
-              <p className="mt-6 font-mono text-[12px] text-slate">
-                {SITE_NAME} · {insightMeta(insight)}
+              <p className="text-slate">{INSIGHT_TYPES[insight.type]}</p>
+              <h1 className="h2 mt-3 text-ink">{insight.title}</h1>
+              <p className="measure mt-5 text-[1.15rem] leading-relaxed text-slate">{insight.dek}</p>
+              <p className="mt-6 text-slate">
+                {SITE_NAME}. {insightMeta(insight)}
               </p>
             </div>
             <div className="lg:col-span-5" data-print="hide">
               <ViewTransition name={`insight-${insight.slug}`} share="morph" default="none">
-                <div className="relative aspect-[16/10] overflow-hidden bg-obsidian">
-                  <Image
-                    src={insight.image.src}
-                    alt={insight.image.alt}
-                    fill
-                    loading="eager"
-                    sizes="(min-width: 1024px) 38vw, 100vw"
-                    className="object-cover"
-                    style={{ objectPosition: insight.image.position }}
-                  />
-                </div>
+                <HardwareFrame
+                  src={insight.image.src}
+                  alt={insight.image.alt}
+                  width={1920}
+                  height={1080}
+                  sizes="(min-width: 1024px) 38vw, 100vw"
+                />
               </ViewTransition>
             </div>
           </div>

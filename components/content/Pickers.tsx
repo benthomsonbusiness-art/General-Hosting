@@ -1,12 +1,39 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useRef, useState, type KeyboardEvent } from "react";
+import { HardwareFrame } from "@/components/media/HardwareFrame";
 import { useMotion } from "@/components/workflow/hooks";
-import { WORKFLOW_MEDIA } from "@/components/workflow/media";
+import { Thumb } from "@/components/workflow/Thumb";
 import type { Industry } from "@/content/industries";
+
+const INDUSTRY_PHOTO: Record<string, { src: string; alt: string }> = {
+  "professional-services": {
+    src: "/images/ind-professional.jpg",
+    alt: "A closed laptop and a desk lamp on a dark green desk, with a glass meeting room behind.",
+  },
+  "health-wellness-fitness": {
+    src: "/images/ind-wellness.jpg",
+    alt: "A fitness studio desk after closing, a tablet face down and rolled mats on the shelves.",
+  },
+  "real-estate": {
+    src: "/images/ind-realestate.jpg",
+    alt: "A property office key cabinet at night, a few keys on unlabeled hooks.",
+  },
+  "ecommerce-retail": {
+    src: "/images/ind-retail.jpg",
+    alt: "A packing room after hours, plain boxes on shelves and a scale on a steel bench.",
+  },
+  "home-services": {
+    src: "/images/ind-home.jpg",
+    alt: "The open side door of a service van at dusk, with a tool rack and parts bins.",
+  },
+  "financial-accounting-firms": {
+    src: "/images/ind-finance.jpg",
+    alt: "An accounting office at night, two monitors off, a scanner and a stack of folders.",
+  },
+};
 
 function nextIndex(key: string, index: number, last: number): number {
   if (key === "ArrowDown" || key === "ArrowRight") return index === last ? 0 : index + 1;
@@ -15,45 +42,6 @@ function nextIndex(key: string, index: number, last: number): number {
   if (key === "End") return last;
   return -1;
 }
-
-const INDUSTRY_STRIPS = [
-  {
-    src: "/images/ind-professional.jpg",
-    position: "center",
-    cutout: "/images/cut-contract.png",
-    folio: "Folio 01",
-  },
-  {
-    src: "/images/ind-wellness.jpg",
-    position: "center",
-    cutout: "/images/cut-notebook.png",
-    folio: "Folio 02",
-  },
-  {
-    src: "/images/ind-realestate.jpg",
-    position: "center",
-    cutout: "/images/cut-envelope.png",
-    folio: "Folio 03",
-  },
-  {
-    src: "/images/ind-retail.jpg",
-    position: "center",
-    cutout: "/images/cut-ticket.png",
-    folio: "Folio 04",
-  },
-  {
-    src: "/images/ind-home.jpg",
-    position: "center",
-    cutout: "/images/cut-receipt.png",
-    folio: "Folio 05",
-  },
-  {
-    src: "/images/ind-finance.jpg",
-    position: "center",
-    cutout: "/images/cut-invoice.png",
-    folio: "Folio 06",
-  },
-];
 
 type Tile = { id: string; title: string };
 export type IndustryView = Industry & { workflows: Tile[] };
@@ -98,18 +86,13 @@ function IndustryTabs({ industries, initial }: { industries: IndustryView[]; ini
     choose(next, true);
   }
 
+  const current = industries[selected];
+
   return (
     <div>
-      <div
-        role="tablist"
-        aria-label="Industries"
-        aria-orientation="horizontal"
-        className="flex flex-col gap-3 lg:h-[30rem] lg:flex-row"
-        onKeyDown={onKey}
-      >
+      <div role="tablist" aria-label="Industries" className="flex gap-2 overflow-x-auto" onKeyDown={onKey}>
         {industries.map((item, index) => {
           const active = index === selected;
-          const strip = INDUSTRY_STRIPS[index % INDUSTRY_STRIPS.length];
           return (
             <button
               key={item.slug}
@@ -120,175 +103,59 @@ function IndustryTabs({ industries, initial }: { industries: IndustryView[]; ini
               type="button"
               role="tab"
               aria-selected={active}
-              aria-controls={`industry-panel-${index}`}
+              aria-controls="industry-panel"
               tabIndex={active ? 0 : -1}
-              style={
-                motion
-                  ? { transition: "flex-grow 420ms var(--ease-paper), min-height 320ms var(--ease-paper)" }
-                  : undefined
-              }
-              className={`group relative flex flex-col justify-between overflow-hidden bg-obsidian text-left outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 ${
-                active
-                  ? "min-h-[16rem] p-6 lg:min-h-0 lg:flex-[3.2] lg:p-7"
-                  : "min-h-[5.25rem] p-4 lg:min-h-0 lg:flex-[1] lg:hover:flex-[1.15]"
+              style={motion ? { transition: "background-color 200ms var(--ease), color 200ms var(--ease)" } : undefined}
+              className={`min-h-11 shrink-0 rounded-[6px] px-4 text-left text-[15px] ${
+                active ? "bg-ivory text-obsidian" : "border border-line text-ivory"
               }`}
               onClick={() => choose(index, false)}
             >
-              <Image
-                src={strip.src}
-                alt=""
-                fill
-                loading="eager"
-                sizes={active ? "(min-width: 1024px) 48vw, 100vw" : "(min-width: 1024px) 16vw, 100vw"}
-                className={`object-cover ${motion ? "transition-transform duration-700 ease-[var(--ease-paper)]" : ""} ${
-                  active ? "scale-100 opacity-70" : "scale-105 opacity-50 group-hover:opacity-65"
-                }`}
-                style={{ objectPosition: strip.position }}
-              />
-              <span
-                aria-hidden
-                className={`pointer-events-none absolute inset-0 ${
-                  active
-                    ? "bg-gradient-to-t from-obsidian via-obsidian/55 to-obsidian/20"
-                    : "bg-gradient-to-t from-obsidian/95 via-obsidian/65 to-obsidian/40"
-                }`}
-              />
-
-              <div className="relative z-10 flex items-start justify-between gap-3">
-                <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-ivory/75">
-                  {strip.folio}
-                </span>
-                {active ? (
-                  <div className="relative hidden h-28 w-24 shrink-0 sm:block lg:h-32 lg:w-24">
-                    <Image
-                      src={strip.cutout}
-                      alt=""
-                      fill
-                      loading="eager"
-                      sizes="112px"
-                      className="object-contain drop-shadow-[0_18px_22px_rgba(11,31,22,0.8)]"
-                    />
-                  </div>
-                ) : null}
-              </div>
-
-              <div className="relative z-10 mt-auto">
-                <span
-                  className={`block font-display font-medium tracking-[-0.02em] text-ivory ${
-                    active
-                      ? "text-[clamp(1.85rem,1.4rem+1.5vw,2.6rem)] leading-[1.02]"
-                      : "text-[1.05rem] leading-[1.14] lg:text-[1.125rem]"
-                  }`}
-                >
-                  {item.name}
-                </span>
-                {active ? (
-                  <span className="mt-3 block max-w-lg text-[15px] leading-relaxed text-ivory/85">
-                    {item.line}
-                  </span>
-                ) : null}
-              </div>
+              {item.name}
             </button>
           );
         })}
       </div>
 
-      <div className="mt-8 border border-ink/15 bg-paper p-7 shadow-[0_24px_60px_-30px_rgba(11,31,22,0.14)] md:p-11">
-        {industries.map((item, index) => (
-          <div
-            key={item.slug}
-            id={`industry-panel-${index}`}
-            role="tabpanel"
-            aria-labelledby={`industry-tab-${index}`}
-            hidden={index !== selected}
-            tabIndex={0}
-            className="outline-none"
-          >
-            <div className="grid gap-10 lg:grid-cols-12">
-              <div className="lg:col-span-5">
-                <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-moss">Selected sector</p>
-                <h3 className="mt-2 font-display text-[clamp(2rem,1.5rem+1.4vw,2.75rem)] leading-[1.02] font-medium text-ink">
-                  {item.name}
-                </h3>
-                <p className="mt-4 text-[1.1rem] leading-relaxed text-slate">{item.line}</p>
-
-                <div className="mt-8 border-t border-ink/15 pt-6">
-                  <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-moss">Where the hours go</p>
-                  <ul aria-label="Where the hours go" className="mt-4 divide-y divide-ink/12 border-b border-ink/12">
-                    {item.hours.map((hour, hIdx) => (
-                      <li key={hour} className="flex items-baseline gap-4 py-3 text-[15px] text-ink">
-                        <span className="font-mono text-[11px] text-slate">0{hIdx + 1}</span>
-                        <span>{hour}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="mt-7 border-l-2 border-forest bg-ivory px-5 py-4">
-                  <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-moss">Stays with people</p>
-                  <p className="mt-1.5 text-[15px] text-ink">{item.stays}</p>
-                </div>
-              </div>
-
-              <div className="lg:col-span-7">
-                <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-moss">Workflows that apply</p>
-                <ul aria-label="Workflows that apply" className="mt-4 grid gap-4 sm:grid-cols-2">
-                  {item.workflows.map((workflow, position) => {
-                    const media = WORKFLOW_MEDIA[workflow.id];
-                    return (
-                      <li key={workflow.id} className={position === 0 ? "sm:col-span-2" : ""}>
-                        <Link
-                          href={`/workflows/${workflow.id}`}
-                          data-surface="dark"
-                          className="group relative flex h-full min-h-48 flex-col justify-between overflow-hidden bg-obsidian p-6"
-                        >
-                          {media ? (
-                            <>
-                              <Image
-                                src={media.envSrc}
-                                alt=""
-                                fill
-                                loading="eager"
-                                sizes="(min-width: 1024px) 36vw, 100vw"
-                                className="zoom object-cover opacity-65"
-                                style={{ objectPosition: media.envPosition }}
-                              />
-                              <span
-                                aria-hidden
-                                className="pointer-events-none absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/65 to-obsidian/30"
-                              />
-                            </>
-                          ) : null}
-                          <div className="relative z-10 flex items-start justify-between gap-4">
-                            <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-ivory/75">
-                              {media?.shortLabel ?? "Workflow"}
-                            </span>
-                            {media ? (
-                              <div className="relative h-16 w-14 shrink-0">
-                                <Image
-                                  src={media.cutoutSrc}
-                                  alt=""
-                                  fill
-                                  loading="eager"
-                                  sizes="64px"
-                                  className="object-contain drop-shadow-[0_12px_18px_rgba(11,31,22,0.65)] transition-transform duration-500 ease-[var(--ease-paper)] group-hover:-translate-y-1"
-                                />
-                              </div>
-                            ) : null}
-                          </div>
-                          <span className="card-title arrow-link relative z-10 mt-6 font-display text-[1.45rem] leading-tight font-medium text-ivory">
-                            {workflow.title}
-                          </span>
-                        </Link>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
+      {current ? (
+        <div id="industry-panel" role="tabpanel" aria-labelledby={`industry-tab-${selected}`} tabIndex={0} className="mt-8 outline-none">
+          <div className="grid gap-10 lg:grid-cols-12">
+            <div className="lg:col-span-5">
+              {INDUSTRY_PHOTO[current.slug] ? (
+                <HardwareFrame
+                  src={INDUSTRY_PHOTO[current.slug].src}
+                  alt={INDUSTRY_PHOTO[current.slug].alt}
+                  width={1600}
+                  height={2000}
+                  sizes="(min-width: 1024px) 36vw, 100vw"
+                />
+              ) : null}
+            </div>
+            <div className="console p-6 lg:col-span-7" aria-label={`${current.name} systems`}>
+              <h3 className="h3">{current.name}</h3>
+              <p className="mt-3 text-muted">{current.line}</p>
+              <p className="mt-6 text-[15px]">Systems that usually sit in the path</p>
+              <ul className="mt-2 font-mono text-[13px] leading-relaxed text-ivory/80">
+                {current.hours.map((hour) => (
+                  <li key={hour}>{hour}</li>
+                ))}
+              </ul>
+              <p className="mt-6 border-t border-line pt-4 text-[15px]">Stays with people. {current.stays}</p>
+              <h3 className="h3 mt-8">Workflows that apply</h3>
+              <ul className="mt-4 divide-y divide-line border-y border-line">
+                {current.workflows.map((workflow) => (
+                  <li key={workflow.id}>
+                    <Link href={`/workflows/${workflow.id}`} className="flex min-h-14 items-center gap-4 py-2">
+                      <Thumb id={workflow.id} className="h-8 w-14 shrink-0" />
+                      <span className="card-title text-[1.15rem]">{workflow.title}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
-        ))}
-      </div>
+        </div>
+      ) : null}
     </div>
   );
 }

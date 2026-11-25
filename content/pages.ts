@@ -85,13 +85,13 @@ export const ABOUT = {
 
 export const CONTACT = {
   metaDescription:
-    "Tell Valentini & Co. which process is slowing the team down. Request a Workflow Audit, or a consultation on Meta advertising or strategy, by form or email.",
+    "Tell Valentini & Co. which process is slowing the team down. Request a workflow audit, or a consultation on Meta advertising or strategy, by form.",
   dek: "Tell us which workflow is eating up your week and where handoffs tend to stall.",
   guidance: "Please do not send passwords, client records or other confidential material.",
   next: [
-    "An engineer reads your note rather than an automated responder.",
-    "We reply from inquiries@valentiniandco.com with two or three clarifying questions.",
-    "We schedule a first conversation to trace the steps on screen.",
+    "Ben reads every note.",
+    "The form is the way to reach the firm.",
+    "A first conversation traces the steps on screen.",
   ],
 };
 

@@ -104,7 +104,7 @@ export function SearchDialog({
             {results.map((entry) => (
               <li key={entry.url} className="border-b border-rule">
                 <Link href={entry.url} className="group block py-3.5" onClick={follow}>
-                  <span className="eyebrow">{entry.type}</span>
+                  <span className="text-[15px] text-slate">{entry.type}</span>
                   <span className="card-title mt-0.5 block font-semibold text-forest">{entry.title}</span>
                 </Link>
               </li>
@@ -112,7 +112,7 @@ export function SearchDialog({
             <li>
               <Link
                 href={`/search?q=${encodeURIComponent(query.trim())}`}
-                className="arrow-link mt-3 min-h-11 items-center"
+                className="text-link mt-3 inline-flex min-h-11 items-center"
                 onClick={follow}
               >
                 See all results

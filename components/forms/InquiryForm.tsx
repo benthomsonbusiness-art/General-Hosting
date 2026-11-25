@@ -11,7 +11,7 @@ import {
   type InquiryField,
   type PracticeInterest,
 } from "@/lib/inquiry-shared";
-import { CTA_LABEL, INQUIRY_EMAIL } from "@/lib/site";
+import { CTA_LABEL } from "@/lib/site";
 
 const FIELD_ORDER: InquiryField[] = ["fullName", "email", "companyRole", "practice", "note"];
 const FALLBACK_ERROR = "The inquiry could not be sent.";
@@ -123,13 +123,7 @@ function InquiryFields({ initialPractice }: { initialPractice: PracticeInterest 
         <h2 ref={thanksRef} tabIndex={-1} className="h2 outline-none">
           Thank you{receivedName ? `, ${receivedName}` : ""}.
         </h2>
-        <p className="mt-4 max-w-[34rem]">
-          Your note is with Valentini &amp; Co. We reply from{" "}
-          <a className="text-link" href={`mailto:${INQUIRY_EMAIL}`}>
-            {INQUIRY_EMAIL}
-          </a>
-          .
-        </p>
+        <p className="mt-4 max-w-[34rem]">Your note is with Valentini &amp; Co. Ben reads every note.</p>
       </div>
     );
   }
@@ -228,13 +222,7 @@ function InquiryFields({ initialPractice }: { initialPractice: PracticeInterest 
 
       <div role="alert">
         {formError ? (
-          <p className="mt-6 border-l-2 border-error pl-4 text-error">
-            {formError} You can also write to{" "}
-            <a className="font-semibold underline underline-offset-4" href={`mailto:${INQUIRY_EMAIL}`}>
-              {INQUIRY_EMAIL}
-            </a>
-            .
-          </p>
+          <p className="mt-6 border-l-2 border-error pl-4 text-error">{formError}</p>
         ) : null}
       </div>
 

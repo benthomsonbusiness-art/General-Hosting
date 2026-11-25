@@ -49,8 +49,8 @@ export const INSIGHTS: Insight[] = [
     services: ["ai-workflow-automation"],
     industries: ["professional-services", "health-wellness-fitness", "real-estate", "home-services"],
     image: {
-      src: "/images/gate-detail.jpg",
-      alt: "A turned walnut and brass rubber stamp hovering millimeters above textured cotton paper.",
+      src: "/images/ins-approval-gate.jpg",
+      alt: "A gold push key inside a low forest-green metal frame, seen from above.",
       position: "center",
     },
     workflowIds: ["lead-triage"],
@@ -68,8 +68,8 @@ export const INSIGHTS: Insight[] = [
     services: ["ai-workflow-automation"],
     industries: ["financial-accounting-firms", "ecommerce-retail", "home-services"],
     image: {
-      src: "/images/wf-invoice.jpg",
-      alt: "A neat stack of ruled ledger invoices on dark green wood with one sheet pulled halfway out.",
+      src: "/images/ins-deterministic-first.jpg",
+      alt: "Forest-green machined gears with one small brass detent lever.",
       position: "center",
     },
     workflowIds: ["ap-intake"],
@@ -94,8 +94,8 @@ export const INSIGHTS: Insight[] = [
       "financial-accounting-firms",
     ],
     image: {
-      src: "/images/wf-lead.jpg",
-      alt: "An open cream correspondence envelope with a folded sheet sliding out across dark green wool baize.",
+      src: "/images/ins-audit-week-one.jpg",
+      alt: "A blank steel rule and a green try square aligned on a dark metal plate.",
       position: "center",
     },
     workflowIds: ["daily-brief"],
@@ -113,8 +113,8 @@ export const INSIGHTS: Insight[] = [
     services: ["ai-workflow-automation"],
     industries: ["home-services", "professional-services", "financial-accounting-firms"],
     image: {
-      src: "/images/hero-paper-fall.jpg",
-      alt: "Dozens of cotton sheets, envelopes, and ruled forms suspended above a dark forest-green desk.",
+      src: "/images/ins-daily-brief.jpg",
+      alt: "Three blank gauges on a dark green panel, needles apart, with a diagonal band of morning light.",
       position: "center",
     },
     workflowIds: ["daily-brief"],

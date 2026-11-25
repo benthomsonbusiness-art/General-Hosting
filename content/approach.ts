@@ -31,7 +31,7 @@ export const METHOD: { title: string; line: string; happens: string; see: string
     happens:
       "The workflow runs beside the manual process and sends nothing. Each difference is a defect until it is explained.",
     see: "A shadow report of every difference.",
-    approve: "The cut-over.",
+    approve: "Going live.",
   },
   {
     title: "Hand over",
