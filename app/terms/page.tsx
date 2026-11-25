@@ -1,5 +1,7 @@
 import { LegalFrame, LegalSection } from "@/components/layout/LegalFrame";
+import { WORKFLOWS } from "@/content/workflows";
 import { pageMetadata } from "@/lib/seo";
+import { trademarkLines, usedAppSlugs } from "@/lib/used-apps";
 
 const title = "Terms";
 const description = "Placeholder terms for the Valentini & Co. website. Not in effect.";
@@ -7,6 +9,8 @@ const description = "Placeholder terms for the Valentini & Co. website. Not in e
 export const metadata = pageMetadata({ title, description, path: "/terms", noindex: true });
 
 export default function TermsPage() {
+  // Only apps a workflow actually draws, one line per owner.
+  const marks = trademarkLines(usedAppSlugs(WORKFLOWS));
   return (
     <LegalFrame
       path="/terms"
@@ -28,10 +32,21 @@ export default function TermsPage() {
       </LegalSection>
       <LegalSection heading="Materials on the site">
         <p>
-          Text, marks, and images on the site belong to Valentini &amp; Co. or their licensors. The
-          final terms will state what visitors may do with them.
+          Text and images on the site belong to Valentini &amp; Co. or its licensors. Third-party product names and
+          logos belong to their owners. They appear only to show the kinds of tools a workflow can connect to, and
+          their use does not mean any of those companies is a client, partner or sponsor. The final terms will state
+          what visitors may do with the site&apos;s own materials.
         </p>
       </LegalSection>
+      {marks.length > 0 ? (
+        <LegalSection heading="Third-party marks">
+          <ul className="space-y-1">
+            {marks.map((line) => (
+              <li key={line}>{line}</li>
+            ))}
+          </ul>
+        </LegalSection>
+      ) : null}
       <LegalSection heading="Liability">
         <p>
           The final terms will set the limits that apply to use of the site. This placeholder is

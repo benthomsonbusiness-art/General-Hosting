@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { BrandMark, BrandWordmark } from "@/components/brand/BrandMark";
 import { BackToTop } from "@/components/nav/BackToTop";
-import { FOOTER, LEGAL_LINKS } from "@/content/site-nav";
+import { FOOTER, LEGAL_LINKS, TRADEMARK_NOTE } from "@/content/site-nav";
 import { SITE_LOCALITY } from "@/lib/site";
 
 const link = "inline-flex min-h-11 items-center text-[15px] underline-offset-4 hover:underline";
@@ -31,6 +31,7 @@ export function SiteFooter() {
           <div>
             <p className="small text-muted">© 2026 Valentini &amp; Co.</p>
             <p className="small text-muted">{SITE_LOCALITY}</p>
+            <p className="small mt-2 max-w-[44rem] text-muted">{TRADEMARK_NOTE}</p>
           </div>
           <ul className="flex flex-wrap items-center gap-x-6">
             {LEGAL_LINKS.map((item) => (
