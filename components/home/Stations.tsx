@@ -1,64 +1,42 @@
-"use client";
-
-import { HardwareFrame } from "@/components/media/HardwareFrame";
-import { useMotion } from "@/components/workflow/hooks";
+import { CodeXml, Database, UserCheck } from "lucide-react";
 import { HOME } from "@/content/pages";
 
-const SHOTS: Record<string, { src: string; alt: string }> = {
-  Code: {
-    src: "/images/station-code.jpg",
-    alt: "Eight identical toggles in a forest-green panel, all in the same position.",
-  },
-  Model: {
-    src: "/images/station-model.jpg",
-    alt: "A dark green rotary dial with fine tick marks and a knurled edge.",
-  },
-  Record: {
-    src: "/images/station-record.jpg",
-    alt: "Thin green and near-black metal plates stacked edge-on, one plate offset.",
-  },
-};
+const ICON = { "aria-hidden": true, focusable: "false", strokeWidth: 1.5 } as const;
+
+/**
+ * The four kinds of step, drawn as the diagram draws them: a rule card, the wide AI card, the
+ * gold approval key and the record card. Keyed by position, so the titles can change freely.
+ */
+const NODES = [
+  <span key="rule" className="relative z-10 grid h-12 place-items-center border border-[rgb(247_244_236_/_0.16)] bg-obsidian text-ivory/64 w-12">
+    <CodeXml {...ICON} size={22} />
+  </span>,
+  <span key="ai" className="relative z-10 grid h-12 place-items-center border border-[rgb(247_244_236_/_0.16)] bg-obsidian text-ivory/64 w-28" />,
+  <span key="approval" className="relative z-10 grid h-12 w-12 place-items-center rounded-[6px] bg-gold text-obsidian shadow-[inset_0_1px_0_rgb(247_244_236_/_0.55)]">
+    <UserCheck {...ICON} size={20} strokeWidth={1.75} />
+  </span>,
+  <span key="record" className="relative z-10 grid h-12 place-items-center border border-[rgb(247_244_236_/_0.16)] bg-obsidian text-ivory/64 w-12">
+    <Database {...ICON} size={22} />
+  </span>,
+];
 
 /** Four stations on one line. The packet moves only when motion is on, and stops at the person. */
 export function Stations() {
-  const [motion] = useMotion();
-  const steps = HOME.how.steps;
-
   return (
-    <div data-motion={motion ? "on" : "off"}>
-      <ol className="relative grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-4">
-        <span aria-hidden className="absolute top-3 right-[12%] left-[12%] hidden h-px bg-line sm:block" />
-        <span aria-hidden className="packet-track hidden sm:block">
-          <span className="packet absolute top-0 left-0 h-2 w-2 bg-ivory" />
-        </span>
-        {steps.map((step, index) => {
-          const person = step.title === "Person";
-          return (
-            <li key={step.title} className="relative">
-              <span
-                aria-hidden
-                className={`mb-4 grid h-6 w-8 place-items-center ${
-                  person ? "rounded-[6px] bg-gold shadow-[inset_0_1px_0_rgb(247_244_236_/_0.55)]" : "border border-line"
-                }`}
-              />
-              <h3 className="h3">
-                {index + 1} {step.title}
-              </h3>
-              <p className="mt-2 text-[15px] text-muted">{step.body}</p>
-              {SHOTS[step.title] ? (
-                <HardwareFrame
-                  src={SHOTS[step.title].src}
-                  alt={SHOTS[step.title].alt}
-                  width={1600}
-                  height={1200}
-                  sizes="(min-width: 640px) 18vw, 40vw"
-                  className="mt-4"
-                />
-              ) : null}
-            </li>
-          );
-        })}
-      </ol>
-    </div>
+    <ol className="relative grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-4">
+      <span aria-hidden className="absolute top-6 right-[12%] left-6 hidden h-px bg-[rgb(247_244_236_/_0.48)] sm:block" />
+      <span aria-hidden className="packet-track top-5 left-0 hidden w-[calc(50%+0.5rem)] sm:block">
+        <span className="packet absolute top-0 left-0 h-2 w-2 bg-ivory" />
+      </span>
+      {HOME.how.steps.map((step, index) => (
+        <li key={step.title} className="relative">
+          <span aria-hidden className="mb-4 flex">
+            {NODES[index]}
+          </span>
+          <h3 className="h4">{step.title}</h3>
+          <p className="mt-2 text-[15px] text-muted">{step.body}</p>
+        </li>
+      ))}
+    </ol>
   );
 }
