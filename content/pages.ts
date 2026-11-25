@@ -40,7 +40,8 @@ export const INDUSTRIES_HUB = {
 export const WORKFLOWS_PAGE = {
   metaDescription:
     "Run eight illustrative workflows and watch one sample item change at each step. Set the threshold, edit the draft and decide at the approval gate yourself.",
-  dek: "Pick one. Change the input. Decide at the gate.",
+  title: "Watch it work. You decide.",
+  dek: "Eight workflows that run on their own and stop where a person decides.",
   note: "Simulation with sample data. Timings are illustrative. Vendor names are example integrations, not partnerships.",
 };
 

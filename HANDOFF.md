@@ -3,6 +3,16 @@
 Last updated: Nov 24, 2026 (ET) · Branch: `cursor/valentini-platform-v2` · Base: `1e42b44` (PR #4 head) · Agent: Claude Code
 Deployed commit: `ab5a4bb` (later commits change documentation only)
 
+## Workflow stage (after v3, same branch; not pushed or deployed yet)
+
+Ben found the v3 player off and chose an approach based on Lindy's layout and Ramp's storytelling. Layout and pacing were borrowed; no artwork, copy or logos were.
+
+- **Files:** `components/workflow/Stage.tsx` (window, status, gate), `WorkflowExplorer.tsx` (list, step caption, "Change the sample" panel), `HeroPlayer.tsx`, `hooks.ts` (`usePlayer`), `scenes/*`, `content/windows.ts`. `WorkflowPlayer`, `Track`, `MotionRoot` and the `framer-motion` dependency are gone.
+- **Playback:** with motion on, a run starts by itself when the stage is in view, can be paused, and waits at every gate. It moves keyboard focus only after the visitor has acted on that run. With motion off, nothing autoplays and Start is step mode. The reducer in `lib/run-machine.ts` is unchanged.
+- **Controls:** 11 at rest (about 22 in v3). Samples, threshold, step-through, expiry and step details sit behind one disclosure.
+- **Checks (local):** 53 unit tests; 76 scripted behavior checks; axe on every workflow at start and at its stop, at 390 and 1440 (36 runs, 0 violations); crawl clean; Lighthouse Performance 96–100, Accessibility and Best Practices 100. Scripts 178–192 KB per page including prefetch. Fits without scrolling at 1536x791, 1440x900 and 1366x657.
+- **Known:** on phones, Accounts payable grows about 50px at its first gate because its two button labels stack. The "Laptop fit" and 1366x657 notes below describe the previous player.
+
 ## v3 redesign (branch `cursor/valentini-platform-v3`, pushed and deployed to `valentini-next`)
 
 The preview URL below now serves v3. PR #5 contains v2 only. v3 is PR #6 (https://github.com/benthomsonbusiness-art/General-Hosting/pull/6), based on the v2 branch, so merge #5 first. `valentini-preview` and `main` were not touched.

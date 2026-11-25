@@ -13,20 +13,21 @@ export function WorkflowsView({ selected }: { selected?: Workflow }) {
   ];
   return (
     <>
-      <section id="explorer" aria-label="Workflow explorer" data-surface="dark" className="bg-obsidian">
-        <div className="wrap flex flex-wrap items-baseline justify-between gap-x-10 gap-y-2 pt-5 pb-3 short:pt-3 short:pb-1">
-          <div>
-            <Breadcrumbs items={crumbs} className="mb-1" />
-            <h1 className="font-display text-[clamp(2rem,1.5rem+1.6vw,2.75rem)] leading-none font-medium short:text-[2rem]">
-              Watch one thing change
-            </h1>
-          </div>
-          <p className="text-muted">{WORKFLOWS_PAGE.dek}</p>
-        </div>
-        <WorkflowExplorer initialId={selected?.id ?? WORKFLOWS[0].id} />
+      <section id="explorer" aria-label="Workflow explorer">
+        <WorkflowExplorer
+          initialId={selected?.id ?? WORKFLOWS[0].id}
+          heading={
+            <>
+              <Breadcrumbs items={crumbs} className="mb-2" />
+              <h1 className="font-display text-[clamp(2.4rem,1.7rem+1.9vw,3.4rem)] leading-[1.02] font-medium short:text-[2.5rem]">
+                {WORKFLOWS_PAGE.title}
+              </h1>
+            </>
+          }
+        />
       </section>
 
-      <Section labelledBy="text">
+      <Section surface="stone" labelledBy="text">
         <Container>
           <h2 id="text" className="h2">
             Every step, in writing

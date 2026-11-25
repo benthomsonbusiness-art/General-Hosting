@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useReducer, useSyncExternalStore } from "react";
+import { useEffect, useReducer, useRef, useState, useSyncExternalStore, type RefObject } from "react";
+import { SCENARIOS, stopsFor } from "@/content/scenarios";
 import type { Workflow } from "@/content/workflows";
 import { initialRun, runReducer } from "@/lib/run-machine";
 
@@ -44,24 +45,139 @@ export function useMotion(): [boolean, (on: boolean) => void] {
   ];
 }
 
-export const TRAVEL_MS = 700;
-const WORK_MS = 1150;
+const TRAVEL_MS = 250;
+const WORK_MS = 1650;
+/** How long one step holds the stage. The progress bar fills over the same time. */
+export const STEP_MS = TRAVEL_MS + WORK_MS;
 
 /**
- * Drives the pure reducer. Each timer is cleared on change and on unmount, and carries the run
- * token, so nothing continues in the background. No timer is ever set while a gate is waiting.
+ * Drives the pure reducer. Each timer is cleared on change, on pause and on unmount, and carries
+ * the run token, so nothing continues in the background. No timer is ever set while a gate waits.
  */
-export function useWorkflowRun(workflow: Workflow) {
+export function useWorkflowRun(workflow: Workflow, paused: boolean) {
   const [state, dispatch] = useReducer(runReducer(workflow), undefined, initialRun);
 
   useEffect(() => {
-    if (state.status !== "running" || state.mode !== "auto") return;
+    if (paused || state.status !== "running" || state.mode !== "auto") return;
     const token = state.token;
     const timer = state.traveling
       ? window.setTimeout(() => dispatch({ type: "ARRIVE", token }), TRAVEL_MS)
       : window.setTimeout(() => dispatch({ type: "FINISH_NODE", token }), WORK_MS);
     return () => window.clearTimeout(timer);
-  }, [state]);
+  }, [state, paused]);
 
   return [state, dispatch] as const;
 }
+
+function gateAt(workflow: Workflow): number {
+  return workflow.nodes.find((node) => node.confidence)?.confidence?.threshold ?? 0.8;
+}
+
+/** Everything one stage needs: the run, the sample input, the draft, and playback. */
+export function usePlayer(workflow: Workflow, rootRef: RefObject<HTMLDivElement | null>) {
+  const scenarios = SCENARIOS[workflow.id];
+  const [motion, setMotion] = useMotion();
+  const [paused, setPaused] = useState(false);
+  const [state, dispatch] = useWorkflowRun(workflow, paused);
+  const [choice, setChoice] = useState(0);
+  const [threshold, setThreshold] = useState(() => gateAt(workflow));
+  const [draft, setDraft] = useState(scenarios[0].draft ?? "");
+  /** True once the visitor acts on this run. A run that started itself never moves focus. */
+  const acted = useRef(false);
+  const scenario = scenarios[choice];
+  const awaiting = state.status === "awaiting";
+
+  // Plays once per workflow, when the stage is on screen and motion is on.
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!motion || !root) return;
+    let timer = 0;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        observer.disconnect();
+        timer = window.setTimeout(() => dispatch({ type: "START", mode: "auto" }), 900);
+      },
+      { threshold: 0.35 },
+    );
+    observer.observe(root);
+    return () => {
+      observer.disconnect();
+      window.clearTimeout(timer);
+    };
+  }, [motion, workflow, dispatch, rootRef]);
+
+  useEffect(() => {
+    if (!awaiting || !acted.current) return;
+    const active = document.activeElement;
+    if (active && active !== document.body && !rootRef.current?.contains(active)) return;
+    rootRef.current?.querySelector<HTMLElement>("[data-approve]")?.focus({ preventScroll: true });
+  }, [awaiting, state.index, rootRef]);
+
+  function setStops(target: Workflow, index: number, value: number) {
+    dispatch({ type: "SET_STOPS", ids: stopsFor(target.nodes, SCENARIOS[target.id][index], value) });
+  }
+
+  return {
+    workflow,
+    scenarios,
+    scenario,
+    choice,
+    threshold,
+    draft,
+    setDraft,
+    state,
+    motion,
+    setMotion,
+    paused,
+    setPaused,
+    awaiting,
+
+    /** Call in the same event that changes the workflow. */
+    load(next: Workflow) {
+      acted.current = false;
+      setPaused(false);
+      setChoice(0);
+      setThreshold(gateAt(next));
+      setDraft(SCENARIOS[next.id][0].draft ?? "");
+      dispatch({ type: "RESET" });
+      setStops(next, 0, gateAt(next));
+    },
+    start(mode: "auto" | "step") {
+      acted.current = true;
+      setPaused(false);
+      setDraft(scenario.draft ?? "");
+      setStops(workflow, choice, threshold);
+      dispatch({ type: "START", mode });
+    },
+    step() {
+      acted.current = true;
+      dispatch({ type: "STEP" });
+    },
+    reset() {
+      setPaused(false);
+      setDraft(scenario.draft ?? "");
+      dispatch({ type: "RESET" });
+    },
+    choose(index: number) {
+      acted.current = true;
+      setPaused(false);
+      setChoice(index);
+      setDraft(scenarios[index].draft ?? "");
+      dispatch({ type: "RESET" });
+      setStops(workflow, index, threshold);
+      if (motion) dispatch({ type: "START", mode: "auto" });
+    },
+    setLine(value: number) {
+      setThreshold(value);
+      setStops(workflow, choice, value);
+    },
+    decide(type: "APPROVE" | "REJECT" | "EXPIRE") {
+      acted.current = true;
+      dispatch({ type });
+      rootRef.current?.querySelector<HTMLElement>("[data-footer]")?.focus({ preventScroll: true });
+    },
+  };
+}
+
+export type Player = ReturnType<typeof usePlayer>;

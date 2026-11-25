@@ -55,7 +55,7 @@ export default function HomePage() {
                 </Link>
               </div>
             </div>
-            <div data-surface="dark" className="bg-obsidian p-5 sm:p-7 lg:col-span-7">
+            <div className="min-w-0 lg:col-span-7">
               <HeroPlayer workflow={lead} />
             </div>
           </div>

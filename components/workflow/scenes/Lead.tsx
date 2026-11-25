@@ -1,46 +1,46 @@
 "use client";
 
-import { Draft, Fill, finished, Gauge, Label, Mark, Paper, reached, Stamp, type SceneProps } from "../scene-parts";
+import { Confidence, Draft, Fact, From, Mark, reached, Rise, type SceneProps } from "../scene-parts";
 
-/** A message becomes a record, then a reply. */
+/** A message arrives, its sender is looked up, and a reply opens under it. */
 export function LeadScene({ state, scenario, draft, onDraft }: SceneProps) {
   const clear = scenario.id === "clear";
   const scored = reached(state, 2);
   return (
-    <div className="grid h-full gap-4 md:grid-cols-12">
-      <Paper className="relative flex flex-col justify-center md:col-span-7">
-        {reached(state, 4) ? (
-          <Draft state={state} draft={draft} onDraft={onDraft} label="Reply draft. Edit it if you like." />
+    <div>
+      <From
+        name={clear ? "A. Rivera" : "J. Park"}
+        meta={clear ? "Harborline Supply (sample)" : "Personal address (sample)"}
+      />
+      <p className="mt-3 font-display text-[1.45rem] leading-[1.25] text-forest sm:text-[1.65rem]">
+        {clear ? (
+          <>
+            Our <Mark on={scored}>quoting still runs through one inbox</Mark>. Twelve people, and we{" "}
+            <Mark on={scored}>need it working by spring</Mark>.
+          </>
         ) : (
-          <div>
-            <Label>From {clear ? "A. Rivera, Harborline Supply" : "J. Park"}</Label>
-            <p className="mt-3 font-display text-[clamp(1.5rem,1.1rem+1.5vw,2.3rem)] leading-[1.22] text-forest">
-              {clear ? (
-                <>
-                  Our <Mark on={scored}>quoting still runs through one inbox</Mark>. Twelve people, and we{" "}
-                  <Mark on={scored}>need it working by spring</Mark>.
-                </>
-              ) : (
-                <>
-                  Hi, <Mark on={scored}>curious what you do</Mark>. Maybe we could talk sometime?
-                </>
-              )}
-            </p>
-          </div>
+          <>
+            Hi, <Mark on={scored}>curious what you do</Mark>. Maybe we could talk sometime?
+          </>
         )}
-        <Stamp on={finished(state)}>Sent</Stamp>
-      </Paper>
-      <Paper tone="stone" className="md:col-span-5">
-        <p className="mb-2 font-semibold text-forest">Lead record</p>
-        <Fill label="Company" value={clear ? "Harborline" : "Not found"} on={reached(state, 1)} />
-        <Fill label="Domain" value={clear ? "Verified" : "Personal"} on={reached(state, 1)} delay={150} />
-        <Fill label="Fit" value={clear ? "Strong" : "Unclear"} on={scored} />
-        <Fill label="CRM" value="Updated" on={reached(state, 3)} />
-        <Fill label="Approved by" value="You" on={reached(state, 5)} />
-        <div className="mt-3">
-          <Gauge value={scenario.confidence} on={scored} />
-        </div>
-      </Paper>
+      </p>
+      <div className="mt-4 flex min-h-9 flex-wrap gap-2">
+        <Fact on={reached(state, 1)}>{clear ? "Company found" : "No company found"}</Fact>
+        <Fact on={scored} tone={clear ? "stone" : "gold"}>
+          {clear ? "Strong fit" : "Fit unclear"}
+        </Fact>
+        <Fact on={reached(state, 3)}>CRM updated</Fact>
+        <Confidence value={scenario.confidence} on={scored} />
+      </div>
+      <Rise on={reached(state, 4)} className="mt-4 min-h-[9.6rem] sm:min-h-[7.6rem]">
+        <Draft
+          state={state}
+          draft={draft}
+          onDraft={onDraft}
+          label="Reply draft. Edit it if you like."
+          sent="Sent by you (sample)"
+        />
+      </Rise>
     </div>
   );
 }
