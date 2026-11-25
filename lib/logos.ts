@@ -4,15 +4,18 @@
  * Product names may be printed freely to say what a workflow connects to. Logos are another
  * matter: most brands' published rules require written permission before a third party shows
  * their mark. Each entry therefore carries a permission status, and a mark is drawn only when
- * the status and LOGO_MODE allow it AND the official artwork file exists in public/logos/.
+ * the status and LOGO_MODE allow it AND the artwork file exists in public/logos/.
  * Everything else is drawn as the app name with a neutral glyph.
  *
- * Never recolor, redraw, outline or add effects to a mark. Artwork comes only from the brand's
- * own press kit or brand page, unaltered apart from SVGO cleanup.
+ * Never recolor, redraw, outline or add effects to a mark. The current files come from two CC0
+ * npm sets (SVG Logos via @iconify-json/logos, and Simple Icons), unaltered apart from SVGO-style
+ * cleanup; docs/logo-sources.md lists the source of every file. The CC0 license covers the
+ * drawing, not the trademark: `status` still records whether the brand has given permission.
+ * Swap in the brand's own press-kit file wherever one is obtained.
  */
 
 /** "cleared-only": draw marks only for cleared apps. "all": draw every app that has an artwork file. */
-export const LOGO_MODE: "cleared-only" | "all" = "cleared-only";
+export const LOGO_MODE: "cleared-only" | "all" = "all";
 
 export const APP_SLUGS = [
   "gmail",
@@ -112,6 +115,8 @@ export type AppEntry = {
   guidelines: string;
   checkedOn: string;
   glyph: FallbackGlyph;
+  /** The mark is near-black and unreadable on the dark disc: draw it on an ivory disc instead. */
+  onLight?: true;
 };
 
 const CHECKED = "2026-11-25";
@@ -119,6 +124,13 @@ const GOOGLE = "https://partnermarketinghub.withgoogle.com/brands/google/brandin
 const MICROSOFT = "https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general.aspx";
 const ASK = "Written permission needed before the mark is shown.";
 const UNREAD = "Brand rules not yet read. Treat as text only until they are.";
+
+/** Where the artwork file came from. Package versions are recorded in docs/logo-sources.md. */
+const svgLogos = (icon: string) =>
+  `Artwork: SVG Logos set by Gil Barbara (npm @iconify-json/logos, CC0), icon "${icon}", a reproduction of the official mark, not the brand's own file.`;
+const simpleIcons = (icon: string, hex: string) =>
+  `Artwork: Simple Icons (npm simple-icons, CC0) path "${icon}" in its listed brand color ${hex}, a reproduction of the official single-color mark, not the brand's own file.`;
+const NO_FILE = "No artwork file, so the name and glyph show.";
 
 function app(
   name: string,
@@ -133,59 +145,131 @@ function app(
 }
 
 export const APPS: Record<AppSlug, AppEntry> = {
-  gmail: app("Gmail", "Google", "email", "mail", GOOGLE, ASK),
-  googlecalendar: app("Google Calendar", "Google", "email", "calendar", GOOGLE, ASK),
-  googledrive: app("Google Drive", "Google", "storage", "folder", GOOGLE, ASK),
-  googlesheets: app("Google Sheets", "Google", "docs", "table", GOOGLE, ASK),
-  googledocs: app("Google Docs", "Google", "docs", "document", GOOGLE, ASK),
-  googleanalytics: app("Google Analytics", "Google", "ads", "chart", GOOGLE, ASK),
-  googleads: app("Google Ads", "Google", "ads", "megaphone", GOOGLE, ASK),
-  outlook: app("Microsoft Outlook", "Microsoft", "email", "mail", MICROSOFT, ASK),
-  teams: app("Microsoft Teams", "Microsoft", "chat", "message", MICROSOFT, ASK),
-  excel: app("Microsoft Excel", "Microsoft", "docs", "table", MICROSOFT, ASK),
-  slack: app("Slack", "Slack Technologies", "chat", "message", "https://slack.com/terms-of-service/slack-brand", ASK),
-  zoom: app("Zoom", "Zoom Communications", "chat", "video", "https://brand.zoom.us/usage-legal/", ASK),
-  hubspot: app("HubSpot", "HubSpot", "crm", "contacts", "https://www.hubspot.com/style-guide", UNREAD),
+  gmail: app("Gmail", "Google", "email", "mail", GOOGLE, `${svgLogos("google-gmail-2020")} ${ASK}`),
+  googlecalendar: app("Google Calendar", "Google", "email", "calendar", GOOGLE, `${svgLogos("google-calendar-2020")} ${ASK}`),
+  googledrive: app("Google Drive", "Google", "storage", "folder", GOOGLE, `${svgLogos("google-drive-2020")} ${ASK}`),
+  googlesheets: app("Google Sheets", "Google", "docs", "table", GOOGLE, `${NO_FILE} Not in SVG Logos, and the mark is multicolor. ${ASK}`),
+  googledocs: app("Google Docs", "Google", "docs", "document", GOOGLE, `${NO_FILE} Not in SVG Logos, and the mark is multicolor. ${ASK}`),
+  googleanalytics: app("Google Analytics", "Google", "ads", "chart", GOOGLE, `${svgLogos("google-analytics")} ${ASK}`),
+  googleads: app("Google Ads", "Google", "ads", "megaphone", GOOGLE, `${svgLogos("google-ads")} ${ASK}`),
+  outlook: app("Microsoft Outlook", "Microsoft", "email", "mail", MICROSOFT, `${NO_FILE} Not in either source set. ${ASK}`),
+  teams: app("Microsoft Teams", "Microsoft", "chat", "message", MICROSOFT, `${svgLogos("microsoft-teams")} ${ASK}`),
+  excel: app("Microsoft Excel", "Microsoft", "docs", "table", MICROSOFT, `${NO_FILE} Not in either source set. ${ASK}`),
+  slack: app("Slack", "Slack Technologies", "chat", "message", "https://slack.com/terms-of-service/slack-brand", `${svgLogos("slack-icon")} ${ASK}`),
+  zoom: app("Zoom", "Zoom Communications", "chat", "video", "https://brand.zoom.us/usage-legal/", `${svgLogos("zoom-icon")} ${ASK}`),
+  hubspot: app(
+    "HubSpot",
+    "HubSpot",
+    "crm",
+    "contacts",
+    "https://www.hubspot.com/style-guide",
+    `${simpleIcons("hubspot", "#FF7A59")} SVG Logos has only the wide wordmark. ${UNREAD}`,
+  ),
   salesforce: app(
     "Salesforce",
     "Salesforce",
     "crm",
     "contacts",
     "https://www.salesforce.com/company/legal/tmcusageguidelines/",
-    "Published rules allow the product logo inside a flowchart, unaltered, with the line \"Salesforce is a trademark of Salesforce, Inc.\" Add the official file to use it.",
+    `${svgLogos("salesforce")} Published rules allow the product logo inside a flowchart, unaltered, with the line "Salesforce is a trademark of Salesforce, Inc." Replace with the official file from Salesforce to rely on that.`,
   ),
-  pipedrive: app("Pipedrive", "Pipedrive", "crm", "contacts", "https://pipedrive.com/en/newsroom/press-kit", UNREAD),
-  apollo: app("Apollo", "Apollo.io", "crm", "database", "https://www.apollo.io", UNREAD),
-  notion: app("Notion", "Notion Labs", "docs", "document", "https://notion.notion.site/Press-Kit-e8c2e63336f045f4ab2fb4a17b4bbd63", UNREAD),
-  airtable: app("Airtable", "Airtable", "docs", "table", "https://airtable.com/newsroom", UNREAD),
-  docusign: app("Docusign", "Docusign", "docs", "signature", "https://www.docusign.com/IP/trademark-general", ASK),
-  pandadoc: app("PandaDoc", "PandaDoc", "docs", "signature", "https://www.pandadoc.com", UNREAD),
-  quickbooks: app("QuickBooks", "Intuit", "accounting", "card", "https://design.intuit.com/quickbooks/brand", UNREAD),
-  xero: app("Xero", "Xero", "accounting", "card", "https://www.xero.com/uk/about/media/downloads", UNREAD),
-  stripe: app("Stripe", "Stripe", "accounting", "card", "https://stripe.com/legal/marks", ASK),
-  billcom: app("BILL", "BILL Holdings", "accounting", "card", "https://accountants.bill.com/articles/bill-logo-and-guidelines", UNREAD),
-  ramp: app("Ramp", "Ramp", "accounting", "card", "https://ramp.com", UNREAD),
-  zendesk: app("Zendesk", "Zendesk", "support", "ticket", "https://brandland.zendesk.com", UNREAD),
-  intercom: app("Intercom", "Intercom", "support", "message", "https://www.intercom.com/press", UNREAD),
-  asana: app("Asana", "Asana", "projects", "checklist", "https://asana.com/brand", UNREAD),
-  clickup: app("ClickUp", "ClickUp", "projects", "checklist", "https://clickup.com/brand", UNREAD),
-  monday: app("monday.com", "monday.com", "projects", "checklist", "https://monday.com/p/press-kit/", UNREAD),
-  typeform: app("Typeform", "Typeform", "forms", "document", "https://www.typeform.com", UNREAD),
-  calendly: app("Calendly", "Calendly", "forms", "calendar", "https://calendly.com/newsroom", UNREAD),
-  meta: app("Meta Ads", "Meta Platforms", "ads", "megaphone", "https://www.meta.com/brand/resources/meta/company-brand/", ASK),
-  shopify: app("Shopify", "Shopify", "commerce", "store", "https://www.shopify.com/brand-assets", ASK),
-  gusto: app("Gusto", "Gusto", "hr", "people", "https://gusto.com", UNREAD),
-  greenhouse: app("Greenhouse", "Greenhouse Software", "hr", "people", "https://brand.greenhouse.io/brand-portal/p/5", UNREAD),
-  claude: app("Claude", "Anthropic", "ai", "sparkles", "https://www.anthropic.com/legal/trademark-guidelines", ASK),
-  openai: app(
-    "OpenAI",
-    "OpenAI",
-    "ai",
-    "sparkles",
-    "https://openai.com/brand/",
-    "Published terms allow the official logo where a step uses OpenAI. Add the official file to use it.",
+  pipedrive: app(
+    "Pipedrive",
+    "Pipedrive",
+    "crm",
+    "contacts",
+    "https://pipedrive.com/en/newsroom/press-kit",
+    `${NO_FILE} SVG Logos has only the wide wordmark and Simple Icons has no entry. ${UNREAD}`,
   ),
-  dropbox: app("Dropbox", "Dropbox", "storage", "folder", "https://www.dropbox.com/branding", UNREAD),
+  apollo: app("Apollo", "Apollo.io", "crm", "database", "https://www.apollo.io", `${NO_FILE} Not in either source set. ${UNREAD}`),
+  notion: app(
+    "Notion",
+    "Notion Labs",
+    "docs",
+    "document",
+    "https://notion.notion.site/Press-Kit-e8c2e63336f045f4ab2fb4a17b4bbd63",
+    `${svgLogos("notion-icon")} ${UNREAD}`,
+  ),
+  airtable: app("Airtable", "Airtable", "docs", "table", "https://airtable.com/newsroom", `${svgLogos("airtable")} ${UNREAD}`),
+  docusign: app("Docusign", "Docusign", "docs", "signature", "https://www.docusign.com/IP/trademark-general", `${NO_FILE} Not in either source set. ${ASK}`),
+  pandadoc: app("PandaDoc", "PandaDoc", "docs", "signature", "https://www.pandadoc.com", `${NO_FILE} Not in either source set. ${UNREAD}`),
+  quickbooks: app(
+    "QuickBooks",
+    "Intuit",
+    "accounting",
+    "card",
+    "https://design.intuit.com/quickbooks/brand",
+    `${NO_FILE} Not in SVG Logos, and the mark is two colors, so a single-color fill would alter it. ${UNREAD}`,
+  ),
+  xero: app("Xero", "Xero", "accounting", "card", "https://www.xero.com/uk/about/media/downloads", `${svgLogos("xero")} ${UNREAD}`),
+  stripe: app(
+    "Stripe",
+    "Stripe",
+    "accounting",
+    "card",
+    "https://stripe.com/legal/marks",
+    `${simpleIcons("stripe", "#635BFF")} SVG Logos has only the wide wordmark. ${ASK}`,
+  ),
+  billcom: app(
+    "BILL",
+    "BILL Holdings",
+    "accounting",
+    "card",
+    "https://accountants.bill.com/articles/bill-logo-and-guidelines",
+    `${NO_FILE} Not in either source set. ${UNREAD}`,
+  ),
+  ramp: app("Ramp", "Ramp", "accounting", "card", "https://ramp.com", `${NO_FILE} Not in either source set. ${UNREAD}`),
+  zendesk: {
+    ...app("Zendesk", "Zendesk", "support", "ticket", "https://brandland.zendesk.com", `${svgLogos("zendesk-icon")} ${UNREAD}`),
+    onLight: true,
+  },
+  intercom: app("Intercom", "Intercom", "support", "message", "https://www.intercom.com/press", `${svgLogos("intercom-icon")} ${UNREAD}`),
+  asana: app("Asana", "Asana", "projects", "checklist", "https://asana.com/brand", `${svgLogos("asana-icon")} ${UNREAD}`),
+  clickup: app("ClickUp", "ClickUp", "projects", "checklist", "https://clickup.com/brand", `${svgLogos("clickup-icon")} ${UNREAD}`),
+  monday: app("monday.com", "monday.com", "projects", "checklist", "https://monday.com/p/press-kit/", `${svgLogos("monday-icon")} ${UNREAD}`),
+  typeform: {
+    ...app("Typeform", "Typeform", "forms", "document", "https://www.typeform.com", `${svgLogos("typeform-icon")} ${UNREAD}`),
+    onLight: true,
+  },
+  calendly: app(
+    "Calendly",
+    "Calendly",
+    "forms",
+    "calendar",
+    "https://calendly.com/newsroom",
+    `${NO_FILE} Not in SVG Logos, and the current mark is more than one color. ${UNREAD}`,
+  ),
+  meta: app(
+    "Meta Ads",
+    "Meta Platforms",
+    "ads",
+    "megaphone",
+    "https://www.meta.com/brand/resources/meta/company-brand/",
+    `${svgLogos("meta-icon")} ${ASK}`,
+  ),
+  shopify: app("Shopify", "Shopify", "commerce", "store", "https://www.shopify.com/brand-assets", `${svgLogos("shopify")} ${ASK}`),
+  gusto: app("Gusto", "Gusto", "hr", "people", "https://gusto.com", `${NO_FILE} Both source sets have only the wide wordmark. ${UNREAD}`),
+  greenhouse: app(
+    "Greenhouse",
+    "Greenhouse Software",
+    "hr",
+    "people",
+    "https://brand.greenhouse.io/brand-portal/p/5",
+    `${simpleIcons("greenhouse", "#24A47F")} ${UNREAD}`,
+  ),
+  claude: app("Claude", "Anthropic", "ai", "sparkles", "https://www.anthropic.com/legal/trademark-guidelines", `${svgLogos("claude-icon")} ${ASK}`),
+  openai: {
+    ...app(
+      "OpenAI",
+      "OpenAI",
+      "ai",
+      "sparkles",
+      "https://openai.com/brand/",
+      `${svgLogos("openai-icon")} Published terms allow the official logo where a step uses OpenAI. Replace with the official file from OpenAI to rely on that.`,
+    ),
+    onLight: true,
+  },
+  dropbox: app("Dropbox", "Dropbox", "storage", "folder", "https://www.dropbox.com/branding", `${svgLogos("dropbox")} ${UNREAD}`),
 };
 
 export function isAppSlug(value: string): value is AppSlug {
