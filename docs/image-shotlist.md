@@ -21,10 +21,10 @@ Style across every shot: editorial still-life and macro photography, 85mm or 100
 | `texture-green.jpg` | 1:1 | 1024 | Generated | Seamless top-down macro of deep dark forest-green (`#133224`) matte wool baize desk blotter texture with subtle woven grain. |
 | `texture-paper.jpg` | 1:1 | 1024 | Derived from `cut-letter` cotton surface | Seamless top-down macro of warm unbleached cotton archival paper fibers (`#F7F4EC`). |
 
-## Pending generation (image-tool quota exhausted during batch generation; prompts ready)
+## Generated and active — Wave 2 (16 still-life photographs)
 
-| File | Target Ratio & Min Width | Prompt |
-| --- | --- | --- |
+| File | Ratio | Source width | Status | Prompt |
+| --- | --- | --- | --- | --- |
 | `wf-proposal.jpg` | 3:2, 2400 | Editorial still-life photography, 85mm lens. A solid brushed-brass fountain pen resting diagonally across an unsigned thick cream proposal sheet on dark forest-green wood (`#133224`), hard directional daylight, long crisp shadow, visible cotton paper fibers, slight grain, no readable text or logos. |
 | `wf-onboarding.jpg` | 3:2, 2400 | Editorial still-life photography, 85mm lens. Two heavy brass keys resting atop a thick dark-green and manila client folder bound with cotton tape, crisp morning window light casting sharp shadows on a dark wood surface, slight film grain, no readable text. |
 | `wf-brief.jpg` | 3:2, 2400 | Editorial still-life photography, 85mm lens. Early morning window sunlight cutting in sharp diagonal bands across a crisp folded cream editorial brief sheet on a dark obsidian-green desk (`#0B1F16`), visible paper tooth, slight grain, no readable text. |

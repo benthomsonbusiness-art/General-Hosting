@@ -18,37 +18,37 @@ function nextIndex(key: string, index: number, last: number): number {
 
 const INDUSTRY_STRIPS = [
   {
-    src: "/images/wf-lead.jpg",
+    src: "/images/ind-professional.jpg",
     position: "center",
     cutout: "/images/cut-contract.png",
     folio: "Folio 01",
   },
   {
-    src: "/images/editorial-workspace.jpg",
+    src: "/images/ind-wellness.jpg",
     position: "center",
     cutout: "/images/cut-notebook.png",
     folio: "Folio 02",
   },
   {
-    src: "/images/gate-detail.jpg",
+    src: "/images/ind-realestate.jpg",
     position: "center",
     cutout: "/images/cut-envelope.png",
     folio: "Folio 03",
   },
   {
-    src: "/images/wf-invoice.jpg",
-    position: "70% center",
+    src: "/images/ind-retail.jpg",
+    position: "center",
     cutout: "/images/cut-ticket.png",
     folio: "Folio 04",
   },
   {
-    src: "/images/consultation-room.jpg",
-    position: "center 30%",
+    src: "/images/ind-home.jpg",
+    position: "center",
     cutout: "/images/cut-receipt.png",
     folio: "Folio 05",
   },
   {
-    src: "/images/hero-paper-fall.jpg",
+    src: "/images/ind-finance.jpg",
     position: "center",
     cutout: "/images/cut-invoice.png",
     folio: "Folio 06",

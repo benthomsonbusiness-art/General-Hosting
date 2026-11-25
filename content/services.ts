@@ -38,6 +38,16 @@ export const PHOTOS = {
     alt: "A wood desk in window light with a closed laptop, an open notebook and a brass pen.",
     position: "center",
   },
+  ads: {
+    src: "/images/wf-ads.jpg",
+    alt: "Overlapping torn matte poster paper layers in deep forest green, cream, and terracotta in sharp raking daylight.",
+    position: "center",
+  },
+  brief: {
+    src: "/images/wf-brief.jpg",
+    alt: "Early morning sunlight cutting in diagonal bands across a folded cream editorial brief sheet on a dark desk.",
+    position: "center",
+  },
 } satisfies Record<string, Photo>;
 
 export type Service = {
@@ -118,7 +128,7 @@ export const SERVICES: Service[] = [
     h1: "Meta advertising, run as a system",
     dek: "Clean conversion tracking and automated weekly reporting so spend decisions rest on numbers your team trusts.",
     cta: { label: "Request a consultation", href: "/contact?practice=meta-ads" },
-    photo: PHOTOS.stamp,
+    photo: PHOTOS.ads,
     areas: [
       { title: "Tracking", body: "Pixel, Conversions API and GA4 compared event by event." },
       { title: "Testing", body: "One hypothesis per test, with the stopping rule written first." },
@@ -156,7 +166,7 @@ export const SERVICES: Service[] = [
     h1: "Strategy that ends in a decision someone owns",
     dek: "Clear operating-model priorities for founders and COOs deciding what to fix before buying new software.",
     cta: { label: "Request a consultation", href: "/contact?practice=strategy" },
-    photo: PHOTOS.envelope,
+    photo: PHOTOS.brief,
     areas: [
       { title: "Operating model", body: "Who does what, and where handoffs stall." },
       { title: "Decision rights", body: "Who decides, to what limit, and when it escalates." },
