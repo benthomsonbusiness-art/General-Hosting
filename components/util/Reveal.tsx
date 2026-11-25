@@ -1,34 +1,50 @@
 "use client";
 
 import { useEffect, useRef, type ReactNode } from "react";
+import { useMotion } from "@/components/workflow/hooks";
 
 /**
- * One short fade-and-rise per element. Content is visible in the server HTML, and only
- * elements still below the fold are hidden after hydration, so nothing depends on it.
+ * Reveals content cleanly on scroll when motion is enabled without stranding sections
+ * invisible if jumped to directly or rendered in a headless viewport.
  */
 export function Reveal({ children, className = "" }: { children: ReactNode; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
+  const [motion] = useMotion();
 
   useEffect(() => {
     const node = ref.current;
-    if (!node || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    if (node.getBoundingClientRect().top < window.innerHeight) return;
+    if (!node || !motion) return;
+    const rect = node.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 1.1) return;
+
     node.classList.add("reveal-pending");
+    const show = () => {
+      node.classList.add("reveal-done");
+      node.classList.remove("reveal-pending");
+    };
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting) return;
-        node.classList.add("reveal-done");
-        node.classList.remove("reveal-pending");
+        show();
         observer.disconnect();
       },
-      { rootMargin: "0px 0px -8% 0px" },
+      { rootMargin: "0px 0px -4% 0px" },
     );
     observer.observe(node);
+
+    const onScroll = () => {
+      if (node.getBoundingClientRect().top < window.innerHeight * 1.05) {
+        show();
+        observer.disconnect();
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       observer.disconnect();
+      window.removeEventListener("scroll", onScroll);
       node.classList.remove("reveal-pending");
     };
-  }, []);
+  }, [motion]);
 
   return (
     <div ref={ref} className={className}>

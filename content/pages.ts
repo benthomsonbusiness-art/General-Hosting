@@ -3,26 +3,26 @@
 export const HOME = {
   metaDescription:
     "Valentini & Co. maps how information moves through owner-led companies, then builds AI workflow automation inside the tools they already use, with approvals.",
-  dek: "Code handles the predictable steps. A model handles the judgment calls. A person approves anything that leaves the company.",
+  dek: "Deterministic code handles routing and arithmetic. A model reads unstructured notes and drafts replies under a strict schema. A person approves anything that leaves the company.",
   problems: [
-    { q: "Leads waiting a day for a first reply?", workflowId: "lead-triage" },
-    { q: "Invoices keyed by hand and matched by eye?", workflowId: "ap-intake" },
-    { q: "Rebuilding the same report every Monday?", workflowId: "daily-brief" },
+    { q: "Inbound leads sitting a full day before anyone sends a first reply", workflowId: "lead-triage" },
+    { q: "Supplier invoices keyed line by line and matched to purchase orders by eye", workflowId: "ap-intake" },
+    { q: "Managers pulling the same Monday numbers out of three separate tools", workflowId: "daily-brief" },
   ],
   how: {
-    heading: "One path, with a person on it",
+    heading: "Four stations on one sheet, paused at the human decision",
     steps: [
-      { title: "Code", body: "Rules, lookups and arithmetic. Same answer every time." },
-      { title: "Model", body: "Reads and drafts. Checked against a schema." },
-      { title: "Person", body: "Sees the draft and its source. Nothing moves until they click." },
-      { title: "Record", body: "Who approved what, when, and what was sent." },
+      { title: "Code", body: "Lookups, routing rules, and invoice math. Runs the same way on every item." },
+      { title: "Model", body: "Reads messy notes and drafts a response. Output that fails its schema is dropped." },
+      { title: "Person", body: "Inspects the draft beside its source. Nothing goes out until someone clicks approve." },
+      { title: "Record", body: "Logs who reviewed the item, what changed in the draft, and the exact text sent." },
     ],
-    own: "It runs in your accounts, from your repository. If we part ways, everything keeps working.",
+    own: "Everything runs in your accounts, from your own repository. If we stop working together, every workflow keeps running.",
   },
 };
 
 export const CTA = {
-  headline: ["Tell us where the hours go.", "We'll map it before anything is built."],
+  headline: ["Tell us which process slows your week down.", "We will map the steps before building anything."],
 };
 
 export const SERVICES_HUB = {
@@ -40,8 +40,8 @@ export const INDUSTRIES_HUB = {
 export const WORKFLOWS_PAGE = {
   metaDescription:
     "Run eight illustrative workflows and watch one sample item change at each step. Set the threshold, edit the draft and decide at the approval gate yourself.",
-  title: "Watch it work. You decide.",
-  dek: "Eight workflows that run on their own and stop where a person decides.",
+  title: "Watch a workflow run and wait for your decision",
+  dek: "Eight everyday processes running on sample data until a person needs to step in.",
   note: "Simulation with sample data. Timings are illustrative. Vendor names are example integrations, not partnerships.",
 };
 

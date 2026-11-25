@@ -1,3 +1,4 @@
+import { ViewTransition } from "react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -79,15 +80,19 @@ export default async function InsightPage({ params }: Props) {
                 {SITE_NAME} | {insightMeta(insight)}
               </p>
             </div>
-            <div className="relative hidden aspect-[4/3] overflow-hidden bg-forest lg:col-span-4 lg:block" data-print="hide">
-              <Image
-                src={insight.image.src}
-                alt={insight.image.alt}
-                fill
-                sizes="(min-width: 1024px) 30vw, 100vw"
-                className="object-cover"
-                style={{ objectPosition: insight.image.position }}
-              />
+            <div className="hidden lg:col-span-4 lg:block" data-print="hide">
+              <ViewTransition name={`insight-${insight.slug}`} share="morph" default="none">
+                <div className="relative aspect-[4/3] overflow-hidden bg-forest">
+                  <Image
+                    src={insight.image.src}
+                    alt={insight.image.alt}
+                    fill
+                    sizes="(min-width: 1024px) 30vw, 100vw"
+                    className="object-cover"
+                    style={{ objectPosition: insight.image.position }}
+                  />
+                </div>
+              </ViewTransition>
             </div>
           </div>
           {insight.type === "blueprint" ? (

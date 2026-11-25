@@ -1,10 +1,12 @@
 "use client";
 
 import { Check, Pause, Play } from "lucide-react";
+import Image from "next/image";
 import type { ComponentType, CSSProperties } from "react";
 import { EXITS, NODE_KINDS } from "@/content/workflows";
 import { WINDOWS } from "@/content/windows";
 import { STEP_MS, type Player } from "./hooks";
+import { WORKFLOW_MEDIA } from "./media";
 import type { SceneProps } from "./scene-parts";
 
 const ENDED: Record<string, string> = {
@@ -22,7 +24,7 @@ const STATUS: Record<string, string> = {
   "low-confidence": "handed to a person",
 };
 
-/** One segment per step. A gate is a diamond, because it is the only place a run stops to wait. */
+/** One segment per step. Automated steps fill in forest; human gates are gold diamonds. */
 export function Progress({ player }: { player: Player }) {
   const { workflow, state, motion, paused } = player;
   return (
@@ -43,7 +45,7 @@ export function Progress({ player }: { player: Player }) {
         return (
           <span key={node.id} className="h-[3px] flex-1 overflow-hidden bg-ink/15">
             <span
-              className={`block h-full origin-left bg-gold-ink ${filling ? "stage-fill" : ""}`}
+              className={`block h-full origin-left bg-forest ${filling ? "stage-fill" : ""}`}
               style={{
                 transform: filling || at === "complete" || at === "active" || at === "low-confidence" ? undefined : "scaleX(0)",
                 animationPlayState: paused ? "paused" : undefined,
@@ -69,6 +71,7 @@ export function Stage({
 }) {
   const { workflow, state, scenario, motion, paused, awaiting } = player;
   const look = WINDOWS[workflow.id];
+  const media = WORKFLOW_MEDIA[workflow.id];
   const node = workflow.nodes[Math.max(state.index, 0)];
   const running = state.status === "running";
   const over = state.status in ENDED;
@@ -82,7 +85,6 @@ export function Stage({
           ? "Paused"
           : look.doing[state.index]
         : "Ready";
-  const dark = look.field === "forest" || look.field === "obsidian";
   const tool = "btn min-h-11 px-4 py-2 text-[15px]";
   const line = awaiting
     ? "It stops here until you decide."
@@ -97,16 +99,32 @@ export function Stage({
   return (
     <div
       data-field={look.field}
-      data-surface={dark ? "dark" : "light"}
-      className={`stage relative flex flex-col px-4 pb-4 sm:px-8 sm:pb-7 ${compact ? "" : "lg:px-12"}`}
+      data-surface="dark"
+      className={`stage relative flex flex-col overflow-hidden bg-obsidian px-4 pb-4 sm:px-7 sm:pb-6 ${compact ? "" : "lg:px-10 short:pb-4"}`}
     >
-      <div className="relative flex min-h-14 flex-wrap items-center justify-between gap-x-6 text-[14px] text-body">
-        <p>Simulation, sample data</p>
+      {/* Photographic environment specific to the active workflow */}
+      {media ? (
+        <div className="pointer-events-none absolute inset-0">
+          <Image
+            src={media.envSrc}
+            alt={media.envAlt}
+            fill
+            loading="eager"
+            sizes="(min-width: 1024px) 60vw, 100vw"
+            className="object-cover opacity-55"
+            style={{ objectPosition: media.envPosition }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-obsidian/70 via-obsidian/45 to-obsidian/80" />
+        </div>
+      ) : null}
+
+      <div className="relative z-10 flex min-h-12 flex-wrap items-center justify-between gap-x-6 text-[13px] text-ivory/90 sm:min-h-14 sm:text-[14px]">
+        <p className="font-mono text-[12px] tracking-[0.06em] uppercase">Simulation, sample data</p>
         <button
           type="button"
           role="switch"
           aria-checked={motion}
-          className="flex min-h-11 items-center gap-3 font-semibold"
+          className="flex min-h-11 items-center gap-3 font-semibold text-ivory"
           onClick={() => player.setMotion(!motion)}
         >
           Motion
@@ -118,23 +136,36 @@ export function Stage({
 
       <div
         data-surface="light"
-        className="stage-window relative mx-auto flex w-full max-w-[40rem] flex-1 flex-col bg-[#fffdf8] text-ink"
+        className="stage-window relative z-10 mx-auto flex w-full max-w-[41rem] flex-1 flex-col bg-paper text-ink"
       >
-        <div className="flex min-h-14 justify-between gap-x-4 gap-y-1 border-b border-ink/10 px-5 py-2 max-sm:flex-col max-sm:items-start sm:items-center sm:px-7">
-          <p className="font-semibold text-forest">{look.place}</p>
+        <div className="flex min-h-13 justify-between gap-x-4 gap-y-1 border-b border-ink/10 px-5 py-2 max-sm:flex-col max-sm:items-start sm:items-center sm:px-7">
+          <div className="flex items-center gap-3">
+            {media ? (
+              <Image
+                src={media.cutoutSrc}
+                alt={media.cutoutAlt}
+                width={960}
+                height={1200}
+                loading="eager"
+                sizes="48px"
+                className="paper-cutout-light h-9 w-auto shrink-0 object-contain"
+              />
+            ) : null}
+            <p className="font-semibold text-forest">{look.place}</p>
+          </div>
           <p
             className={`flex items-center gap-2 px-3 py-1 text-[14px] font-semibold ${
-              awaiting ? "bg-gold text-obsidian" : over && state.status === "completed" ? "bg-forest text-ivory" : "bg-stone text-ink"
+              awaiting ? "bg-gold text-obsidian" : over && state.status === "completed" ? "bg-forest text-paper" : "bg-ivory text-ink"
             }`}
           >
             {state.status === "completed" ? <Check size={14} strokeWidth={3} aria-hidden /> : null}
-            {running && !paused ? <span aria-hidden className="stage-spin h-3 w-3 rounded-full border-2 border-gold-ink border-t-transparent" /> : null}
+            {running && !paused ? <span aria-hidden className="stage-spin h-3 w-3 rounded-full border-2 border-forest border-t-transparent" /> : null}
             {awaiting ? <span aria-hidden className="h-2 w-2 rotate-45 bg-obsidian" /> : null}
             {pill}
           </p>
         </div>
 
-        <div className={`flex flex-1 flex-col justify-center px-5 py-5 sm:px-7 ${compact ? "min-h-[20rem]" : "min-h-[22rem] short:min-h-[17.5rem] short:py-3"}`}>
+        <div className={`relative flex flex-1 flex-col justify-center px-5 py-4 sm:px-7 ${compact ? "min-h-[19rem]" : "min-h-[20.5rem] short:min-h-[16.5rem] short:py-2.5"}`}>
           <Scene state={state} scenario={scenario} draft={player.draft} onDraft={player.setDraft} />
         </div>
 
@@ -143,7 +174,7 @@ export function Stage({
           tabIndex={-1}
           role="group"
           aria-label="Playback and decision"
-          className="flex min-h-[4.75rem] flex-wrap items-center justify-between gap-x-5 gap-y-3 border-t border-ink/10 px-5 py-3 sm:px-7"
+          className="flex min-h-[4.5rem] flex-wrap items-center justify-between gap-x-5 gap-y-3 border-t border-ink/10 px-5 py-2.5 sm:px-7 short:min-h-[4rem]"
         >
           <p className="text-[15px] leading-snug max-sm:w-full sm:max-w-[21rem] sm:flex-1 sm:basis-48">{line}</p>
           <div className="flex flex-wrap gap-2">

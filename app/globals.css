@@ -6,17 +6,21 @@
 :root {
   --forest: #133224;
   --obsidian: #0b1f16;
+  --moss: #244b38;
   --ivory: #f7f4ec;
+  --paper: #fcfbf7;
+  --terracotta: #a84b2e;
   --stone: #ede7da;
   --gold: #c5a869;
   --gold-ink: #7d6128;
   --ink: #1a1e1b;
   --slate: #4f5752;
-  --ivory-70: rgb(247 244 236 / 0.72);
-  --rule-light: rgb(26 30 27 / 0.16);
+  --ivory-70: rgb(247 244 236 / 0.74);
+  --rule-light: rgb(26 30 27 / 0.14);
   --rule-dark: rgb(247 244 236 / 0.18);
   --error: #8a2e1b;
   --header-h: 4rem;
+  --ease-paper: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @media (min-width: 64rem) {
@@ -28,7 +32,10 @@
 @theme inline {
   --color-forest: var(--forest);
   --color-obsidian: var(--obsidian);
+  --color-moss: var(--moss);
   --color-ivory: var(--ivory);
+  --color-paper: var(--paper);
+  --color-terracotta: var(--terracotta);
   --color-stone: var(--stone);
   --color-gold: var(--gold);
   --color-gold-ink: var(--gold-ink);
@@ -40,10 +47,13 @@
   --color-accent: var(--accent);
   --color-heading: var(--heading);
   --color-rule: var(--rule);
-  --font-sans: var(--font-jakarta), "Plus Jakarta Sans", system-ui, sans-serif;
-  --font-display: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
-  --font-display-italic: var(--font-cormorant-italic), "Cormorant Garamond", Georgia, serif;
+  --font-sans: var(--font-plex), "IBM Plex Sans", system-ui, sans-serif;
+  --font-display: var(--font-bricolage), "Bricolage Grotesque", system-ui, sans-serif;
+  --font-display-italic: var(--font-plex), "IBM Plex Sans", system-ui, sans-serif;
+  --font-wordmark: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
   --font-ampersand-face: var(--font-ampersand), var(--font-cormorant), Georgia, serif;
+  --font-bricolage: var(--font-bricolage), system-ui, sans-serif;
+  --font-plex: var(--font-plex), system-ui, sans-serif;
   --font-mono: var(--font-jetbrains), "JetBrains Mono", ui-monospace, monospace;
   --radius-sm: 0px;
   --radius-md: 0px;
@@ -54,32 +64,34 @@
   --radius-4xl: 0px;
 }
 
-/* Every surface sets the colors its children inherit, so components never hard-code a tone. */
+/* Surfaces set inherited colors; gold appears only where a person decides (CTA, gates, approvals). */
 :root,
 [data-surface="light"] {
   --body: var(--ink);
   --muted: var(--slate);
-  --accent: var(--gold-ink);
+  --accent: var(--forest);
   --heading: var(--forest);
   --rule: var(--rule-light);
   --focus: var(--forest);
-  --btn-fill: var(--forest);
-  --btn-text: var(--ivory);
-  --btn-hover: var(--obsidian);
-  --on-heading: var(--ivory);
+  --btn-fill: var(--gold);
+  --btn-text: var(--obsidian);
+  --btn-hover: var(--forest);
+  --btn-hover-text: var(--paper);
+  --on-heading: var(--paper);
   --thumb-accent: var(--gold-ink);
 }
 
 [data-surface="dark"] {
   --body: var(--ivory);
   --muted: var(--ivory-70);
-  --accent: var(--gold);
+  --accent: var(--ivory);
   --heading: var(--ivory);
   --rule: var(--rule-dark);
   --focus: var(--gold);
   --btn-fill: var(--gold);
   --btn-text: var(--obsidian);
-  --btn-hover: var(--ivory);
+  --btn-hover: var(--paper);
+  --btn-hover-text: var(--obsidian);
   --on-heading: var(--forest);
   --thumb-accent: var(--gold);
 }
@@ -88,11 +100,11 @@
   html {
     scroll-behavior: smooth;
     scroll-padding-top: calc(var(--header-h) + 1rem);
-    background: var(--ivory);
+    background: var(--paper);
   }
 
   body {
-    background: var(--ivory);
+    background: var(--paper);
     color: var(--ink);
     font-family: var(--font-sans);
     font-size: clamp(1rem, 0.97rem + 0.14vw, 1.0625rem);
@@ -146,13 +158,13 @@ html[data-modality="pointer"] :focus-visible {
 
 ::selection {
   background: var(--forest);
-  color: var(--ivory);
+  color: var(--paper);
 }
 
 @layer components {
   .wrap {
     width: 100%;
-    max-width: 80rem;
+    max-width: 82rem;
     margin-inline: auto;
     padding-inline: 1.25rem;
   }
@@ -163,37 +175,37 @@ html[data-modality="pointer"] :focus-visible {
 
   .display {
     font-family: var(--font-display);
-    font-weight: 500;
-    font-size: clamp(2.75rem, 1.6rem + 3.4vw, 4.6rem);
-    line-height: 1.02;
-    letter-spacing: -0.01em;
-  }
-
-  .display em {
-    font-family: var(--font-display-italic);
+    font-variation-settings: "opsz" 96, "wdth" 88;
+    font-weight: 600;
+    font-size: clamp(2.85rem, 1.8rem + 4.8vw, 6.75rem);
+    line-height: 0.94;
+    letter-spacing: -0.036em;
+    transition: font-variation-settings 650ms var(--ease-paper);
   }
 
   .h1 {
     font-family: var(--font-display);
-    font-weight: 500;
-    font-size: clamp(2.5rem, 1.5rem + 4.2vw, 5rem);
-    line-height: 1.02;
-    letter-spacing: -0.01em;
+    font-variation-settings: "opsz" 96, "wdth" 88;
+    font-weight: 600;
+    font-size: clamp(2.6rem, 1.7rem + 3.8vw, 5.25rem);
+    line-height: 0.96;
+    letter-spacing: -0.034em;
   }
 
   .h2 {
     font-family: var(--font-display);
-    font-weight: 500;
-    font-size: clamp(2.25rem, 1.5rem + 3vw, 3.75rem);
-    line-height: 1.04;
-    letter-spacing: -0.015em;
+    font-variation-settings: "opsz" 72, "wdth" 92;
+    font-weight: 600;
+    font-size: clamp(2rem, 1.4rem + 2.4vw, 3.6rem);
+    line-height: 1.02;
+    letter-spacing: -0.028em;
   }
 
   .h3 {
     font-weight: 600;
     font-size: clamp(1.25rem, 1.15rem + 0.4vw, 1.5rem);
     line-height: 1.3;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.012em;
   }
 
   .h4 {
@@ -203,7 +215,7 @@ html[data-modality="pointer"] :focus-visible {
   }
 
   .lead {
-    font-size: clamp(1.125rem, 1.04rem + 0.35vw, 1.3125rem);
+    font-size: clamp(1.1rem, 1.02rem + 0.35vw, 1.3rem);
     line-height: 1.55;
   }
 
@@ -214,12 +226,13 @@ html[data-modality="pointer"] :focus-visible {
   }
 
   .eyebrow {
+    font-family: var(--font-mono);
     font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 1.3;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--accent);
+    color: var(--muted);
   }
 
   .btn {
@@ -228,16 +241,17 @@ html[data-modality="pointer"] :focus-visible {
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    padding: 0.625rem 1.375rem;
+    padding: 0.625rem 1.45rem;
     border: 1px solid transparent;
     font-size: 0.975rem;
     font-weight: 600;
     line-height: 1.25;
     text-align: center;
     transition:
-      background-color 160ms ease,
-      color 160ms ease,
-      border-color 160ms ease;
+      background-color 150ms var(--ease-paper),
+      color 150ms var(--ease-paper),
+      border-color 150ms var(--ease-paper),
+      transform 150ms var(--ease-paper);
   }
 
   .btn-primary {
@@ -247,6 +261,7 @@ html[data-modality="pointer"] :focus-visible {
 
   .btn-primary:hover {
     background: var(--btn-hover);
+    color: var(--btn-hover-text);
   }
 
   .btn-secondary {
@@ -276,7 +291,7 @@ html[data-modality="pointer"] :focus-visible {
   .arrow-link::after,
   .arrow-after::after {
     content: "→";
-    transition: translate 200ms ease;
+    transition: translate 150ms var(--ease-paper);
   }
 
   .arrow-link:hover,
@@ -310,42 +325,51 @@ html[data-modality="pointer"] :focus-visible {
   .group:hover .card-title,
   .group:focus-visible .card-title {
     text-decoration-line: underline;
-    text-decoration-color: var(--accent);
+    text-decoration-color: currentColor;
   }
 
   .zoom {
-    transition: scale 300ms ease;
+    transition: transform 650ms var(--ease-paper);
   }
 
   .group:hover .zoom {
-    scale: 1.03;
+    transform: scale(1.03);
   }
 
-  /* The one brand gesture in the layout: photo edges cut at the angle of the mark's gold stroke. */
-  .cut-left {
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  .paper-cutout {
+    filter: drop-shadow(0 24px 36px rgb(11 31 22 / 0.34)) drop-shadow(0 6px 12px rgb(11 31 22 / 0.22));
+    transition:
+      transform 650ms var(--ease-paper),
+      filter 400ms var(--ease-paper);
+  }
+
+  .paper-cutout-light {
+    filter: drop-shadow(0 20px 30px rgb(19 50 36 / 0.16)) drop-shadow(0 4px 10px rgb(19 50 36 / 0.1));
+    transition:
+      transform 650ms var(--ease-paper),
+      filter 400ms var(--ease-paper);
   }
 
   .menu-panel:not([hidden]) {
-    animation: menu-in 170ms ease-out;
+    animation: menu-in 240ms var(--ease-paper);
   }
 
   .reveal-pending {
     opacity: 0;
-    translate: 0 10px;
+    transform: translate3d(0, 14px, 0);
   }
 
   .reveal-done {
     transition:
-      opacity 380ms ease-out,
-      translate 380ms ease-out;
+      opacity 620ms var(--ease-paper),
+      transform 620ms var(--ease-paper);
   }
 
   .field {
     width: 100%;
     min-height: 3rem;
-    border: 1px solid rgb(26 30 27 / 0.45);
-    background: #fffdf8;
+    border: 1px solid rgb(26 30 27 / 0.35);
+    background: var(--paper);
     padding: 0.7rem 0.875rem;
     color: var(--ink);
     font-size: 1rem;
@@ -361,42 +385,29 @@ html[data-modality="pointer"] :focus-visible {
     overflow-x: clip;
   }
 
-  /* The stage: one palette color, cut once at the angle of the mark's gold stroke. */
   .stage {
-    min-height: min(44rem, max(34rem, calc(100svh - var(--header-h) - 3.5rem)));
+    min-height: min(41rem, max(31rem, calc(100svh - var(--header-h) - 4.25rem)));
     background: var(--field);
-  }
-
-  .stage::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: var(--field-cut);
-    clip-path: polygon(58% 0, 100% 0, 100% 100%, 24% 100%);
   }
 
   .stage[data-field="forest"] {
     --field: var(--forest);
-    --field-cut: var(--obsidian);
   }
 
   .stage[data-field="obsidian"] {
     --field: var(--obsidian);
-    --field-cut: var(--forest);
   }
 
   .stage[data-field="gold"] {
-    --field: var(--gold);
-    --field-cut: color-mix(in srgb, var(--gold) 74%, var(--ivory));
+    --field: var(--moss);
   }
 
   .stage[data-field="stone"] {
-    --field: var(--stone);
-    --field-cut: color-mix(in srgb, var(--stone) 78%, var(--gold));
+    --field: var(--forest);
   }
 
   .stage-window {
-    box-shadow: 0 24px 48px -24px rgb(11 31 22 / 0.45);
+    box-shadow: 0 28px 56px -20px rgb(11 31 22 / 0.55);
   }
 
   .stage-fill {
@@ -410,13 +421,13 @@ html[data-modality="pointer"] :focus-visible {
   .scene-rise {
     opacity: 0;
     visibility: hidden;
-    translate: 0 28px;
+    transform: translate3d(0, 24px, 0);
   }
 
   .scene-rise-on {
     opacity: 1;
     visibility: visible;
-    translate: none;
+    transform: translate3d(0, 0, 0);
   }
 
   .scene-word {
@@ -453,8 +464,8 @@ html[data-modality="pointer"] :focus-visible {
 
   [data-motion="on"] .scene-rise {
     transition:
-      opacity 420ms ease-out,
-      translate 520ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      opacity 420ms var(--ease-paper),
+      transform 520ms var(--ease-paper);
   }
 
   [data-motion="on"] .scene-word {
@@ -462,23 +473,23 @@ html[data-modality="pointer"] :focus-visible {
   }
 
   [data-motion="on"] .scene-open {
-    transition: grid-template-rows 420ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    transition: grid-template-rows 420ms var(--ease-paper);
   }
 
   .sx {
     opacity: 0;
-    translate: 0 8px;
+    transform: translate3d(0, 8px, 0);
     visibility: hidden;
   }
 
   .sx-on {
     opacity: 1;
-    translate: none;
+    transform: translate3d(0, 0, 0);
     visibility: visible;
   }
 
   .scene-mark {
-    background: linear-gradient(rgb(197 168 105 / 0.5), rgb(197 168 105 / 0.5)) no-repeat 0 60% / 0% 72%;
+    background: linear-gradient(rgb(197 168 105 / 0.45), rgb(197 168 105 / 0.45)) no-repeat 0 60% / 0% 72%;
     -webkit-box-decoration-break: clone;
     box-decoration-break: clone;
   }
@@ -492,19 +503,18 @@ html[data-modality="pointer"] :focus-visible {
     right: 0.5rem;
     bottom: 0.5rem;
     border: 2px solid var(--gold-ink);
-    background: #fffdf8;
+    background: var(--paper);
     padding: 0.35rem 0.9rem;
     color: var(--gold-ink);
     font-weight: 700;
     opacity: 0;
-    rotate: -8deg;
-    scale: 1.5;
+    transform: rotate(-8deg) scale(1.45);
     visibility: hidden;
   }
 
   .scene-stamp-on {
     opacity: 1;
-    scale: 1;
+    transform: rotate(-8deg) scale(1);
     visibility: visible;
   }
 
@@ -518,14 +528,13 @@ html[data-modality="pointer"] :focus-visible {
   }
 
   .scene-tile {
-    background: var(--stone);
+    background: var(--ivory);
     color: var(--slate);
-    clip-path: polygon(9% 0, 100% 0, 91% 100%, 0 100%);
   }
 
   .scene-tile-on {
     background: var(--forest);
-    color: var(--ivory);
+    color: var(--paper);
   }
 
   .scene-redact-on {
@@ -539,32 +548,32 @@ html[data-modality="pointer"] :focus-visible {
     top: 50%;
     z-index: 1;
     height: 3px;
-    background: var(--gold);
+    background: var(--forest);
   }
 
   [data-motion="on"] .sx,
   [data-motion="on"] .scene-fade,
   [data-motion="on"] .scene-tile {
     transition:
-      opacity 420ms ease-out,
-      translate 420ms ease-out,
-      background-color 420ms ease-out,
-      color 320ms ease-out,
-      border-color 320ms ease-out,
-      fill 420ms ease-out;
+      opacity 420ms var(--ease-paper),
+      transform 420ms var(--ease-paper),
+      background-color 420ms var(--ease-paper),
+      color 320ms var(--ease-paper),
+      border-color 320ms var(--ease-paper),
+      fill 420ms var(--ease-paper);
     transition-delay: var(--delay, 0ms);
   }
 
   [data-motion="on"] .scene-mark {
-    transition: background-size 620ms ease-out;
+    transition: background-size 620ms var(--ease-paper);
   }
 
   [data-motion="on"] .scene-grow {
-    transition: transform 800ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    transition: transform 800ms var(--ease-paper);
   }
 
   [data-motion="on"] .scene-move {
-    transition: left 800ms cubic-bezier(0.5, 0, 0.2, 1);
+    transition: left 800ms var(--ease-paper);
   }
 
   [data-motion="on"] .scene-draw {
@@ -574,16 +583,11 @@ html[data-modality="pointer"] :focus-visible {
   [data-motion="on"] .scene-stamp {
     transition:
       opacity 180ms ease-in,
-      scale 260ms cubic-bezier(0.3, 1.4, 0.5, 1);
+      transform 260ms var(--ease-paper);
   }
 
   [data-motion="on"] .scene-scan {
     animation: scan 1100ms ease-in-out infinite alternate;
-  }
-
-  /* The cut: panels and photos share the angle of the mark's gold stroke. */
-  .cut-band {
-    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 4vw), 0 100%);
   }
 
   .scroll-none {
@@ -602,7 +606,7 @@ html[data-modality="pointer"] :focus-visible {
     width: fit-content;
     margin-top: 0.5rem;
     padding: 0.1rem 0.6rem;
-    rotate: -3deg;
+    transform: rotate(-3deg);
   }
 }
 
@@ -612,13 +616,7 @@ html[data-modality="pointer"] :focus-visible {
   }
 
   .band {
-    padding-block: 6rem;
-  }
-}
-
-@media (min-width: 64rem) {
-  .cut-left {
-    clip-path: polygon(13% 0, 100% 0, 100% 100%, 0 100%);
+    padding-block: 5.5rem;
   }
 }
 
@@ -628,7 +626,40 @@ html[data-modality="pointer"] :focus-visible {
   }
 
   .band {
-    padding-block: 7rem;
+    padding-block: 6.5rem;
+  }
+}
+
+/* View Transitions: keep the header anchored, let shared images morph cleanly. */
+::view-transition {
+  pointer-events: none;
+}
+
+::view-transition-group(site-header) {
+  animation: none;
+  z-index: 100;
+}
+
+::view-transition-old(site-header) {
+  display: none;
+}
+
+::view-transition-new(site-header) {
+  animation: none;
+}
+
+::view-transition-group(.morph) {
+  animation-duration: 500ms;
+  animation-timing-function: var(--ease-paper);
+}
+
+::view-transition-image-pair(.morph) {
+  animation-name: via-paper;
+}
+
+@keyframes via-paper {
+  35% {
+    filter: blur(2px);
   }
 }
 
@@ -649,7 +680,7 @@ html[data-modality="pointer"] :focus-visible {
 
 @keyframes spin {
   to {
-    rotate: 360deg;
+    transform: rotate(360deg);
   }
 }
 
@@ -659,22 +690,10 @@ html[data-modality="pointer"] :focus-visible {
   }
 }
 
-@keyframes open-cut {
-  from {
-    clip-path: polygon(60% 0, 100% 0, 100% 100%, 47% 100%);
-  }
-}
-
-@media (min-width: 64rem) and (prefers-reduced-motion: no-preference) {
-  .cut-left {
-    animation: open-cut 900ms cubic-bezier(0.2, 0.8, 0.2, 1);
-  }
-}
-
 @keyframes menu-in {
   from {
     opacity: 0;
-    translate: 0 -6px;
+    transform: translate3d(0, -8px, 0);
   }
 }
 
@@ -705,7 +724,7 @@ html[data-modality="keyboard"] input[type="range"]:focus-visible::-moz-range-thu
 
 input[type="range"]::-webkit-slider-runnable-track {
   height: 2px;
-  background: rgb(19 50 36 / 0.6);
+  background: rgb(19 50 36 / 0.55);
 }
 
 input[type="range"]::-webkit-slider-thumb {
@@ -714,13 +733,13 @@ input[type="range"]::-webkit-slider-thumb {
   height: 22px;
   margin-top: -10px;
   background: var(--forest);
-  border: 1px solid var(--gold);
+  border: 2px solid var(--paper);
   border-radius: 0;
 }
 
 input[type="range"]::-moz-range-track {
   height: 2px;
-  background: rgb(19 50 36 / 0.6);
+  background: rgb(19 50 36 / 0.55);
   border: 0;
 }
 
@@ -728,16 +747,16 @@ input[type="range"]::-moz-range-thumb {
   width: 22px;
   height: 22px;
   background: var(--forest);
-  border: 1px solid var(--gold);
+  border: 2px solid var(--paper);
   border-radius: 0;
 }
 
 .range-dark::-webkit-slider-runnable-track {
-  background: rgb(247 244 236 / 0.6) !important;
+  background: rgb(247 244 236 / 0.55) !important;
 }
 
 .range-dark::-moz-range-track {
-  background: rgb(247 244 236 / 0.6) !important;
+  background: rgb(247 244 236 / 0.55) !important;
 }
 
 .range-dark::-webkit-slider-thumb {
@@ -758,9 +777,12 @@ input[type="range"]::-moz-range-thumb {
   .arrow-link::after,
   .arrow-after::after,
   .arrow-link:hover::after,
-  .group:hover .arrow-after::after {
+  .group:hover .arrow-after::after,
+  .paper-cutout,
+  .paper-cutout-light,
+  .display {
     transition: none;
-    scale: none;
+    transform: none;
     translate: none;
   }
 
@@ -771,8 +793,15 @@ input[type="range"]::-moz-range-thumb {
   .reveal-pending,
   .reveal-done {
     opacity: 1;
-    translate: none;
+    transform: none;
     transition: none;
+  }
+
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
   }
 }
 
@@ -781,5 +810,91 @@ input[type="range"]::-moz-range-thumb {
   footer,
   [data-print="hide"] {
     display: none;
+  }
+}
+
+/* Lab & custom utilities */
+.lab-root {
+  --ease-paper: cubic-bezier(0.22, 1, 0.36, 1);
+  font-family: var(--font-plex);
+}
+
+.lab-display {
+  font-family: var(--font-bricolage);
+  font-variation-settings: "opsz" 96, "wdth" 88;
+  font-weight: 600;
+  line-height: 0.93;
+  letter-spacing: -0.038em;
+  transition: font-variation-settings 650ms var(--ease-paper);
+}
+
+.lab-display-wide {
+  font-variation-settings: "opsz" 96, "wdth" 100;
+}
+
+.lab-display-narrow {
+  font-variation-settings: "opsz" 96, "wdth" 78;
+}
+
+.lab-cutout {
+  filter: drop-shadow(0 24px 36px rgb(11 31 22 / 0.34)) drop-shadow(0 6px 12px rgb(11 31 22 / 0.22));
+  transition:
+    transform 650ms var(--ease-paper),
+    filter 400ms var(--ease-paper);
+}
+
+.lab-cutout-light {
+  filter: drop-shadow(0 22px 32px rgb(19 50 36 / 0.18)) drop-shadow(0 4px 10px rgb(19 50 36 / 0.12));
+  transition:
+    transform 650ms var(--ease-paper),
+    filter 400ms var(--ease-paper);
+}
+
+.lab-mono {
+  font-family: var(--font-mono);
+}
+
+@keyframes lab-drift-a {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(-6deg);
+  }
+  50% {
+    transform: translate3d(0, -10px, 0) rotate(-4.5deg);
+  }
+}
+
+@keyframes lab-drift-b {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(7deg);
+  }
+  50% {
+    transform: translate3d(0, 9px, 0) rotate(5.5deg);
+  }
+}
+
+[data-motion="on"] .lab-float-a {
+  animation: lab-drift-a 4.6s var(--ease-paper) infinite;
+}
+
+[data-motion="on"] .lab-float-b {
+  animation: lab-drift-b 4.8s var(--ease-paper) infinite;
+}
+
+[data-motion="off"] .lab-float-a,
+[data-motion="off"] .lab-float-b {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lab-display,
+  .lab-cutout,
+  .lab-cutout-light {
+    transition: none;
+  }
+  [data-motion="on"] .lab-float-a,
+  [data-motion="on"] .lab-float-b {
+    animation: none;
   }
 }

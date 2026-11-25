@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
-import { Cormorant_Garamond, JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
+import { Bricolage_Grotesque, Cormorant_Garamond, IBM_Plex_Sans, JetBrains_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
@@ -12,25 +12,30 @@ import { DEFAULT_SHARE_IMAGE } from "@/lib/seo";
 import { INQUIRY_EMAIL, SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
-const cormorant = Cormorant_Garamond({
+const bricolage = Bricolage_Grotesque({
+  subsets: ["latin"],
+  axes: ["opsz", "wdth"],
+  variable: "--font-bricolage",
+  display: "swap",
+});
+
+const plex = IBM_Plex_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-plex",
+  display: "swap",
+});
+
+// Used exclusively for BrandWordmark so the wordmark remains live text in Cormorant.
+const cormorantWordmark = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["500"],
   variable: "--font-cormorant",
   display: "swap",
 });
 
-// Emphasis and pull quotes only, so it does not compete with the hero image for bandwidth.
-const cormorantItalic = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  style: "italic",
-  variable: "--font-cormorant-italic",
-  display: "swap",
-  preload: false,
-});
-
-// The wordmark ampersand, subset from Cormorant Garamond Italic 500 (SIL Open Font License), so
-// pages without italic text do not download the full italic file.
+// Wordmark ampersand subset from Cormorant Garamond Italic 500 (SIL Open Font License).
 const ampersand = localFont({
   src: "./fonts/cormorant-italic-ampersand.woff2",
   weight: "500",
@@ -39,14 +44,7 @@ const ampersand = localFont({
   display: "swap",
 });
 
-const jakarta = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-jakarta",
-  display: "swap",
-});
-
-// Used only for the payload viewer, so it is not preloaded on other pages.
+// Used for payloads and coordinate labels, not preloaded on every route.
 const jetbrains = JetBrains_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],
@@ -80,7 +78,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#F7F4EC",
+  themeColor: "#FCFBF7",
 };
 
 const organization = {
@@ -114,7 +112,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${cormorant.variable} ${cormorantItalic.variable} ${ampersand.variable} ${jakarta.variable} ${jetbrains.variable} h-full antialiased`}
+      className={`${bricolage.variable} ${plex.variable} ${cormorantWordmark.variable} ${ampersand.variable} ${jetbrains.variable} h-full antialiased`}
     >
       <body data-surface="light" className="flex min-h-full flex-col">
         <InputModality />

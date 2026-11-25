@@ -54,7 +54,7 @@ export function BrandWordmark({
 
   return (
     <span
-      className={`inline-block font-display leading-none font-medium tracking-[0.18em] uppercase sm:tracking-[0.22em] ${ink} ${className}`}
+      className={`inline-block font-wordmark leading-none font-medium tracking-[0.18em] uppercase sm:tracking-[0.22em] ${ink} ${className}`}
     >
       Valentini <span className="font-ampersand-face text-[#C5A869] italic">&amp;</span> Co.
     </span>

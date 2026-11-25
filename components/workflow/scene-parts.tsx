@@ -74,8 +74,7 @@ export function From({ name, meta }: { name: string; meta: string }) {
     <div className="flex items-center gap-3">
       <span
         aria-hidden
-        className="grid h-10 w-11 shrink-0 place-items-center bg-forest text-[14px] font-semibold text-ivory"
-        style={{ clipPath: "polygon(16% 0,100% 0,84% 100%,0 100%)" }}
+        className="grid h-10 w-10 shrink-0 place-items-center bg-forest font-mono text-[13px] font-semibold text-paper"
       >
         {initials}
       </span>

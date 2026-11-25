@@ -1,4 +1,3 @@
-import { CtaBand } from "@/components/layout/CtaBand";
 import { Container, Section } from "@/components/layout/Section";
 import { Breadcrumbs } from "@/components/nav/Breadcrumbs";
 import { WorkflowExplorer } from "@/components/workflow/WorkflowExplorer";
@@ -13,13 +12,13 @@ export function WorkflowsView({ selected }: { selected?: Workflow }) {
   ];
   return (
     <>
-      <section id="explorer" aria-label="Workflow explorer">
+      <section id="explorer" data-surface="light" aria-label="Workflow explorer" className="bg-paper">
         <WorkflowExplorer
           initialId={selected?.id ?? WORKFLOWS[0].id}
           heading={
             <>
               <Breadcrumbs items={crumbs} className="mb-2" />
-              <h1 className="font-display text-[clamp(2.4rem,1.7rem+1.9vw,3.4rem)] leading-[1.02] font-medium short:text-[2.5rem]">
+              <h1 className="font-display text-[clamp(2rem,1.4rem+1.8vw,3rem)] leading-[0.98] font-semibold tracking-[-0.03em] text-forest short:text-[2.15rem]">
                 {WORKFLOWS_PAGE.title}
               </h1>
             </>
@@ -27,7 +26,7 @@ export function WorkflowsView({ selected }: { selected?: Workflow }) {
         />
       </section>
 
-      <Section surface="stone" labelledBy="text">
+      <Section surface="paper" labelledBy="text" className="border-t border-ink/12">
         <Container>
           <h2 id="text" className="h2">
             Every step, in writing
@@ -38,8 +37,6 @@ export function WorkflowsView({ selected }: { selected?: Workflow }) {
           </div>
         </Container>
       </Section>
-
-      <CtaBand headline={["Want one of these", "mapped to your tools?"]} />
     </>
   );
 }
