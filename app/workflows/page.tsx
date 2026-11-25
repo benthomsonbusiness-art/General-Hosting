@@ -1,6 +1,6 @@
 import { WORKFLOWS_PAGE } from "@/content/pages";
 import { pageMetadata } from "@/lib/seo";
-import { WorkflowsView } from "./WorkflowsView";
+import { WorkflowsIndex } from "./WorkflowsView";
 
 export const metadata = pageMetadata({
   title: "Example workflows",
@@ -9,5 +9,5 @@ export const metadata = pageMetadata({
 });
 
 export default function WorkflowsPage() {
-  return <WorkflowsView />;
+  return <WorkflowsIndex />;
 }
