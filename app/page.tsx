@@ -76,7 +76,7 @@ export default function HomePage() {
       </section>
 
       <section data-surface="dark" aria-labelledby="yours" className="border-t border-line bg-obsidian">
-        <div className="wrap grid items-center gap-10 py-14 lg:grid-cols-12 lg:py-20">
+        <div className="wrap grid grid-cols-[minmax(0,1fr)] items-center gap-10 py-14 lg:grid-cols-12 lg:py-20">
           <div className="lg:col-span-5">
             <h2 id="yours" className="h2">
               You own what we build.
@@ -91,7 +91,7 @@ export default function HomePage() {
               ))}
             </ul>
           </div>
-          <div className="lg:col-span-7">
+          <div className="min-w-0 lg:col-span-7">
             <RepoPanel />
           </div>
         </div>
