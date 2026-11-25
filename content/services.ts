@@ -51,14 +51,14 @@ export type SubService = {
 export const SERVICES: Service[] = [
   {
     slug: "ai-workflow-automation",
-    name: "AI Workflow Automation",
+    name: "AI workflow automation",
     kind: "flagship",
-    summary: "We follow one process from trigger to finished record, then automate the steps that don't need a person.",
-    metaTitle: "AI Workflow Automation",
+    summary: "We follow one process from first email to finished record, then automate the steps that don't need a person.",
+    metaTitle: "AI workflow automation",
     metaDescription:
       "We map how leads, documents and approvals move through your company, then automate the steps that do not need a person, inside the tools you already use.",
     h1: "Automate the steps that don't need a person",
-    dek: "Built inside the tools your team already uses, pausing wherever someone needs to approve what goes out.",
+    dek: "Built inside the tools your team already uses. It waits for your approval before anything goes out.",
     cta: { label: "Request a workflow audit", href: "/contact" },
     photo: PHOTOS.invoices,
     areas: [],
@@ -69,8 +69,8 @@ export const SERVICES: Service[] = [
         a: "You do. It lives in your repository and runs in your accounts. If we part ways, everything keeps working.",
       },
       {
-        q: "What if the AI step is wrong?",
-        a: "Its output is checked against a schema and a confidence threshold. Low-confidence items go to a person, and anything a customer would see waits at an approval gate.",
+        q: "What if the AI gets it wrong?",
+        a: "Its answer is checked by rules first. If it is unsure, the item goes to a person, and anything a customer would see waits for your approval.",
       },
       {
         q: "Which tools do you work with?",
@@ -78,25 +78,25 @@ export const SERVICES: Service[] = [
       },
       {
         q: "How long does an audit take?",
-        a: "The Workflow Audit is a fixed scope of one to two weeks.",
+        a: "One to two weeks, fixed scope.",
       },
       {
         q: "Do you need access to our systems?",
-        a: "The audit can start with screen-sharing and exports. Building needs access, and we ask for the narrowest scope, under credentials you can revoke.",
+        a: "The audit can start with screen-sharing and exports. Building needs access, and we ask for the least access the work needs, under logins you can revoke.",
       },
     ],
     keywords: ["automation", "workflow", "AI", "CRM", "approval", "audit"],
   },
   {
     slug: "meta-ads-consulting",
-    name: "Meta Ads Consulting",
+    name: "Meta ads consulting",
     kind: "secondary",
-    summary: "Tracking you can trust, a testing cadence, and a weekly report that writes itself.",
-    metaTitle: "Meta Ads Consulting",
+    summary: "Tracking you can check, a written testing plan, and a weekly report built from your ad data.",
+    metaTitle: "Meta ads consulting",
     metaDescription:
       "Account structure, tracking checks, a written testing cadence, budget pacing rules and automated reporting for companies that run Meta advertising in-house.",
-    h1: "Meta advertising, run as a system",
-    dek: "Clean conversion tracking and automated weekly reporting so spend decisions rest on numbers your team trusts.",
+    h1: "Meta ads with tracking you can check",
+    dek: "We fix your conversion tracking and set up a weekly report, so spend decisions rest on numbers your team trusts.",
     cta: { label: "Request a consultation", href: "/contact?practice=meta-ads" },
     photo: PHOTOS.ads,
     areas: [
@@ -104,12 +104,12 @@ export const SERVICES: Service[] = [
       { title: "Testing", body: "One hypothesis per test, with the stopping rule written first." },
       { title: "Pacing", body: "Outliers are flagged daily. A person decides what to do." },
       { title: "Reporting", body: "A weekly brief with figures inserted from the data." },
-      { title: "Handover", body: "A guide the next buyer can read in an afternoon." },
+      { title: "Handover", body: "A guide your next ad manager can read in an afternoon." },
     ],
     steps: [
       { title: "Audit the tracking", body: "We inspect Pixel, Conversions API, and GA4 under read-only access to list every gap." },
-      { title: "Rebuild the cadence", body: "We set the campaign structure, written testing log, and weekly automated brief." },
-      { title: "Hand it to your buyer", body: "Your in-house team or agency runs daily spend inside clear pacing limits." },
+      { title: "Set the testing plan", body: "We set the campaign structure, a written test log and the weekly report." },
+      { title: "Hand it to your team", body: "Your team or agency runs daily spend inside written limits." },
     ],
     workflowIds: ["meta-ads-reporting"],
     faqs: [
@@ -134,20 +134,20 @@ export const SERVICES: Service[] = [
     metaDescription:
       "Operating-model review, decision rights, automation priorities, tool selection and owner-level reporting for founders, COOs and managing principals.",
     h1: "Strategy that ends in a decision someone owns",
-    dek: "Clear operating-model priorities for founders and COOs deciding what to fix before buying new software.",
+    dek: "For owners deciding what to fix before buying new software.",
     cta: { label: "Request a consultation", href: "/contact?practice=strategy" },
     photo: PHOTOS.brief,
     areas: [
-      { title: "Operating model", body: "Who does what, and where handoffs stall." },
+      { title: "Who does what", body: "Who does what, and where handoffs stall." },
       { title: "Decision rights", body: "Who decides, to what limit, and when it escalates." },
       { title: "Automation priorities", body: "Ranked by hours, risk and dependency." },
       { title: "Tool selection", body: "Requirements first, then a test with your own records." },
       { title: "Owner reporting", body: "The few figures that would change a decision." },
     ],
     steps: [
-      { title: "Frame the constraint", body: "Put the operational bottleneck in writing, short enough for the leadership team to test." },
+      { title: "Name the bottleneck", body: "Write down what is slowing the company, in one page your leaders can check." },
       { title: "Assign the decisions", body: "Set a small list of priorities and limits, each tied to one named owner." },
-      { title: "Install the cadence", body: "Establish the weekly meeting and exception report that keep the plan alive." },
+      { title: "Set the weekly review", body: "A weekly meeting and a short report of what is off plan." },
     ],
     workflowIds: [],
     faqs: [
@@ -168,7 +168,7 @@ export const SERVICES: Service[] = [
 export const SUB_SERVICES: SubService[] = [
   {
     slug: "workflow-audit",
-    name: "Workflow Audit",
+    name: "Workflow audit",
     question: "Not sure where the hours go?",
     answer: "We follow the work and return a ranked roadmap with the arithmetic shown.",
     get: ["Process maps", "Systems inventory", "Ranked roadmap", "Risk notes"],
@@ -176,37 +176,46 @@ export const SUB_SERVICES: SubService[] = [
   },
   {
     slug: "build-and-deploy",
-    name: "Build & Deploy",
+    name: "Build and deploy",
     question: "Know what to automate?",
     answer: "We build it in your accounts and run it beside the manual process before it sends anything.",
-    get: ["Data contract", "Working workflow", "Shadow report", "Runbook"],
+    get: ["Field list", "Working workflow", "Side-by-side test report", "Runbook"],
     keywords: ["build", "deploy", "shadow testing", "data contract", "handover"],
   },
   {
     slug: "retained-operations",
-    name: "Retained Operations",
+    name: "Retained operations",
     question: "Who notices when it stops?",
-    answer: "We watch the runs, fix what breaks and test every model or prompt change.",
-    get: ["Monitoring", "Fixes with a cause", "Tested updates", "Monthly note"],
+    answer: "We watch it work, fix what breaks, and test every AI change before it goes live.",
+    get: ["Monitoring", "Fixes, each with its cause", "Tested updates", "Monthly note"],
     keywords: ["monitoring", "operations", "maintenance", "retainer", "updates"],
   },
   {
     slug: "ai-agents-and-integrations",
-    name: "AI Agents & Integrations",
+    name: "AI agents and integrations",
     question: "Two systems that should talk?",
-    answer: "Ordinary code connects them. A model gets one narrow job and a short list of tools.",
-    get: ["Integration code", "Agent limits", "Test set", "Call log"],
+    answer: "Plain code connects them. AI gets one narrow job and a short list of tools.",
+    get: ["Connection code", "Written limits for the AI", "Saved tests", "Log of every action"],
     keywords: ["agents", "integration", "API", "webhook", "tools"],
   },
   {
     slug: "reporting-and-data-pipelines",
-    name: "Reporting & Data Pipelines",
+    name: "Reporting and data pipelines",
     question: "Rebuilding the same report?",
-    answer: "Scheduled pulls, rules you can edit, and a brief that names its own gaps.",
-    get: ["Source map", "Scheduled pulls", "Editable rules", "Cited brief"],
+    answer: "Scheduled pulls, rules you can edit, and a brief that says when a source is missing.",
+    get: ["List of sources", "Scheduled pulls", "Rules you can edit", "Brief with sources"],
     keywords: ["reporting", "data", "pipeline", "dashboard", "brief", "reconciliation"],
   },
 ];
+
+/** The two build types listed under "What we build". The three engagement stages are drawn once, as the StageDiagram. */
+export const BUILD_TYPES = ["ai-agents-and-integrations", "reporting-and-data-pipelines"];
+
+/** The "Built inside the tools you already use" section on the flagship page. */
+export const INTEGRATIONS = {
+  heading: "Built inside the tools you already use",
+  note: "Example integrations. Product names and logos belong to their owners. No partnership or endorsement is implied.",
+};
 
 export const FLAGSHIP = SERVICES[0];
 
