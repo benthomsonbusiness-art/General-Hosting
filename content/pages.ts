@@ -2,39 +2,37 @@
 
 export const HOME = {
   metaDescription:
-    "Valentini & Co. maps how information moves through owner-led companies, then builds AI workflow automation inside the tools they already use, with approvals.",
-  dek: "Deterministic code handles routing and arithmetic. A model reads unstructured notes and drafts replies under a strict schema. A person approves anything that leaves the company.",
+    "Valentini & Co. automates back-office work for owner-led companies, inside the tools you already use. Nothing leaves your company until a person approves it.",
   problems: [
     { q: "Inbound leads sitting a full day before anyone sends a first reply", workflowId: "lead-triage" },
     { q: "Supplier invoices keyed line by line and matched to purchase orders by eye", workflowId: "ap-intake" },
     { q: "Managers pulling the same Monday numbers out of three separate tools", workflowId: "daily-brief" },
   ],
   how: {
-    heading: "Four stations on one sheet, paused at the human decision",
     steps: [
       { title: "Code", body: "Lookups, routing rules, and invoice math. Runs the same way on every item." },
       { title: "Model", body: "Reads messy notes and drafts a response. Output that fails its schema is dropped." },
       { title: "Person", body: "Inspects the draft beside its source. Nothing goes out until someone clicks approve." },
       { title: "Record", body: "Logs who reviewed the item, what changed in the draft, and the exact text sent." },
     ],
-    own: "Everything runs in your accounts, from your own repository. If we stop working together, every workflow keeps running.",
+    own: "It runs in your accounts, from code in your repository. If we stop working together, it keeps running.",
   },
 };
 
 export const CTA = {
-  headline: ["Tell us which process slows your week down.", "We will map the steps before building anything."],
+  headline: "Tell us which process slows your week down.",
 };
 
 export const SERVICES_HUB = {
   metaDescription:
     "AI workflow automation is the main practice: audits, builds and ongoing operations. Meta Ads Consulting and Strategy support it for owner-led companies.",
-  dek: "One main practice, and two that support it.",
+  dek: "Workflow automation is the main work. Meta ads and strategy support it.",
 };
 
 export const INDUSTRIES_HUB = {
   metaDescription:
     "Where workflow automation applies across professional services, wellness, real estate, retail, home services and accounting firms, and what stays with people.",
-  dek: "The patterns are the same. The systems and the approvals differ.",
+  dek: "Pick your industry to see where the hours go and what stays with your team.",
 };
 
 export const WORKFLOWS_PAGE = {
@@ -47,55 +45,39 @@ export const WORKFLOWS_PAGE = {
 
 export const INSIGHTS_HUB = {
   metaDescription:
-    "Guides, articles, checklists and illustrative blueprints on approval gates, deterministic steps, workflow audits and reporting for owner-led companies.",
-  dek: "Field notes on building operations software that holds up under real work.",
+    "Short guides for owner-led companies on what to automate, where a person should approve, what a workflow audit covers and how a daily brief is built.",
+  dek: "Short guides on what to automate, where a person should approve, and what an audit covers.",
 };
 
 export const APPROACH_PAGE = {
   metaDescription:
-    "How Valentini & Co. works: map the process, design the data contract and gates, build and shadow-test, then hand over code, accounts, logs and runbooks.",
-  dek: "We follow real items across your tools, write the data contract, run the build beside your team before anything sends, and hand over the repository.",
+    "How Valentini & Co. runs a project: map the process, write down the rules and approvals, test beside your team, then hand over the code, accounts and manuals.",
+  dek: "We follow real work through your tools, write down every rule, test the automation beside your team before it sends anything, and hand you the code.",
 };
 
 export const ABOUT = {
   metaDescription:
-    "Valentini & Co. is an advisory firm in Bloomington, Indiana. How we think about deterministic code, human approval and who should own the finished work.",
-  dek: "A private advisory firm building the operational connections between the software your company already runs.",
-  beliefs: [
-    {
-      title: "Keep the software that holds your history",
-      body: "Your CRM, ledger, and inbox already contain years of context. We build the reliable routing and checks between them instead of asking your staff to learn another workspace.",
-    },
-    {
-      title: "Write every business rule down first",
-      body: "Most delays come from routing logic nobody has written down. Once those thresholds and rules are explicit, ordinary deterministic code handles them cleanly.",
-    },
-    {
-      title: "Keep a person behind every external send",
-      body: "A quote, reply, or payment run carries the reputation of your company. Someone on your staff should see the draft beside its source and click approve before it leaves.",
-    },
-    {
-      title: "Leave the repository and keys in your name",
-      body: "Every workflow runs inside your own accounts from your own repository, with audit logs and runbooks written for the person who operates it next.",
-    },
-  ],
-  name: "Valentini is a family name.",
+    "Valentini & Co. is an advisory firm in Bloomington, Indiana that automates back-office work for owner-led companies. You approve what goes out and own the code.",
+  dek: "We automate back-office work inside the software your company already runs.",
+  founder:
+    "Routine work is written as plain rules. AI is used only where a step needs reading or drafting. Nothing leaves your company until a person on your team approves it.",
   where: "Based in Bloomington, Indiana, working remotely with owner-led companies.",
 };
 
 export const CONTACT = {
   metaDescription:
-    "Tell Valentini & Co. which process is slowing the team down. Request a workflow audit, or a consultation on Meta advertising or strategy, by form.",
-  dek: "Tell us which workflow is eating up your week and where handoffs tend to stall.",
+    "Tell Valentini & Co. which process slows your week down. Request a workflow audit, or ask about Meta ads or strategy, using the short form on this page.",
+  dek: "A few sentences is enough. Say what the process is, who touches it, and where it stalls.",
   guidance: "Please do not send passwords, client records or other confidential material.",
   next: [
     "Ben reads every note.",
-    "The form is the way to reach the firm.",
-    "A first conversation traces the steps on screen.",
+    "If it is a fit, the first call walks through the process on screen.",
   ],
+  /** Shown above the form until NEXT_PUBLIC_INQUIRY_LIVE is "1". */
+  offline: "Sending is not set up yet. Nothing you type here is sent.",
 };
 
 export const SEARCH_PAGE = {
   metaDescription:
-    "Search the Valentini & Co. site for services, workflow blueprints, industries, guides and articles on AI workflow automation for owner-led companies today.",
+    "Search the Valentini & Co. site for services, example workflows, industries and guides about automating back-office work at owner-led companies.",
 };

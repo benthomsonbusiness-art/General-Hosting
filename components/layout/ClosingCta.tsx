@@ -4,7 +4,7 @@ import { CTA_HREF, CTA_LABEL } from "@/lib/site";
 
 /** The closing band every page ends on: one heading, one primary button. */
 export function ClosingCta({
-  heading = CTA.headline[0],
+  heading = CTA.headline,
   label = CTA_LABEL,
   href = CTA_HREF,
   id = "close",

@@ -4,7 +4,10 @@ import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import {
   HONEYPOT_FIELD,
+  INQUIRY_NOT_SENT,
+  INQUIRY_SENT,
   PRACTICE_INTERESTS,
+  PRACTICE_LABELS,
   practiceFromQuery,
   validateInquiry,
   type FieldErrors,
@@ -26,16 +29,31 @@ export function InquiryForm() {
   );
 }
 
+/** ?practice= preselects the service. ?sent=1 or ?sent=0 is where a form post without JavaScript lands. */
 function InquiryFromQuery() {
-  const practice = practiceFromQuery(useSearchParams().get("practice"));
-  return <InquiryFields key={practice} initialPractice={practice} />;
+  const params = useSearchParams();
+  const practice = practiceFromQuery(params.get("practice"));
+  const sent = params.get("sent");
+  return (
+    <InquiryFields
+      key={`${practice}-${sent}`}
+      initialPractice={practice}
+      initialStatus={sent === "1" ? "success" : sent === "0" ? "error" : "idle"}
+    />
+  );
 }
 
-function InquiryFields({ initialPractice }: { initialPractice: PracticeInterest }) {
+function InquiryFields({
+  initialPractice,
+  initialStatus = "idle",
+}: {
+  initialPractice: PracticeInterest;
+  initialStatus?: Status;
+}) {
   const submitting = useRef(false);
-  const [status, setStatus] = useState<Status>("idle");
+  const [status, setStatus] = useState<Status>(initialStatus);
   const [errors, setErrors] = useState<FieldErrors>({});
-  const [formError, setFormError] = useState<string | null>(null);
+  const [formError, setFormError] = useState<string | null>(initialStatus === "error" ? INQUIRY_NOT_SENT : null);
   const [receivedName, setReceivedName] = useState("");
   const [practice, setPractice] = useState<PracticeInterest>(initialPractice);
   const thanksRef = useRef<HTMLHeadingElement>(null);
@@ -123,7 +141,7 @@ function InquiryFields({ initialPractice }: { initialPractice: PracticeInterest 
         <h2 ref={thanksRef} tabIndex={-1} className="h2 outline-none">
           Thank you{receivedName ? `, ${receivedName}` : ""}.
         </h2>
-        <p className="mt-4 max-w-[34rem]">Your note is with Valentini &amp; Co. Ben reads every note.</p>
+        <p className="mt-4 max-w-[34rem]">{INQUIRY_SENT}</p>
       </div>
     );
   }
@@ -131,7 +149,7 @@ function InquiryFields({ initialPractice }: { initialPractice: PracticeInterest 
   const sending = status === "submitting";
 
   return (
-    <form noValidate onSubmit={onSubmit} aria-busy={sending} className="relative">
+    <form method="post" action="/api/inquiry" noValidate onSubmit={onSubmit} aria-busy={sending} className="relative">
       <div className="absolute -left-[9999px] h-px w-px overflow-hidden" aria-hidden="true">
         <label htmlFor={HONEYPOT_FIELD}>Fax</label>
         <input id={HONEYPOT_FIELD} name={HONEYPOT_FIELD} type="text" tabIndex={-1} autoComplete="off" defaultValue="" />
@@ -183,7 +201,7 @@ function InquiryFields({ initialPractice }: { initialPractice: PracticeInterest 
             className="field"
           />
         </Field>
-        <Field label="Practice" id="practice" error={errors.practice}>
+        <Field label="What do you need?" id="practice" error={errors.practice}>
           <select
             id="practice"
             name="practice"
@@ -199,13 +217,13 @@ function InquiryFields({ initialPractice }: { initialPractice: PracticeInterest 
           >
             {PRACTICE_INTERESTS.map((interest) => (
               <option key={interest} value={interest}>
-                {interest}
+                {PRACTICE_LABELS[interest]}
               </option>
             ))}
           </select>
         </Field>
         <div className="sm:col-span-2">
-          <Field label="What's the problem you want looked at?" id="note" error={errors.note}>
+          <Field label="Which process do you want looked at?" id="note" error={errors.note}>
             <textarea
               id="note"
               name="note"
@@ -248,6 +266,7 @@ function Field({
     <div>
       <label htmlFor={id} className="mb-2 block text-[15px] font-semibold text-forest">
         {label}
+        <span className="font-normal text-slate"> (required)</span>
       </label>
       {children}
       {error ? (

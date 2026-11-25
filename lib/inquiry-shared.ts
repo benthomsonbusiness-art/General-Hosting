@@ -8,10 +8,24 @@ export const PRACTICE_INTERESTS = [
 
 export type PracticeInterest = (typeof PRACTICE_INTERESTS)[number];
 
+/** What the form shows. The values above are stored and mapped from ?practice=, so they never change. */
+export const PRACTICE_LABELS: Record<PracticeInterest, string> = {
+  "AI Workflow Automation": "AI workflow automation",
+  "Meta Ads Consulting": "Meta ads consulting",
+  Strategy: "Strategy",
+};
+
 export const HONEYPOT_FIELD = "fax_number";
 
 export const INQUIRY_OFFLINE_ERROR =
-  "Sending is not set up yet, so inquiries are offline. Nothing was sent.";
+  "The form is not working right now, so nothing was sent. Please try again later.";
+
+/** Shown on /contact?sent=1 after a form post without JavaScript, and after a sent note. */
+export const INQUIRY_SENT = "Your note was sent.";
+
+/** Shown on /contact?sent=0 after a form post without JavaScript that did not go through. */
+export const INQUIRY_NOT_SENT =
+  "Your note was not sent. Check that every field is filled in, then try again. If it still fails, the form is not working right now.";
 
 export type Inquiry = {
   fullName: string;
@@ -86,10 +100,10 @@ export function validateInquiry(
     fieldErrors.companyRole = "Enter your company and role.";
   }
   if (!practice) {
-    fieldErrors.practice = "Select a practice.";
+    fieldErrors.practice = "Choose what you need.";
   }
   if (note.length < 8 || note.length > 2000) {
-    fieldErrors.note = "Describe the problem in a sentence or two.";
+    fieldErrors.note = "Describe the process in a sentence or two.";
   }
 
   if (!practice || Object.keys(fieldErrors).length > 0) {
