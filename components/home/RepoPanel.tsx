@@ -2,12 +2,12 @@ import { FileText, Folder, GitBranch, Lock } from "lucide-react";
 
 const ROWS: { name: string; note: string; depth: number; file?: boolean }[] = [
   { name: "workflows/", note: "One folder per workflow", depth: 0 },
-  { name: "lead-triage/", note: "New lead follow-up", depth: 1 },
-  { name: "ap-intake/", note: "Supplier invoice processing", depth: 1 },
-  { name: "prompts/", note: "AI instructions, in plain text", depth: 0 },
+  { name: "missed-calls/", note: "Missed call text-back", depth: 1 },
+  { name: "reminders/", note: "Confirmations and reminders", depth: 1 },
+  { name: "messages/", note: "Every text template, in plain words", depth: 0 },
   { name: "tests/", note: "Saved cases from the side-by-side run", depth: 0 },
   { name: "monitoring/", note: "Alerts when anything fails", depth: 0 },
-  { name: "audit-log/", note: "Every approval and every send", depth: 0 },
+  { name: "audit-log/", note: "Every approval and every text sent", depth: 0 },
   { name: "RUNBOOK.md", note: "Your team's manual", depth: 0, file: true },
 ];
 

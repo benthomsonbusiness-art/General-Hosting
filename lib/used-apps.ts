@@ -35,6 +35,9 @@ const CATEGORY_LABELS: Record<AppCategory, string> = {
   hr: "Hiring and HR",
   ai: "AI",
   storage: "File storage",
+  fieldservice: "Field service software",
+  phone: "Calls and texts",
+  leads: "Lead marketplaces",
 };
 
 export type AppGroup = { category: AppCategory; label: string; apps: { slug: AppSlug; name: string }[] };

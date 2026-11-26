@@ -42,7 +42,8 @@ for (const workflow of WORKFLOWS) {
       assert.ok(node.label.length <= 28, `${node.id}: "${node.label}"`);
       assert.match(node.label, /^[A-Z0-9#]/, `${node.id}: label starts with a capital`);
       if (node.app) assert.ok(mono(node.app.app, node.app.operation).length <= 22, `${node.id}: mono line`);
-      if (node.gate) assert.ok(mono(node.gate.channelApp, node.gate.operation).length <= 22, `${node.id}: gate mono line`);
+      if (node.gate)
+        assert.ok(mono(node.gate.channelApp, node.gate.operation).length <= 22, `${node.id}: gate mono line`);
       if (node.stopLabel !== undefined) assert.ok(node.stopLabel.length <= 40, `${node.id}: stopLabel`);
       for (const item of node.attached ?? []) {
         assert.ok(item.label.length <= 24, `${node.id}/${item.id}: "${item.label}"`);
@@ -131,66 +132,38 @@ function node(workflow: Workflow, id: string): WorkflowNode {
   return found;
 }
 
-test("lead triage: the AI step writes the draft and the CRM step only saves it", () => {
-  const workflow = find("lead-triage");
-  assert.match(node(workflow, "scoring").payload, /"draft":/);
-  assert.match(node(workflow, "crm-sync").does, /saves/);
-  assert.doesNotMatch(node(workflow, "crm-sync").does, /draft(s|ed)? a/i);
+test("missed call: the AI drafts, the office approves, and only then is a text sent", () => {
+  const workflow = find("missed-call-text-back");
+  assert.match(node(workflow, "draft-text").payload, /"draft":/);
+  assert.equal(node(workflow, "office-approves").kind, "human");
+  assert.equal(node(workflow, "text-back").audience, "external");
+  assert.equal(node(workflow, "hold-visit").audience, "internal");
 });
 
-test("proposal ops: the first invoice is an internal draft", () => {
-  const invoice = node(find("proposal-ops"), "invoice-created");
-  assert.equal(invoice.audience, "internal");
-  assert.match(invoice.payload, /"status": "draft"/);
-  assert.doesNotMatch(invoice.payload, /"sent":/);
-  assert.equal(node(find("proposal-ops"), "margin-check").stopLabel, "Below your margin floor: nothing sent");
-});
-
-test("client onboarding: the welcome send and the kickoff booking are separate results", () => {
-  const workflow = find("client-onboarding");
+test("web lead booking: out-of-area leads stop at the rule, before the AI", () => {
+  const workflow = find("web-lead-booking");
   const ids = workflow.nodes.map((item) => item.id);
-  assert.deepEqual(ids.slice(-3), ["lead-approves", "welcome-sent", "kickoff"]);
-  assert.ok(node(workflow, "intake").stopLabel);
+  assert.ok(ids.indexOf("area-check") < ids.indexOf("match-slot"));
+  assert.ok(node(workflow, "area-check").stopLabel);
 });
 
-test("daily brief and Meta Ads: an unsure AI step posts nothing", () => {
-  for (const [id, step] of [["daily-brief", "cited-summary"], ["meta-ads-reporting", "weekly-brief"]] as const) {
-    const ai = node(find(id), step);
-    assert.match(ai.confidence?.belowThreshold ?? "", /Nothing is posted\./, id);
-    assert.match(ai.failure, /nothing is posted/, id);
-    assert.doesNotMatch(`${ai.confidence?.belowThreshold} ${ai.failure}`, /instead|without it|only the/i, id);
+test("every booking workflow texts a customer only after a person approves", () => {
+  for (const workflow of WORKFLOWS) {
+    const first = workflow.nodes.findIndex((item) => item.kind === "output" && item.audience === "external");
+    const gate = workflow.nodes.findIndex((item) => item.kind === "human");
+    if (first !== -1) assert.ok(gate !== -1 && gate < first, workflow.id);
   }
-  assert.ok(find("daily-brief").nodes.every((item) => item.kind !== "human"), "internal only, no approval");
 });
 
-test("ap intake: the reading step has no tools and two people approve", () => {
-  const workflow = find("ap-intake");
-  assert.deepEqual(node(workflow, "extraction").attached?.map((item) => item.port), ["model"]);
-  assert.deepEqual(
-    workflow.nodes.filter((item) => item.gate).map((item) => item.gate?.channelApp),
-    ["slack", "billcom"],
-  );
+test("reminders and reviews: the AI writes before the approval and never changes a time or buys a review", () => {
+  const reminders = find("appointment-reminders").nodes.map((item) => item.kind);
+  assert.ok(reminders.indexOf("ai") < reminders.indexOf("human"));
+  assert.match(node(find("appointment-reminders"), "write-visit-texts").guardrail, /Never changes a time/);
+  assert.match(node(find("review-requests"), "draft-thanks").guardrail, /Never offers anything/);
 });
 
-test("support routing: a support rep approves, never an agent", () => {
-  const workflow = find("support-routing");
-  assert.doesNotMatch(copy(workflow), /\bagents?\b/i);
-  assert.equal(node(workflow, "agent-approves").gate?.approver, "Support rep");
-});
-
-test("meta ads: daily flags and a Monday brief", () => {
-  const workflow = find("meta-ads-reporting");
-  assert.match(workflow.outcome, /Daily flags and a Monday brief/);
-  assert.ok(node(workflow, "weekly-brief").attached?.some((item) => item.port === "memory"));
-});
-
-test("applicant screening: masking runs before the AI, which quotes and never scores", () => {
-  const workflow = find("recruiting-screen");
-  const ids = workflow.nodes.map((item) => item.id);
-  assert.ok(ids.indexOf("redaction") < ids.indexOf("rubric-extraction"), "masking comes first");
-  assert.equal(node(workflow, "redaction").kind, "deterministic");
-  assert.match(node(workflow, "application").guardrail, /person-only review/);
-  assert.match(node(workflow, "rubric-extraction").guardrail, /no score, rank or pass or fail/);
-  assert.match(workflow.ownership, /Your counsel decides whether notice or an audit applies\.$/);
-  assert.doesNotMatch(copy(workflow), /shortlist|rubric|protected attributes/i);
+test("estimate follow-up: sold or declined estimates are never chased", () => {
+  const workflow = find("estimate-follow-up");
+  assert.equal(node(workflow, "still-open").stopLabel, "Sold or declined: nothing sent");
+  assert.match(node(workflow, "draft-follow-up").guardrail, /Never changes a price/);
 });

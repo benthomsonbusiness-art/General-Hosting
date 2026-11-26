@@ -51,19 +51,25 @@ const nextConfig: NextConfig = {
       { source: "/insights/:slug", destination: "/", permanent: true },
       {
         source: "/practices/meta-ads",
-        destination: "/services/meta-ads-consulting",
+        destination: "/services",
         permanent: true,
       },
       // Sub-services and industries are sections of one page each.
       ...["workflow-audit", "build-and-deploy", "retained-operations", "ai-agents-and-integrations", "reporting-and-data-pipelines"].map(
         (slug) => ({
           source: `/services/ai-workflow-automation/${slug}`,
-          destination: `/services/ai-workflow-automation#${slug}`,
+          destination: `/services/booking-automation#${slug}`,
           permanent: true,
         }),
       ),
       { source: "/industries/:slug", destination: "/industries?industry=:slug", permanent: true },
-      { source: "/practices/strategy", destination: "/services/strategy", permanent: true },
+      { source: "/practices/strategy", destination: "/services", permanent: true },
+      { source: "/services/ai-workflow-automation", destination: "/services/booking-automation", permanent: true },
+      { source: "/services/meta-ads-consulting", destination: "/services", permanent: true },
+      { source: "/services/strategy", destination: "/services", permanent: true },
+      ...["lead-triage", "proposal-ops", "client-onboarding", "daily-brief", "ap-intake", "support-routing", "meta-ads-reporting", "recruiting-screen"].map(
+        (id) => ({ source: `/workflows/${id}`, destination: "/workflows", permanent: true }),
+      ),
     ];
   },
   async headers() {

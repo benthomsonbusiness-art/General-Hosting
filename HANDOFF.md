@@ -1,3 +1,16 @@
+# HANDOFF: pivot to booking automation for home service businesses
+
+Last updated: Nov 26, 2026 · Live branch: `main` (Cloudflare Workers Builds production branch set to `main`)
+
+- **Focus:** booking automation for home service businesses only. Meta ads, strategy and Insights are gone; old URLs redirect (`next.config.ts`).
+- **Services:** `booking-automation` (flagship), `reminders-and-rescheduling`, `follow-up-and-reviews`. Each has a drawn graphic in `components/graphics/ServiceArt.tsx`.
+- **Industries (trades):** hvac, plumbing, electrical, roofing, landscaping, cleaning. Photos in `components/content/Pickers.tsx` are reused brand photos, not trade photos.
+- **Workflows:** missed-call-text-back, web-lead-booking, marketplace-leads, appointment-reminders, cancellation-waitlist, estimate-follow-up, review-requests, maintenance-reminders. Every customer text comes after a human step; old workflow URLs redirect to /workflows.
+- **Apps added:** ServiceTitan, Jobber, Housecall Pro, CallRail, Angi (glyphs, no files); Twilio and Thumbtack (CC0 files, see `docs/logo-sources.md`).
+- **Home figures** are design targets, labelled as such on the page.
+
+---
+
 # HANDOFF: Valentini Systems rename and workflow polish
 
 Last updated: Nov 25, 2026 · Merged into `cursor/valentini-platform-v6` from `claude/peaceful-cannon-66jdb5`

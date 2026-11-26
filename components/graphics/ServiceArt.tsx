@@ -1,13 +1,13 @@
-import { Bot, ClipboardList, Database, Megaphone, Send, UserCheck } from "lucide-react";
+import { Bot, CalendarCheck, Check, MessageSquare, PhoneMissed, RotateCcw, Star, UserCheck } from "lucide-react";
 
-/** Workflow automation: a short chain of steps ending at the person who approves. */
-function FlowArt() {
+/** Booking: a missed call becomes a booked job, with a person approving the text. */
+function BookingArt() {
   const steps = [
-    { icon: ClipboardList, label: "Form" },
+    { icon: PhoneMissed, label: "Missed call" },
     { icon: Bot, label: "AI drafts" },
-    { icon: Database, label: "CRM" },
     { icon: UserCheck, label: "You approve", gold: true },
-    { icon: Send, label: "Sent" },
+    { icon: MessageSquare, label: "Text sent" },
+    { icon: CalendarCheck, label: "Booked" },
   ];
   return (
     <span className="art-flow">
@@ -27,67 +27,60 @@ function FlowArt() {
   );
 }
 
-/** Meta ads: weekly results climbing, with the latest week highlighted. */
-function AdsArt() {
-  const bars = [32, 40, 36, 52, 58, 66, 84];
+/** Reminders: tomorrow's visits, confirmed by text, one reschedule flagged. */
+function RemindersArt() {
+  const rows = [
+    { time: "8-10 a.m.", job: "AC tune-up", state: "ok" },
+    { time: "10-12", job: "Water heater", state: "ok" },
+    { time: "1-3 p.m.", job: "Panel quote", state: "move" },
+    { time: "3-5 p.m.", job: "Drain clean", state: "ok" },
+  ];
   return (
-    <span className="art-ads">
-      <span className="art-ads-head">
-        <Megaphone size={16} strokeWidth={1.75} />
-        Booked from ads, by week
-      </span>
-      <span className="art-bars">
-        {bars.map((h, i) => (
-          <span
-            key={i}
-            className="art-bar"
-            data-gold={i === bars.length - 1 ? "" : undefined}
-            style={{ height: `${h}%` }}
-          />
-        ))}
-      </span>
+    <span className="art-list">
+      <span className="art-list-head">Tomorrow</span>
+      {rows.map((row) => (
+        <span key={row.time} className="art-row" data-move={row.state === "move" ? "" : undefined}>
+          <span className="art-row-time">{row.time}</span>
+          <span className="art-row-job">{row.job}</span>
+          <span className="art-row-state">
+            {row.state === "ok" ? <Check size={14} strokeWidth={2.5} /> : <RotateCcw size={14} strokeWidth={2.25} />}
+          </span>
+        </span>
+      ))}
     </span>
   );
 }
 
-/** Strategy: effort against impact, with one item marked to fix first. */
-function StrategyArt() {
-  const dots = [
-    { x: 22, y: 70 },
-    { x: 40, y: 30 },
-    { x: 64, y: 62 },
-    { x: 78, y: 82 },
-    { x: 30, y: 48 },
-  ];
+/** Follow-up: an open estimate followed up, and a five-star review. */
+function FollowUpArt() {
   return (
-    <span className="art-strategy">
-      <span className="art-axis-y">Impact</span>
-      <span className="art-axis-x">Effort</span>
-      <span className="art-grid">
-        <span className="art-quad" data-gold="" />
-        <span className="art-quad" />
-        <span className="art-quad" />
-        <span className="art-quad" />
-        {dots.map((d, i) => (
-          <span key={i} className="art-dot" style={{ left: `${d.x}%`, top: `${d.y}%` }} />
-        ))}
-        <span className="art-pick" style={{ left: "24%", top: "22%" }}>
-          Fix first
+    <span className="art-follow">
+      <span className="art-estimate">
+        <span className="art-caption">Estimate</span>
+        <span className="art-estimate-title">New system, 2 options</span>
+        <span className="art-pill">Followed up</span>
+      </span>
+      <span className="art-review">
+        <span className="art-stars">
+          {[0, 1, 2, 3, 4].map((i) => (
+            <Star key={i} size={18} strokeWidth={1.5} fill="currentColor" />
+          ))}
         </span>
+        <span className="art-caption">Review requested after the job</span>
       </span>
     </span>
   );
 }
 
 const ART: Record<string, () => React.JSX.Element> = {
-  "ai-workflow-automation": FlowArt,
-  "meta-ads-consulting": AdsArt,
-  strategy: StrategyArt,
+  "booking-automation": BookingArt,
+  "reminders-and-rescheduling": RemindersArt,
+  "follow-up-and-reviews": FollowUpArt,
 };
 
 /** A drawn picture of what each service does, in place of a photograph. Decorative. */
 export function ServiceArt({ slug, className = "" }: { slug: string; className?: string }) {
-  const Art = ART[slug] ?? FlowArt;
+  const Art = ART[slug] ?? BookingArt;
   return (
     <span className={`art ${className}`} aria-hidden>
       <Art />

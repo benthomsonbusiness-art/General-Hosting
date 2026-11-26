@@ -36,7 +36,7 @@ import { ENGAGEMENTS } from "@/content/engagements";
 /** One icon per known title; anything unlisted falls back by position. */
 const ICONS: Record<string, LucideIcon> = {
   // Engagements
-  "Workflow audit": ClipboardList,
+  "Booking audit": ClipboardList,
   "Build and deploy": Hammer,
   "Retained operations": Activity,
   // Method
@@ -45,13 +45,36 @@ const ICONS: Record<string, LucideIcon> = {
   Build: Wrench,
   "Hand over": KeyRound,
   // Services
-  "AI workflow automation": Workflow,
-  "Meta ads consulting": Megaphone,
-  Strategy: Compass,
+  "Booking automation": Workflow,
+  "Reminders and rescheduling": Megaphone,
+  "Follow-up and reviews": Compass,
+  // Booking areas
+  "Missed calls": Target,
+  "Web leads": Workflow,
+  "Marketplace leads": Users,
+  "After hours": Gauge,
+  Booking: ListChecks,
+  // Reminder areas
+  Confirmations: UserCheck,
+  Reminders: Megaphone,
+  Reschedules: GitBranch,
+  Waitlist: ListChecks,
+  "Dispatch board": Map,
+  "Map your schedule": Map,
+  "Set the messages": PenLine,
+  "Run it beside you": Handshake,
+  // Follow-up areas
+  "Estimate follow-up": FileCheck,
+  "Review requests": UserCheck,
+  "Tune-up reminders": Gauge,
+  "Service plans": ShieldCheck,
+  Complaints: Scale,
+  "Find the gaps": Target,
+  "Write the messages": PenLine,
   "By industry": Building2,
   "Morristown, New Jersey": MapPin,
   "Founder-led": UserRound,
-  "Three services": Layers,
+  "One focus": Layers,
   "You own it": ShieldCheck,
   "How it works": Workflow,
   // Meta ads areas and steps
@@ -75,7 +98,7 @@ const ICONS: Record<string, LucideIcon> = {
   // Principles
   "Plain rules wherever possible": GitBranch,
   "AI only for reading and drafting": Bot,
-  "A person approves what leaves the company": UserCheck,
+  "A person approves every text": UserCheck,
   "You own the code, the accounts and the logs": ShieldCheck,
   "Every workflow comes with a manual": FileCheck,
 };

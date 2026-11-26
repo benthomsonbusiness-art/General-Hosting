@@ -31,7 +31,7 @@ function hasFounderPhoto(): boolean {
 const GLANCE = [
   { title: "Morristown, New Jersey", body: "Working in person and remotely." },
   { title: "Founder-led", body: "You work with Ben directly." },
-  { title: "Three services", body: "Automation, Meta ads and strategy." },
+  { title: "One focus", body: "More booked jobs for home service businesses." },
   { title: "You own it", body: "Code, accounts and logs stay yours." },
 ];
 

@@ -57,6 +57,13 @@ export const APP_SLUGS = [
   "claude",
   "openai",
   "dropbox",
+  "servicetitan",
+  "jobber",
+  "housecallpro",
+  "callrail",
+  "twilio",
+  "angi",
+  "thumbtack",
 ] as const;
 
 export type AppSlug = (typeof APP_SLUGS)[number];
@@ -85,7 +92,10 @@ export type FallbackGlyph =
   | "store"
   | "people"
   | "sparkles"
-  | "megaphone";
+  | "megaphone"
+  | "phone"
+  | "wrench"
+  | "star";
 
 export type AppCategory =
   | "email"
@@ -100,7 +110,10 @@ export type AppCategory =
   | "commerce"
   | "hr"
   | "ai"
-  | "storage";
+  | "storage"
+  | "fieldservice"
+  | "phone"
+  | "leads";
 
 export type AppEntry = {
   /** Product name as the owner writes it. */
@@ -270,6 +283,13 @@ export const APPS: Record<AppSlug, AppEntry> = {
     onLight: true,
   },
   dropbox: app("Dropbox", "Dropbox", "storage", "folder", "https://www.dropbox.com/branding", `${svgLogos("dropbox")} ${UNREAD}`),
+  servicetitan: app("ServiceTitan", "ServiceTitan", "fieldservice", "wrench", "https://www.servicetitan.com", `${NO_FILE} Not in either source set. ${UNREAD}`),
+  jobber: app("Jobber", "Jobber", "fieldservice", "wrench", "https://www.getjobber.com", `${NO_FILE} Not in either source set. ${UNREAD}`),
+  housecallpro: app("Housecall Pro", "Housecall Pro", "fieldservice", "wrench", "https://www.housecallpro.com", `${NO_FILE} Not in either source set. ${UNREAD}`),
+  callrail: app("CallRail", "CallRail", "phone", "phone", "https://www.callrail.com", `${NO_FILE} Not in either source set. ${UNREAD}`),
+  twilio: app("Twilio", "Twilio", "phone", "message", "https://www.twilio.com/en-us/brand", `${svgLogos("twilio-icon")} ${UNREAD}`),
+  angi: app("Angi", "Angi", "leads", "people", "https://www.angi.com", `${NO_FILE} Not in either source set. ${UNREAD}`),
+  thumbtack: app("Thumbtack", "Thumbtack", "leads", "people", "https://www.thumbtack.com", `${simpleIcons("thumbtack", "#009FD9")} ${UNREAD}`),
 };
 
 export function isAppSlug(value: string): value is AppSlug {

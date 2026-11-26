@@ -11,7 +11,7 @@ const valid = {
   fullName: "A. Rivera",
   email: "rivera@harborline.example.com",
   companyRole: "Harborline, owner",
-  practice: "AI Workflow Automation",
+  practice: "Booking Automation",
   note: "Quoting runs through one inbox.",
 };
 
@@ -173,7 +173,7 @@ test("header injection is collapsed to one line", () => {
 });
 
 test("practice query still maps", () => {
-  assert.equal(practiceFromQuery("meta-ads"), "Meta Ads Consulting");
-  assert.equal(practiceFromQuery("strategy"), "Strategy");
-  assert.equal(practiceFromQuery(null), "AI Workflow Automation");
+  assert.equal(practiceFromQuery("reminders"), "Reminders and Rescheduling");
+  assert.equal(practiceFromQuery("follow-up"), "Follow-up and Reviews");
+  assert.equal(practiceFromQuery(null), "Booking Automation");
 });

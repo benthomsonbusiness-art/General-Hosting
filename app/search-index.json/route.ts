@@ -11,7 +11,7 @@ export const dynamic = "force-static";
 
 function entries(): SearchEntry[] {
   return [
-    { url: "/services", title: "Services", type: "Page", summary: SERVICES_HUB.dek, keywords: "practices consulting" },
+    { url: "/services", title: "Services", type: "Page", summary: SERVICES_HUB.dek, keywords: "booking automation home services hvac plumbing" },
     {
       url: "/workflows",
       title: "Example workflows",
@@ -19,7 +19,7 @@ function entries(): SearchEntry[] {
       summary: WORKFLOWS_PAGE.dek,
       keywords: "flowchart steps approval",
     },
-    { url: "/industries", title: "Industries", type: "Page", summary: INDUSTRIES_HUB.dek, keywords: "sectors" },
+    { url: "/industries", title: "Industries", type: "Page", summary: INDUSTRIES_HUB.dek, keywords: "trades hvac plumbing electrical roofing lawn cleaning pest" },
     {
       url: "/testimonials",
       title: "Client testimonials",

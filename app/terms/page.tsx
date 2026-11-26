@@ -26,7 +26,7 @@ export default function TermsPage() {
       </LegalSection>
       <LegalSection heading="Inquiries">
         <p>
-          Requesting a workflow audit or a consultation asks for a conversation. It does not reserve services, form
+          Requesting a booking audit asks for a conversation. It does not reserve services, form
           a contract, or require a response.
         </p>
       </LegalSection>

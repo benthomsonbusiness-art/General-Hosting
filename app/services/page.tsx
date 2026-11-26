@@ -32,7 +32,7 @@ export default function ServicesPage() {
             <IconCards
               columns={2}
               items={[
-                { title: "By industry", body: "What we automate in six kinds of company.", href: "/industries" },
+                { title: "By industry", body: "Where bookings slip in six trades.", href: "/industries" },
                 { title: "How it works", body: "Four steps, from first map to handover.", href: "/how-it-works" },
               ]}
             />

@@ -11,75 +11,88 @@ export type Scenario = {
 };
 
 export const SCENARIOS: Record<string, [Scenario, Scenario]> = {
-  "lead-triage": [
+  "missed-call-text-back": [
     {
       id: "clear",
-      label: "Clear lead",
-      confidence: 0.92,
-      draft: "Thanks for writing. Which system holds your price list today?",
-    },
-    {
-      id: "vague",
-      label: "Vague lead",
-      confidence: 0.62,
-      draft: "Happy to explain. What made you look for this now?",
-    },
-  ],
-  "proposal-ops": [
-    { id: "healthy", label: "Healthy margin", confidence: 0.9 },
-    { id: "thin", label: "Below the floor", confidence: 0.9, stopAt: "margin-check" },
-  ],
-  "client-onboarding": [
-    {
-      id: "complete",
-      label: "Complete intake",
-      confidence: 0.9,
-      draft: "Welcome. Your folder is ready, and the kickoff agenda is inside.",
-    },
-    { id: "missing", label: "Missing answers", confidence: 0.9, stopAt: "intake" },
-  ],
-  "daily-brief": [
-    { id: "all", label: "All sources load", confidence: 0.9 },
-    { id: "gap", label: "CRM is down", confidence: 0.86 },
-  ],
-  "ap-intake": [
-    { id: "short", label: "Short delivery", confidence: 0.93 },
-    { id: "scan", label: "Poor scan", confidence: 0.58 },
-  ],
-  "support-routing": [
-    {
-      id: "exchange",
-      label: "Exchange request",
+      label: "Clear voicemail",
       confidence: 0.91,
-      draft: "You can exchange the item. The steps are in our exchange policy.",
+      draft: "Sorry we missed you. We can be there today 2 to 4 or tomorrow 8 to 10. Which works?",
     },
-    { id: "unclear", label: "Unclear message", confidence: 0.55, draft: "Could you tell us more?" },
-  ],
-  "meta-ads-reporting": [
-    { id: "spike", label: "Cost spike", confidence: 0.9 },
-    { id: "steady", label: "Steady week", confidence: 0.94 },
-  ],
-  "recruiting-screen": [
     {
-      id: "evidence",
-      label: "Clear evidence",
-      confidence: 0.9,
-      draft: "We would like to talk. Please choose a time that suits you.",
+      id: "silent",
+      label: "No voicemail",
+      confidence: 0.55,
+      draft: "Sorry we missed your call. What can we help with?",
     },
-    { id: "thin", label: "Thin resume", confidence: 0.6, draft: "We would like to talk." },
+  ],
+  "web-lead-booking": [
+    {
+      id: "in-area",
+      label: "In your area",
+      confidence: 0.88,
+      draft: "You're booked Tue 10 to 12 with Marco. Reply C to change.",
+    },
+    { id: "out-of-area", label: "Outside your area", confidence: 0.9, stopAt: "area-check" },
+  ],
+  "marketplace-leads": [
+    {
+      id: "good-fit",
+      label: "Good fit",
+      confidence: 0.86,
+      draft: "We can do this within our usual range. Wed 9 to 11 or Thu 1 to 3?",
+    },
+    {
+      id: "unclear",
+      label: "Unclear job",
+      confidence: 0.6,
+      draft: "Happy to help. Can you send a photo of the panel?",
+    },
+  ],
+  "appointment-reminders": [
+    { id: "all-ready", label: "All visits ready", confidence: 0.92 },
+    { id: "missing", label: "Missing details", confidence: 0.92, stopAt: "ready-check" },
+  ],
+  "cancellation-waitlist": [
+    {
+      id: "filled",
+      label: "Waitlist match",
+      confidence: 0.93,
+      draft: "A Tuesday 8 to 10 slot opened up. Want it? Reply YES.",
+    },
+    { id: "nobody", label: "Nobody fits", confidence: 0.93, stopAt: "rank-waitlist" },
+  ],
+  "estimate-follow-up": [
+    {
+      id: "open",
+      label: "Still open",
+      confidence: 0.87,
+      draft: "Hi Dana, any questions on the two options? Happy to walk through financing.",
+    },
+    { id: "sold", label: "Already sold", confidence: 0.87, stopAt: "still-open" },
+  ],
+  "review-requests": [
+    {
+      id: "happy",
+      label: "Happy customer",
+      confidence: 0.9,
+      draft: "Thanks for having us out today. Would you leave us a quick Google review?",
+    },
+    { id: "callback", label: "Callback job", confidence: 0.9, stopAt: "job-checks" },
+  ],
+  "maintenance-reminders": [
+    {
+      id: "batch",
+      label: "Full batch",
+      confidence: 0.88,
+      draft: "Your furnace tune-up is due. Tue 9 to 11 or Thu 1 to 3? Reply 1 or 2.",
+    },
+    { id: "unsure", label: "Thin history", confidence: 0.6, draft: "Your yearly tune-up is due. What day works best?" },
   ],
 };
 
 /** The steps where a sample run leaves the automatic path. */
-export function stopsFor(
-  nodes: { id: string; kind: string }[],
-  scenario: Scenario,
-  threshold: number,
-): string[] {
+export function stopsFor(nodes: { id: string; kind: string }[], scenario: Scenario, threshold: number): string[] {
   return nodes
-    .filter(
-      (node) =>
-        node.id === scenario.stopAt || (node.kind === "ai" && scenario.confidence < threshold),
-    )
+    .filter((node) => node.id === scenario.stopAt || (node.kind === "ai" && scenario.confidence < threshold))
     .map((node) => node.id);
 }

@@ -18,12 +18,12 @@ export const ENGAGEMENTS: { status: "proposed" | "confirmed"; stages: Engagement
   stages: [
     {
       id: "workflow-audit",
-      name: "Workflow audit",
+      name: "Booking audit",
       shape: "Fixed scope, 1 to 2 weeks",
       delivers:
-        "A map of the work and a ranked roadmap.",
-      pricing: "Request a workflow audit",
-      href: "/services/ai-workflow-automation#workflow-audit",
+        "Where calls and leads slip, and what to fix first.",
+      pricing: "Request a booking audit",
+      href: "/services/booking-automation#workflow-audit",
     },
     {
       id: "build-and-deploy",
@@ -32,7 +32,7 @@ export const ENGAGEMENTS: { status: "proposed" | "confirmed"; stages: Engagement
       delivers:
         "Built in your accounts, tested beside the manual process, handed over.",
       pricing: "Scoped after the audit",
-      href: "/services/ai-workflow-automation#build-and-deploy",
+      href: "/services/booking-automation#build-and-deploy",
     },
     {
       id: "retained-operations",
@@ -40,7 +40,7 @@ export const ENGAGEMENTS: { status: "proposed" | "confirmed"; stages: Engagement
       shape: "Monthly",
       delivers: "Monitoring, fixes, tested updates and new workflows.",
       pricing: "Scoped after the audit",
-      href: "/services/ai-workflow-automation#retained-operations",
+      href: "/services/booking-automation#retained-operations",
     },
   ],
 };

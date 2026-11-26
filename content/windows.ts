@@ -8,60 +8,44 @@ export type StageWindow = {
 };
 
 export const WINDOWS: Record<string, StageWindow> = {
-  "lead-triage": {
-    place: "Inbox",
+  "missed-call-text-back": {
+    place: "Phones",
     field: "forest",
-    doing: ["Receiving", "Scoring and drafting", "Updating the CRM", "", "Sending"],
+    doing: ["Call missed", "Drafting a text", "", "Texting back", "Holding the visit"],
   },
-  "proposal-ops": {
-    place: "Proposals",
+  "web-lead-booking": {
+    place: "Booking",
     field: "gold",
-    doing: [
-      "Reading the call",
-      "Listing requirements",
-      "Checking the margin",
-      "Writing the proposal",
-      "",
-      "Requesting the signature",
-      "Creating the invoice",
-    ],
+    doing: ["Receiving", "Checking the area", "Matching tech and window", "", "Confirming", "Booking"],
   },
-  "client-onboarding": {
-    place: "Client workspace",
+  "marketplace-leads": {
+    place: "Lead inbox",
     field: "stone",
-    doing: [
-      "Contract signed",
-      "Collecting answers",
-      "Building the workspace",
-      "Drafting the welcome",
-      "",
-      "Sending the welcome",
-      "Booking the kickoff",
-    ],
+    doing: ["Receiving", "Qualifying", "", "Replying", "Adding the lead"],
   },
-  "daily-brief": {
-    place: "Leadership channel",
+  "appointment-reminders": {
+    place: "Dispatch board",
     field: "obsidian",
-    doing: ["Starting", "Pulling the figures", "Finding exceptions", "Writing the brief", "Delivering"],
+    doing: ["Pulling tomorrow", "Checking each visit", "Writing reminders", "", "Reminding", "Marking visits"],
   },
-  "ap-intake": {
-    place: "Accounts payable",
-    field: "gold",
-    doing: ["Receiving", "Reading the invoice", "Matching the order", "", "", "Scheduling"],
-  },
-  "support-routing": {
-    place: "Support desk",
+  "cancellation-waitlist": {
+    place: "Dispatch board",
     field: "forest",
-    doing: ["Receiving", "Labeling", "Drafting from articles", "", "Logging"],
+    doing: ["Reply received", "Reading it", "Ranking the waitlist", "", "Offering the slot", "Moving the visit"],
   },
-  "meta-ads-reporting": {
-    place: "Ad reporting",
+  "estimate-follow-up": {
+    place: "Sales",
+    field: "gold",
+    doing: ["Finding open estimates", "Checking status", "Drafting", "", "Sending", "Logging"],
+  },
+  "review-requests": {
+    place: "Reviews",
     field: "stone",
-    doing: ["Pulling the data", "Checking the baseline", "Checking each ad", "Writing the brief", "Posting"],
+    doing: ["Job complete", "Checking the job", "Drafting a thank-you", "", "Asking for a review", "Logging"],
   },
-  "recruiting-screen": {
-    place: "Hiring",
+  "maintenance-reminders": {
+    place: "Service plans",
     field: "obsidian",
-    doing: ["Receiving", "Masking details", "Finding evidence", "", "", "Booking"],
+    doing: ["Finding plans due", "Building the list", "Writing reminders", "", "Sending", "Holding slots"],
   },
 };

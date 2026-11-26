@@ -23,7 +23,7 @@ type Status = "idle" | "submitting" | "success" | "error";
 
 export function InquiryForm() {
   return (
-    <Suspense fallback={<InquiryFields initialPractice="AI Workflow Automation" />}>
+    <Suspense fallback={<InquiryFields initialPractice="Booking Automation" />}>
       <InquiryFromQuery />
     </Suspense>
   );
@@ -245,7 +245,7 @@ function InquiryFields({
       </div>
 
       <button type="submit" aria-disabled={sending} className="btn btn-primary mt-8 w-full sm:w-auto">
-        {sending ? "Sending…" : practice === "AI Workflow Automation" ? CTA_LABEL : "Request a consultation"}
+        {sending ? "Sending…" : CTA_LABEL}
       </button>
     </form>
   );

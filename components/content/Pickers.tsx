@@ -7,29 +7,29 @@ import { HardwareFrame } from "@/components/media/HardwareFrame";
 import type { Industry } from "@/content/industries";
 
 const INDUSTRY_PHOTO: Record<string, { src: string; alt: string }> = {
-  "professional-services": {
-    src: "/images/ind-professional.jpg",
-    alt: "A closed laptop and a desk lamp on a dark green desk, with a glass meeting room behind.",
+  hvac: {
+    src: "/images/station-model.jpg",
+    alt: "A dark green control dial with engraved tick marks, like a thermostat.",
   },
-  "health-wellness-fitness": {
-    src: "/images/ind-wellness.jpg",
-    alt: "A fitness studio desk after closing, a tablet face down and rolled mats on the shelves.",
+  plumbing: {
+    src: "/images/ins-daily-brief.jpg",
+    alt: "Three gauges on a dark green panel, with morning light across them.",
   },
-  "real-estate": {
-    src: "/images/ind-realestate.jpg",
-    alt: "A property office key cabinet at night, a few keys on unlabeled hooks.",
+  electrical: {
+    src: "/images/station-code.jpg",
+    alt: "A row of toggle switches on a dark green panel.",
   },
-  "ecommerce-retail": {
-    src: "/images/ind-retail.jpg",
-    alt: "A packing room after hours, plain boxes on shelves and a scale on a steel bench.",
-  },
-  "home-services": {
+  roofing: {
     src: "/images/ind-home.jpg",
     alt: "The open side door of a service van at dusk, with a tool rack and parts bins.",
   },
-  "financial-accounting-firms": {
-    src: "/images/ind-finance.jpg",
-    alt: "An accounting office at night, two monitors off, a scanner and a stack of folders.",
+  landscaping: {
+    src: "/images/ind-retail.jpg",
+    alt: "A stockroom after hours, plain boxes on shelves and a steel bench.",
+  },
+  cleaning: {
+    src: "/images/ind-wellness.jpg",
+    alt: "A tidy room after closing, shelves of folded supplies and a clean counter.",
   },
 };
 
@@ -114,7 +114,13 @@ function IndustryTabs({ industries, initial }: { industries: IndustryView[]; ini
       </div>
 
       {current ? (
-        <div id="industry-panel" role="tabpanel" aria-labelledby={`industry-tab-${selected}`} tabIndex={0} className="mt-8 outline-none">
+        <div
+          id="industry-panel"
+          role="tabpanel"
+          aria-labelledby={`industry-tab-${selected}`}
+          tabIndex={0}
+          className="mt-8 outline-none"
+        >
           <div className="grid gap-10 lg:grid-cols-12">
             <div className="lg:col-span-5">
               {INDUSTRY_PHOTO[current.slug] ? (

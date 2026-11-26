@@ -55,3 +55,5 @@ These apps show the name and glyph:
 | calendly | Not in SVG Logos; the current mark uses more than one color. |
 | pipedrive | SVG Logos has only the wide wordmark; not in Simple Icons. |
 | gusto | Both packages have only the wide wordmark. |
+| `thumbtack.svg` | simple-icons | `thumbtack` (fill #009FD9) | 16.38.1 | CC0-1.0 | https://www.thumbtack.com |
+| `twilio.svg` | @iconify-json/logos (SVG Logos by Gil Barbara) | `twilio-icon` | 1.2.21 | CC0-1.0 | https://www.twilio.com/en-us/brand |

@@ -14,6 +14,9 @@ import {
   Mail,
   Megaphone,
   MessageSquare,
+  Phone,
+  Star,
+  Wrench,
   Send,
   Signature,
   Sparkles,
@@ -51,6 +54,9 @@ const FALLBACK: Record<FallbackGlyph, LucideIcon> = {
   people: Users,
   sparkles: Sparkles,
   megaphone: Megaphone,
+  phone: Phone,
+  wrench: Wrench,
+  star: Star,
 };
 
 /** House glyphs for steps that are not a branded app. */

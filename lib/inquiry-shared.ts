@@ -1,18 +1,18 @@
 /** Client-safe half of the inquiry contract: constants, types and validation. */
 
 export const PRACTICE_INTERESTS = [
-  "AI Workflow Automation",
-  "Meta Ads Consulting",
-  "Strategy",
+  "Booking Automation",
+  "Reminders and Rescheduling",
+  "Follow-up and Reviews",
 ] as const;
 
 export type PracticeInterest = (typeof PRACTICE_INTERESTS)[number];
 
 /** What the form shows. The values above are stored and mapped from ?practice=, so they never change. */
 export const PRACTICE_LABELS: Record<PracticeInterest, string> = {
-  "AI Workflow Automation": "AI workflow automation",
-  "Meta Ads Consulting": "Meta ads consulting",
-  Strategy: "Strategy",
+  "Booking Automation": "Booking automation (calls and leads)",
+  "Reminders and Rescheduling": "Reminders and rescheduling",
+  "Follow-up and Reviews": "Estimate follow-up and reviews",
 };
 
 export const HONEYPOT_FIELD = "fax_number";
@@ -43,15 +43,9 @@ const EMAIL = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
 export function practiceFromQuery(value: string | null | undefined): PracticeInterest {
   const normalized = (value ?? "").trim().toLowerCase();
-  if (
-    normalized === "meta-ads" ||
-    normalized === "meta ads" ||
-    normalized === "meta ads consulting"
-  ) {
-    return "Meta Ads Consulting";
-  }
-  if (normalized === "strategy") return "Strategy";
-  return "AI Workflow Automation";
+  if (normalized === "reminders" || normalized === "reminders-and-rescheduling") return "Reminders and Rescheduling";
+  if (normalized === "follow-up" || normalized === "follow-up-and-reviews") return "Follow-up and Reviews";
+  return "Booking Automation";
 }
 
 export function isRecord(value: unknown): value is Record<string, unknown> {

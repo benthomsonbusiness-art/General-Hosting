@@ -16,25 +16,25 @@ import { pageMetadata } from "@/lib/seo";
 import { CTA_HREF, CTA_LABEL, SITE_NAME } from "@/lib/site";
 
 export const metadata = pageMetadata({
-  title: `${SITE_NAME} | AI Workflow Automation`,
+  title: `${SITE_NAME} | Booking Automation for Home Services`,
   absoluteTitle: true,
   description: HOME.metaDescription,
   path: "/",
 });
 
-const FIRST = ["lead-triage", "ap-intake", "daily-brief"] as const;
+const FIRST = ["missed-call-text-back", "appointment-reminders", "estimate-follow-up"] as const;
 
 /** The one workflow drawn on the first screen. Browsing the rest happens on /workflows. */
-const HERO_FLOW = flowExample("lead-triage");
+const HERO_FLOW = flowExample("web-lead-booking");
 
 const QUOTE = TESTIMONIALS[0];
 
 /** Targets each workflow is designed to reach; the audit sets real numbers per client. */
 const STATS = [
-  { prefix: "Up to", value: "80%", label: "less time on lead follow-up" },
-  { prefix: "Up to", value: "70%", label: "faster invoice processing" },
-  { prefix: "", value: "5 hrs", label: "a week back on reporting" },
-  { prefix: "", value: "100%", label: "of outgoing messages approved by a person" },
+  { prefix: "Up to", value: "80%", label: "less time answering new leads" },
+  { prefix: "Up to", value: "50%", label: "fewer no-shows" },
+  { prefix: "", value: "5 hrs", label: "a week back on scheduling" },
+  { prefix: "", value: "100%", label: "of texts approved by a person" },
 ];
 
 const STATS_NOTE = "Design targets for each workflow. Your audit sets the numbers for your company.";
@@ -54,8 +54,8 @@ export default function HomePage() {
             AI does the busywork. <span className="text-gold">You stay in the loop.</span>
           </h1>
           <p className="lead mt-6 max-w-[62rem] text-muted">
-            AI handles the repetitive steps inside the tools you already use. A person on your team approves anything
-            that goes out.
+            Booking automation for home service businesses. Every missed call and lead gets a fast reply with real open
+            times, and your office approves each one from a phone.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <Link href={CTA_HREF} className="btn btn-primary">

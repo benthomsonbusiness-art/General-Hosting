@@ -1,7 +1,7 @@
-import { BarChart3, Check, Mail, Receipt, UserCheck } from "lucide-react";
+import { CalendarCheck, Check, FileText, PhoneMissed, UserCheck } from "lucide-react";
 
 type Row = {
-  icon: typeof Mail;
+  icon: typeof PhoneMissed;
   title: string;
   detail: string;
   status: "approve" | "done";
@@ -10,25 +10,25 @@ type Row = {
 
 const ROWS: Row[] = [
   {
-    icon: Mail,
-    title: "New lead from your website",
-    detail: "Company looked up, scored as a good fit, first reply drafted",
+    icon: PhoneMissed,
+    title: "Missed call, 6:12 p.m.",
+    detail: "Voicemail says AC not cooling. Text drafted with two open windows",
     status: "approve",
     statusLabel: "Waiting for you",
   },
   {
-    icon: Receipt,
-    title: "Supplier invoice",
-    detail: "Every line matched to the purchase order, totals agree",
+    icon: CalendarCheck,
+    title: "Tomorrow's 14 visits",
+    detail: "Reminders sent, 12 confirmed by text, 1 reschedule flagged",
     status: "done",
-    statusLabel: "Ready to post",
+    statusLabel: "Board updated",
   },
   {
-    icon: BarChart3,
-    title: "Monday numbers",
-    detail: "Pulled from three tools into one brief, each figure sourced",
+    icon: FileText,
+    title: "Estimate open 3 days",
+    detail: "Follow-up sent after the comfort advisor approved it",
     status: "done",
-    statusLabel: "Posted 6:30 a.m.",
+    statusLabel: "Logged",
   },
 ];
 

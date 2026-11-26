@@ -8,8 +8,6 @@ import ts from "typescript";
 import * as approach from "../content/approach.ts";
 import * as engagements from "../content/engagements.ts";
 import { INDUSTRIES } from "../content/industries.ts";
-import { BODIES, wordCount } from "../content/insights/bodies.ts";
-import { INSIGHTS } from "../content/insights/index.ts";
 import * as scenarios from "../content/scenarios.ts";
 import * as pages from "../content/pages.ts";
 import { SERVICES, SUB_SERVICES } from "../content/services.ts";
@@ -91,8 +89,6 @@ function walk(value: unknown, where: string) {
 walk(approach, "approach");
 walk(engagements.ENGAGEMENTS, "engagements");
 walk(INDUSTRIES, "industries");
-walk(INSIGHTS, "insights");
-walk(BODIES, "bodies");
 walk(pages, "pages");
 walk(SERVICES, "services");
 walk(SUB_SERVICES, "subservices");
@@ -143,7 +139,6 @@ unique([...workflowIds].concat(WORKFLOWS.length === workflowIds.size ? [] : ["du
 unique(WORKFLOWS.map((item) => item.id), "workflow ids");
 unique([...SERVICES, ...SUB_SERVICES].map((item) => item.slug), "service slugs");
 unique(INDUSTRIES.map((item) => item.slug), "industry slugs");
-unique(INSIGHTS.map((item) => item.slug), "insight slugs");
 
 function refs(ids: string[], valid: Set<string>, where: string) {
   for (const id of ids) if (!valid.has(id)) fail(`${where}: unknown reference "${id}"`);
@@ -165,7 +160,6 @@ for (const item of INDUSTRIES) {
 
 const described: { where: string; text: string }[] = [
   ...SERVICES.map((item) => ({ where: item.slug, text: item.metaDescription })),
-  ...INSIGHTS.map((item) => ({ where: item.slug, text: item.metaDescription })),
   ...WORKFLOWS.map((item) => ({ where: item.id, text: item.metaDescription })),
   ...Object.entries(pages).flatMap(([name, value]) =>
     typeof value === "object" && "metaDescription" in value ? [{ where: name, text: value.metaDescription }] : [],
@@ -175,30 +169,6 @@ for (const { where, text } of described) {
   if (text.length < 140 || text.length > 160) fail(`${where}: metaDescription is ${text.length} characters (140-160)`);
 }
 if (new Set(described.map((item) => item.text)).size !== described.length) fail("duplicate metaDescription");
-
-// ---------- Insights ----------
-
-const today = new Date(Date.now() - 5 * 3600 * 1000).toISOString().slice(0, 10); // US Eastern, no DST
-for (const insight of INSIGHTS) {
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(insight.date) || insight.date > today) {
-    fail(`${insight.slug}: date ${insight.date} is later than ${today}`);
-  }
-  refs(insight.workflowIds, workflowIds, insight.slug);
-  refs(insight.services, serviceSlugs, insight.slug);
-  refs(insight.industries, industrySlugs, insight.slug);
-  const body = BODIES[insight.slug];
-  if (!body) {
-    fail(`${insight.slug}: no body`);
-    continue;
-  }
-  const words = wordCount(body);
-  const minutes = Math.max(1, Math.round(words / 220));
-  if (words < 900 || words > 1400) fail(`${insight.slug}: ${words} words (900-1400)`);
-  if (minutes !== insight.readMinutes) fail(`${insight.slug}: readMinutes should be ${minutes}`);
-  for (const block of body) {
-    if (block.type === "workflow") refs([block.id], workflowIds, insight.slug);
-  }
-}
 
 // ---------- Diagram data ----------
 
@@ -342,5 +312,5 @@ if (errors.length > 0) {
   process.exit(1);
 }
 console.log(
-  `Content check passed: ${WORKFLOWS.length} workflows, ${SERVICES.length + SUB_SERVICES.length} services, ${INDUSTRIES.length} industries, ${INSIGHTS.length} insights (${Math.round(size / 1024)} KB of workflow data).`,
+  `Content check passed: ${WORKFLOWS.length} workflows, ${SERVICES.length + SUB_SERVICES.length} services, ${INDUSTRIES.length} industries (${Math.round(size / 1024)} KB of workflow data).`,
 );

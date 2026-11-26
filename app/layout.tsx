@@ -35,7 +35,7 @@ const plexMono = IBM_Plex_Mono({
   preload: false,
 });
 
-const title = `${SITE_NAME} | AI Workflow Automation`;
+const title = `${SITE_NAME} | Booking Automation for Home Services`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -79,10 +79,10 @@ const organization = {
   },
   founder: { "@type": "Person", name: "Ben Thomson", jobTitle: "Founder" },
   knowsAbout: [
-    "AI workflow automation",
-    "Business process automation",
-    "Meta advertising",
-    "Operational strategy",
+    "Booking automation",
+    "Missed call text-back",
+    "Appointment reminders",
+    "Home service businesses",
   ],
 };
 
