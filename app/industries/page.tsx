@@ -23,7 +23,6 @@ export default function IndustriesPage() {
           <h1 id="industries-title" className="h1 mt-6 max-w-[16ch]">
             What we automate, by industry
           </h1>
-          <p className="lead mt-4 max-w-[36rem] text-muted">{INDUSTRIES_HUB.dek}</p>
           <HelpCta />
           <div className="mt-10">
             <IndustryPicker

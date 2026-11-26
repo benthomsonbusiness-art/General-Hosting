@@ -68,7 +68,7 @@ export function SearchDialog({
             name="q"
             type="search"
             autoComplete="off"
-            placeholder="Search services, workflows, industries and insights"
+            placeholder="Search services, workflows and industries"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             onKeyDown={(event) => {

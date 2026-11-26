@@ -3,12 +3,10 @@ import { RowLink } from "@/components/cards/RowLink";
 import { HelpCta } from "@/components/layout/HelpCta";
 import { ClosingCta } from "@/components/layout/ClosingCta";
 import { Breadcrumbs } from "@/components/nav/Breadcrumbs";
-import { firstSentence, toFlowNodes } from "@/components/workflow/examples";
+import { toFlowNodes } from "@/components/workflow/examples";
 import { FlowDiagram } from "@/components/workflow/flow/FlowDiagram";
 import { WorkflowText } from "@/components/workflow/WorkflowText";
-import { INDUSTRIES } from "@/content/industries";
 import { WORKFLOWS_PAGE } from "@/content/pages";
-import { getService, serviceHref } from "@/content/services";
 import { WORKFLOWS, type Workflow } from "@/content/workflows";
 
 const COPY = WORKFLOWS_PAGE;
@@ -23,8 +21,7 @@ export function WorkflowsIndex() {
           <h1 id="workflows-title" className="h1 mt-2 max-w-[16ch]">
             {COPY.title}
           </h1>
-          <p className="lead mt-4 max-w-[36rem] text-muted">{COPY.dek}</p>
-          <HelpCta line="Have a process that isn't listed? We'll map it with you." />
+          <HelpCta />
           <h2 className="h3 mt-14">{COPY.listHeading}</h2>
           <ul className="mt-4 border-t border-line">
             {WORKFLOWS.map((workflow, index) => {
@@ -32,12 +29,7 @@ export function WorkflowsIndex() {
               return (
                 <li key={workflow.id} className="grid gap-y-4 border-b border-line pb-10">
                   <div className="max-w-[44rem]">
-                    <RowLink
-                      href={`/workflows/${workflow.id}`}
-                      title={workflow.title}
-                      line={firstSentence(workflow.summary)}
-                      titleId={titleId}
-                    />
+                    <RowLink href={`/workflows/${workflow.id}`} title={workflow.title} titleId={titleId} />
                   </div>
                   <div className="min-w-0">
                     <FlowDiagram
@@ -58,44 +50,6 @@ export function WorkflowsIndex() {
       </section>
       <ClosingCta />
     </>
-  );
-}
-
-function Fits({ workflow }: { workflow: Workflow }) {
-  const industries = INDUSTRIES.filter((item) => workflow.industries.includes(item.slug));
-  const services = workflow.services.map((slug) => getService(slug)).filter((item) => item !== undefined);
-  return (
-    <div className="mt-6 grid gap-1 text-muted">
-      {industries.length ? (
-        <p>
-          <span className="font-semibold text-body">{COPY.fits}</span>{" "}
-          {industries.map((item, index) => (
-            <span key={item.slug}>
-              <Link
-                href={`/industries?industry=${item.slug}`}
-                className="text-link inline-flex min-h-11 items-center underline"
-              >
-                {item.name}
-              </Link>
-              {index < industries.length - 1 ? ", " : ""}
-            </span>
-          ))}
-        </p>
-      ) : null}
-      {services.length ? (
-        <p>
-          <span className="font-semibold text-body">{COPY.service}</span>{" "}
-          {services.map((service, index) => (
-            <span key={service.slug}>
-              <Link href={serviceHref(service.slug)} className="text-link inline-flex min-h-11 items-center underline">
-                {service.name}
-              </Link>
-              {index < services.length - 1 ? ", " : ""}
-            </span>
-          ))}
-        </p>
-      ) : null}
-    </div>
   );
 }
 
@@ -161,7 +115,7 @@ export function WorkflowDetail({ workflow }: { workflow: Workflow }) {
             {workflow.title}
           </h1>
           <p className="lead measure mt-5 text-muted">{workflow.summary}</p>
-          <HelpCta className="mt-6" line="Want this running in your company?" />
+          <HelpCta className="mt-6" />
           <div className="mt-10">
             <FlowDiagram
               id={`flow-${workflow.id}`}
@@ -172,7 +126,6 @@ export function WorkflowDetail({ workflow }: { workflow: Workflow }) {
               eager
             />
           </div>
-          <Fits workflow={workflow} />
           <Decides workflow={workflow} />
           <section aria-labelledby="steps" className="mt-14">
             <h2 id="steps" className="h3">

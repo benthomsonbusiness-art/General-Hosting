@@ -46,7 +46,6 @@ export default function AboutPage() {
             <h1 id="about-title" className="h1 mt-6">
               About the firm
             </h1>
-            <p className="lead measure mt-5 text-muted">{ABOUT.dek}</p>
             <HelpCta />
           </div>
           <div className="relative aspect-[4/3] overflow-hidden rounded-[14px] border border-line lg:col-span-5">

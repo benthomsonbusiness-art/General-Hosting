@@ -1,7 +1,7 @@
 import { ArrowRight } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { iconFor } from "@/components/graphics/Graphics";
+import { ServiceArt } from "@/components/graphics/ServiceArt";
 import { SERVICES, serviceHref } from "@/content/services";
 
 /** One line per service; the service pages carry the detail. */
@@ -21,14 +21,7 @@ export function ServiceCards() {
           <li key={service.slug} className="flex">
             <Link href={serviceHref(service.slug)} className="photo-card group">
               <span className="photo-card-img">
-                <Image
-                  src={service.photo.src}
-                  alt=""
-                  fill
-                  sizes="(min-width: 768px) 33vw, 100vw"
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  style={{ objectPosition: service.photo.position }}
-                />
+                <ServiceArt slug={service.slug} />
                 {index === 0 ? <span className="photo-card-tag">Main service</span> : null}
               </span>
               <span className="photo-card-body">

@@ -28,13 +28,9 @@ export default function SearchPage() {
             <Link href="/services" className="text-link">
               services
             </Link>
-            ,{" "}
+            and{" "}
             <Link href="/workflows" className="text-link">
               workflows
-            </Link>{" "}
-            and{" "}
-            <Link href="/insights" className="text-link">
-              insights
             </Link>
             .
           </p>

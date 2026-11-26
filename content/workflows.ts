@@ -94,7 +94,7 @@ export const NODE_KINDS: Record<NodeKind, string> = {
   trigger: "Trigger",
   deterministic: "Rule",
   ai: "AI",
-  human: "Approval",
+  human: "Human in the loop",
   output: "Result",
 };
 

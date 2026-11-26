@@ -24,7 +24,6 @@ export default function TestimonialsPage() {
           <h1 id="testimonials-title" className="h1 mt-6 max-w-[16ch]">
             Client testimonials
           </h1>
-          <p className="lead mt-4 max-w-[36rem] text-muted">{TESTIMONIALS_PAGE.dek}</p>
 
           {TESTIMONIALS.length ? (
             <ul className="mt-12 grid gap-6 md:grid-cols-2">
@@ -58,7 +57,7 @@ export default function TestimonialsPage() {
           ) : (
             <div className="mt-12 max-w-[44rem] rounded-lg border border-line bg-well p-8">
               <p className="text-body">{TESTIMONIALS_PAGE.empty}</p>
-              <HelpCta className="mt-6" line="" />
+              <HelpCta className="mt-6" />
             </div>
           )}
         </Container>

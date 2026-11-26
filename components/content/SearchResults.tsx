@@ -55,7 +55,7 @@ function FromQuery() {
         {failed
           ? "Search could not be loaded. Use the menu, or reload the page to try again."
           : query === ""
-            ? "Enter a word or two to search services, workflows, industries and insights."
+            ? "Enter a word or two to search services, workflows and industries."
             : index === null
               ? "Searching…"
               : `${results.length} ${results.length === 1 ? "result" : "results"} for “${query}”`}

@@ -46,7 +46,6 @@ export default function HowItWorksPage() {
           <h2 id="process" className="h2">
             The process
           </h2>
-          <p className="mt-4 text-muted">You approve each step before we move on.</p>
           <div className="mt-12">
             <StepTrack steps={METHOD.map((step) => ({ title: step.title, line: step.line }))} />
           </div>
@@ -58,7 +57,6 @@ export default function HowItWorksPage() {
           <h2 id="scope" className="h2">
             How it&rsquo;s scoped
           </h2>
-          <p className="mt-4 text-muted">Start small. You only commit to the audit.</p>
           <div className="mt-10">
             <ScopeSteps />
           </div>

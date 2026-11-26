@@ -22,7 +22,6 @@ export default function ServicesPage() {
           <h1 id="services-title" className="h1 mt-6 max-w-[12ch]">
             Services
           </h1>
-          <p className="lead mt-4 max-w-[36rem] text-muted">{SERVICES_HUB.dek}</p>
           <HelpCta />
 
           <div className="mt-12">

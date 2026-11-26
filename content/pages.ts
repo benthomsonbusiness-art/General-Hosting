@@ -12,7 +12,7 @@ export const HOME = {
     steps: [
       { title: "Rules", body: "Lookups, routing and invoice math. Same result every time." },
       { title: "AI", body: "Reads messy emails and notes and drafts a reply. Drafts that fail a check are thrown out." },
-      { title: "Approval", body: "You see the draft next to the original. Nothing goes out until you click approve." },
+      { title: "Human in the loop", body: "You see the draft next to the original. Nothing goes out until you click approve." },
       { title: "Record", body: "Logs who approved it, what they changed and exactly what was sent." },
     ],
     own: "It runs in your accounts, from code in your repository. Every login, log and line of code belongs to you.",
@@ -51,7 +51,7 @@ export const WORKFLOWS_PAGE = {
   fits: "Fits:",
   service: "Service:",
   decides: {
-    heading: "Where a person decides",
+    heading: "Human in the loop",
     expires: "Expires after",
     closing: "Rejected, expired or unsure items send nothing.",
   },

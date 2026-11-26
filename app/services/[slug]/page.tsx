@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { IconCards, ScopeSteps, StepTrack } from "@/components/graphics/Graphics";
+import { ServiceArt } from "@/components/graphics/ServiceArt";
 import { notFound } from "next/navigation";
 import { Faq } from "@/components/content/Blocks";
 import { Estimator } from "@/components/content/Estimator";
@@ -62,15 +62,7 @@ export default async function ServicePage({ params }: Props) {
             </Link>
           </div>
           <div className="relative aspect-[4/3] overflow-hidden rounded-[14px] border border-line lg:col-span-5">
-            <Image
-              src={service.photo.src}
-              alt={service.photo.alt}
-              fill
-              priority
-              sizes="(min-width: 1024px) 40vw, 100vw"
-              className="object-cover"
-              style={{ objectPosition: service.photo.position }}
-            />
+            <ServiceArt slug={service.slug} />
           </div>
         </Container>
       </Section>
@@ -108,7 +100,6 @@ export default async function ServicePage({ params }: Props) {
                 <li key={workflow.id}>
                   <Link href={`/workflows/${workflow.id}`} className="group block py-5">
                     <span className="card-title row-title block">{workflow.title}</span>
-                    <span className="mt-1 block text-muted">{workflow.summary.split(". ")[0]}.</span>
                   </Link>
                 </li>
               ))}

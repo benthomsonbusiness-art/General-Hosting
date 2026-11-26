@@ -29,6 +29,16 @@ const HERO_FLOW = flowExample("lead-triage");
 
 const QUOTE = TESTIMONIALS[0];
 
+/** Targets each workflow is designed to reach; the audit sets real numbers per client. */
+const STATS = [
+  { prefix: "Up to", value: "80%", label: "less time on lead follow-up" },
+  { prefix: "Up to", value: "70%", label: "faster invoice processing" },
+  { prefix: "", value: "5 hrs", label: "a week back on reporting" },
+  { prefix: "", value: "100%", label: "of outgoing messages approved by a person" },
+];
+
+const STATS_NOTE = "Design targets for each workflow. Your audit sets the numbers for your company.";
+
 const OWN_POINTS = [
   "Built in your accounts, not ours",
   "Code, AI instructions and logs live in your repository",
@@ -41,11 +51,11 @@ export default function HomePage() {
       <section data-surface="dark" className="bg-obsidian">
         <div className="wrap py-10 lg:py-16">
           <h1 className="h1 max-w-[22ch]">
-            Automate the busywork. <span className="text-gold">Approve what matters.</span>
+            AI does the busywork. <span className="text-gold">You stay in the loop.</span>
           </h1>
           <p className="lead mt-6 max-w-[62rem] text-muted">
-            We map how work moves through your company, then build the automations inside the tools you already use.
-            Routine steps run on their own, and nothing goes out until you approve it.
+            AI handles the repetitive steps inside the tools you already use. A person on your team approves anything
+            that goes out.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <Link href={CTA_HREF} className="btn btn-primary">
@@ -55,6 +65,18 @@ export default function HomePage() {
               How it works
             </Link>
           </div>
+          <dl className="stats mt-12">
+            {STATS.map((stat) => (
+              <div key={stat.label} className="stat">
+                <dt className="stat-label">{stat.label}</dt>
+                <dd className="stat-value">
+                  {stat.prefix ? <span className="stat-prefix">{stat.prefix}</span> : null}
+                  {stat.value}
+                </dd>
+              </div>
+            ))}
+          </dl>
+          <p className="small mt-3 text-muted">{STATS_NOTE}</p>
           <div className="mt-12 min-w-0">
             <div className="mb-3 flex flex-wrap items-baseline justify-between gap-3">
               <p id="hero-flow" className="small text-muted">
@@ -82,7 +104,6 @@ export default function HomePage() {
             <h2 id="yours" className="h2">
               You own what we build.
             </h2>
-            <p className="mt-4 max-w-[36rem] text-muted">{HOME.how.own}</p>
             <ul className="mt-6 grid gap-3">
               {OWN_POINTS.map((point) => (
                 <li key={point} className="flex items-start gap-3">
@@ -104,16 +125,13 @@ export default function HomePage() {
             <h2 id="helps" className="h2">
               Where it helps first
             </h2>
-            <p className="mt-4 max-w-[36rem] text-muted">
-              Most companies start with one of these. Each is a workflow we have already drawn out.
-            </p>
             <ul className="mt-6 border-t border-line">
               {HOME.problems.map((problem) => {
                 const workflow = getWorkflow(problem.workflowId);
                 if (!workflow || !FIRST.includes(problem.workflowId as (typeof FIRST)[number])) return null;
                 return (
                   <li key={problem.workflowId} className="border-b border-line">
-                    <RowLink href={`/workflows/${workflow.id}`} title={problem.q} line={workflow.title} />
+                    <RowLink href={`/workflows/${workflow.id}`} title={problem.q} />
                   </li>
                 );
               })}
@@ -157,9 +175,6 @@ export default function HomePage() {
           <h2 id="built" className="h2">
             What happens to each item
           </h2>
-          <p className="mx-auto mt-4 max-w-[40rem] text-muted">
-            Every item passes the same four stations. Only the approval waits for a person.
-          </p>
           <div className="mx-auto mt-12 max-w-[64rem]">
             <Stations />
           </div>
@@ -171,7 +186,6 @@ export default function HomePage() {
           <h2 id="engagement" className="h2">
             How the work is scoped
           </h2>
-          <p className="mt-4 max-w-[40rem] text-muted">Start small. You only commit to the audit.</p>
           <div className="mt-10">
             <ScopeSteps />
           </div>

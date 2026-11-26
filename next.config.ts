@@ -47,6 +47,8 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       { source: "/approach", destination: "/how-it-works", permanent: true },
+      { source: "/insights", destination: "/", permanent: true },
+      { source: "/insights/:slug", destination: "/", permanent: true },
       {
         source: "/practices/meta-ads",
         destination: "/services/meta-ads-consulting",

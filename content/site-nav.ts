@@ -11,7 +11,6 @@ export const NAV: NavItem[] = [
   { label: "Workflows", href: "/workflows", match: ["/workflows"] },
   { label: "Services", href: "/services", match: ["/services"] },
   { label: "How it works", href: "/how-it-works", match: ["/how-it-works"] },
-  { label: "Insights", href: "/insights", match: ["/insights"] },
   { label: "Testimonials", href: "/testimonials", match: ["/testimonials"] },
   { label: "About", href: "/about", match: ["/about"] },
 ];
@@ -28,7 +27,6 @@ export const FOOTER: NavLink[] = [
   { label: "Services", href: "/services" },
   { label: "How it works", href: "/how-it-works" },
   { label: "Industries", href: "/industries" },
-  { label: "Insights", href: "/insights" },
   { label: "Testimonials", href: "/testimonials" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },

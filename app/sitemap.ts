@@ -1,5 +1,4 @@
 import type { MetadataRoute } from "next";
-import { INSIGHTS } from "@/content/insights";
 import { SERVICES, serviceHref } from "@/content/services";
 import { WORKFLOWS } from "@/content/workflows";
 import { absolute } from "@/lib/seo";
@@ -17,13 +16,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/workflows",
     ...WORKFLOWS.map((item) => `/workflows/${item.id}`),
     "/industries",
-    "/insights",
     "/testimonials",
     "/about",
     "/contact",
   ];
   return [
     ...paths.map((path) => ({ url: absolute(path), lastModified: CONTENT_DATE })),
-    ...INSIGHTS.map((item) => ({ url: absolute(`/insights/${item.slug}`), lastModified: item.date })),
   ];
 }
