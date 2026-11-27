@@ -1,6 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <title>Temporant</title>
-  <rect x="1.5" y="1.5" width="29" height="29" rx="6.5" fill="#0E1024" stroke="#FFB547" stroke-width="3"/>
-  <rect x="7" y="7.5" width="18" height="5" rx="1" fill="#F4F5FA"/>
-  <path fill="#38D6C4" d="M 13.6 14 H 18.4 L 19.4 25 H 14.8 Z"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><title>Temporant</title><defs><linearGradient id="g" gradientUnits="userSpaceOnUse" x1="5" y1="5" x2="27" y2="27"><stop offset="0" stop-color="#3B82F6"/><stop offset="0.5" stop-color="#8B5CF6"/><stop offset="1" stop-color="#EC4899"/></linearGradient></defs><rect width="32" height="32" rx="7" fill="#0B0D1C"/><rect x="5.0" y="11.0" width="3.2" height="10" rx="1.6" fill="url(#g)"/><rect x="9.8" y="8.0" width="3.2" height="16" rx="1.6" fill="url(#g)"/><rect x="14.6" y="5.0" width="3.2" height="22" rx="1.6" fill="url(#g)"/><rect x="19.4" y="8.0" width="3.2" height="16" rx="1.6" fill="url(#g)"/><rect x="24.2" y="11.0" width="3.2" height="10" rx="1.6" fill="url(#g)"/></svg>

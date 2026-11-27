@@ -1,10 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
-  <title>Temporant</title>
-  <rect width="1024" height="1024" fill="#0E1024"/>
-  <g transform="translate(292 180) scale(1.0476)">
-    <rect x="22" y="22" width="376" height="376" rx="76" fill="none" stroke="#FFB547" stroke-width="28"/>
-    <path fill="#F4F5FA" d="M 102 104 H 318 A 12 12 0 0 1 330 116 V 152 A 12 12 0 0 1 318 164 H 102 A 12 12 0 0 1 90 152 V 116 A 12 12 0 0 1 102 104 Z"/>
-    <path fill="#38D6C4" d="M 181 182 H 239 L 252 318 H 196 Z"/>
-  </g>
-  <text x="523" y="800" text-anchor="middle" font-family="Inter, Helvetica, Arial, sans-serif" font-size="88" font-weight="600" letter-spacing="22" fill="#F4F5FA">TEMP<tspan fill="#FFB547">O</tspan>RANT</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024"><title>Temporant</title>
+<defs><linearGradient id="g" gradientUnits="userSpaceOnUse" x1="309.2" y1="215.0" x2="709.6" y2="605.0"><stop offset="0" stop-color="#3B82F6"/><stop offset="0.5" stop-color="#8B5CF6"/><stop offset="1" stop-color="#EC4899"/></linearGradient><linearGradient id="t" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3B82F6"/><stop offset="0.5" stop-color="#8B5CF6"/><stop offset="1" stop-color="#EC4899"/></linearGradient></defs>
+<rect width="1024" height="1024" fill="#0B0D1C"/><rect x="309.20" y="358.00" width="41.60" height="104.00" rx="20.80" fill="url(#g)"/><rect x="369.00" y="319.00" width="41.60" height="182.00" rx="20.80" fill="url(#g)"/><rect x="428.80" y="267.00" width="41.60" height="286.00" rx="20.80" fill="url(#g)"/><rect x="488.60" y="215.00" width="41.60" height="390.00" rx="20.80" fill="url(#g)"/><rect x="548.40" y="267.00" width="41.60" height="286.00" rx="20.80" fill="url(#g)"/><rect x="608.20" y="319.00" width="41.60" height="182.00" rx="20.80" fill="url(#g)"/><rect x="668.00" y="358.00" width="41.60" height="104.00" rx="20.80" fill="url(#g)"/>
+<text x="512" y="850" text-anchor="middle" font-family="Mona Sans, Inter, system-ui, sans-serif" font-weight="600" font-size="150" letter-spacing="3" fill="#F5F6FB">temp<tspan fill="url(#t)">o</tspan>rant</text></svg>

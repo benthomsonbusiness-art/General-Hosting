@@ -1,6 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 420" fill="none">
-  <title>Temporant</title>
-  <rect x="22" y="22" width="376" height="376" rx="76" fill="none" stroke="#FFB547" stroke-width="28"/>
-  <path fill="#F4F5FA" d="M 102 104 H 318 A 12 12 0 0 1 330 116 V 152 A 12 12 0 0 1 318 164 H 102 A 12 12 0 0 1 90 152 V 116 A 12 12 0 0 1 102 104 Z"/>
-  <path fill="#38D6C4" d="M 181 182 H 239 L 252 318 H 196 Z"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><title>Temporant</title><defs><linearGradient id="g" gradientUnits="userSpaceOnUse" x1="22" y1="25" x2="176" y2="175"><stop offset="0" stop-color="#3B82F6"/><stop offset="0.5" stop-color="#8B5CF6"/><stop offset="1" stop-color="#EC4899"/></linearGradient></defs><rect x="22.00" y="80.00" width="16.00" height="40.00" rx="8.00" fill="url(#g)"/><rect x="45.00" y="65.00" width="16.00" height="70.00" rx="8.00" fill="url(#g)"/><rect x="68.00" y="45.00" width="16.00" height="110.00" rx="8.00" fill="url(#g)"/><rect x="91.00" y="25.00" width="16.00" height="150.00" rx="8.00" fill="url(#g)"/><rect x="114.00" y="45.00" width="16.00" height="110.00" rx="8.00" fill="url(#g)"/><rect x="137.00" y="65.00" width="16.00" height="70.00" rx="8.00" fill="url(#g)"/><rect x="160.00" y="80.00" width="16.00" height="40.00" rx="8.00" fill="url(#g)"/></svg>

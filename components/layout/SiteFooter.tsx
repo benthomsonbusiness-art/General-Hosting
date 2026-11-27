@@ -11,9 +11,9 @@ export function SiteFooter() {
     <footer id="site-footer" tabIndex={-1} data-surface="dark" className="border-t border-line bg-obsidian outline-none">
       <div className="wrap py-12">
         <div className="flex flex-wrap items-start justify-between gap-x-12 gap-y-8">
-          <Link href="/" className="inline-flex min-h-11 items-center gap-3" aria-label="Temporant home">
+          <Link href="/" className="inline-flex min-h-11 items-center gap-2" aria-label="Temporant home">
             <BrandMark className="h-10 w-10 shrink-0" />
-            <BrandWordmark className="text-[13px]" />
+            <BrandWordmark className="text-[21px]" />
           </Link>
           <nav aria-label="Footer">
             <ul className="flex max-w-[40rem] flex-wrap gap-x-6">
