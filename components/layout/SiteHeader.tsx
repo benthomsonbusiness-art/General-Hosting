@@ -96,19 +96,19 @@ export function SiteHeader({ items }: { items: NavItem[] }) {
           onClick={close}
         >
           <BrandMark className="h-9 w-9 shrink-0" />
-          <span className="inline lg:max-xl:hidden">
+          <span className="inline">
             <BrandWordmark tone="dark" className="min-w-0 truncate text-[19px] sm:text-[21px]" />
           </span>
         </Link>
 
-        <div className="hidden items-center gap-6 lg:flex">
-          <nav className="flex items-center gap-6" aria-label="Primary">
+        <div className="hidden items-center gap-4 lg:flex xl:gap-6">
+          <nav className="flex items-center gap-4 xl:gap-6" aria-label="Primary">
             {items.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 aria-current={current(item)}
-                className={`flex min-h-11 items-center text-[15px] underline-offset-4 hover:underline ${
+                className={`flex min-h-11 items-center text-[15px] whitespace-nowrap underline-offset-4 hover:underline ${
                   isCurrent(item) ? "underline" : ""
                 }`}
               >

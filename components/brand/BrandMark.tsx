@@ -41,7 +41,7 @@ export function BrandWordmark({ tone = "dark", className = "" }: { tone?: Tone; 
   const ink = tone === "light" ? "text-[#0B0D1C]" : "text-[#F5F6FB]";
 
   return (
-    <span className={`inline-block font-sans leading-none font-semibold tracking-[0.02em] ${ink} ${className}`}>
+    <span className={`inline-block font-sans leading-none font-semibold tracking-[0.02em] [font-variation-settings:"wght"_600] ${ink} ${className}`}>
       temp<span className="brand-gradient-text">o</span>rant
     </span>
   );

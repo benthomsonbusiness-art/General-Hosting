@@ -65,7 +65,7 @@ export default function HomePage() {
               How it works
             </Link>
           </div>
-          <p className="small mt-12 font-semibold tracking-[0.08em] text-cyan uppercase">Our goals for you</p>
+          <p className="small mt-12 font-semibold tracking-[0.08em] text-violet-hi uppercase">Our goals for you</p>
           <dl className="stats mt-3">
             {STATS.map((stat) => (
               <div key={stat.label} className="stat">

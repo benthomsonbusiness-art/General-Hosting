@@ -49,6 +49,7 @@
   --color-cyan: var(--cyan);
   --color-cyan-ink: var(--cyan-ink);
   --color-violet: var(--violet);
+  --color-violet-hi: var(--violet-hi);
   --color-error: var(--error);
   --color-line: var(--line);
   --color-body: var(--body);
@@ -1612,9 +1613,9 @@ input[type="range"]::-moz-range-thumb {
     gap: 12px;
     margin: 0 16px 16px;
     padding: 12px 14px;
-    border: 1px solid rgb(244 114 182 / 0.35);
+    border: 1px solid rgb(139 92 246 / 0.35);
     border-radius: 10px;
-    background: rgb(244 114 182 / 0.08);
+    background: rgb(139 92 246 / 0.08);
     color: var(--ivory-64);
     font-size: 13px;
     line-height: 1.4;
@@ -1627,7 +1628,7 @@ input[type="range"]::-moz-range-thumb {
     height: 28px;
     place-items: center;
     border-radius: 9999px;
-    background: var(--gold);
+    background: var(--violet-hi);
     color: var(--obsidian);
   }
 
@@ -1705,9 +1706,9 @@ input[type="range"]::-moz-range-thumb {
   }
 
   .scope-card[data-first] {
-    border-color: rgb(244 114 182 / 0.45);
+    border-color: rgb(139 92 246 / 0.45);
     box-shadow:
-      0 0 0 4px rgb(244 114 182 / 0.08),
+      0 0 0 4px rgb(139 92 246 / 0.08),
       0 30px 60px -40px rgb(0 0 0 / 0.8);
   }
 
@@ -1718,7 +1719,7 @@ input[type="range"]::-moz-range-thumb {
   }
 
   .scope-num {
-    color: rgb(245 246 251 / 0.35);
+    color: rgb(245 246 251 / 0.45);
     font-family: var(--font-mono);
     font-size: 44px;
     font-weight: 600;
@@ -1759,10 +1760,10 @@ input[type="range"]::-moz-range-thumb {
       height: 28px;
       place-items: center;
       transform: translate(50%, -50%);
-      border: 1px solid rgb(244 114 182 / 0.5);
+      border: 1px solid rgb(139 92 246 / 0.5);
       border-radius: 9999px;
       background: var(--obsidian);
-      color: var(--gold);
+      color: var(--violet-hi);
     }
   }
 
@@ -1890,7 +1891,7 @@ input[type="range"]::-moz-range-thumb {
 
   a.icard:hover {
     transform: translateY(-2px);
-    border-color: rgb(244 114 182 / 0.5);
+    border-color: rgb(139 92 246 / 0.5);
   }
 
   .icard-title {
@@ -1979,9 +1980,9 @@ input[type="range"]::-moz-range-thumb {
     height: 36px;
     place-items: center;
     border-radius: 8px;
-    background: linear-gradient(180deg, var(--gold-hi), var(--gold));
+    background: linear-gradient(180deg, var(--violet-hi), var(--violet-hi));
     color: var(--obsidian);
-    font-family: var(--font-wordmark);
+    font-family: var(--font-sans);
     font-size: 20px;
     font-weight: 600;
   }
@@ -2016,7 +2017,7 @@ input[type="range"]::-moz-range-thumb {
 
   .photo-card:hover {
     transform: translateY(-2px);
-    border-color: rgb(244 114 182 / 0.5);
+    border-color: rgb(139 92 246 / 0.5);
   }
 
   .photo-card-img {
@@ -2084,7 +2085,7 @@ input[type="range"]::-moz-range-thumb {
     align-items: baseline;
     gap: 8px;
     margin: 0;
-    color: var(--cyan);
+    color: var(--violet-hi);
     white-space: nowrap;
     font-size: clamp(2.25rem, 1.6rem + 2vw, 3.5rem);
     font-variation-settings: "wdth" 115, "wght" 640;
@@ -2315,8 +2316,8 @@ input[type="range"]::-moz-range-thumb {
   }
 
   .art-row[data-move] {
-    border-color: rgb(244 114 182 / 0.5);
-    background: rgb(244 114 182 / 0.1);
+    border-color: rgb(139 92 246 / 0.5);
+    background: rgb(139 92 246 / 0.1);
   }
 
   .art-row-time {
@@ -2339,7 +2340,7 @@ input[type="range"]::-moz-range-thumb {
   }
 
   .art-row[data-move] .art-row-state {
-    background: var(--gold);
+    background: var(--violet-hi);
     color: var(--obsidian);
   }
 
