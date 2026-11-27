@@ -4,7 +4,6 @@ import {
   ChartLine,
   ClipboardList,
   Clock,
-  CodeXml,
   CreditCard,
   Database,
   FileText,
@@ -61,7 +60,7 @@ const FALLBACK: Record<FallbackGlyph, LucideIcon> = {
 
 /** House glyphs for steps that are not a branded app. */
 const HOUSE: Record<Glyph, LucideIcon> = {
-  code: CodeXml,
+  code: ListChecks,
   clock: Clock,
   webhook: Webhook,
   form: ClipboardList,
@@ -71,7 +70,7 @@ const HOUSE: Record<Glyph, LucideIcon> = {
 /** When a step names no app at all, the glyph says what kind of step it is. */
 const BY_KIND: Partial<Record<NodeKind, LucideIcon>> = {
   trigger: Zap,
-  deterministic: CodeXml,
+  deterministic: ListChecks,
   output: Send,
 };
 
@@ -114,7 +113,7 @@ export function AppMark({
       </span>
     );
   }
-  const Icon = app ? (isAppSlug(app) ? FALLBACK[APPS[app].glyph] : HOUSE[app]) : (kind && BY_KIND[kind]) || CodeXml;
+  const Icon = app ? (isAppSlug(app) ? FALLBACK[APPS[app].glyph] : HOUSE[app]) : (kind && BY_KIND[kind]) || ListChecks;
   return (
     <span className="flow-mark flow-glyph">
       <Icon aria-hidden focusable="false" size={glyph} strokeWidth={1.5} />

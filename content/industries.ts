@@ -31,7 +31,7 @@ export const INDUSTRIES: Industry[] = [
     slug: "electrical",
     name: "Electrical",
     line: "Lots of small jobs, each one wanting a quick answer.",
-    hours: ["Missed calls on the job", "Web leads", "Rescheduled visits"],
+    hours: ["Missed calls on the job", "Web leads that wait", "Customers not home"],
     workflowIds: ["missed-call-text-back", "web-lead-booking", "appointment-reminders"],
     stays: "Safety questions and permits.",
     keywords: ["electrician", "panel", "EV charger", "outlets", "wiring"],

@@ -24,9 +24,10 @@ export type Service = {
 };
 
 const SETUP: Service["steps"] = [
-  { title: "We look", body: "We see how calls and leads come in today." },
-  { title: "We set it up", body: "In the tools you already use." },
-  { title: "We test it with you", body: "Two weeks next to your office." },
+  { title: "Look", body: "How you book today" },
+  { title: "Plan", body: "Write the texts with you" },
+  { title: "Test", body: "Two weeks of practice runs" },
+  { title: "Go live", body: "It's yours" },
 ];
 
 const CTA = { label: "Request a booking audit", href: "/contact" };
@@ -44,9 +45,9 @@ export const SERVICES: Service[] = [
     dek: "When you can't pick up, the caller gets a text back in minutes with times you're free. You approve it with one tap.",
     cta: CTA,
     areas: [
-      { title: "Text back in minutes", body: "Before they call someone else." },
+      { title: "Text back in minutes", body: "Once you approve, before they call someone else." },
       { title: "Real open times", body: "Pulled from your schedule." },
-      { title: "Day and night", body: "Even when you're on a job." },
+      { title: "Day and night", body: "A text is ready for you, even on a job." },
       { title: "You approve", body: "One tap from your phone." },
     ],
     steps: SETUP,
@@ -58,7 +59,7 @@ export const SERVICES: Service[] = [
       },
       {
         q: "Do I need a new phone number?",
-        a: "No. It works with the business number you already have.",
+        a: "Usually not. Missed calls are forwarded from the number you already have. We check this in the audit.",
       },
       {
         q: "What if I don't answer in time?",
@@ -69,12 +70,12 @@ export const SERVICES: Service[] = [
   },
   {
     slug: "instant-booking",
-    name: "Instant booking",
+    name: "Instant booking for web leads",
     kind: "secondary",
-    summary: "Website leads get a time and a booked job, fast.",
-    metaTitle: "Instant booking for website leads",
+    summary: "Web leads get a time and a booked job, fast.",
+    metaTitle: "Instant booking for web leads",
     metaDescription:
-      "When someone fills out your website form, we check your area, pick a tech and an open time, and text them. You approve it and the job lands on your schedule.",
+      "When someone fills out the form on your website, we check your area, pick a tech and an open time, and text them. You approve, and the job is on your schedule.",
     h1: "Book web leads while they're still looking",
     dek: "When someone fills out your website form, we find an open time and text them. You approve, and the job is booked.",
     cta: CTA,

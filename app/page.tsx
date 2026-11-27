@@ -33,7 +33,7 @@ const QUOTE = TESTIMONIALS[0];
 const STATS = [
   { prefix: "Up to", value: "80%", label: "less time answering new leads" },
   { prefix: "Up to", value: "50%", label: "fewer no-shows" },
-  { prefix: "", value: "5 hrs", label: "a week back on scheduling" },
+  { prefix: "Up to", value: "5 hrs", label: "a week back on scheduling" },
   { prefix: "", value: "100%", label: "of texts approved by you" },
 ];
 
@@ -65,7 +65,8 @@ export default function HomePage() {
               How it works
             </Link>
           </div>
-          <dl className="stats mt-12">
+          <p className="small mt-12 font-semibold tracking-[0.08em] text-gold uppercase">Our goals for you</p>
+          <dl className="stats mt-3">
             {STATS.map((stat) => (
               <div key={stat.label} className="stat">
                 <dt className="stat-label">{stat.label}</dt>

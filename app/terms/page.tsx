@@ -21,7 +21,7 @@ export default function TermsPage() {
       <LegalSection heading="Using this site">
         <p>
           Browsing the site does not create a client relationship, a retainer, or any other
-          engagement with Valentini Systems
+          work with Valentini Systems.
         </p>
       </LegalSection>
       <LegalSection heading="Inquiries">

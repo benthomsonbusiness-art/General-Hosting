@@ -68,7 +68,7 @@ const ICONS: Record<string, LucideIcon> = {
   "One focus": Layers,
   "You own it": ShieldCheck,
   // Principles
-  "Simple rules first": GitBranch,
+  "Checks first, then writes": GitBranch,
   "AI only writes drafts": Bot,
   "You approve every text": UserCheck,
   "You own everything": ShieldCheck,

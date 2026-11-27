@@ -41,7 +41,7 @@ export default function ContactPage() {
           </div>
         </div>
         <div data-surface="light" className="bg-ivory px-5 py-10 text-ink sm:px-8 lg:col-span-7 lg:px-16 lg:py-16">
-          <h2 className="h3">Describe the process</h2>
+          <h2 className="h3">Tell us what&apos;s going wrong</h2>
           {INQUIRY_LIVE ? null : (
             <p className="mt-4 max-w-[40rem] border-l-2 border-error pl-4 text-error">{CONTACT.offline}</p>
           )}

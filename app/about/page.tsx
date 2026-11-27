@@ -32,7 +32,7 @@ const GLANCE = [
   { title: "Morristown, New Jersey", body: "Working in person and remotely." },
   { title: "Founder-led", body: "You work with Ben directly." },
   { title: "One focus", body: "More booked jobs for service businesses." },
-  { title: "You own it", body: "Code, accounts and logs stay yours." },
+  { title: "You own it", body: "Your accounts and records stay yours." },
 ];
 
 export default function AboutPage() {

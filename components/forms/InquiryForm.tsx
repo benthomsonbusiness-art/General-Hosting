@@ -223,7 +223,7 @@ function InquiryFields({
           </select>
         </Field>
         <div className="sm:col-span-2">
-          <Field label="Which process do you want looked at?" id="note" error={errors.note}>
+          <Field label="Where do jobs slip away?" id="note" error={errors.note}>
             <textarea
               id="note"
               name="note"

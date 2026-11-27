@@ -1,4 +1,4 @@
-import { CodeXml, Database, Sparkles, UserCheck } from "lucide-react";
+import { ListChecks, Database, Sparkles, UserCheck } from "lucide-react";
 import { HOME } from "@/content/pages";
 
 const ICON = { "aria-hidden": true, focusable: "false", strokeWidth: 1.5 } as const;
@@ -12,7 +12,7 @@ const NODES = [
     key="rule"
     className="relative z-10 grid h-12 place-items-center border border-[rgb(247_244_236_/_0.16)] bg-obsidian text-ivory/64 w-12"
   >
-    <CodeXml {...ICON} size={22} />
+    <ListChecks {...ICON} size={22} />
   </span>,
   <span
     key="ai"

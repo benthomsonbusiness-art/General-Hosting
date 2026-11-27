@@ -7,7 +7,7 @@ import { SERVICES, serviceHref } from "@/content/services";
 /** One line per service; the service pages carry the detail. */
 const SHORT: Record<string, string> = {
   "missed-calls": "Every missed call gets a text back in minutes.",
-  "instant-booking": "Website leads get a time and a booked job, fast.",
+  "instant-booking": "Web leads get a time and a booked job, fast.",
   reminders: "Customers confirm by text. Fewer no-shows.",
 };
 

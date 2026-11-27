@@ -123,10 +123,10 @@ export const MAX_COLUMNS = 6;
 export const MAX_ATTACHED = 5;
 
 export const PORT_LABEL: Record<Attachment["port"], string> = {
-  model: "Model",
-  memory: "Memory",
-  tools: "Tools",
-  calls: "Calls",
+  model: "Writes",
+  memory: "Remembers",
+  tools: "Looks up",
+  calls: "Gets",
 };
 
 /**

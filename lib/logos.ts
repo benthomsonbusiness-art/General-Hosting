@@ -308,5 +308,5 @@ export function markAllowed(slug: AppSlug): boolean {
 /** Display name for an app slug or glyph. Glyph steps name themselves in their operation line. */
 export function appName(value: AppSlug | Glyph): string {
   if (isAppSlug(value)) return APPS[value].name;
-  return { code: "Code", clock: "Schedule", webhook: "Webhook", form: "Web form", http: "HTTP" }[value];
+  return { code: "Rules", clock: "Schedule", webhook: "Webhook", form: "Web form", http: "HTTP" }[value];
 }

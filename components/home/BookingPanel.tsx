@@ -27,7 +27,7 @@ export function BookingPanel() {
         <span className="repo-path">Bookings · this week</span>
         <span className="repo-badge">
           <CalendarCheck aria-hidden size={12} strokeWidth={2} />
-          Auto-confirmed
+          Approved by you
         </span>
       </div>
       <div className="cal">

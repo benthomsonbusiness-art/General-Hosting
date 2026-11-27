@@ -44,7 +44,7 @@ function entries(): SearchEntry[] {
       title: "How it works",
       type: "Page",
       summary: APPROACH_PAGE.dek,
-      keywords: "approach method process principles estimator hours faq",
+      keywords: "how it works setup steps audit questions",
     },
     {
       url: "/about",

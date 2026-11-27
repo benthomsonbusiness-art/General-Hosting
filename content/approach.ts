@@ -1,7 +1,7 @@
 export type Faq = { q: string; a: string };
 
 export const PRINCIPLES: { title: string; short: string }[] = [
-  { title: "Simple rules first", short: "Same input, same answer." },
+  { title: "Checks first, then writes", short: "Your area and schedule, every time." },
   { title: "AI only writes drafts", short: "It never sends anything." },
   { title: "You approve every text", short: "One tap from your phone." },
   { title: "You own everything", short: "It runs in your accounts." },
@@ -25,8 +25,8 @@ export const METHOD: { title: string; line: string; happens: string; see: string
   },
   {
     title: "Test",
-    line: "Run it next to your office",
-    happens: "It runs next to your office for two weeks and sends nothing.",
+    line: "Two weeks of practice runs",
+    happens: "Two weeks of practice runs. Nothing goes to customers.",
     see: "What it would have sent.",
     approve: "Going live.",
   },

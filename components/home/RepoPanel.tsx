@@ -1,13 +1,11 @@
-import { FileText, Folder, GitBranch, Lock } from "lucide-react";
+import { FileText, Folder, Lock } from "lucide-react";
 
 const ROWS: { name: string; note: string; depth: number; file?: boolean }[] = [
-  { name: "tools/", note: "Your three tools", depth: 0 },
-  { name: "missed-calls/", note: "Missed call text-back", depth: 1 },
-  { name: "booking/", note: "Instant booking", depth: 1 },
-  { name: "reminders/", note: "Appointment reminders", depth: 1 },
-  { name: "texts/", note: "Every text, in plain words", depth: 0 },
-  { name: "history/", note: "Every text you approved", depth: 0 },
-  { name: "HOW-TO.md", note: "Simple instructions for your team", depth: 0, file: true },
+  { name: "Missed call texts", note: "Your wording", depth: 0 },
+  { name: "Booking rules", note: "Your area, your techs", depth: 0 },
+  { name: "Reminder texts", note: "Your wording", depth: 0 },
+  { name: "Every text sent", note: "Who approved it, and when", depth: 0 },
+  { name: "How-to guide", note: "Simple steps for your team", depth: 0, file: true },
 ];
 
 /** The handover, drawn as the repository a client receives: what each part is, in plain words. */
@@ -20,16 +18,11 @@ export function RepoPanel() {
           <span />
           <span />
         </span>
-        <span className="repo-path">your-company/automations</span>
+        <span className="repo-path">Your booking tools</span>
         <span className="repo-badge">
           <Lock aria-hidden size={12} strokeWidth={2} />
           Private · yours
         </span>
-      </div>
-      <div className="repo-branch">
-        <GitBranch aria-hidden size={14} strokeWidth={1.75} />
-        main
-        <span className="repo-branch-note">Yours to keep</span>
       </div>
       <ul className="repo-rows">
         {ROWS.map((row) => (

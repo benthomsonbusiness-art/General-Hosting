@@ -193,7 +193,7 @@ export const WORKFLOWS: Workflow[] = [
           claude("text-model"),
           {
             id: "find-client",
-            label: "Look up the caller",
+            label: "Find the caller",
             port: "tools",
             app: "jobber",
             operation: "Find client",
@@ -284,7 +284,7 @@ export const WORKFLOWS: Workflow[] = [
         id: "web-lead",
         label: "New form on your website",
         kind: "trigger",
-        app: { app: "form", operation: "New request", alternatives: ["Google ads", "Facebook ads", "Typeform"] },
+        app: { app: "form", operation: "New request", alternatives: ["Google ads", "Your booking page", "Typeform"] },
         does: "Catches every form the moment it comes in, even at night.",
         guardrail: "Spam is filtered out.",
         failure: "If a form is broken, your office is told.",
@@ -295,7 +295,7 @@ export const WORKFLOWS: Workflow[] = [
         id: "area-check",
         label: "Check you serve the area",
         kind: "deterministic",
-        app: { app: "code", operation: "Zip and job type", alternatives: [] },
+        app: { app: "code", operation: "Zip and job", alternatives: [] },
         does: "Checks the zip code is in your service area and the job is work you do.",
         guardrail: "Simple rules you can change any time.",
         failure: "If the zip is missing, your office gets the lead.",
@@ -311,7 +311,7 @@ export const WORKFLOWS: Workflow[] = [
           claude("match-model"),
           {
             id: "find-customer",
-            label: "Look up the customer",
+            label: "Find the customer",
             port: "tools",
             app: "servicetitan",
             operation: "Customer",
@@ -321,7 +321,7 @@ export const WORKFLOWS: Workflow[] = [
           },
           {
             id: "tech-skills",
-            label: "See who can do the job",
+            label: "Find the right tech",
             port: "tools",
             app: "servicetitan",
             operation: "Techs",
@@ -351,7 +351,7 @@ export const WORKFLOWS: Workflow[] = [
         payload: sample({ tech: "M. Ortiz", time: "Tue 10-12", confidence: 0.88 }),
       },
       {
-        id: "csr-approves",
+        id: "approve-booking",
         label: "You approve the booking",
         kind: "human",
         does: "Shows you the lead, the tech, the time and the text in one message.",
@@ -470,7 +470,7 @@ export const WORKFLOWS: Workflow[] = [
         }),
       },
       {
-        id: "dispatcher-approves",
+        id: "approve-list",
         label: "You approve the list",
         kind: "human",
         does: "Shows you tomorrow's list and the reminders in one message.",

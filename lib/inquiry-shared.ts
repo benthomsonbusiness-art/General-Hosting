@@ -1,14 +1,20 @@
 /** Client-safe half of the inquiry contract: constants, types and validation. */
 
-export const PRACTICE_INTERESTS = ["Booking Automation", "Missed Call Text-back", "Appointment Reminders"] as const;
+export const PRACTICE_INTERESTS = [
+  "Booking Automation",
+  "Missed Call Text-back",
+  "Appointment Reminders",
+  "Not Sure Yet",
+] as const;
 
 export type PracticeInterest = (typeof PRACTICE_INTERESTS)[number];
 
 /** What the form shows. The values above are stored and mapped from ?practice=, so they never change. */
 export const PRACTICE_LABELS: Record<PracticeInterest, string> = {
-  "Booking Automation": "Instant booking for web leads, or not sure yet",
+  "Booking Automation": "Instant booking for web leads",
   "Missed Call Text-back": "Missed call text-back",
   "Appointment Reminders": "Appointment reminders",
+  "Not Sure Yet": "Not sure yet",
 };
 
 export const HONEYPOT_FIELD = "fax_number";
