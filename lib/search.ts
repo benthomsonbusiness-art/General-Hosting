@@ -1,4 +1,4 @@
-export type SearchType = "Page" | "Service" | "Industry" | "Workflow" | "Insight";
+export type SearchType = "Page" | "Service" | "Industry" | "Workflow";
 
 export type SearchEntry = {
   url: string;
@@ -13,7 +13,6 @@ export const SEARCH_GROUPS: { type: SearchType; heading: string }[] = [
   { type: "Service", heading: "Services" },
   { type: "Industry", heading: "Industries" },
   { type: "Workflow", heading: "Workflows" },
-  { type: "Insight", heading: "Insights" },
 ];
 
 function words(text: string): string[] {

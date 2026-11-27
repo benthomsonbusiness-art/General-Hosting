@@ -1,7 +1,7 @@
 /** Client-safe half of the inquiry contract: constants, types and validation. */
 
 export const PRACTICE_INTERESTS = [
-  "Booking Automation",
+  "Instant Booking",
   "Missed Call Text-back",
   "Appointment Reminders",
   "Not Sure Yet",
@@ -11,7 +11,7 @@ export type PracticeInterest = (typeof PRACTICE_INTERESTS)[number];
 
 /** What the form shows. The values above are stored and mapped from ?practice=, so they never change. */
 export const PRACTICE_LABELS: Record<PracticeInterest, string> = {
-  "Booking Automation": "Instant booking for web leads",
+  "Instant Booking": "Instant booking for web leads",
   "Missed Call Text-back": "Missed call text-back",
   "Appointment Reminders": "Appointment reminders",
   "Not Sure Yet": "Not sure yet",
@@ -46,7 +46,7 @@ export function practiceFromQuery(value: string | null | undefined): PracticeInt
   const normalized = (value ?? "").trim().toLowerCase();
   if (normalized === "reminders") return "Appointment Reminders";
   if (normalized === "missed-calls") return "Missed Call Text-back";
-  return "Booking Automation";
+  return "Instant Booking";
 }
 
 export function isRecord(value: unknown): value is Record<string, unknown> {

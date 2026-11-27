@@ -16,9 +16,9 @@ export default function PrivacyPage() {
     >
       <LegalSection heading="Information this site may collect">
         <p>
-          The inquiry form asks for a name, a work email, a company and role, a practice interest,
-          and a description of the workflow. The final notice will also cover ordinary technical
-          data such as browser type and pages visited. The site saves one motion setting in your browser, and it is not sent anywhere. This placeholder does not publish those
+          The contact form asks for a name, a work email, a company and role, which tool you need,
+          and where jobs slip away. The final notice will also cover ordinary technical data such as
+          browser type and pages visited. This placeholder does not publish those
           details as a policy.
         </p>
       </LegalSection>

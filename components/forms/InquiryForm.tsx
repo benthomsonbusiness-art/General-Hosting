@@ -23,7 +23,7 @@ type Status = "idle" | "submitting" | "success" | "error";
 
 export function InquiryForm() {
   return (
-    <Suspense fallback={<InquiryFields initialPractice="Booking Automation" />}>
+    <Suspense fallback={<InquiryFields initialPractice="Instant Booking" />}>
       <InquiryFromQuery />
     </Suspense>
   );

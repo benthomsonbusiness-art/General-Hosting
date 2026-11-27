@@ -11,7 +11,7 @@ const valid = {
   fullName: "A. Rivera",
   email: "rivera@harborline.example.com",
   companyRole: "Harborline, owner",
-  practice: "Booking Automation",
+  practice: "Instant Booking",
   note: "Quoting runs through one inbox.",
 };
 
@@ -175,5 +175,5 @@ test("header injection is collapsed to one line", () => {
 test("practice query still maps", () => {
   assert.equal(practiceFromQuery("reminders"), "Appointment Reminders");
   assert.equal(practiceFromQuery("missed-calls"), "Missed Call Text-back");
-  assert.equal(practiceFromQuery(null), "Booking Automation");
+  assert.equal(practiceFromQuery(null), "Instant Booking");
 });
