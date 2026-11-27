@@ -2,9 +2,8 @@ import { existsSync } from "node:fs";
 import { join } from "node:path";
 import Image from "next/image";
 import Link from "next/link";
-import { IconCards } from "@/components/graphics/Graphics";
-import { HelpCta } from "@/components/layout/HelpCta";
 import { ClosingCta } from "@/components/layout/ClosingCta";
+import { HelpCta } from "@/components/layout/HelpCta";
 import { Container, Section } from "@/components/layout/Section";
 import { HardwareFrame } from "@/components/media/HardwareFrame";
 import { Breadcrumbs } from "@/components/nav/Breadcrumbs";
@@ -17,7 +16,6 @@ export const metadata = pageMetadata({
   path: "/about",
 });
 
-/** The founder photograph is never generated. The slot appears only once the real file is added. */
 const FOUNDER_PHOTO = "/images/about-founder.jpg";
 
 function hasFounderPhoto(): boolean {
@@ -28,13 +26,6 @@ function hasFounderPhoto(): boolean {
   }
 }
 
-const GLANCE = [
-  { title: "Morristown, New Jersey", body: "Working in person and remotely." },
-  { title: "Founder-led", body: "You work with Ben directly." },
-  { title: "One focus", body: "More booked jobs for service businesses." },
-  { title: "You own it", body: "Your accounts and records stay yours." },
-];
-
 export default function AboutPage() {
   const photo = hasFounderPhoto();
   return (
@@ -44,11 +35,12 @@ export default function AboutPage() {
           <div className="lg:col-span-7">
             <Breadcrumbs items={[{ name: "About the firm", path: "/about" }]} />
             <h1 id="about-title" className="h1 mt-6">
-              About the firm
+              About Temporant
             </h1>
+            <p className="lead mt-5 max-w-[38rem] text-muted">{ABOUT.dek}</p>
             <HelpCta />
           </div>
-          <div className="relative aspect-[4/3] overflow-hidden rounded-[14px] border border-line lg:col-span-5">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-[10px] border border-line lg:col-span-5">
             <Image
               src="/images/key-hero.jpg"
               alt="A copper push key set into a dark machined panel, waiting to be pressed."
@@ -80,21 +72,10 @@ export default function AboutPage() {
             </h2>
             <p className="mt-2 text-slate">Founder</p>
             <p className="measure mt-5 text-ink">{ABOUT.founder}</p>
-            <p className="mt-8 text-slate">{ABOUT.where}</p>
-            <Link href="/how-it-works" className="text-link mt-2 inline-flex min-h-11 items-center">
-              How it works
+            <p className="mt-6 text-slate">{ABOUT.where}</p>
+            <Link href="/how-it-works" className="text-link mt-4 inline-flex min-h-11 items-center">
+              See how we work →
             </Link>
-          </div>
-        </Container>
-      </Section>
-
-      <Section surface="forest" labelledBy="glance">
-        <Container>
-          <h2 id="glance" className="h2">
-            At a glance
-          </h2>
-          <div className="mt-10">
-            <IconCards columns={4} items={GLANCE} />
           </div>
         </Container>
       </Section>

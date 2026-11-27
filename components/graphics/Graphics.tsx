@@ -2,7 +2,6 @@ import {
   Activity,
   ArrowRight,
   BarChart3,
-  Bot,
   Building2,
   CalendarCheck,
   ClipboardList,
@@ -12,17 +11,18 @@ import {
   Hammer,
   Handshake,
   KeyRound,
+  Layers,
   ListChecks,
   Map,
   MapPin,
-  Layers,
-  UserRound,
   Megaphone,
+  MessageSquare,
   PenLine,
   PhoneMissed,
   ShieldCheck,
   Target,
   UserCheck,
+  UserRound,
   Users,
   Workflow,
   Wrench,
@@ -31,13 +31,10 @@ import {
 import Link from "next/link";
 import { ENGAGEMENTS } from "@/content/engagements";
 
-/** One icon per known title; anything unlisted falls back by position. */
 const ICONS: Record<string, LucideIcon> = {
-  // Getting started
   "Booking audit": ClipboardList,
   Setup: Hammer,
   "Ongoing care": Activity,
-  // Four steps
   Look: Map,
   Plan: PenLine,
   Test: Wrench,
@@ -45,33 +42,29 @@ const ICONS: Record<string, LucideIcon> = {
   "We look": Map,
   "We set it up": Hammer,
   "We test it with you": Handshake,
-  // Services
   "Missed call text-back": PhoneMissed,
   "Instant booking": CalendarCheck,
   "Instant booking for web leads": CalendarCheck,
   "Appointment reminders": Megaphone,
   "By industry": Building2,
   "How it works": Workflow,
-  // What you get
   "Text back in minutes": Megaphone,
   "Real open times": ListChecks,
-  "Day and night": Gauge,
+  "During classes or after hours": Gauge,
   "You approve": UserCheck,
-  "Area check": Map,
-  "Right tech": Users,
+  "Fit check": Map,
+  "Right calendar": Users,
   "Open time": ListChecks,
   "Booked for you": FileCheck,
-  "Day-before text": Megaphone,
+  "Recurring classes": CalendarCheck,
   "Reply YES": UserCheck,
-  "Changes flagged": GitBranch,
-  // About
+  "Changes caught early": GitBranch,
   "Morristown, New Jersey": MapPin,
   "Founder-led": UserRound,
   "One focus": Layers,
   "You own it": ShieldCheck,
-  // Principles
   "Checks first, then writes": GitBranch,
-  "AI only writes drafts": Bot,
+  "AI only writes drafts": MessageSquare,
   "You approve every text": UserCheck,
   "You own everything": ShieldCheck,
   "Clear instructions": FileCheck,
@@ -83,58 +76,41 @@ export function iconFor(title: string, index = 0): LucideIcon {
   return ICONS[title] ?? FALLBACK[index % FALLBACK.length];
 }
 
-/** The three engagement stages as large connected cards. */
+/** The three engagement stages as clean architectural columns separated by hairlines. */
 export function ScopeSteps() {
   const stages = ENGAGEMENTS.stages;
   return (
     <ol className="scope">
-      {stages.map((stage, index) => {
-        const Icon = iconFor(stage.name, index);
-        return (
-          <li key={stage.id} className="scope-card" data-first={index === 0 ? "" : undefined}>
-            <span className="scope-top">
-              <span className="g-icon">
-                <Icon aria-hidden size={22} strokeWidth={1.5} />
-              </span>
-              <span className="scope-num" aria-hidden>0{index + 1}</span>
-            </span>
-            <h3 className="scope-name">{stage.name}</h3>
-            <span className="g-chip">{stage.shape}</span>
-            <p className="scope-line">{stage.delivers}</p>
-            {index < stages.length - 1 ? (
-              <span className="scope-arrow" aria-hidden>
-                <ArrowRight size={18} strokeWidth={1.75} />
-              </span>
-            ) : null}
-          </li>
-        );
-      })}
+      {stages.map((stage, index) => (
+        <li key={stage.id} className="scope-card">
+          <div className="flex items-baseline justify-between gap-3">
+            <span className="font-mono text-[13px] text-muted">0{index + 1}</span>
+            <span className="font-mono text-[13px] text-muted">{stage.shape}</span>
+          </div>
+          <h3 className="scope-name">{stage.name}</h3>
+          <p className="scope-line">{stage.delivers}</p>
+        </li>
+      ))}
     </ol>
   );
 }
 
-/** Numbered steps on one line: an icon, a title and one short line each. */
+/** Numbered steps on one line: clean number, title, and one short line. */
 export function StepTrack({ steps }: { steps: { title: string; line: string }[] }) {
   return (
-    <ol className="track" style={{ "--n": steps.length } as React.CSSProperties}>
-      {steps.map((step, index) => {
-        const Icon = iconFor(step.title, index);
-        return (
-          <li key={step.title} className="track-step">
-            <span className="track-dot">
-              <Icon aria-hidden size={22} strokeWidth={1.5} />
-              <span className="track-num">{index + 1}</span>
-            </span>
-            <h3 className="track-title">{step.title}</h3>
-            <p className="track-line">{step.line}</p>
-          </li>
-        );
-      })}
+    <ol className="grid gap-8 border-t border-line pt-8 sm:grid-cols-2 lg:grid-cols-4">
+      {steps.map((step, index) => (
+        <li key={step.title} className="space-y-2">
+          <span className="font-mono text-[13px] text-gold">0{index + 1}</span>
+          <h3 className="h4">{step.title}</h3>
+          <p className="text-[15px] text-muted">{step.line}</p>
+        </li>
+      ))}
     </ol>
   );
 }
 
-/** A grid of icon cards. `body` is optional; keep it to one short line. */
+/** Clean list/grid without beveled icon boxes or neon hover cards. */
 export function IconCards({
   items,
   columns = 3,
@@ -144,13 +120,9 @@ export function IconCards({
 }) {
   return (
     <ul className="icards" data-cols={columns}>
-      {items.map((item, index) => {
-        const Icon = iconFor(item.title, index);
+      {items.map((item) => {
         const inner = (
           <>
-            <span className="g-icon">
-              <Icon aria-hidden size={22} strokeWidth={1.5} />
-            </span>
             <span className="icard-title">{item.title}</span>
             {item.body ? <span className="icard-body">{item.body}</span> : null}
             {item.href ? (
@@ -176,7 +148,6 @@ export function IconCards({
   );
 }
 
-/** A slow, endless strip of client names. Repeats the list so the strip is always full. */
 export function NameMarquee({ names, label }: { names: { name: string; place?: string }[]; label: string }) {
   const minimum = 8;
   const row = Array.from({ length: Math.max(minimum, names.length) }, (_, i) => names[i % names.length]);

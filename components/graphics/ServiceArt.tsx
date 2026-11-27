@@ -1,12 +1,11 @@
-import { Bot, CalendarCheck, Check, Globe, MessageSquare, PhoneMissed, RotateCcw, UserCheck } from "lucide-react";
+import { CalendarCheck, Check, Globe, MessageSquare, PhoneMissed, RotateCcw, UserCheck } from "lucide-react";
 
-/** Instant booking: a website form becomes a booked job, with you approving the text. */
+/** Instant booking: a website form becomes a booked slot, with you approving the text. */
 function BookingArt() {
   const steps = [
     { icon: Globe, label: "Web form" },
-    { icon: Bot, label: "AI drafts", ai: true },
+    { icon: MessageSquare, label: "Drafts", ai: true },
     { icon: UserCheck, label: "You approve", gold: true },
-    { icon: MessageSquare, label: "Text sent" },
     { icon: CalendarCheck, label: "Booked" },
   ];
   return (
@@ -27,17 +26,17 @@ function BookingArt() {
   );
 }
 
-/** Reminders: tomorrow's visits, confirmed by text, one reschedule flagged. */
+/** Reminders: tomorrow's recurring classes and appointments confirmed by text. */
 function RemindersArt() {
   const rows = [
-    { time: "8-10 a.m.", job: "AC tune-up", state: "ok" },
-    { time: "10-12", job: "Water heater", state: "ok" },
-    { time: "1-3 p.m.", job: "Panel quote", state: "move" },
-    { time: "3-5 p.m.", job: "Drain clean", state: "ok" },
+    { time: "6:00 a.m.", job: "Strength class (14)", state: "ok" },
+    { time: "9:30 a.m.", job: "Intro session", state: "ok" },
+    { time: "12:00 p.m.", job: "Pilates reformer", state: "move" },
+    { time: "5:30 p.m.", job: "Small group", state: "ok" },
   ];
   return (
     <span className="art-list">
-      <span className="art-list-head">Tomorrow</span>
+      <span className="art-list-head">Tomorrow&apos;s roster</span>
       {rows.map((row) => (
         <span key={row.time} className="art-row" data-move={row.state === "move" ? "" : undefined}>
           <span className="art-row-time">{row.time}</span>
@@ -57,14 +56,14 @@ function TextBackArt() {
     <span className="art-thread">
       <span className="art-call">
         <PhoneMissed size={16} strokeWidth={1.75} />
-        Missed call, 6:12 p.m.
+        Missed call, 6:15 p.m.
       </span>
       <span className="art-bubble" data-out="">
-        Sorry we missed you. We can come today 2 to 4 or tomorrow 8 to 10. Which works?
+        Sorry we missed you. Intro spots are open tomorrow at 7 a.m. or 5:30 p.m. Which works?
       </span>
-      <span className="art-bubble">Tomorrow 8 to 10 please</span>
+      <span className="art-bubble">Tomorrow 5:30 please</span>
       <span className="art-bubble" data-out="">
-        You&apos;re booked. See you tomorrow.
+        You&apos;re on the list. See you tomorrow.
       </span>
     </span>
   );

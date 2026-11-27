@@ -29,20 +29,20 @@ export function InquiryForm() {
   );
 }
 
-const TRADE_NAMES: Record<string, string> = {
-  hvac: "HVAC",
-  plumbing: "Plumbing",
-  electrical: "Electrical",
-  roofing: "Roofing",
+const BUSINESS_NAMES: Record<string, string> = {
+  gyms: "Gym or fitness studio",
+  recruiting: "Recruiting and staffing",
+  events: "Events and entertainment",
   landscaping: "Lawn and landscaping",
-  cleaning: "Cleaning and pest control",
+  plumbing: "Plumbing and home services",
+  appointments: "Studio or local service",
 };
 
 function starterNote(trade: string | null, missed: string | null): string {
-  const cleanTrade = trade ? (TRADE_NAMES[trade.toLowerCase()] ?? trade.slice(0, 40)) : "";
+  const cleanType = trade ? (BUSINESS_NAMES[trade.toLowerCase()] ?? trade.slice(0, 40)) : "";
   const count = missed ? Number.parseInt(missed, 10) : Number.NaN;
   const parts: string[] = [];
-  if (cleanTrade) parts.push(`Trade: ${cleanTrade}.`);
+  if (cleanType) parts.push(`Business: ${cleanType}.`);
   if (Number.isFinite(count) && count > 0 && count <= 200) {
     parts.push(`Roughly ${count} missed calls or slow web leads a week.`);
   }
@@ -247,7 +247,7 @@ function InquiryFields({
           </select>
         </Field>
         <div className="sm:col-span-2">
-          <Field label="Where do jobs slip away?" id="note" error={errors.note}>
+          <Field label="Where do bookings slip?" id="note" error={errors.note}>
             <textarea
               id="note"
               name="note"
@@ -291,7 +291,6 @@ function Field({
     <div>
       <label htmlFor={id} className="mb-2 block text-[15px] font-semibold text-heading">
         {label}
-        <span className="font-normal text-slate"> (required)</span>
       </label>
       {children}
       {error ? (

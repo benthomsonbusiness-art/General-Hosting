@@ -1,6 +1,5 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useState, type ReactNode } from "react";
 
@@ -12,7 +11,7 @@ export type WorkflowTabSlot = {
 };
 
 /**
- * Home workflow explorer switching between server-rendered FlowPlayer + FlowDiagram slots.
+ * Clean workflow switcher on the home page with zero redundant kickers or duplicate paragraphs.
  */
 export function HomeWorkflowStage({ items }: { items: WorkflowTabSlot[] }) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -22,20 +21,16 @@ export function HomeWorkflowStage({ items }: { items: WorkflowTabSlot[] }) {
 
   return (
     <div>
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p className="small font-semibold tracking-[0.08em] text-violet-hi uppercase">Interactive workflow stage</p>
-          <h2 id="hero-flow" className="h2 mt-2">
-            Watch a job move from lead to schedule
-          </h2>
-        </div>
-        <Link href={`/workflows/${current.id}`} className="text-link inline-flex min-h-11 items-center gap-1.5">
-          <span>Read every step of {current.title.toLowerCase()}</span>
-          <ArrowRight aria-hidden size={16} strokeWidth={1.75} />
+      <div className="flex flex-wrap items-baseline justify-between gap-4">
+        <h2 id="hero-flow" className="h2">
+          How a missed booking turns into a full class
+        </h2>
+        <Link href={`/workflows/${current.id}`} className="text-link inline-flex min-h-11 items-center text-[15px]">
+          Full breakdown →
         </Link>
       </div>
 
-      <div role="tablist" aria-label="Choose a workflow to test" className="mt-6 flex gap-2 overflow-x-auto pb-1">
+      <div role="tablist" aria-label="Choose a workflow" className="mt-6 flex gap-2 overflow-x-auto pb-1">
         {items.map((item, index) => {
           const selected = index === activeIndex;
           return (
@@ -54,8 +49,6 @@ export function HomeWorkflowStage({ items }: { items: WorkflowTabSlot[] }) {
           );
         })}
       </div>
-
-      <p className="mt-4 max-w-[46rem] text-muted">{current.summary}</p>
 
       <div className="mt-6 min-w-0">{current.player}</div>
     </div>

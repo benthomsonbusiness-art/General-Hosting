@@ -21,7 +21,7 @@ export default function IndustriesPage() {
         <Container>
           <Breadcrumbs items={[{ name: "Industries", path: "/industries" }]} />
           <h1 id="industries-title" className="h1 mt-6 max-w-[16ch]">
-            Built for your trade
+            Built for how you book
           </h1>
           <HelpCta />
           <div className="mt-10">

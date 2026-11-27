@@ -62,20 +62,17 @@ function Decides({ workflow }: { workflow: Workflow }) {
         {COPY.decides.heading}
       </h2>
       {gates.length ? (
-        <>
-          <ul className="mt-6 grid gap-6 md:grid-cols-2">
-            {gates.map((node) => (
-              <li key={node.id} className="border-l-2 border-gold pl-4">
-                <p className="font-semibold">{node.label}</p>
-                <p className="mt-1 text-muted">
-                  {node.gate!.approver}. {node.gate!.channel}.
-                  {node.gate!.expiresAfter ? ` ${COPY.decides.expires} ${node.gate!.expiresAfter}.` : ""}
-                </p>
-              </li>
-            ))}
-          </ul>
-          <p className="mt-6">{COPY.decides.closing}</p>
-        </>
+        <ul className="mt-6 grid gap-6 md:grid-cols-2">
+          {gates.map((node) => (
+            <li key={node.id} className="border-l-2 border-gold pl-4">
+              <p className="font-semibold">{node.label}</p>
+              <p className="mt-1 text-muted">
+                {node.gate!.approver}. {node.gate!.channel}.
+                {node.gate!.expiresAfter ? ` ${COPY.decides.expires} ${node.gate!.expiresAfter}.` : ""}
+              </p>
+            </li>
+          ))}
+        </ul>
       ) : (
         <p className="mt-4">{COPY.internalOnly}</p>
       )}
@@ -83,19 +80,7 @@ function Decides({ workflow }: { workflow: Workflow }) {
   );
 }
 
-/** One sentence per way an item can stop, then who owns what. */
-function Exits({ workflow }: { workflow: Workflow }) {
-  const hasAi = workflow.nodes.some((node) => node.kind === "ai");
-  const hasGate = workflow.nodes.some((node) => node.kind === "human");
-  const lines = [...(hasAi ? [COPY.exits.manual] : []), ...(hasGate ? [COPY.exits.rejected, COPY.exits.expired] : [])];
-  return (
-    <p className="measure mt-8 text-muted">
-      {lines.join(" ")} {workflow.ownership}
-    </p>
-  );
-}
-
-/** /workflows/[slug]: interactive simulator full width, where people decide, then every step in writing. */
+/** /workflows/[slug]: guided story + full diagram, human gate summary, then collapsible steps. */
 export function WorkflowDetail({ workflow }: { workflow: Workflow }) {
   const index = WORKFLOWS.findIndex((item) => item.id === workflow.id);
   const previous = index > 0 ? WORKFLOWS[index - 1] : undefined;
@@ -137,7 +122,6 @@ export function WorkflowDetail({ workflow }: { workflow: Workflow }) {
             <div className="mt-6">
               <WorkflowText nodes={workflow.nodes} />
             </div>
-            <Exits workflow={workflow} />
           </section>
         </div>
       </section>

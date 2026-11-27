@@ -1,11 +1,11 @@
-# HANDOFF: Interactive console, split hero & surface cadence
+# HANDOFF: Gyms-first positioning, guided workflow story & anti-AI visual cleanup
 
 Last updated: Nov 27, 2026 · Live branch: `main`
 
-- **Split hero & tactile phone stage:** rebuilt `app/page.tsx` with a 12-column split hero (`.display` headline + trade eyebrow + software strip on the left, interactive `HeroPhoneStage` with the 7-bar Ember waveform and tactile `.copper-key` approval button on the right) and compact goals strip so everything fits in a 900px viewport.
-- **Interactive workflow simulator (`FlowPlayer`):** reconnected `lib/run-machine.ts` and `content/scenarios.ts` onto server-rendered `FlowDiagram` across Home (`HomeWorkflowStage` with 3-workflow tabs), `/workflows/[slug]`, and `/services/[slug]`.
-- **Playable `QueuePanel`, `BookingPanel` & `LeadLeakCalculator`:** upgraded `QueuePanel` with live Approve / SMS preview / Reset, gave `BookingPanel` a home-service `Trade board` default alongside `Client week`, added trade-specific SMS threads to `Pickers` on `/industries`, and added `LeadLeakCalculator` with trade presets that pre-fill `/contact?practice=missed-calls&trade=...&missed=...`.
-- **Surface cadence, nav & conversion fixes:** added a warm `--ivory` contrast band mid-home, promoted `Industries` into primary `NAV`, fixed duplicate `/services` icon, gated single-client `NameMarquee` until 4+ quotes exist, dropped unused `Cormorant_Garamond` font, pointed default `SITE_URL` to `valentini-next.benthomsonbusiness.workers.dev` until `NEXT_PUBLIC_SITE_URL` is set, and added a direct `mailto:` fallback on `/contact`.
+- **Gyms & multi-service positioning:** re-centered copy across Home, `/services`, `/workflows`, `/industries`, `/about`, `/contact`, and search around **gyms & niche fitness studios** first, alongside **recruiting & staffing**, **events & entertainment**, **landscaping**, and **plumbing & home services** (including recurring class and appointment reminders).
+- **Anti-AI visual & subtext cleanup:** removed ceiling radial spotlights, neon outer glow rings, `<Sparkles>` / `<Bot>` icons, fake 3-dot window bars, uppercase micro-kickers, and duplicate disclaimers across `app/globals.css`, `app/page.tsx`, `HeroPhoneStage`, `QueuePanel`, `RepoPanel`, `ScopeSteps`, `StepTrack`, and `IconCards`. Turned Home goals and scope stages into open hairline typographic strips.
+- **Guided 4-beat workflow story (`FlowPlayer`):** replaced the abstract timer bar with a step-by-step narrative (`1. Call missed -> 2. Reply drafted -> 3. You approve -> 4. Spot booked`) synced to `FlowDiagram` nodes and ending on a concrete booked result.
+- **Blessinger DJ schedule & Missed Bookings calculator:** rebuilt `BookingPanel` around Blessinger Entertainment's actual event/DJ bookings, and updated `LeadLeakCalculator` to **Missed bookings** starting with **Gyms & studios**.
 
 ---
 

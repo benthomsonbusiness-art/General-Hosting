@@ -28,12 +28,12 @@ export default function ServicesPage() {
             <ServiceCards />
           </div>
 
-          <div className="mt-6">
+          <div className="mt-8">
             <IconCards
               columns={2}
               items={[
-                { title: "By industry", body: "Where bookings slip in six trades.", href: "/industries" },
-                { title: "How it works", body: "Four steps, from first map to handover.", href: "/how-it-works" },
+                { title: "By industry", body: "Gyms, studios, recruiting, events, landscaping and home services.", href: "/industries" },
+                { title: "How it works", body: "Four steps, from first look to handover.", href: "/how-it-works" },
               ]}
             />
           </div>

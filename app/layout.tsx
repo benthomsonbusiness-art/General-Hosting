@@ -27,7 +27,7 @@ const plexMono = IBM_Plex_Mono({
   preload: false,
 });
 
-const title = `${SITE_NAME} | More Booked Jobs for Service Businesses`;
+const title = `${SITE_NAME} | More Bookings for Gyms & Service Businesses`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -72,9 +72,9 @@ const organization = {
   founder: { "@type": "Person", name: "Ben Thomson", jobTitle: "Founder" },
   knowsAbout: [
     "Booking automation",
+    "Gym and fitness studio scheduling",
     "Missed call text-back",
-    "Appointment reminders",
-    "Service businesses",
+    "Class and appointment reminders",
   ],
 };
 

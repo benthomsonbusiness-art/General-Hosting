@@ -5,7 +5,6 @@ export type Photo = { src: string; alt: string; position: string };
 export type Service = {
   slug: string;
   name: string;
-  /** The first service is the one most clients start with. */
   kind: "flagship" | "secondary";
   summary: string;
   metaTitle: string;
@@ -13,11 +12,8 @@ export type Service = {
   h1: string;
   dek: string;
   cta: { label: string; href: string };
-  /** What the customer gets, as short cards. */
   areas: { title: string; body: string }[];
-  /** How we set it up, as a short track. */
   steps: { title: string; body: string }[];
-  /** The one workflow this service runs. */
   workflowIds: string[];
   faqs: Faq[];
   keywords: string[];
@@ -38,16 +34,16 @@ export const SERVICES: Service[] = [
     name: "Missed call text-back",
     kind: "flagship",
     summary: "Every missed call gets a text back in minutes.",
-    metaTitle: "Missed call text-back for service businesses",
+    metaTitle: "Missed call text-back for gyms and service businesses",
     metaDescription:
-      "When you can't pick up, the caller gets a text back in minutes with times you're free. You approve it from your phone, so you stop losing jobs to missed calls.",
-    h1: "Stop losing jobs to missed calls",
-    dek: "When you can't pick up, the caller gets a text back in minutes with times you're free. You approve it with one tap.",
+      "When you miss a call during a class or appointment, the caller gets a text back in minutes with open times. You approve every text from your phone.",
+    h1: "Stop losing bookings to missed calls",
+    dek: "When you're coaching a class, on a call or out on a site, callers get a text back in minutes with real open times. You approve with one tap.",
     cta: CTA,
     areas: [
-      { title: "Text back in minutes", body: "Once you approve, before they call someone else." },
-      { title: "Real open times", body: "Pulled from your schedule." },
-      { title: "Day and night", body: "A text is ready for you, even on a job." },
+      { title: "Text back in minutes", body: "Before they book somewhere else." },
+      { title: "Real open times", body: "Pulled straight from your calendar." },
+      { title: "During classes or after hours", body: "A reply is ready whenever the phone rings." },
       { title: "You approve", body: "One tap from your phone." },
     ],
     steps: SETUP,
@@ -55,91 +51,90 @@ export const SERVICES: Service[] = [
     faqs: [
       {
         q: "Does it text people without asking me?",
-        a: "No. Every text comes to you first. You tap Approve or change it.",
+        a: "No. Every text comes to your phone first so you can approve or edit it.",
       },
       {
         q: "Do I need a new phone number?",
-        a: "Usually not. Missed calls are forwarded from the number you already have. We check this in the audit.",
+        a: "Usually not. Missed calls forward from the number you already use.",
       },
       {
-        q: "What if I don't answer in time?",
-        a: "Your on-call tech gets a heads-up to call the customer back.",
+        q: "What if nobody approves in time?",
+        a: "Your team gets a heads-up to call back directly, and nothing goes out on its own.",
       },
     ],
-    keywords: ["missed call", "text back", "phone", "after hours", "voicemail"],
+    keywords: ["missed call", "text back", "gym", "studio", "after hours", "voicemail"],
   },
   {
     slug: "instant-booking",
     name: "Instant booking for web leads",
     kind: "secondary",
-    summary: "Web leads get a time and a booked job, fast.",
+    summary: "Website inquiries get an open time and a booked spot fast.",
     metaTitle: "Instant booking for web leads",
     metaDescription:
-      "When someone fills out the form on your website, we check your area, pick a tech and an open time, and text them. You approve, and the job is on your schedule.",
-    h1: "Book web leads while they're still looking",
-    dek: "When someone fills out your website form, we find an open time and text them. You approve, and the job is booked.",
+      "When someone fills out the form on your website, we check fit, find an open class or slot on your calendar and draft the text for you to approve.",
+    h1: "Book web leads while they're still interested",
+    dek: "When someone fills out your trial, consult or quote form, we match an open time on your calendar and draft the text. You approve, and they're booked.",
     cta: CTA,
     areas: [
-      { title: "Area check", body: "Only leads you can serve." },
-      { title: "Right tech", body: "Someone who does that job." },
-      { title: "Open time", body: "Straight from your schedule." },
-      { title: "Booked for you", body: "On your calendar, with the source." },
+      { title: "Fit check", body: "Matches your classes, area or roles." },
+      { title: "Right calendar", body: "Picks the right coach or team member." },
+      { title: "Open time", body: "Pulled live from your schedule." },
+      { title: "Booked for you", body: "Added to your calendar with the source." },
     ],
     steps: SETUP,
     workflowIds: ["web-lead-booking"],
     faqs: [
       {
-        q: "Which software does it work with?",
-        a: "ServiceTitan, Jobber, Housecall Pro or a plain Google Calendar.",
+        q: "Which calendars and tools does it work with?",
+        a: "Google Calendar, Calendly, HubSpot, Greenhouse, Jobber and most studio or booking calendars.",
       },
       {
-        q: "What about leads outside my area?",
-        a: "They go to your office so you can decide.",
+        q: "What if an inquiry isn't a clear fit?",
+        a: "It goes straight to your inbox so you can reply personally.",
       },
       {
-        q: "Can I still call the customer myself?",
-        a: "Yes. Every booking has a Call instead button.",
+        q: "Can I call them instead of texting?",
+        a: "Yes. Every approval message lets you skip the text and call directly.",
       },
     ],
-    keywords: ["online booking", "web leads", "website form", "speed to lead", "schedule"],
+    keywords: ["online booking", "web leads", "trial class", "intro session", "schedule"],
   },
   {
     slug: "reminders",
     name: "Appointment reminders",
     kind: "secondary",
-    summary: "Customers confirm by text, so fewer no-shows.",
-    metaTitle: "Appointment reminders for service businesses",
+    summary: "Members and clients confirm by text, keeping classes and calendars full.",
+    metaTitle: "Class and appointment reminders",
     metaDescription:
-      "The day before each visit, customers get a reminder text and reply YES to confirm. Anyone who needs to change is flagged early, so fewer wasted trips for you.",
-    h1: "Fewer no-shows, fewer wasted trips",
-    dek: "The day before each visit, customers get a reminder and reply YES to confirm. Changes reach you early, not at the door.",
+      "Before each class, call or visit, clients get a reminder text and reply YES to confirm. Recurring sessions stay full and changes show up early.",
+    h1: "Keep classes and calendars full",
+    dek: "Set up recurring class and appointment reminders so members reply YES to confirm, and last-minute changes open up spots early.",
     cta: CTA,
     areas: [
-      { title: "Day-before text", body: "Time, tech and what to expect." },
-      { title: "Reply YES", body: "Confirmed visits are marked." },
-      { title: "Changes flagged", body: "Before the truck leaves." },
-      { title: "You approve", body: "The whole list, in one tap." },
+      { title: "Recurring classes", body: "Works for daily classes and 1-on-1 slots." },
+      { title: "Reply YES", body: "Confirmed spots mark themselves." },
+      { title: "Changes caught early", body: "Open spots go back to your waitlist." },
+      { title: "You approve", body: "Review tomorrow's batch in one tap." },
     ],
     steps: SETUP,
     workflowIds: ["appointment-reminders"],
     faqs: [
       {
-        q: "Will it move appointments on its own?",
-        a: "No. It flags changes. You decide what to move.",
+        q: "Can it handle recurring weekly classes?",
+        a: "Yes. It reads tomorrow's class roster or appointment list every afternoon and prepares reminders for everyone booked.",
       },
       {
-        q: "What if a customer replies with a question?",
-        a: "It goes to your office. Nothing answers customers automatically.",
+        q: "Will it reschedule someone on its own?",
+        a: "No. Anyone asking to move is flagged for your front desk so you stay in control.",
       },
     ],
-    keywords: ["appointment reminders", "no-shows", "confirm", "text reminders", "schedule"],
+    keywords: ["appointment reminders", "class reminders", "recurring classes", "no-shows", "gym"],
   },
 ];
 
-/** The "Works with the tools you already use" list on each service page. */
 export const INTEGRATIONS = {
   heading: "Works with the tools you already use",
-  note: "Examples only. Product names and logos belong to their owners. No partnership is implied.",
+  note: "",
 };
 
 export function serviceHref(slug: string): string {

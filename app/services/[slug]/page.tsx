@@ -133,7 +133,7 @@ export default async function ServicePage({ params }: Props) {
                   </li>
                 ))}
             </ul>
-            <p className="small mt-6 max-w-[44rem] text-muted">{INTEGRATIONS.note}</p>
+            {INTEGRATIONS.note ? <p className="small mt-6 max-w-[44rem] text-muted">{INTEGRATIONS.note}</p> : null}
           </Container>
         </Section>
       ) : null}

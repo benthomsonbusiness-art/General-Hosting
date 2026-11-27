@@ -1,15 +1,127 @@
 "use client";
 
-import { Check, Clock, Play, RotateCcw, X } from "lucide-react";
-import { useEffect, useMemo, useReducer, useRef, useState, type MouseEvent, type ReactNode } from "react";
-import { SCENARIOS, stopsFor, type Scenario } from "@/content/scenarios";
+import { ArrowRight, Check, RotateCcw } from "lucide-react";
+import { useEffect, useState, type MouseEvent, type ReactNode } from "react";
+import { useRef } from "react";
 import type { Workflow } from "@/content/workflows";
-import { initialRun, runReducer } from "@/lib/run-machine";
+
+type StoryBeat = {
+  stepTitle: string;
+  time: string;
+  narrative: string;
+  quote?: string;
+  result?: string;
+  activeNodes: string[];
+  awaitingNode?: string;
+};
+
+const STORIES: Record<string, StoryBeat[]> = {
+  "missed-call-text-back": [
+    {
+      stepTitle: "1. Call missed",
+      time: "6:15 p.m.",
+      narrative:
+        "Jordan calls your gym asking about a trial workout while coaches are leading the evening class. Instead of hitting a dead voicemail, the call is picked up right away.",
+      activeNodes: ["missed-call"],
+    },
+    {
+      stepTitle: "2. Reply drafted",
+      time: "6:15 p.m.",
+      narrative:
+        "Checks your class calendar, sees two open intro spots tomorrow, and writes a plain text reply ready for you to check.",
+      quote: "“Sorry we missed your call. Coach Maya has intro spots tomorrow at 7 a.m. or 5:30 p.m. Reply 1 or 2 to grab one.”",
+      activeNodes: ["draft-text"],
+    },
+    {
+      stepTitle: "3. You approve",
+      time: "6:16 p.m.",
+      narrative:
+        "Between sets, your phone shows the voicemail and the drafted text. Nothing goes to Jordan until you tap Approve.",
+      quote: "“Sorry we missed your call. Coach Maya has intro spots tomorrow at 7 a.m. or 5:30 p.m. Reply 1 or 2 to grab one.”",
+      activeNodes: ["office-approves"],
+      awaitingNode: "office-approves",
+    },
+    {
+      stepTitle: "4. Spot booked",
+      time: "6:18 p.m.",
+      narrative:
+        "The text goes out, Jordan replies “2”, and tomorrow's 5:30 p.m. spot is held on your roster with class reminders ready.",
+      result: "Booked: Jordan M. · Tomorrow 5:30 p.m. Strength Intro",
+      activeNodes: ["text-back", "hold-visit"],
+    },
+  ],
+  "web-lead-booking": [
+    {
+      stepTitle: "1. Form comes in",
+      time: "9:40 p.m.",
+      narrative:
+        "Someone fills out the intro or consult form on your website at night while comparing three local options.",
+      activeNodes: ["web-lead", "area-check"],
+    },
+    {
+      stepTitle: "2. Time matched",
+      time: "9:40 p.m.",
+      narrative:
+        "Checks that the request fits what you offer, finds open slots on the right coach or recruiter's calendar, and writes the reply.",
+      quote: "“Thanks for reaching out. We have Thursday at 6 a.m. or Friday at 12 p.m. open for your first session. Which works?”",
+      activeNodes: ["match-slot"],
+    },
+    {
+      stepTitle: "3. You approve",
+      time: "7:05 a.m.",
+      narrative:
+        "You see the inquiry, the matched slot, and the text in one message. One tap sends it, or you can edit first.",
+      quote: "“Thanks for reaching out. We have Thursday at 6 a.m. or Friday at 12 p.m. open for your first session. Which works?”",
+      activeNodes: ["approve-booking"],
+      awaitingNode: "approve-booking",
+    },
+    {
+      stepTitle: "4. Added to calendar",
+      time: "7:12 a.m.",
+      narrative:
+        "They confirm Thursday at 6 a.m. The booking lands directly on your calendar with their form notes attached.",
+      result: "Booked: J. Alvarez · Thursday 6:00 a.m. · Source: Website form",
+      activeNodes: ["confirm-text", "book-job"],
+    },
+  ],
+  "appointment-reminders": [
+    {
+      stepTitle: "1. Roster pulled",
+      time: "4:00 p.m.",
+      narrative:
+        "Every afternoon, tomorrow's recurring classes, intro sessions, and client appointments are gathered from your calendar.",
+      activeNodes: ["daily-4pm", "ready-check"],
+    },
+    {
+      stepTitle: "2. Reminders written",
+      time: "4:01 p.m.",
+      narrative:
+        "Writes a short reminder for each person with their class time, coach, and any first-visit note.",
+      quote: "“See you tomorrow at 6 a.m. for Strength with Coach Maya. Reply YES to confirm or C if you need to move.”",
+      activeNodes: ["write-visit-texts"],
+    },
+    {
+      stepTitle: "3. You approve once",
+      time: "4:05 p.m.",
+      narrative:
+        "Instead of texting 18 people one by one, you review tomorrow's list in a single message and approve the whole batch.",
+      activeNodes: ["approve-list"],
+      awaitingNode: "approve-list",
+    },
+    {
+      stepTitle: "4. Class stays full",
+      time: "4:20 p.m.",
+      narrative:
+        "17 members reply YES. One asks to move to Friday, opening their 6 a.m. spot early enough for someone on the waitlist.",
+      result: "Roster updated: 17 confirmed · 1 spot reopened for waitlist",
+      activeNodes: ["send-reminders", "update-board"],
+    },
+  ],
+};
 
 /**
- * Interactive workflow simulator wrapping a server-rendered FlowDiagram ({children}).
- * Syncs live node states via data-run-state attributes and intercepts clicks on an awaiting
- * human gate, keeping FlowDiagram and AppMark 100% server-rendered.
+ * Story-driven walkthrough paired with the server-rendered FlowDiagram.
+ * Stepping through the 4 story beats highlights the matching workflow nodes and ends on a concrete result.
  */
 export function FlowPlayer({
   workflow,
@@ -18,176 +130,127 @@ export function FlowPlayer({
   workflow: Workflow;
   children: ReactNode;
 }) {
-  const scenarios = SCENARIOS[workflow.id] ?? [];
-  const [scenarioIndex, setScenarioIndex] = useState(0);
-  const scenario: Scenario | undefined = scenarios[scenarioIndex];
+  const beats = STORIES[workflow.id] ?? STORIES["missed-call-text-back"];
+  const [step, setStep] = useState(0);
   const stageRef = useRef<HTMLDivElement>(null);
 
-  const aiThreshold = useMemo(() => {
-    const aiNode = workflow.nodes.find((n) => n.kind === "ai" && n.confidence);
-    return aiNode?.confidence?.threshold ?? 0.75;
-  }, [workflow]);
-
-  const reducer = useMemo(() => runReducer(workflow), [workflow]);
-  const [state, dispatch] = useReducer(reducer, undefined, initialRun);
-
-  useEffect(() => {
-    if (!scenario) return;
-    const stops = stopsFor(workflow.nodes, scenario, aiThreshold);
-    dispatch({ type: "RESET" });
-    dispatch({ type: "SET_STOPS", ids: stops });
-  }, [workflow, scenario, aiThreshold]);
-
-  useEffect(() => {
-    if (state.status !== "running") return;
-    const reduced =
-      typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const delay = reduced ? 200 : state.traveling ? 320 : 620;
-    const timer = window.setTimeout(() => {
-      if (state.traveling) {
-        dispatch({ type: "ARRIVE", token: state.token });
-      } else {
-        dispatch({ type: "FINISH_NODE", token: state.token });
-      }
-    }, delay);
-    return () => window.clearTimeout(timer);
-  }, [state.status, state.traveling, state.index, state.token]);
+  const current = beats[step] ?? beats[0];
+  const isLast = step === beats.length - 1;
+  const isGate = Boolean(current.awaitingNode);
 
   useEffect(() => {
     const container = stageRef.current;
     if (!container) return;
+    const activeIds = new Set(current.activeNodes);
+    const allNodeIds = workflow.nodes.map((n) => n.id);
+    const maxActiveIdx = Math.max(
+      ...current.activeNodes.map((id) => allNodeIds.indexOf(id)).filter((idx) => idx >= 0),
+    );
+
     const items = container.querySelectorAll<HTMLElement>(".flow-item[data-node-id]");
     items.forEach((item) => {
       const nodeId = item.dataset.nodeId;
-      const runState = nodeId ? state.nodes[nodeId] : undefined;
-      if (runState) {
-        item.dataset.runState = runState;
+      if (!nodeId) return;
+      const idx = allNodeIds.indexOf(nodeId);
+      if (current.awaitingNode === nodeId) {
+        item.dataset.runState = "awaiting";
+      } else if (activeIds.has(nodeId)) {
+        item.dataset.runState = "active";
+      } else if (idx >= 0 && idx < maxActiveIdx) {
+        item.dataset.runState = "complete";
       } else {
         delete item.dataset.runState;
       }
     });
-  }, [state.nodes]);
-
-  const isIdle = state.status === "ready";
-  const isAwaiting = state.status === "awaiting";
-  const isDone =
-    state.status === "completed" ||
-    state.status === "rejected" ||
-    state.status === "expired" ||
-    state.status === "manual";
-
-  function startRun() {
-    if (scenario) {
-      dispatch({ type: "SET_STOPS", ids: stopsFor(workflow.nodes, scenario, aiThreshold) });
-    }
-    dispatch({ type: "START", mode: "auto" });
-  }
+  }, [current, workflow.nodes]);
 
   function onStageClick(event: MouseEvent<HTMLDivElement>) {
-    if (!isAwaiting) return;
     const target = event.target as HTMLElement | null;
-    const humanItem = target?.closest<HTMLElement>('.flow-item[data-kind="human"][data-run-state="awaiting"]');
-    if (humanItem) {
+    const clickedItem = target?.closest<HTMLElement>(".flow-item[data-node-id]");
+    if (!clickedItem) return;
+    const nodeId = clickedItem.dataset.nodeId;
+    if (!nodeId) return;
+    const matchingBeat = beats.findIndex((b) => b.activeNodes.includes(nodeId));
+    if (matchingBeat >= 0) {
       event.preventDefault();
-      dispatch({ type: "APPROVE" });
+      if (matchingBeat === step && isGate && !isLast) {
+        setStep(step + 1);
+      } else {
+        setStep(matchingBeat);
+      }
     }
   }
 
   return (
-    <div className="space-y-3">
-      <div className="flow-player-bar">
-        <div className="flex flex-wrap items-center gap-2">
-          {isIdle ? (
-            <button
-              type="button"
-              onClick={startRun}
-              className="copper-key min-h-10 px-3.5 py-1.5 text-[13px] font-semibold"
-            >
-              <Play aria-hidden size={14} strokeWidth={2.25} fill="currentColor" />
-              <span>Run sample lead</span>
-            </button>
-          ) : (
-            <button
-              type="button"
-              onClick={() => dispatch({ type: "RESET" })}
-              className="inline-flex min-h-10 items-center gap-1.5 rounded-[6px] border border-line bg-well px-3.5 py-1.5 text-[13px] font-semibold text-ivory hover:border-ivory"
-            >
-              <RotateCcw aria-hidden size={14} strokeWidth={2} />
-              <span>{isDone ? "Run again" : "Reset"}</span>
-            </button>
-          )}
+    <div className="space-y-5">
+      <div className="story-card">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-4">
+          <div role="tablist" aria-label="Walk through the story" className="flex flex-wrap gap-1.5">
+            {beats.map((beat, idx) => {
+              const active = idx === step;
+              return (
+                <button
+                  key={beat.stepTitle}
+                  type="button"
+                  role="tab"
+                  aria-selected={active}
+                  onClick={() => setStep(idx)}
+                  className={`min-h-9 rounded-[6px] px-3 text-[13px] font-medium transition ${
+                    active
+                      ? "bg-ivory font-semibold text-obsidian"
+                      : "border border-line text-muted hover:text-ivory"
+                  }`}
+                >
+                  {beat.stepTitle}
+                </button>
+              );
+            })}
+          </div>
 
-          {scenarios.length > 1 ? (
-            <div className="flex flex-wrap items-center gap-1.5 pl-1" role="group" aria-label="Sample scenario">
-              <span className="mr-1 hidden text-[12px] text-muted sm:inline">Sample:</span>
-              {scenarios.map((item, idx) => {
-                const active = idx === scenarioIndex;
-                return (
-                  <button
-                    key={item.id}
-                    type="button"
-                    onClick={() => setScenarioIndex(idx)}
-                    aria-pressed={active}
-                    className={`min-h-9 rounded-full px-3 text-[12px] font-medium transition ${
-                      active
-                        ? "bg-ivory font-semibold text-obsidian"
-                        : "border border-line text-muted hover:text-ivory"
-                    }`}
-                  >
-                    {item.label}
-                  </button>
-                );
-              })}
-            </div>
-          ) : null}
+          <span className="font-mono text-[13px] text-muted">{current.time}</span>
         </div>
 
-        <div aria-live="polite" className="flex flex-wrap items-center gap-2.5 text-[13px]">
-          {state.message ? (
-            <span className={isAwaiting ? "font-semibold text-gold" : "text-muted"}>{state.message}</span>
-          ) : (
-            <span className="text-muted">Click Run sample lead to watch how each step behaves.</span>
-          )}
+        <div aria-live="polite" className="mt-4 grid items-center gap-5 lg:grid-cols-12">
+          <div className="space-y-3 lg:col-span-8">
+            <p className="text-[17px] leading-relaxed text-ivory">{current.narrative}</p>
+            {current.quote ? (
+              <p className="border-l-2 border-violet pl-3.5 text-[15px] text-muted">{current.quote}</p>
+            ) : null}
+            {current.result ? (
+              <p className="inline-flex items-center gap-2 rounded-[6px] border border-[rgb(255_107_74_/_0.4)] bg-[rgb(255_107_74_/_0.1)] px-3.5 py-2 text-[14px] font-semibold text-ivory">
+                <Check aria-hidden size={16} strokeWidth={2.5} className="text-gold" />
+                {current.result}
+              </p>
+            ) : null}
+          </div>
 
-          {isAwaiting ? (
-            <span className="flex flex-wrap items-center gap-2">
+          <div className="flex lg:col-span-4 lg:justify-end">
+            {!isLast ? (
               <button
                 type="button"
-                onClick={() => dispatch({ type: "APPROVE" })}
-                className="copper-key min-h-9 px-3 py-1 text-[12px] font-semibold"
+                onClick={() => setStep(step + 1)}
+                className={
+                  isGate
+                    ? "copper-key min-h-11 px-5 py-2.5 text-[14px] font-semibold"
+                    : "btn btn-secondary min-h-11 px-4 text-[14px]"
+                }
               >
-                <Check aria-hidden size={14} strokeWidth={2.5} />
-                <span>Approve text</span>
+                <span>{isGate ? "Approve text & finish" : "Next step"}</span>
+                <ArrowRight aria-hidden size={16} strokeWidth={2} />
               </button>
+            ) : (
               <button
                 type="button"
-                onClick={() => dispatch({ type: "REJECT" })}
-                className="inline-flex min-h-9 items-center gap-1 rounded-[6px] border border-line bg-obsidian px-2.5 py-1 text-[12px] font-medium text-ivory hover:border-ivory"
+                onClick={() => setStep(0)}
+                className="btn btn-secondary min-h-11 px-4 text-[14px]"
               >
-                <X aria-hidden size={13} strokeWidth={2} />
-                <span>Say no</span>
+                <RotateCcw aria-hidden size={15} strokeWidth={1.75} />
+                <span>Start story over</span>
               </button>
-              <button
-                type="button"
-                onClick={() => dispatch({ type: "EXPIRE" })}
-                className="inline-flex min-h-9 items-center gap-1 rounded-[6px] border border-line bg-obsidian px-2.5 py-1 text-[12px] font-medium text-muted hover:text-ivory"
-              >
-                <Clock aria-hidden size={13} strokeWidth={2} />
-                <span>No answer</span>
-              </button>
-            </span>
-          ) : null}
+            )}
+          </div>
         </div>
       </div>
-
-      {isAwaiting && scenario?.draft ? (
-        <div className="rounded-[10px] border border-[rgb(255_107_74_/_0.45)] bg-[#1e120d] px-4 py-3 text-[14px]">
-          <span className="font-mono text-[12px] font-semibold tracking-wider text-gold uppercase">
-            Ready on your phone:{" "}
-          </span>
-          <span className="text-ivory">“{scenario.draft}”</span>
-        </div>
-      ) : null}
 
       <div ref={stageRef} onClick={onStageClick}>
         {children}

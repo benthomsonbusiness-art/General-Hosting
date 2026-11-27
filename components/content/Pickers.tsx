@@ -7,62 +7,56 @@ import { HardwareFrame } from "@/components/media/HardwareFrame";
 import type { Industry } from "@/content/industries";
 
 const INDUSTRY_PHOTO: Record<string, { src: string; alt: string }> = {
-  hvac: {
-    src: "/images/station-model.jpg",
-    alt: "A dark charcoal control dial with engraved tick marks, like a thermostat.",
+  gyms: {
+    src: "/images/ind-wellness.jpg",
+    alt: "A clean studio interior after hours, folded towels on shelves and a tidy front desk.",
   },
-  plumbing: {
-    src: "/images/ins-daily-brief.jpg",
-    alt: "Three gauges on a dark charcoal panel, with morning light across them.",
-  },
-  electrical: {
+  recruiting: {
     src: "/images/station-code.jpg",
-    alt: "A row of toggle switches on a dark charcoal panel.",
+    alt: "A row of precision toggle switches on a dark charcoal panel.",
   },
-  roofing: {
-    src: "/images/ind-home.jpg",
-    alt: "The open side door of a service van at dusk, with a tool rack and parts bins.",
+  events: {
+    src: "/images/station-model.jpg",
+    alt: "A dark charcoal control dial with engraved tick marks, like a sound mixer knob.",
   },
   landscaping: {
     src: "/images/ind-retail.jpg",
-    alt: "A stockroom after hours, plain boxes on shelves and a steel bench.",
+    alt: "A tidy equipment room after hours, shelves and a steel bench.",
   },
-  cleaning: {
-    src: "/images/ind-wellness.jpg",
-    alt: "A tidy room after closing, shelves of folded supplies and a clean counter.",
+  plumbing: {
+    src: "/images/ind-home.jpg",
+    alt: "The open side door of a service van at dusk, with organized gear.",
+  },
+  appointments: {
+    src: "/images/ins-daily-brief.jpg",
+    alt: "Three analog gauges on a dark charcoal panel in morning light.",
   },
 };
 
-const TRADE_SMS: Record<string, { trigger: string; draft: string; reply: string }> = {
-  hvac: {
-    trigger: "Missed call, 6:12 p.m. · Voicemail: AC blowing warm air",
-    draft: "Sorry we missed your call. Marco can come tomorrow 8 to 10 a.m. or 1 to 3 p.m. Which works?",
-    reply: "Tomorrow 8 to 10 works, thank you.",
+const SAMPLE_TEXT: Record<string, { trigger: string; draft: string }> = {
+  gyms: {
+    trigger: "Missed call during 6 p.m. class",
+    draft: "“Sorry we missed your call. Coach Maya has intro spots open tomorrow at 7 a.m. or 5:30 p.m. Reply 1 or 2 to grab one.”",
   },
-  plumbing: {
-    trigger: "Missed call, 7:40 a.m. · Voicemail: Water heater leaking in basement",
-    draft: "Sorry we missed you. Sam is nearby and has 10 to 12 today or 8 to 10 tomorrow open.",
-    reply: "10 to 12 today please.",
+  recruiting: {
+    trigger: "New candidate form submitted",
+    draft: "“Thanks for applying. Do you have 15 minutes Thursday at 11 a.m. or 2 p.m. for a quick intro call?”",
   },
-  electrical: {
-    trigger: "Website form · 200-amp panel quote in Morristown",
-    draft: "Thanks for reaching out. Devon can stop by Thursday 9 to 11 a.m. or Friday 1 to 3 p.m. for an estimate.",
-    reply: "Thursday 9 to 11 is great.",
-  },
-  roofing: {
-    trigger: "Missed call after storm · Shingles blown off garage ridge",
-    draft: "Sorry we missed your call. Luis can inspect your roof Wednesday 11 to 1 or Thursday 8 to 10.",
-    reply: "Wednesday 11 to 1 works.",
+  events: {
+    trigger: "Saturday night date inquiry",
+    draft: "“Thanks for reaching out. October 14 is open on our calendar — want to hop on a quick call Tuesday at 5:30 p.m.?”",
   },
   landscaping: {
-    trigger: "Website form · Spring cleanup and weekly mowing",
-    draft: "Thanks for your note. Crew B is on your street Tuesday afternoon for a quick walk-through.",
-    reply: "See you Tuesday afternoon.",
+    trigger: "Spring cleanup website inquiry",
+    draft: "“Thanks for your note. Our crew is on your street Wednesday afternoon if you'd like a quick walk-through.”",
   },
-  cleaning: {
-    trigger: "Day-before reminder · Recurring home visit",
-    draft: "Friendly reminder that Maria's team arrives tomorrow between 9 and 11 a.m. Reply YES to confirm.",
-    reply: "YES, back gate will be unlocked.",
+  plumbing: {
+    trigger: "Missed call while on a job",
+    draft: "“Sorry we missed you. Sam has 10 to 12 today or 8 to 10 tomorrow open. Which works?”",
+  },
+  appointments: {
+    trigger: "Recurring session reminder",
+    draft: "“See you tomorrow at 9:30 a.m. Reply YES to confirm or C if you need to pick another day.”",
   },
 };
 
@@ -120,7 +114,12 @@ function IndustryTabs({ industries, initial }: { industries: IndustryView[]; ini
 
   return (
     <div>
-      <div role="tablist" aria-label="Industries" className="flex gap-2 overflow-x-auto" onKeyDown={onKey}>
+      <div
+        role="tablist"
+        aria-label="Industries"
+        className="flex gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible"
+        onKeyDown={onKey}
+      >
         {industries.map((item, index) => {
           const active = index === selected;
           return (
@@ -135,8 +134,8 @@ function IndustryTabs({ industries, initial }: { industries: IndustryView[]; ini
               aria-selected={active}
               aria-controls="industry-panel"
               tabIndex={active ? 0 : -1}
-              className={`min-h-11 shrink-0 rounded-[6px] px-4 text-left text-[15px] ${
-                active ? "bg-ivory text-obsidian" : "border border-line text-ivory"
+              className={`min-h-11 shrink-0 rounded-[6px] px-4 text-left text-[15px] font-medium ${
+                active ? "bg-ivory font-semibold text-obsidian" : "border border-line text-ivory hover:border-ivory"
               }`}
               onClick={() => choose(index, false)}
             >
@@ -166,31 +165,26 @@ function IndustryTabs({ industries, initial }: { industries: IndustryView[]; ini
                 />
               ) : null}
             </div>
-            <div className="console p-6 lg:col-span-7">
-              <h2 className="h3">{current.name}</h2>
-              <p className="mt-3 text-muted">{current.line}</p>
-              <p className="mt-6 text-[15px]">Where jobs slip</p>
-              <ul className="mt-2 text-[15px] leading-relaxed text-muted">
+            <div className="lg:col-span-7">
+              <h2 className="h2">{current.name}</h2>
+              <p className="lead mt-3 text-muted">{current.line}</p>
+
+              <ul className="mt-6 space-y-2 border-t border-line pt-5 text-[16px] text-ivory">
                 {current.hours.map((hour) => (
-                  <li key={hour}>{hour}</li>
+                  <li key={hour}>· {hour}</li>
                 ))}
               </ul>
-              <p className="mt-6 border-t border-line pt-4 text-[15px]">Stays with your team: {current.stays}</p>
-              {TRADE_SMS[current.slug] ? (
-                <div className="mt-6 rounded-[10px] border border-line bg-obsidian p-4">
-                  <p className="font-mono text-[12px] text-muted">{TRADE_SMS[current.slug].trigger}</p>
-                  <div className="mt-3 flex flex-col gap-2">
-                    <p className="max-w-[88%] self-end rounded-[12px_12px_4px_12px] border border-[rgb(249_115_22_/_0.35)] bg-[#2a1b13] px-3 py-2 text-[13px] text-ivory">
-                      {TRADE_SMS[current.slug].draft}
-                    </p>
-                    <p className="max-w-[82%] self-start rounded-[12px_12px_12px_4px] bg-[rgb(251_246_241_/_0.08)] px-3 py-2 text-[13px] text-ivory">
-                      {TRADE_SMS[current.slug].reply}
-                    </p>
-                  </div>
+
+              {SAMPLE_TEXT[current.slug] ? (
+                <div className="mt-7 border-l-2 border-gold pl-4">
+                  <p className="text-[13px] text-muted">{SAMPLE_TEXT[current.slug].trigger}</p>
+                  <p className="mt-1 text-[16px] text-ivory">{SAMPLE_TEXT[current.slug].draft}</p>
                 </div>
               ) : null}
-              <h3 className="h4 mt-8">How we help</h3>
-              <ul className="mt-4 divide-y divide-line border-y border-line">
+
+              <p className="mt-6 text-[15px] text-muted">Stays with your team: {current.stays}</p>
+
+              <ul className="mt-8 divide-y divide-line border-y border-line">
                 {current.workflows.map((workflow) => (
                   <li key={workflow.id}>
                     <Link href={`/workflows/${workflow.id}`} className="group flex min-h-14 items-center py-2">
