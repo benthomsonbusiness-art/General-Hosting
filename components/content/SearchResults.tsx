@@ -18,7 +18,7 @@ function SearchForm({ initial }: { initial: string }) {
   return (
     <form action="/search" role="search" className="flex flex-wrap items-end gap-3">
       <div className="min-w-0 flex-1 basis-64">
-        <label htmlFor="q" className="mb-2 block font-semibold text-forest">
+        <label htmlFor="q" className="mb-2 block font-semibold text-heading">
           Search terms
         </label>
         <input key={initial} id="q" name="q" type="search" defaultValue={initial} className="field" />
@@ -51,7 +51,7 @@ function FromQuery() {
   return (
     <>
       <SearchForm initial={query} />
-      <p role="status" className="mt-8 font-semibold text-forest">
+      <p role="status" className="mt-8 font-semibold text-heading">
         {failed
           ? "Search could not be loaded. Use the menu, or reload the page to try again."
           : query === ""
@@ -87,7 +87,7 @@ function FromQuery() {
               {entries.map((entry) => (
                 <li key={entry.url} className="border-b border-rule">
                   <Link href={entry.url} className="group block py-4">
-                    <span className="card-title block font-semibold text-forest">{entry.title}</span>
+                    <span className="card-title block font-semibold text-heading">{entry.title}</span>
                     <span className="mt-1 block text-muted">{entry.summary}</span>
                   </Link>
                 </li>

@@ -25,7 +25,7 @@ export function ServiceCards() {
                 {index === 0 ? <span className="photo-card-tag">Main service</span> : null}
               </span>
               <span className="photo-card-body">
-                <span className="g-icon -mt-12">
+                <span className="g-icon relative -mt-6">
                   <Icon aria-hidden size={22} strokeWidth={1.5} />
                 </span>
                 <span className="card-title h3 mt-2 block">{service.name}</span>

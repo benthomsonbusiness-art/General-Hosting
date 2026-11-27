@@ -53,8 +53,8 @@ export function InPageIndex({ items }: { items: IndexItem[] }) {
               aria-current={current ? "location" : undefined}
               className={`-ml-px flex min-h-11 items-center border-l-2 py-1.5 pl-4 text-[14px] leading-snug ${
                 current
-                  ? "border-forest font-semibold text-forest"
-                  : "border-transparent text-slate hover:text-forest"
+                  ? "border-heading font-semibold text-heading"
+                  : "border-transparent text-slate hover:text-heading"
               }`}
               onClick={() => moveFocus(item.id)}
             >
@@ -69,11 +69,11 @@ export function InPageIndex({ items }: { items: IndexItem[] }) {
   return (
     <nav aria-label="On this page" data-print="hide">
       <div className="sticky top-[calc(var(--header-h)+2.5rem)] hidden lg:block">
-        <p className="mb-3 text-[14px] font-bold text-forest">On this page</p>
+        <p className="mb-3 text-[14px] font-bold text-heading">On this page</p>
         {list}
       </div>
       <details className="border-y border-rule lg:hidden">
-        <summary className="flex min-h-12 items-center justify-between font-semibold text-forest">
+        <summary className="flex min-h-12 items-center justify-between font-semibold text-heading">
           On this page
           <span aria-hidden>+</span>
         </summary>

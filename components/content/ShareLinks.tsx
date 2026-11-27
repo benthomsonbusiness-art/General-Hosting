@@ -18,7 +18,7 @@ export function ShareLinks({ url }: { url: string }) {
   const link = "text-link inline-flex min-h-11 items-center text-[15px]";
   return (
     <div data-print="hide" className="mt-14 flex flex-wrap items-center gap-x-7 gap-y-1 border-t border-rule pt-5">
-      <p className="font-semibold text-forest">Share</p>
+      <p className="font-semibold text-heading">Share</p>
       <button type="button" className={link} onClick={copy}>
         <span aria-live="polite">
           {state === "copied" ? "Link copied" : state === "failed" ? "Copy failed" : "Copy link"}

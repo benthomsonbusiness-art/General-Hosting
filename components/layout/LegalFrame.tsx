@@ -22,7 +22,7 @@ export function LegalFrame({
         <Breadcrumbs items={[{ name: title, path }]} className="mb-6" />
         <h1 className="h1">{title}</h1>
         <p className="lead mt-5 text-muted">{lede}</p>
-        <p className="mt-8 border-l-2 border-forest bg-ivory px-6 py-4 font-medium">
+        <p className="mt-8 border-l-2 border-heading bg-ivory px-6 py-4 font-medium">
           Placeholder. Counsel-approved text will replace this page before publication. Nothing on this page is in
           effect.
         </p>

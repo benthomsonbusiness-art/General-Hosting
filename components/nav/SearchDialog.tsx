@@ -58,8 +58,8 @@ export function SearchDialog({
       }}
     >
       <div className="wrap max-w-[56rem] py-6 md:py-10">
-        <form action="/search" role="search" className="flex items-center gap-3 border-b-2 border-forest">
-          <Search size={22} strokeWidth={1.5} aria-hidden className="shrink-0 text-forest" />
+        <form action="/search" role="search" className="flex items-center gap-3 border-b-2 border-heading">
+          <Search size={22} strokeWidth={1.5} aria-hidden className="shrink-0 text-heading" />
           <label htmlFor="site-search" className="sr-only">
             Search the site
           </label>
@@ -81,7 +81,7 @@ export function SearchDialog({
           />
           <button
             type="button"
-            className="flex h-11 w-11 shrink-0 items-center justify-center text-forest"
+            className="flex h-11 w-11 shrink-0 items-center justify-center text-heading"
             aria-label="Close search"
             onClick={close}
           >
@@ -105,7 +105,7 @@ export function SearchDialog({
               <li key={entry.url} className="border-b border-rule">
                 <Link href={entry.url} className="group block py-3.5" onClick={follow}>
                   <span className="text-[15px] text-slate">{entry.type}</span>
-                  <span className="card-title mt-0.5 block font-semibold text-forest">{entry.title}</span>
+                  <span className="card-title mt-0.5 block font-semibold text-heading">{entry.title}</span>
                 </Link>
               </li>
             ))}

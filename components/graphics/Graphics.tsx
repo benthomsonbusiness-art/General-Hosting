@@ -94,7 +94,7 @@ export function ScopeSteps() {
               <span className="g-icon">
                 <Icon aria-hidden size={22} strokeWidth={1.5} />
               </span>
-              <span className="scope-num">0{index + 1}</span>
+              <span className="scope-num" aria-hidden>0{index + 1}</span>
             </span>
             <h3 className="scope-name">{stage.name}</h3>
             <span className="g-chip">{stage.shape}</span>

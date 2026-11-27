@@ -65,7 +65,7 @@ export default function HomePage() {
               How it works
             </Link>
           </div>
-          <p className="small mt-12 font-semibold tracking-[0.08em] text-gold uppercase">Our goals for you</p>
+          <p className="small mt-12 font-semibold tracking-[0.08em] text-cyan uppercase">Our goals for you</p>
           <dl className="stats mt-3">
             {STATS.map((stat) => (
               <div key={stat.label} className="stat">
@@ -151,7 +151,7 @@ export default function HomePage() {
         <section data-surface="dark" aria-labelledby="client" className="border-t border-line bg-forest">
           <div className="wrap grid grid-cols-[minmax(0,1fr)] items-center gap-10 py-14 lg:grid-cols-12 lg:py-20">
             <figure className="lg:col-span-5">
-              <p id="client" className="small font-semibold tracking-[0.08em] text-gold uppercase">
+              <p id="client" className="small font-semibold tracking-[0.08em] text-muted uppercase">
                 Client story
               </p>
               <blockquote className="h3 mt-4 font-normal">“{QUOTE.quote}”</blockquote>

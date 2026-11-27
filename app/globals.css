@@ -86,7 +86,7 @@
   --error: var(--error-light);
   --btn-fill: var(--obsidian);
   --btn-text: var(--ivory);
-  --btn-hover: var(--gold-ink);
+  --btn-hover: #1e2348;
   --btn-hover-text: var(--ivory);
 }
 
@@ -342,9 +342,9 @@ html[data-modality="pointer"] :focus-visible {
   .field {
     width: 100%;
     min-height: 2.75rem;
-    border: 1px solid var(--line-light);
+    border: 1px solid rgb(14 16 36 / 0.4);
     border-radius: 6px;
-    background: var(--ivory);
+    background: #ffffff;
     padding: 0.7rem 0.875rem;
     color: var(--ink);
     font-size: 1rem;
@@ -419,7 +419,7 @@ html[data-modality="pointer"] :focus-visible {
     background-color: var(--well);
     background-image:
       radial-gradient(120% 90% at 50% -10%, rgb(56 70 160 / 0.42), transparent 60%),
-      radial-gradient(70% 60% at 85% 110%, rgb(255 181 71 / 0.06), transparent 70%);
+      radial-gradient(70% 60% at 85% 110%, rgb(56 214 196 / 0.04), transparent 70%);
   }
 
   .flow-q {
@@ -676,7 +676,7 @@ html[data-modality="pointer"] :focus-visible {
       align-items: center;
       justify-content: space-between;
       gap: 8px;
-      color: var(--gold);
+      color: var(--ivory-64);
       font-size: 11px;
       font-weight: 600;
       letter-spacing: 0.08em;
@@ -685,6 +685,10 @@ html[data-modality="pointer"] :focus-visible {
 
     .flow-item[data-kind="ai"] > .flow-node > .flow-tip .flow-tip-kicker {
       color: var(--cyan);
+    }
+
+    .flow-item[data-kind="human"] > .flow-node > .flow-tip .flow-tip-kicker {
+      color: var(--gold);
     }
 
     .flow-tip-app {
@@ -1396,9 +1400,9 @@ input[type="range"]::-moz-range-thumb {
     gap: 6px;
     margin-left: auto;
     padding: 2px 10px;
-    border: 1px solid rgb(255 181 71 / 0.45);
+    border: 1px solid rgb(244 245 250 / 0.22);
     border-radius: 9999px;
-    color: var(--gold);
+    color: var(--ivory-64);
     font-size: 12px;
     white-space: nowrap;
   }
@@ -1652,7 +1656,7 @@ input[type="range"]::-moz-range-thumb {
     box-shadow:
       inset 0 1px 0 rgb(244 245 250 / 0.1),
       0 10px 20px -12px rgb(0 0 0 / 0.8);
-    color: var(--gold);
+    color: var(--ivory);
   }
 
   .g-chip {
@@ -1709,7 +1713,7 @@ input[type="range"]::-moz-range-thumb {
   }
 
   .scope-num {
-    color: rgb(244 245 250 / 0.18);
+    color: rgb(244 245 250 / 0.35);
     font-family: var(--font-mono);
     font-size: 44px;
     font-weight: 600;
@@ -1781,7 +1785,7 @@ input[type="range"]::-moz-range-thumb {
     bottom: -28px;
     left: 31px;
     width: 2px;
-    background: linear-gradient(180deg, rgb(255 181 71 / 0.6), rgb(244 245 250 / 0.12));
+    background: linear-gradient(180deg, rgb(56 214 196 / 0.5), rgb(244 245 250 / 0.12));
   }
 
   .track-dot {
@@ -1807,7 +1811,7 @@ input[type="range"]::-moz-range-thumb {
     height: 22px;
     place-items: center;
     border-radius: 9999px;
-    background: var(--gold);
+    background: var(--ivory);
     color: var(--obsidian);
     font-size: 12px;
     font-weight: 700;
@@ -1846,7 +1850,7 @@ input[type="range"]::-moz-range-thumb {
       left: calc(50% + 40px);
       width: auto;
       height: 2px;
-      background: linear-gradient(90deg, rgb(255 181 71 / 0.6), rgb(244 245 250 / 0.12));
+      background: linear-gradient(90deg, rgb(56 214 196 / 0.5), rgb(244 245 250 / 0.12));
     }
 
     .track-title {
@@ -2031,7 +2035,7 @@ input[type="range"]::-moz-range-thumb {
     z-index: 1;
     padding: 3px 10px;
     border-radius: 9999px;
-    background: var(--gold);
+    background: var(--ivory);
     color: var(--obsidian);
     font-size: 12px;
     font-weight: 600;
@@ -2075,7 +2079,8 @@ input[type="range"]::-moz-range-thumb {
     align-items: baseline;
     gap: 8px;
     margin: 0;
-    color: var(--gold);
+    color: var(--cyan);
+    white-space: nowrap;
     font-size: clamp(2.25rem, 1.6rem + 2vw, 3.5rem);
     font-variation-settings: "wdth" 115, "wght" 640;
     font-weight: 640;
@@ -2405,4 +2410,10 @@ input[type="range"]::-moz-range-thumb {
     border-radius: 14px 14px 4px 14px;
     background: linear-gradient(180deg, #2e3570, var(--card-hover));
   }
+}
+
+/* Hide the browser's own clear button in search fields; the dialog has its own. */
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
 }

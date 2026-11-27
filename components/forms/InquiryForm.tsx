@@ -137,7 +137,7 @@ function InquiryFields({
 
   if (status === "success") {
     return (
-      <div className="border-t-2 border-forest pt-7">
+      <div className="border-t-2 border-heading pt-7">
         <h2 ref={thanksRef} tabIndex={-1} className="h2 outline-none">
           Thank you{receivedName ? `, ${receivedName}` : ""}.
         </h2>
@@ -264,7 +264,7 @@ function Field({
 }) {
   return (
     <div>
-      <label htmlFor={id} className="mb-2 block text-[15px] font-semibold text-forest">
+      <label htmlFor={id} className="mb-2 block text-[15px] font-semibold text-heading">
         {label}
         <span className="font-normal text-slate"> (required)</span>
       </label>
