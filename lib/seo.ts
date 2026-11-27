@@ -5,7 +5,7 @@ export const DEFAULT_SHARE_IMAGE = {
   url: "/images/og-share.jpg",
   width: 1200,
   height: 630,
-  alt: "A gold push key set into a navy machined panel, with empty dark metal beside it.",
+  alt: "Temporant logo: a blue-to-pink voice waveform beside the temporant wordmark, with the line AI does the busywork. You stay in the loop.",
 };
 
 export function absolute(path: string): string {

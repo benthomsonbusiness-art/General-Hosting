@@ -1,6 +1,6 @@
 # v5 design: the operator's console
 
-The site is a console for a back office. Dark, left-aligned, and exact. Gold appears only where a person approves.
+The site is a console for a back office. Dark, left-aligned, and exact. Pink (the `--gold` token) appears only where a person approves.
 
 ## Thesis
 
@@ -10,29 +10,33 @@ The memorable element is the approval key: a gold control in the interface, and 
 
 ## Color
 
+Spectrum palette. Token names are kept from earlier palettes so classes stay stable.
+
 | Token | Value | Role |
 |---|---|---|
-| `--obsidian` | `#0B1F16` | Page background |
-| `--well` | `#07140E` | Console wells and logs |
-| `--forest` | `#133224` | Raised panels, header after scroll |
-| `--ivory` | `#F7F4EC` | Primary text on dark; reading surfaces |
-| `--ink` | `#1A1E1B` | Text on ivory |
-| `--slate` | `#4F5752` | Secondary text on ivory |
-| `--ivory-64` | `rgb(247 244 236 / 0.64)` | Secondary text on dark (about 7:1 on obsidian) |
-| `--line` | `rgb(247 244 236 / 0.10)` | Hairline on dark |
-| `--line-light` | `rgb(26 30 27 / 0.12)` | Hairline on ivory |
-| `--gold` | `#C5A869` | Approval node on dark |
-| `--gold-ink` | `#7D6128` | Approval node on ivory |
-| `--error-dark` | `#E8A090` | Errors on obsidian (about 8:1) |
-| `--error-light` | `#8A2E1B` | Errors on ivory |
+| `--obsidian` | `#0B0D1C` | Page background |
+| `--well` | `#070814` | Console wells and logs |
+| `--forest` | `#14172E` | Raised panels, header after scroll |
+| `--card-top` / `--card-bottom` / `--card-hover` | `#1B1F3D` / `#10132A` / `#232850` | Card gradients |
+| `--ivory` | `#F5F6FB` | Primary text on dark; reading surfaces |
+| `--ink` | `#0B0D1C` | Text on ivory |
+| `--slate` | `#4A4F6E` | Secondary text on ivory |
+| `--ivory-64` | `#A6A9C2` | Secondary text on dark |
+| `--gold` | `#F472B6` (pink) | Human approval only |
+| `--gold-ink` | `#BE185D` | Approval on light surfaces |
+| `--cyan` | `#6EA8FF` (blue) | AI and automation |
+| `--cyan-ink` | `#1D4ED8` | AI on light surfaces |
+| `--violet` / `--violet-hi` | `#8B5CF6` / `#C4B5FD` | Brand accents, button hover, chips |
+| `--brand-gradient` | `#3B82F6` → `#8B5CF6` → `#EC4899` | Logo and wordmark "o" only |
+| `--error-dark` / `--error-light` | `#E8A090` / `#8A2E1B` | Errors on dark / light |
 
-The Temporant mark is an amber (#FFB547) rounded-square frame around a geometric T: ink crossbar (#F4F5FA on dark, #0E1024 on light) and a cyan (#38D6C4) stem that leans like a clock hand. Elsewhere, gold marks the approval node in a workflow drawing and the person station.
+The Temporant mark is a 7-bar voice waveform filled with the brand gradient (a phone call turning into a booking). The favicon uses 5 bars on a dark tile so it reads at 16px. The gradient is not used as text on light surfaces (it fails 4.5:1 there).
 
-Primary actions are ivory on dark and obsidian on ivory. They are not gold.
+Primary actions are ivory on dark and obsidian on ivory, hovering to `--violet-hi`. They are not pink.
 
 ## Type
 
-Mona Sans for everything a person reads. IBM Plex Mono for machine output only: log lines, payloads, field values, the deliverable tree, and the "App: Operation" line under each step in a workflow drawing (it names the API call the step makes). The TEMPORANT wordmark is set in the sans (semibold, wide tracking) with an amber O.
+Mona Sans for everything a person reads. IBM Plex Mono for machine output only: log lines, payloads, field values, the deliverable tree, and the "App: Operation" line under each step in a workflow drawing (it names the API call the step makes). The wordmark is lowercase "temporant" in the sans, semibold, with a gradient "o".
 
 | Style | Settings |
 |---|---|
@@ -60,7 +64,7 @@ One component draws every workflow: `components/workflow/flow/` (`layout.ts` is 
 - The spine runs left to right. Trigger, rule and result cards are 64px squares in `--forest` with a 0.16 ivory border and the app's mark. The AI card is 208 by 64 with its label inside and no glyph. The approval card is the Approve key: gold, 6px, a person-check glyph, and never a third-party mark.
 - Under each card: the label (13px Mona Sans 500) and the mono line (12px Plex Mono, `--ivory-64`). Approval cards add the approver role.
 - Tools hang below the AI card's Model and Tools ports, and below a rule step's Calls port, as 40px circles on dashed S-curves. Exits rise above the spine as dashed stubs with one muted line. Two outputs after one approval stack in the last column.
-- Lines are ivory at 0.48, 1.5px. Gold appears only on approval cards.
+- Lines are ivory at 0.48, 1.5px. Pink (`--gold`) appears only on approval cards.
 - The stage is horizontal when the canvas is at least 880px wide (up to five columns) or 1040px (six columns), and at least 680px for the compact variant used on home and the workflow index. Below that the same HTML becomes a vertical list. Nothing scrolls sideways.
 - A caption under every drawing says it is an example with sample data and that product names and logos belong to their owners.
 

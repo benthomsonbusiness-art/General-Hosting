@@ -10,8 +10,9 @@ export const BRAND_STOPS = ["#3B82F6", "#8B5CF6", "#EC4899"] as const;
    becoming a booking), filled with one diagonal gradient across all bars. */
 const BARS = [40, 70, 110, 150, 110, 70, 40];
 
-export function BrandMark({ className, title }: { tone?: Tone; className?: string; title?: string }) {
-  const id = `tw-${useId().replace(/:/g, "")}`;
+/** The mark looks the same on dark and light surfaces, so it takes no tone. */
+export function BrandMark({ className, title }: { className?: string; title?: string }) {
+  const id = `tw-${useId().replace(/[^a-zA-Z0-9_-]/g, "")}`;
   const labelled = Boolean(title);
 
   return (

@@ -10,9 +10,9 @@ The photographs in `public/images/hero-architecture.jpg` and `public/images/syst
 
 | Path | Use |
 | --- | --- |
-| `public/brand/logo.svg` | Large lockup. Hairline gold stroke. |
-| `public/brand/logo-mark.svg` | Large monogram. Hairline gold stroke. |
-| `app/icon.svg` | Favicon. Thicker filled gold stroke so the split V reads at small sizes. The header uses the same filled stroke. |
+| `public/brand/logo.svg` | Large lockup: 7-bar gradient waveform over the lowercase wordmark. |
+| `public/brand/logo-mark.svg` | Waveform mark alone, transparent background. |
+| `app/icon.svg` | Favicon: a 5-bar waveform on a dark tile so it reads at 16px. |
 
 ## Inquiry
 

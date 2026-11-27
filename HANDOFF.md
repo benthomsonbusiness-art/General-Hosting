@@ -1,4 +1,14 @@
-# HANDOFF: renamed to Temporant
+# HANDOFF: Spectrum palette and waveform logo
+
+Last updated: Nov 27, 2026
+
+- **Logo:** a 7-bar voice waveform filled with one gradient (#3B82F6, #8B5CF6, #EC4899), plus the lowercase wordmark "temporant" with a gradient "o" (`.brand-gradient-text`). `components/brand/BrandMark.tsx`, `public/brand/logo.svg`, `public/brand/logo-mark.svg`. Favicon and apple icon use a 5-bar version on a dark tile so it reads at 16px. The share image `public/images/og-share.jpg` is the branded lockup.
+- **Palette:** background #0B0D1C. Token names are unchanged: `--gold` is now pink #F472B6 (human approval only), `--cyan` is blue #6EA8FF (AI and automation). New: `--violet`, `--violet-hi`, `--brand-gradient`. Primary buttons hover to `--violet-hi`.
+- The gradient fails 4.5:1 as text on light surfaces. Nothing uses a light wordmark today; if one is added, use a darker gradient (#1D4ED8, #6D28D9, #BE185D).
+
+---
+
+# Earlier: renamed to Temporant
 
 Last updated: Nov 27, 2026
 

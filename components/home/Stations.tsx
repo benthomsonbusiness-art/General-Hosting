@@ -5,7 +5,7 @@ const ICON = { "aria-hidden": true, focusable: "false", strokeWidth: 1.5 } as co
 
 /**
  * The four kinds of step, drawn as the diagram draws them: a rule card, the wide AI card (cyan), the
- * amber approval key and the record card. Keyed by position, so the titles can change freely.
+ * pink approval key (--gold) and the record card. Keyed by position, so the titles can change freely.
  */
 const NODES = [
   <span
