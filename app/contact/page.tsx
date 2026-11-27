@@ -33,7 +33,7 @@ export default function ContactPage() {
           <div className="mt-8 hidden lg:block">
             <HardwareFrame
               src="/images/key-hero.jpg"
-              alt="A gold push key set into a forest-green machined panel."
+              alt="A gold push key set into a navy machined panel."
               width={2400}
               height={1030}
               sizes="(min-width: 1024px) 40vw, 100vw"

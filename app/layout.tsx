@@ -18,7 +18,7 @@ const mona = Mona_Sans({
   display: "swap",
 });
 
-// Used exclusively for BrandWordmark so the wordmark remains live text in Cormorant.
+// Cormorant is no longer used by BrandWordmark (now font-sans); kept for remaining serif accents.
 const cormorantWordmark = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["500"],
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0B1F16",
+  themeColor: "#0E1024",
 };
 
 const organization = {

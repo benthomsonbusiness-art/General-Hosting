@@ -4,7 +4,7 @@ import { Bot, CalendarCheck, Check, Globe, MessageSquare, PhoneMissed, RotateCcw
 function BookingArt() {
   const steps = [
     { icon: Globe, label: "Web form" },
-    { icon: Bot, label: "AI drafts" },
+    { icon: Bot, label: "AI drafts", ai: true },
     { icon: UserCheck, label: "You approve", gold: true },
     { icon: MessageSquare, label: "Text sent" },
     { icon: CalendarCheck, label: "Booked" },
@@ -15,7 +15,7 @@ function BookingArt() {
         const Icon = step.icon;
         return (
           <span key={step.label} className="art-flow-step">
-            <span className="art-node" data-gold={step.gold ? "" : undefined}>
+            <span className="art-node" data-ai={step.ai ? "" : undefined} data-gold={step.gold ? "" : undefined}>
               <Icon size={18} strokeWidth={1.75} />
             </span>
             <span className="art-caption">{step.label}</span>

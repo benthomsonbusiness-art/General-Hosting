@@ -51,7 +51,7 @@ export default function AboutPage() {
           <div className="relative aspect-[4/3] overflow-hidden rounded-[14px] border border-line lg:col-span-5">
             <Image
               src="/images/key-hero.jpg"
-              alt="A gold push key set into a forest-green machined panel, waiting to be pressed."
+              alt="A gold push key set into a navy machined panel, waiting to be pressed."
               fill
               priority
               sizes="(min-width: 1024px) 40vw, 100vw"

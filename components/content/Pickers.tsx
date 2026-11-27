@@ -9,15 +9,15 @@ import type { Industry } from "@/content/industries";
 const INDUSTRY_PHOTO: Record<string, { src: string; alt: string }> = {
   hvac: {
     src: "/images/station-model.jpg",
-    alt: "A dark green control dial with engraved tick marks, like a thermostat.",
+    alt: "A dark navy control dial with engraved tick marks, like a thermostat.",
   },
   plumbing: {
     src: "/images/ins-daily-brief.jpg",
-    alt: "Three gauges on a dark green panel, with morning light across them.",
+    alt: "Three gauges on a dark navy panel, with morning light across them.",
   },
   electrical: {
     src: "/images/station-code.jpg",
-    alt: "A row of toggle switches on a dark green panel.",
+    alt: "A row of toggle switches on a dark navy panel.",
   },
   roofing: {
     src: "/images/ind-home.jpg",
