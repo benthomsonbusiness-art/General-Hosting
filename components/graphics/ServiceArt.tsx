@@ -1,9 +1,9 @@
-import { Bot, CalendarCheck, Check, MessageSquare, PhoneMissed, RotateCcw, Star, UserCheck } from "lucide-react";
+import { Bot, CalendarCheck, Check, Globe, MessageSquare, PhoneMissed, RotateCcw, UserCheck } from "lucide-react";
 
-/** Booking: a missed call becomes a booked job, with a person approving the text. */
+/** Instant booking: a website form becomes a booked job, with you approving the text. */
 function BookingArt() {
   const steps = [
-    { icon: PhoneMissed, label: "Missed call" },
+    { icon: Globe, label: "Web form" },
     { icon: Bot, label: "AI drafts" },
     { icon: UserCheck, label: "You approve", gold: true },
     { icon: MessageSquare, label: "Text sent" },
@@ -51,31 +51,29 @@ function RemindersArt() {
   );
 }
 
-/** Follow-up: an open estimate followed up, and a five-star review. */
-function FollowUpArt() {
+/** Missed calls: the text thread a caller sees a few minutes after you miss them. */
+function TextBackArt() {
   return (
-    <span className="art-follow">
-      <span className="art-estimate">
-        <span className="art-caption">Estimate</span>
-        <span className="art-estimate-title">New system, 2 options</span>
-        <span className="art-pill">Followed up</span>
+    <span className="art-thread">
+      <span className="art-call">
+        <PhoneMissed size={16} strokeWidth={1.75} />
+        Missed call, 6:12 p.m.
       </span>
-      <span className="art-review">
-        <span className="art-stars">
-          {[0, 1, 2, 3, 4].map((i) => (
-            <Star key={i} size={18} strokeWidth={1.5} fill="currentColor" />
-          ))}
-        </span>
-        <span className="art-caption">Review requested after the job</span>
+      <span className="art-bubble" data-out="">
+        Sorry we missed you. We can come today 2 to 4 or tomorrow 8 to 10. Which works?
+      </span>
+      <span className="art-bubble">Tomorrow 8 to 10 please</span>
+      <span className="art-bubble" data-out="">
+        You&apos;re booked. See you tomorrow.
       </span>
     </span>
   );
 }
 
 const ART: Record<string, () => React.JSX.Element> = {
-  "booking-automation": BookingArt,
-  "reminders-and-rescheduling": RemindersArt,
-  "follow-up-and-reviews": FollowUpArt,
+  "missed-calls": TextBackArt,
+  "instant-booking": BookingArt,
+  reminders: RemindersArt,
 };
 
 /** A drawn picture of what each service does, in place of a photograph. Decorative. */

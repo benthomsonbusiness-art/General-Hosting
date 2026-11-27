@@ -155,15 +155,8 @@ test("every booking workflow texts a customer only after a person approves", () 
   }
 });
 
-test("reminders and reviews: the AI writes before the approval and never changes a time or buys a review", () => {
-  const reminders = find("appointment-reminders").nodes.map((item) => item.kind);
-  assert.ok(reminders.indexOf("ai") < reminders.indexOf("human"));
+test("reminders: the AI writes before the approval and never changes a time", () => {
+  const kinds = find("appointment-reminders").nodes.map((item) => item.kind);
+  assert.ok(kinds.indexOf("ai") < kinds.indexOf("human"));
   assert.match(node(find("appointment-reminders"), "write-visit-texts").guardrail, /Never changes a time/);
-  assert.match(node(find("review-requests"), "draft-thanks").guardrail, /Never offers anything/);
-});
-
-test("estimate follow-up: sold or declined estimates are never chased", () => {
-  const workflow = find("estimate-follow-up");
-  assert.equal(node(workflow, "still-open").stopLabel, "Sold or declined: nothing sent");
-  assert.match(node(workflow, "draft-follow-up").guardrail, /Never changes a price/);
 });

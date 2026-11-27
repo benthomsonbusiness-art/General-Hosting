@@ -1,14 +1,13 @@
 import { FileText, Folder, GitBranch, Lock } from "lucide-react";
 
 const ROWS: { name: string; note: string; depth: number; file?: boolean }[] = [
-  { name: "workflows/", note: "One folder per workflow", depth: 0 },
+  { name: "tools/", note: "Your three tools", depth: 0 },
   { name: "missed-calls/", note: "Missed call text-back", depth: 1 },
-  { name: "reminders/", note: "Confirmations and reminders", depth: 1 },
-  { name: "messages/", note: "Every text template, in plain words", depth: 0 },
-  { name: "tests/", note: "Saved cases from the side-by-side run", depth: 0 },
-  { name: "monitoring/", note: "Alerts when anything fails", depth: 0 },
-  { name: "audit-log/", note: "Every approval and every text sent", depth: 0 },
-  { name: "RUNBOOK.md", note: "Your team's manual", depth: 0, file: true },
+  { name: "booking/", note: "Instant booking", depth: 1 },
+  { name: "reminders/", note: "Appointment reminders", depth: 1 },
+  { name: "texts/", note: "Every text, in plain words", depth: 0 },
+  { name: "history/", note: "Every text you approved", depth: 0 },
+  { name: "HOW-TO.md", note: "Simple instructions for your team", depth: 0, file: true },
 ];
 
 /** The handover, drawn as the repository a client receives: what each part is, in plain words. */
@@ -30,7 +29,7 @@ export function RepoPanel() {
       <div className="repo-branch">
         <GitBranch aria-hidden size={14} strokeWidth={1.75} />
         main
-        <span className="repo-branch-note">Updated after every tested change</span>
+        <span className="repo-branch-note">Yours to keep</span>
       </div>
       <ul className="repo-rows">
         {ROWS.map((row) => (
@@ -47,7 +46,7 @@ export function RepoPanel() {
           </li>
         ))}
       </ul>
-      <figcaption className="repo-foot">Runs in your accounts. Logins, logs and code stay with you.</figcaption>
+      <figcaption className="repo-foot">Runs in your accounts. Everything stays with you.</figcaption>
     </figure>
   );
 }

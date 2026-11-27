@@ -1,24 +1,19 @@
 /** Client-safe half of the inquiry contract: constants, types and validation. */
 
-export const PRACTICE_INTERESTS = [
-  "Booking Automation",
-  "Reminders and Rescheduling",
-  "Follow-up and Reviews",
-] as const;
+export const PRACTICE_INTERESTS = ["Booking Automation", "Missed Call Text-back", "Appointment Reminders"] as const;
 
 export type PracticeInterest = (typeof PRACTICE_INTERESTS)[number];
 
 /** What the form shows. The values above are stored and mapped from ?practice=, so they never change. */
 export const PRACTICE_LABELS: Record<PracticeInterest, string> = {
-  "Booking Automation": "Booking automation (calls and leads)",
-  "Reminders and Rescheduling": "Reminders and rescheduling",
-  "Follow-up and Reviews": "Estimate follow-up and reviews",
+  "Booking Automation": "Instant booking for web leads, or not sure yet",
+  "Missed Call Text-back": "Missed call text-back",
+  "Appointment Reminders": "Appointment reminders",
 };
 
 export const HONEYPOT_FIELD = "fax_number";
 
-export const INQUIRY_OFFLINE_ERROR =
-  "The form is not working right now, so nothing was sent. Please try again later.";
+export const INQUIRY_OFFLINE_ERROR = "The form is not working right now, so nothing was sent. Please try again later.";
 
 /** Shown on /contact?sent=1 after a form post without JavaScript, and after a sent note. */
 export const INQUIRY_SENT = "Your note was sent.";
@@ -43,8 +38,8 @@ const EMAIL = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
 export function practiceFromQuery(value: string | null | undefined): PracticeInterest {
   const normalized = (value ?? "").trim().toLowerCase();
-  if (normalized === "reminders" || normalized === "reminders-and-rescheduling") return "Reminders and Rescheduling";
-  if (normalized === "follow-up" || normalized === "follow-up-and-reviews") return "Follow-up and Reviews";
+  if (normalized === "reminders") return "Appointment Reminders";
+  if (normalized === "missed-calls") return "Missed Call Text-back";
   return "Booking Automation";
 }
 

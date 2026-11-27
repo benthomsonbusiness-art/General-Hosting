@@ -1,3 +1,14 @@
+# HANDOFF: three workflows, plain language
+
+Last updated: Nov 27, 2026 · Live branch: `main`
+
+- **Three workflows only:** missed-call-text-back, web-lead-booking, appointment-reminders. The other five redirect to /workflows.
+- **Three services, one per workflow:** /services/missed-calls, /services/instant-booking, /services/reminders. Old service slugs redirect. Each service page shows its workflow drawing, what you get, setup steps, tools and questions.
+- **Plain language everywhere:** short words, no trade or tech jargon (no CSR, dispatcher, runbook, repository, scoped). "Human in the loop" is kept for approval steps at Ben's request.
+- **Removed:** SUB_SERVICES, Estimator, SubServiceScenes, StageDiagram.
+
+---
+
 # HANDOFF: pivot to booking automation for home service businesses
 
 Last updated: Nov 26, 2026 · Live branch: `main` (Cloudflare Workers Builds production branch set to `main`)

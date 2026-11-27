@@ -16,13 +16,13 @@ import { pageMetadata } from "@/lib/seo";
 import { CTA_HREF, CTA_LABEL, SITE_NAME } from "@/lib/site";
 
 export const metadata = pageMetadata({
-  title: `${SITE_NAME} | Booking Automation for Home Services`,
+  title: `${SITE_NAME} | More Booked Jobs for Service Businesses`,
   absoluteTitle: true,
   description: HOME.metaDescription,
   path: "/",
 });
 
-const FIRST = ["missed-call-text-back", "appointment-reminders", "estimate-follow-up"] as const;
+const FIRST = ["missed-call-text-back", "web-lead-booking", "appointment-reminders"] as const;
 
 /** The one workflow drawn on the first screen. Browsing the rest happens on /workflows. */
 const HERO_FLOW = flowExample("web-lead-booking");
@@ -34,15 +34,15 @@ const STATS = [
   { prefix: "Up to", value: "80%", label: "less time answering new leads" },
   { prefix: "Up to", value: "50%", label: "fewer no-shows" },
   { prefix: "", value: "5 hrs", label: "a week back on scheduling" },
-  { prefix: "", value: "100%", label: "of texts approved by a person" },
+  { prefix: "", value: "100%", label: "of texts approved by you" },
 ];
 
-const STATS_NOTE = "Design targets for each workflow. Your audit sets the numbers for your company.";
+const STATS_NOTE = "Goals we design each tool to hit. Your audit sets the real numbers for your business.";
 
 const OWN_POINTS = [
-  "Built in your accounts, not ours",
-  "Code, AI instructions and logs live in your repository",
-  "A written runbook so your team can run it without us",
+  "Set up in your accounts, not ours",
+  "Every text and setting is yours to keep",
+  "Simple instructions your team can follow",
 ];
 
 export default function HomePage() {
@@ -54,8 +54,8 @@ export default function HomePage() {
             AI does the busywork. <span className="text-gold">You stay in the loop.</span>
           </h1>
           <p className="lead mt-6 max-w-[62rem] text-muted">
-            Booking automation for home service businesses. Every missed call and lead gets a fast reply with real open
-            times, and your office approves each one from a phone.
+            We help service businesses book more jobs. Missed calls get a text back, website leads get booked, and
+            customers get reminded. You approve every text from your phone.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <Link href={CTA_HREF} className="btn btn-primary">
@@ -83,7 +83,7 @@ export default function HomePage() {
                 Example: {HERO_FLOW.title}
               </p>
               <Link href="/workflows" className="text-link small inline-flex min-h-11 items-center">
-                See all eight workflows
+                See how each one works
               </Link>
             </div>
             <FlowDiagram
@@ -102,7 +102,7 @@ export default function HomePage() {
         <div className="wrap grid grid-cols-[minmax(0,1fr)] items-center gap-10 py-14 lg:grid-cols-12 lg:py-20">
           <div className="lg:col-span-5">
             <h2 id="yours" className="h2">
-              You own what we build.
+              You own it.
             </h2>
             <ul className="mt-6 grid gap-3">
               {OWN_POINTS.map((point) => (
@@ -137,7 +137,7 @@ export default function HomePage() {
               })}
             </ul>
             <Link href="/workflows" className="btn btn-secondary mt-6">
-              See all eight workflows
+              See how each one works
             </Link>
           </div>
           <div className="min-w-0 lg:col-span-7">
@@ -173,7 +173,7 @@ export default function HomePage() {
       <section data-surface="dark" aria-labelledby="built" className="border-t border-line bg-forest">
         <div className="wrap py-14 text-center lg:py-20">
           <h2 id="built" className="h2">
-            What happens to each item
+            How every text works
           </h2>
           <div className="mx-auto mt-12 max-w-[64rem]">
             <Stations />
@@ -184,7 +184,7 @@ export default function HomePage() {
       <section data-surface="dark" aria-labelledby="engagement" className="border-t border-line bg-obsidian">
         <div className="wrap py-14 lg:py-20">
           <h2 id="engagement" className="h2">
-            How the work is scoped
+            How we get started
           </h2>
           <div className="mt-10">
             <ScopeSteps />

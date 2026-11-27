@@ -1,6 +1,6 @@
 import { INDUSTRIES } from "@/content/industries";
 import { ABOUT, APPROACH_PAGE, CONTACT, INDUSTRIES_HUB, SERVICES_HUB, WORKFLOWS_PAGE } from "@/content/pages";
-import { SERVICES, SUB_SERVICES, serviceHref, subServiceHref } from "@/content/services";
+import { SERVICES, serviceHref } from "@/content/services";
 import { WORKFLOWS } from "@/content/workflows";
 import { appName } from "@/lib/logos";
 import type { SearchEntry } from "@/lib/search";
@@ -11,7 +11,13 @@ export const dynamic = "force-static";
 
 function entries(): SearchEntry[] {
   return [
-    { url: "/services", title: "Services", type: "Page", summary: SERVICES_HUB.dek, keywords: "booking automation home services hvac plumbing" },
+    {
+      url: "/services",
+      title: "Services",
+      type: "Page",
+      summary: SERVICES_HUB.dek,
+      keywords: "booking automation home services hvac plumbing",
+    },
     {
       url: "/workflows",
       title: "Example workflows",
@@ -19,7 +25,13 @@ function entries(): SearchEntry[] {
       summary: WORKFLOWS_PAGE.dek,
       keywords: "flowchart steps approval",
     },
-    { url: "/industries", title: "Industries", type: "Page", summary: INDUSTRIES_HUB.dek, keywords: "trades hvac plumbing electrical roofing lawn cleaning pest" },
+    {
+      url: "/industries",
+      title: "Industries",
+      type: "Page",
+      summary: INDUSTRIES_HUB.dek,
+      keywords: "trades hvac plumbing electrical roofing lawn cleaning pest",
+    },
     {
       url: "/testimonials",
       title: "Client testimonials",
@@ -63,15 +75,6 @@ function entries(): SearchEntry[] {
         type: "Service",
         summary: item.summary,
         keywords: [...item.keywords, ...item.areas.map((area) => area.title)].join(" "),
-      }),
-    ),
-    ...SUB_SERVICES.map(
-      (item): SearchEntry => ({
-        url: subServiceHref(item.slug),
-        title: item.name,
-        type: "Service",
-        summary: item.answer,
-        keywords: [...item.keywords, ...item.get].join(" "),
       }),
     ),
     ...INDUSTRIES.map(

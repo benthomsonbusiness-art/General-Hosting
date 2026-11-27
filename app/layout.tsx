@@ -35,7 +35,7 @@ const plexMono = IBM_Plex_Mono({
   preload: false,
 });
 
-const title = `${SITE_NAME} | Booking Automation for Home Services`;
+const title = `${SITE_NAME} | More Booked Jobs for Service Businesses`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -82,7 +82,7 @@ const organization = {
     "Booking automation",
     "Missed call text-back",
     "Appointment reminders",
-    "Home service businesses",
+    "Service businesses",
   ],
 };
 

@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { IconCards, ScopeSteps, StepTrack } from "@/components/graphics/Graphics";
-import { ServiceArt } from "@/components/graphics/ServiceArt";
 import { notFound } from "next/navigation";
 import { Faq } from "@/components/content/Blocks";
-import { Estimator } from "@/components/content/Estimator";
-import { SubServiceScenes } from "@/components/content/SubServiceScenes";
+import { IconCards, StepTrack } from "@/components/graphics/Graphics";
+import { ServiceArt } from "@/components/graphics/ServiceArt";
 import { ClosingCta } from "@/components/layout/ClosingCta";
 import { Container, Section } from "@/components/layout/Section";
 import { Breadcrumbs } from "@/components/nav/Breadcrumbs";
 import { JsonLd } from "@/components/util/JsonLd";
-import { BUILD_TYPES, getService, INTEGRATIONS, SERVICES, SUB_SERVICES, serviceHref } from "@/content/services";
-import { WORKFLOWS, workflowsById } from "@/content/workflows";
+import { toFlowNodes } from "@/components/workflow/examples";
+import { FlowDiagram } from "@/components/workflow/flow/FlowDiagram";
+import { getService, INTEGRATIONS, SERVICES, serviceHref } from "@/content/services";
+import { workflowsById } from "@/content/workflows";
 import { pageMetadata, serviceJsonLd } from "@/lib/seo";
 import { appsByCategory, showMark, usedAppSlugs } from "@/lib/used-apps";
 
@@ -36,10 +36,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ServicePage({ params }: Props) {
   const service = getService((await params).slug);
   if (!service) notFound();
-  const flagship = service.kind === "flagship";
   const workflows = workflowsById(service.workflowIds);
+  const workflow = workflows[0];
   const path = serviceHref(service.slug);
-  const tools = flagship ? appsByCategory(usedAppSlugs(WORKFLOWS)) : [];
+  const tools = appsByCategory(usedAppSlugs(workflows));
 
   return (
     <>
@@ -67,105 +67,75 @@ export default async function ServicePage({ params }: Props) {
         </Container>
       </Section>
 
-      {flagship ? (
-        <Section surface="forest" labelledBy="services">
-          <Container>
-            <h2 id="services" className="h2">
-              What we build
-            </h2>
-            <SubServiceScenes items={SUB_SERVICES.filter((item) => BUILD_TYPES.includes(item.slug))} />
-          </Container>
-        </Section>
-      ) : (
-        <Section surface="forest" labelledBy="areas">
-          <Container>
-            <h2 id="areas" className="h2">
-              Where we help
-            </h2>
-            <div className="mt-10">
-              <IconCards items={service.areas} columns={5} />
-            </div>
-          </Container>
-        </Section>
-      )}
-
-      {workflows.length > 0 ? (
-        <Section labelledBy="try">
-          <Container>
-            <h2 id="try" className="h2">
-              Example workflows
-            </h2>
-            <ul className="mt-8 divide-y divide-line border-y border-line">
-              {workflows.map((workflow) => (
-                <li key={workflow.id}>
-                  <Link href={`/workflows/${workflow.id}`} className="group block py-5">
-                    <span className="card-title row-title block">{workflow.title}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </Container>
-        </Section>
-      ) : null}
-
-      {tools.length > 0 ? (
-        <Section labelledBy="tools" className="border-t border-line">
-          <Container>
-            <h2 id="tools" className="h2 max-w-[18ch]">
-              {INTEGRATIONS.heading}
-            </h2>
-            <div className="mt-8 grid gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
-              {tools.map((group) => (
-                <div key={group.category}>
-                  <h3 className="small text-muted">{group.label}</h3>
-                  <ul className="mt-3 space-y-2">
-                    {group.apps.map((app) => (
-                      <li key={app.slug} className="flex min-h-8 items-center gap-3">
-                        {showMark(app.slug) ? (
-                          // eslint-disable-next-line @next/next/no-img-element -- official SVG artwork, drawn as is
-                          <img src={`/logos/${app.slug}.svg`} alt="" width={24} height={24} className="h-6 w-6" />
-                        ) : null}
-                        <span>{app.name}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-            <p className="small mt-8 max-w-[44rem] text-muted">{INTEGRATIONS.note}</p>
-          </Container>
-        </Section>
-      ) : null}
-
-      <Section surface={flagship ? "forest" : "obsidian"} labelledBy="runs" className="border-t border-line">
+      <Section surface="forest" labelledBy="get">
         <Container>
-          <h2 id="runs" className="h2">
-            {flagship ? "How the work is scoped" : "How it runs"}
+          <h2 id="get" className="h2">
+            What you get
           </h2>
-          <div className="mt-8">
-            {flagship ? (
-              <ScopeSteps />
-            ) : (
-              <StepTrack steps={(service.steps ?? []).map((step) => ({ title: step.title, line: step.body }))} />
-            )}
+          <div className="mt-10">
+            <IconCards items={service.areas} columns={4} />
           </div>
         </Container>
       </Section>
 
-      {flagship ? (
-        <Section labelledBy="hours">
+      {workflow ? (
+        <Section labelledBy="see">
           <Container>
-            <h2 id="hours" className="h2 max-w-[16ch]">
-              Hours this task takes a year
+            <h2 id="see" className="h2">
+              See it work
             </h2>
-            <div className="mt-8">
-              <Estimator />
+            <div className="mt-10">
+              <FlowDiagram
+                id={`service-${workflow.id}`}
+                title={workflow.title}
+                nodes={toFlowNodes(workflow)}
+                stepsHref={`/workflows/${workflow.id}`}
+                labelledBy="see"
+              />
             </div>
           </Container>
         </Section>
       ) : null}
 
-      <Section labelledBy="questions">
+      <Section surface="forest" labelledBy="setup">
+        <Container>
+          <h2 id="setup" className="h2">
+            How we set it up
+          </h2>
+          <div className="mt-12">
+            <StepTrack steps={service.steps.map((step) => ({ title: step.title, line: step.body }))} />
+          </div>
+        </Container>
+      </Section>
+
+      {tools.length > 0 ? (
+        <Section labelledBy="tools">
+          <Container>
+            <h2 id="tools" className="h2 max-w-[18ch]">
+              {INTEGRATIONS.heading}
+            </h2>
+            <ul className="mt-8 flex flex-wrap gap-3">
+              {tools
+                .flatMap((group) => group.apps)
+                .map((app) => (
+                  <li
+                    key={app.slug}
+                    className="flex min-h-12 items-center gap-3 rounded-[10px] border border-line px-4"
+                  >
+                    {showMark(app.slug) ? (
+                      // eslint-disable-next-line @next/next/no-img-element -- official SVG artwork, drawn as is
+                      <img src={`/logos/${app.slug}.svg`} alt="" width={22} height={22} className="h-[22px] w-[22px]" />
+                    ) : null}
+                    <span>{app.name}</span>
+                  </li>
+                ))}
+            </ul>
+            <p className="small mt-6 max-w-[44rem] text-muted">{INTEGRATIONS.note}</p>
+          </Container>
+        </Section>
+      ) : null}
+
+      <Section surface="forest" labelledBy="questions">
         <Container className="grid gap-8 lg:grid-cols-12">
           <h2 id="questions" className="h2 lg:col-span-4">
             Questions

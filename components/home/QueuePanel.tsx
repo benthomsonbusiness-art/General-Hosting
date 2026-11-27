@@ -1,4 +1,4 @@
-import { CalendarCheck, Check, FileText, PhoneMissed, UserCheck } from "lucide-react";
+import { CalendarCheck, Check, Globe, PhoneMissed, UserCheck } from "lucide-react";
 
 type Row = {
   icon: typeof PhoneMissed;
@@ -12,23 +12,23 @@ const ROWS: Row[] = [
   {
     icon: PhoneMissed,
     title: "Missed call, 6:12 p.m.",
-    detail: "Voicemail says AC not cooling. Text drafted with two open windows",
+    detail: "Voicemail says AC not cooling. Text written with two open times",
     status: "approve",
     statusLabel: "Waiting for you",
   },
   {
-    icon: CalendarCheck,
-    title: "Tomorrow's 14 visits",
-    detail: "Reminders sent, 12 confirmed by text, 1 reschedule flagged",
+    icon: Globe,
+    title: "Website form, water heater",
+    detail: "In your area. Booked Tuesday 10 to 12 with Marco",
     status: "done",
-    statusLabel: "Board updated",
+    statusLabel: "Booked",
   },
   {
-    icon: FileText,
-    title: "Estimate open 3 days",
-    detail: "Follow-up sent after the comfort advisor approved it",
+    icon: CalendarCheck,
+    title: "Tomorrow's 14 visits",
+    detail: "Reminders sent. 12 confirmed, 1 wants to change",
     status: "done",
-    statusLabel: "Logged",
+    statusLabel: "Confirmed",
   },
 ];
 
@@ -76,9 +76,7 @@ export function QueuePanel() {
           );
         })}
       </ul>
-      <figcaption className="repo-foot">
-        Sample data. Routine items finish on their own; anything going out waits for you.
-      </figcaption>
+      <figcaption className="repo-foot">Sample data. Nothing goes to a customer until you approve it.</figcaption>
     </figure>
   );
 }

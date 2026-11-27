@@ -55,7 +55,7 @@ export default function HowItWorksPage() {
       <Section labelledBy="scope" surface="forest">
         <Container>
           <h2 id="scope" className="h2">
-            How it&rsquo;s scoped
+            How we get started
           </h2>
           <div className="mt-10">
             <ScopeSteps />

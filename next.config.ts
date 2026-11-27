@@ -55,21 +55,40 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       // Sub-services and industries are sections of one page each.
-      ...["workflow-audit", "build-and-deploy", "retained-operations", "ai-agents-and-integrations", "reporting-and-data-pipelines"].map(
-        (slug) => ({
-          source: `/services/ai-workflow-automation/${slug}`,
-          destination: `/services/booking-automation#${slug}`,
-          permanent: true,
-        }),
-      ),
+      ...[
+        "workflow-audit",
+        "build-and-deploy",
+        "retained-operations",
+        "ai-agents-and-integrations",
+        "reporting-and-data-pipelines",
+      ].map((slug) => ({
+        source: `/services/ai-workflow-automation/${slug}`,
+        destination: "/how-it-works",
+        permanent: true,
+      })),
       { source: "/industries/:slug", destination: "/industries?industry=:slug", permanent: true },
       { source: "/practices/strategy", destination: "/services", permanent: true },
-      { source: "/services/ai-workflow-automation", destination: "/services/booking-automation", permanent: true },
+      { source: "/services/ai-workflow-automation", destination: "/services/instant-booking", permanent: true },
+      { source: "/services/booking-automation", destination: "/services/instant-booking", permanent: true },
+      { source: "/services/reminders-and-rescheduling", destination: "/services/reminders", permanent: true },
+      { source: "/services/follow-up-and-reviews", destination: "/services", permanent: true },
       { source: "/services/meta-ads-consulting", destination: "/services", permanent: true },
       { source: "/services/strategy", destination: "/services", permanent: true },
-      ...["lead-triage", "proposal-ops", "client-onboarding", "daily-brief", "ap-intake", "support-routing", "meta-ads-reporting", "recruiting-screen"].map(
-        (id) => ({ source: `/workflows/${id}`, destination: "/workflows", permanent: true }),
-      ),
+      ...[
+        "lead-triage",
+        "proposal-ops",
+        "client-onboarding",
+        "daily-brief",
+        "ap-intake",
+        "support-routing",
+        "meta-ads-reporting",
+        "recruiting-screen",
+        "marketplace-leads",
+        "cancellation-waitlist",
+        "estimate-follow-up",
+        "review-requests",
+        "maintenance-reminders",
+      ].map((id) => ({ source: `/workflows/${id}`, destination: "/workflows", permanent: true })),
     ];
   },
   async headers() {

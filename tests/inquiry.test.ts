@@ -173,7 +173,7 @@ test("header injection is collapsed to one line", () => {
 });
 
 test("practice query still maps", () => {
-  assert.equal(practiceFromQuery("reminders"), "Reminders and Rescheduling");
-  assert.equal(practiceFromQuery("follow-up"), "Follow-up and Reviews");
+  assert.equal(practiceFromQuery("reminders"), "Appointment Reminders");
+  assert.equal(practiceFromQuery("missed-calls"), "Missed Call Text-back");
   assert.equal(practiceFromQuery(null), "Booking Automation");
 });

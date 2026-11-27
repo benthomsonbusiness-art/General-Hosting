@@ -1,65 +1,62 @@
 export type Faq = { q: string; a: string };
 
 export const PRINCIPLES: { title: string; short: string }[] = [
-  { title: "Plain rules wherever possible", short: "Same input, same result." },
-  { title: "AI only for reading and drafting", short: "Answers that fail a check are thrown out." },
-  { title: "A person approves every text", short: "It waits. It never sends itself." },
-  { title: "You own the code, the accounts and the logs", short: "Removing our access is one line in the runbook." },
-  { title: "Every workflow comes with a manual", short: "Alerts, a log of every action, and written steps for your team." },
+  { title: "Simple rules first", short: "Same input, same answer." },
+  { title: "AI only writes drafts", short: "It never sends anything." },
+  { title: "You approve every text", short: "One tap from your phone." },
+  { title: "You own everything", short: "It runs in your accounts." },
+  { title: "Clear instructions", short: "Your team knows how it works." },
 ];
 
 export const METHOD: { title: string; line: string; happens: string; see: string; approve: string }[] = [
   {
-    title: "Map",
-    line: "Follow your calls and leads",
-    happens:
-      "We follow real items with the people who handle them. Exceptions get as much time as the normal path, because they are where most automations break.",
-    see: "A process map, a systems inventory and a ranked list.",
-    approve: "The map. If it is wrong, we correct it first.",
+    title: "Look",
+    line: "How you book today",
+    happens: "We watch how calls and leads come in, and where they slip.",
+    see: "A short list of what to fix first.",
+    approve: "The list.",
   },
   {
-    title: "Design",
-    line: "Write it down",
-    happens:
-      "We write down each piece of information, where it comes from and who owns it. We mark which steps are rules, which use AI and which need your approval.",
-    see: "The field list, the approval points, and what happens when something fails.",
-    approve: "Where you approve, the limits, and who gets access.",
+    title: "Plan",
+    line: "Write the texts with you",
+    happens: "We write every text with you and decide when you approve.",
+    see: "Every text, in plain words.",
+    approve: "The wording.",
   },
   {
-    title: "Build",
-    line: "Test it beside your team",
-    happens:
-      "The workflow runs beside the manual process and sends nothing. Each difference is a defect until it is explained.",
-    see: "A report of every difference from your team's work.",
+    title: "Test",
+    line: "Run it next to your office",
+    happens: "It runs next to your office for two weeks and sends nothing.",
+    see: "What it would have sent.",
     approve: "Going live.",
   },
   {
-    title: "Hand over",
-    line: "Make it yours",
-    happens: "Your team runs it with us present, including one deliberate failure and one run by hand.",
-    see: "The runbook, the alerts and the saved tests.",
-    approve: "Acceptance, and whether we stay on.",
+    title: "Go live",
+    line: "It's yours",
+    happens: "Your team uses it, with us on hand.",
+    see: "Simple instructions for your team.",
+    approve: "Whether we stay on to look after it.",
   },
 ];
 
-/** Links the four method stages to the three engagement stages. */
-export const STAGES_NOTE = "Map and Design happen in the booking audit. Build and Hand over happen in build and deploy.";
+/** Links the four steps to the three stages. */
+export const STAGES_NOTE = "Look and Plan happen in the booking audit. Test and Go live happen in setup.";
 
 export const APPROACH_FAQ: Faq[] = [
   {
-    q: "Do we have to do all of it?",
-    a: "No. The audit stands on its own. You can take the list of fixes to your own team or decide nothing is worth building yet.",
+    q: "Do I have to buy everything?",
+    a: "No. Start with the audit. You can stop there if nothing is worth setting up.",
   },
   {
-    q: "How much time do you need from our people?",
-    a: "Most of it falls in the audit. After that we need one owner, plus the people who will approve each step.",
+    q: "How much of my time does it take?",
+    a: "A couple of short calls in the audit, then someone to approve texts while we test.",
   },
   {
-    q: "What if the test goes badly?",
-    a: "The manual process is still running, so nothing is lost. We fix the cause, or we tell you the step is not a good candidate.",
+    q: "What if it doesn't work for us?",
+    a: "Your office keeps working the old way while we test, so nothing is lost.",
   },
   {
     q: "What does it cost?",
-    a: "The audit is a fixed price, agreed up front. Build work is scoped after the audit.",
+    a: "The audit is a set price agreed up front. Setup is priced after the audit.",
   },
 ];

@@ -10,7 +10,7 @@ import * as engagements from "../content/engagements.ts";
 import { INDUSTRIES } from "../content/industries.ts";
 import * as scenarios from "../content/scenarios.ts";
 import * as pages from "../content/pages.ts";
-import { SERVICES, SUB_SERVICES } from "../content/services.ts";
+import { SERVICES } from "../content/services.ts";
 import * as nav from "../content/site-nav.ts";
 import { EXITS, WORKFLOWS, type Workflow, type WorkflowNode } from "../content/workflows.ts";
 import { appName, isAppSlug, isGlyph } from "../lib/logos.ts";
@@ -91,13 +91,13 @@ walk(engagements.ENGAGEMENTS, "engagements");
 walk(INDUSTRIES, "industries");
 walk(pages, "pages");
 walk(SERVICES, "services");
-walk(SUB_SERVICES, "subservices");
 walk(nav, "nav");
 walk(scenarios.SCENARIOS, "scenarios");
 walk(WORKFLOWS, "workflows");
 
 /** Text written directly in components: JSX text plus string attributes a reader can see. */
-const SKIP_ATTR = /^(className|style|href|src|id|type|key|d|viewBox|sizes|points|transform|rel|role|name|autoComplete|fill|stroke.*|preserveAspectRatio)$/;
+const SKIP_ATTR =
+  /^(className|style|href|src|id|type|key|d|viewBox|sizes|points|transform|rel|role|name|autoComplete|fill|stroke.*|preserveAspectRatio)$/;
 function checkTsx(path: string) {
   const source = ts.createSourceFile(path, readFileSync(path, "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
   const visit = (node: ts.Node) => {
@@ -136,9 +136,18 @@ const serviceSlugs = new Set(SERVICES.map((item) => item.slug));
 const industrySlugs = new Set(INDUSTRIES.map((item) => item.slug));
 
 unique([...workflowIds].concat(WORKFLOWS.length === workflowIds.size ? [] : ["duplicate-workflow"]), "workflows");
-unique(WORKFLOWS.map((item) => item.id), "workflow ids");
-unique([...SERVICES, ...SUB_SERVICES].map((item) => item.slug), "service slugs");
-unique(INDUSTRIES.map((item) => item.slug), "industry slugs");
+unique(
+  WORKFLOWS.map((item) => item.id),
+  "workflow ids",
+);
+unique(
+  SERVICES.map((item) => item.slug),
+  "service slugs",
+);
+unique(
+  INDUSTRIES.map((item) => item.slug),
+  "industry slugs",
+);
 
 function refs(ids: string[], valid: Set<string>, where: string) {
   for (const id of ids) if (!valid.has(id)) fail(`${where}: unknown reference "${id}"`);
@@ -226,8 +235,7 @@ function checkDiagram(node: WorkflowNode, where: string) {
 /** Spine columns as drawn: two outputs directly after one approval stack in one column. */
 function spineColumns(workflow: Workflow): number {
   return workflow.nodes.filter((node, index, nodes) => {
-    const stacked =
-      node.kind === "output" && nodes[index - 1]?.kind === "output" && nodes[index - 2]?.kind === "human";
+    const stacked = node.kind === "output" && nodes[index - 1]?.kind === "output" && nodes[index - 2]?.kind === "human";
     return !stacked;
   }).length;
 }
@@ -312,5 +320,5 @@ if (errors.length > 0) {
   process.exit(1);
 }
 console.log(
-  `Content check passed: ${WORKFLOWS.length} workflows, ${SERVICES.length + SUB_SERVICES.length} services, ${INDUSTRIES.length} industries (${Math.round(size / 1024)} KB of workflow data).`,
+  `Content check passed: ${WORKFLOWS.length} workflows, ${SERVICES.length} services, ${INDUSTRIES.length} industries (${Math.round(size / 1024)} KB of workflow data).`,
 );

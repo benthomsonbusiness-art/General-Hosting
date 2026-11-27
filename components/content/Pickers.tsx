@@ -136,14 +136,14 @@ function IndustryTabs({ industries, initial }: { industries: IndustryView[]; ini
             <div className="console p-6 lg:col-span-7">
               <h2 className="h3">{current.name}</h2>
               <p className="mt-3 text-muted">{current.line}</p>
-              <p className="mt-6 text-[15px]">Work that piles up</p>
+              <p className="mt-6 text-[15px]">Where jobs slip</p>
               <ul className="mt-2 text-[15px] leading-relaxed text-muted">
                 {current.hours.map((hour) => (
                   <li key={hour}>{hour}</li>
                 ))}
               </ul>
               <p className="mt-6 border-t border-line pt-4 text-[15px]">Stays with your team: {current.stays}</p>
-              <h3 className="h4 mt-8">Example workflows</h3>
+              <h3 className="h4 mt-8">How we help</h3>
               <ul className="mt-4 divide-y divide-line border-y border-line">
                 {current.workflows.map((workflow) => (
                   <li key={workflow.id}>
