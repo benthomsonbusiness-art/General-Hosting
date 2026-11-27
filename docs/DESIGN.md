@@ -26,13 +26,13 @@ The memorable element is the approval key: a gold control in the interface, and 
 | `--error-dark` | `#E8A090` | Errors on obsidian (about 8:1) |
 | `--error-light` | `#8A2E1B` | Errors on ivory |
 
-The logo mark keeps its gold stroke. That geometry is unchanged. Elsewhere, gold marks the approval node in a workflow drawing and the person station.
+The Temporant mark is an amber (#FFB547) rounded-square frame around a geometric T: ink crossbar (#F4F5FA on dark, #0E1024 on light) and a cyan (#38D6C4) stem that leans like a clock hand. Elsewhere, gold marks the approval node in a workflow drawing and the person station.
 
 Primary actions are ivory on dark and obsidian on ivory. They are not gold.
 
 ## Type
 
-Mona Sans for everything a person reads. IBM Plex Mono for machine output only: log lines, payloads, field values, the deliverable tree, and the "App: Operation" line under each step in a workflow drawing (it names the API call the step makes). Cormorant Garamond and the ampersand subset stay inside the wordmark.
+Mona Sans for everything a person reads. IBM Plex Mono for machine output only: log lines, payloads, field values, the deliverable tree, and the "App: Operation" line under each step in a workflow drawing (it names the API call the step makes). The TEMPORANT wordmark is set in the sans (semibold, wide tracking) with an amber O.
 
 | Style | Settings |
 |---|---|

@@ -1,3 +1,13 @@
+# HANDOFF: renamed to Temporant
+
+Last updated: Nov 27, 2026
+
+- **New name:** Temporant (from Latin *tempus*, time). Domain `temporant.com` (not registered yet), contact `inquiries@temporant.com`. All set in `lib/site.ts`; titles, JSON-LD, copy and tests follow it.
+- **New logo:** amber rounded-square frame, geometric T with a white (navy on light) crossbar and a cyan stem angled like a clock hand. `components/brand/BrandMark.tsx`, `public/brand/logo.svg`, `public/brand/logo-mark.svg`, `app/icon.svg`. Wordmark TEMPORANT is now `font-sans`, semibold, wide tracking, amber O.
+- **Unchanged on purpose:** Cloudflare worker `valentini-next`, preview hosts in `PREVIEW_HOSTS`, the webhook `source: "valentini-inquiry"` value (receivers may filter on it). Older sections below are historical.
+
+---
+
 # HANDOFF: three workflows, plain language
 
 Last updated: Nov 27, 2026 · Live branch: `main`

@@ -11,7 +11,7 @@ export function SiteFooter() {
     <footer id="site-footer" tabIndex={-1} data-surface="dark" className="border-t border-line bg-obsidian outline-none">
       <div className="wrap py-12">
         <div className="flex flex-wrap items-start justify-between gap-x-12 gap-y-8">
-          <Link href="/" className="inline-flex min-h-11 items-center gap-3" aria-label="Valentini Systems home">
+          <Link href="/" className="inline-flex min-h-11 items-center gap-3" aria-label="Temporant home">
             <BrandMark className="h-10 w-10 shrink-0" />
             <BrandWordmark className="text-[13px]" />
           </Link>
@@ -29,7 +29,7 @@ export function SiteFooter() {
         </div>
         <div className="mt-8 flex flex-wrap items-center justify-between gap-x-8 gap-y-2 border-t border-line pt-6">
           <div>
-            <p className="small text-muted">© 2026 Valentini Systems</p>
+            <p className="small text-muted">© 2026 Temporant</p>
             <p className="small text-muted">{SITE_LOCALITY}</p>
             <p className="small mt-2 max-w-[44rem] text-muted">{TRADEMARK_NOTE}</p>
           </div>

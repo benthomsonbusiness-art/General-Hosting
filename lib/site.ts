@@ -1,5 +1,5 @@
-export const SITE_NAME = "Valentini Systems";
-export const SITE_DOMAIN = "valentinisystems.com";
+export const SITE_NAME = "Temporant";
+export const SITE_DOMAIN = "temporant.com";
 export const SITE_WWW = `www.${SITE_DOMAIN}`;
 export const SITE_URL = `https://${SITE_DOMAIN}`;
 export const INQUIRY_EMAIL = `inquiries@${SITE_DOMAIN}`;

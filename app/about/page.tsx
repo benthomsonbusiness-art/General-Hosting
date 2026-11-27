@@ -67,7 +67,7 @@ export default function AboutPage() {
             <div className="lg:col-span-4">
               <HardwareFrame
                 src={FOUNDER_PHOTO}
-                alt="Ben Thomson, founder of Valentini Systems"
+                alt="Ben Thomson, founder of Temporant"
                 width={1600}
                 height={2000}
                 sizes="(min-width: 1024px) 30vw, 100vw"

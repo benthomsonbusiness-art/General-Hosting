@@ -1,6 +1,6 @@
-# Valentini & Co.
+# Temporant
 
-Multi-page site for Valentini & Co. The flagship practice is AI Workflow Automation. Read `HANDOFF.md` for status, decisions and deploy steps.
+Multi-page site for Temporant: booking automation for service businesses (missed call text-back, instant booking for web leads, appointment reminders). Read `HANDOFF.md` for status, decisions and deploy steps.
 
 Copy lives in `content/`. `npm run check` validates it (also runs before every build), `npm test` covers the run state machine and the inquiry API. After changing a photo, run `node scripts/resize-images.mjs` and update `lib/image-loader.ts`. Node 22.18 or newer is required.
 

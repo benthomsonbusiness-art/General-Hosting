@@ -40,4 +40,4 @@ export const LEGAL_LINKS: NavLink[] = [
 
 /** Printed under the copyright line. Product names appear on the site only as example integrations. */
 export const TRADEMARK_NOTE =
-  "Product names and logos on this site belong to their owners and show example integrations only. Valentini Systems is not affiliated with, sponsored by or endorsed by them.";
+  "Product names and logos on this site belong to their owners and show example integrations only. Temporant is not affiliated with, sponsored by or endorsed by them.";

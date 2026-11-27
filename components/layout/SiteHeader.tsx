@@ -92,7 +92,7 @@ export function SiteHeader({ items }: { items: NavItem[] }) {
         <Link
           href="/"
           className="flex min-h-11 min-w-0 items-center gap-3"
-          aria-label="Valentini Systems home"
+          aria-label="Temporant home"
           onClick={close}
         >
           <BrandMark tone="dark" className="h-9 w-9 shrink-0" />

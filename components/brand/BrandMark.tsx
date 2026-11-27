@@ -1,11 +1,15 @@
 type Tone = "dark" | "light";
 
-const IVORY_V =
-  "M 84 95 H 164 C 160 101, 152 109, 146 113 L 234 321 L 219 367 L 109 113 C 104 109, 94 101, 84 95 Z";
-/* Filled, tapered right stroke. At a 28px header mark the narrow end is about 1.6px,
-   so the split (ivory / gold) still reads. The large lockup keeps the hairline. */
-const GOLD_STROKE =
-  "M 296 88 H 352 L 344 104 L 331 119.2 L 250.1 316.4 L 227.9 307.6 L 305 108.8 L 300 104 Z";
+const AMBER = "#FFB547";
+const CYAN = "#38D6C4";
+
+/* Temporant mark on a 420 grid: amber rounded-square frame, bold geometric T.
+   The crossbar is ink (white on dark, navy on light); the cyan stem leans a few
+   degrees like a clock hand and is notched off the crossbar. Every part is at
+   least ~1.7px wide at the 28px header size. */
+const FRAME = { x: 22, y: 22, size: 376, radius: 76, stroke: 28 };
+const CROSSBAR = "M 102 104 H 318 A 12 12 0 0 1 330 116 V 152 A 12 12 0 0 1 318 164 H 102 A 12 12 0 0 1 90 152 V 116 A 12 12 0 0 1 102 104 Z";
+const STEM = "M 181 182 H 239 L 252 318 H 196 Z";
 
 export function BrandMark({
   tone = "dark",
@@ -16,7 +20,7 @@ export function BrandMark({
   className?: string;
   title?: string;
 }) {
-  const ink = tone === "light" ? "#133224" : "#F7F4EC";
+  const ink = tone === "light" ? "#0E1024" : "#F4F5FA";
   const labelled = Boolean(title);
 
   return (
@@ -29,16 +33,16 @@ export function BrandMark({
       fill="none"
     >
       <rect
-        x="1"
-        y="1"
-        width="418"
-        height="418"
-        stroke="#C5A869"
-        strokeWidth="1.25"
-        vectorEffect="non-scaling-stroke"
+        x={FRAME.x}
+        y={FRAME.y}
+        width={FRAME.size}
+        height={FRAME.size}
+        rx={FRAME.radius}
+        stroke={AMBER}
+        strokeWidth={FRAME.stroke}
       />
-      <path fill={ink} d={IVORY_V} />
-      <path fill="#C5A869" d={GOLD_STROKE} />
+      <path fill={ink} d={CROSSBAR} />
+      <path fill={CYAN} d={STEM} />
     </svg>
   );
 }
@@ -50,13 +54,15 @@ export function BrandWordmark({
   tone?: Tone;
   className?: string;
 }) {
-  const ink = tone === "light" ? "text-[#133224]" : "text-[#F7F4EC]";
+  const ink = tone === "light" ? "text-[#0E1024]" : "text-[#F4F5FA]";
+  /* Amber fails contrast on a light ground, so the light tone uses a deeper amber. */
+  const accent = tone === "light" ? "text-[#9A5B00]" : "text-[#FFB547]";
 
   return (
     <span
-      className={`inline-block font-wordmark leading-none font-medium tracking-[0.18em] sm:tracking-[0.22em] ${ink} ${className}`}
+      className={`inline-block font-sans leading-none font-semibold tracking-[0.2em] sm:tracking-[0.24em] ${ink} ${className}`}
     >
-      VALENTINI <span className="text-[#C5A869]">SYSTEMS</span>
+      TEMP<span className={accent}>O</span>RANT
     </span>
   );
 }

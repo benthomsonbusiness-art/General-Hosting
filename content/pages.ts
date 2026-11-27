@@ -2,7 +2,7 @@
 
 export const HOME = {
   metaDescription:
-    "Valentini Systems helps service businesses book more jobs: missed calls get a text back, web leads get booked, customers get reminders. You approve every text.",
+    "Temporant helps service businesses book more jobs: missed calls get a text back, web leads get booked, customers get reminders. You approve every text.",
   problems: [
     { q: "Calls that ring out while you're on a job", workflowId: "missed-call-text-back" },
     { q: "Website leads that wait hours for an answer", workflowId: "web-lead-booking" },
@@ -81,7 +81,7 @@ export const APPROACH_PAGE = {
 
 export const ABOUT = {
   metaDescription:
-    "Valentini Systems is based in Morristown, New Jersey and helps service businesses book more jobs with simple text tools. You approve every text we set up.",
+    "Temporant is based in Morristown, New Jersey and helps service businesses book more jobs with simple text tools. You approve every text we set up.",
   dek: "We help service businesses book more of the jobs they already pay to find.",
   founder:
     "Every missed call and every lead deserves a fast, real answer. We set up simple tools that write the text for you, and you approve it before it goes out.",
@@ -90,7 +90,7 @@ export const ABOUT = {
 
 export const CONTACT = {
   metaDescription:
-    "Tell Valentini Systems where your bookings slip: missed calls, slow replies to web leads, or no-shows. Request a booking audit with the short form on this page.",
+    "Tell Temporant where your bookings slip: missed calls, slow replies to web leads, or no-shows. Request a booking audit with the short form on this page.",
   dek: "A few sentences is enough. What's your trade, what software do you use, and where do jobs slip away?",
   guidance: "Please don't send passwords or customer records.",
   next: ["Ben reads every note.", "If it's a fit, we'll walk through your calls and leads together."],
@@ -100,12 +100,12 @@ export const CONTACT = {
 
 export const SEARCH_PAGE = {
   metaDescription:
-    "Search the Valentini Systems site for missed call text-back, instant booking for website leads, appointment reminders, trades and how setup works for you.",
+    "Search the Temporant site for missed call text-back, instant booking for website leads, appointment reminders, trades and how setup works for you.",
 };
 
 export const TESTIMONIALS_PAGE = {
   metaDescription:
-    "What service businesses say after Valentini Systems set up their booking: faster replies, fewer no-shows, hours back each week, and every text approved.",
+    "What service businesses say after Temporant set up their booking: faster replies, fewer no-shows, hours back each week, and every text approved.",
   dek: "What clients say.",
   empty: "Client stories will appear here soon. In the meantime, request an audit and see it for yourself.",
 };

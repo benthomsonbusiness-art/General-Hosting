@@ -2,7 +2,7 @@ import { LegalFrame, LegalSection } from "@/components/layout/LegalFrame";
 import { pageMetadata } from "@/lib/seo";
 
 const title = "Privacy";
-const description = "Placeholder privacy notice for the Valentini Systems website. Not in effect.";
+const description = "Placeholder privacy notice for the Temporant website. Not in effect.";
 
 export const metadata = pageMetadata({ title, description, path: "/privacy", noindex: true });
 
@@ -12,7 +12,7 @@ export default function PrivacyPage() {
       path="/privacy"
       other={{ href: "/terms", label: "Terms" }}
       title="Privacy"
-      lede="This notice will explain how Valentini Systems handles information collected on this website. The sections below mark what the final text must cover."
+      lede="This notice will explain how Temporant handles information collected on this website. The sections below mark what the final text must cover."
     >
       <LegalSection heading="Information this site may collect">
         <p>

@@ -17,7 +17,7 @@ const valid = {
 
 function post(body: unknown, headers: Record<string, string> = {}) {
   return handleInquiry(
-    new Request("https://valentinisystems.com/api/inquiry", {
+    new Request("https://temporant.com/api/inquiry", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -63,8 +63,8 @@ test("X-Forwarded-Host cannot widen the origin check in production", async () =>
 
 test("site, www and preview origins pass", async () => {
   for (const host of [
-    "valentinisystems.com",
-    "www.valentinisystems.com",
+    "temporant.com",
+    "www.temporant.com",
     "valentini-next.benthomsonbusiness.workers.dev",
   ]) {
     assert.equal((await post(valid, { origin: `https://${host}` })).status, 503);
@@ -97,7 +97,7 @@ test("production without a channel is 503", async () => {
 
 function postForm(body: Record<string, string>, headers: Record<string, string> = {}) {
   return handleInquiry(
-    new Request("https://valentinisystems.com/api/inquiry", {
+    new Request("https://temporant.com/api/inquiry", {
       method: "POST",
       headers: {
         "content-type": "application/x-www-form-urlencoded",
@@ -110,7 +110,7 @@ function postForm(body: Record<string, string>, headers: Record<string, string> 
 }
 
 test("form post without a channel redirects to sent=0", async () => {
-  const response = await postForm(valid, { origin: "https://valentinisystems.com" });
+  const response = await postForm(valid, { origin: "https://temporant.com" });
   assert.equal(response.status, 303);
   assert.equal(response.headers.get("location"), "/contact?sent=0");
 });
