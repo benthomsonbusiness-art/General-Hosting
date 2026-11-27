@@ -387,7 +387,13 @@ export function FlowDiagram({
                   const attached = layout?.tools.filter((tool) => tool.parentIndex === index) ?? [];
                   const items = node.attached ?? [];
                   return (
-                    <li key={node.id} className="flow-item" data-k={`s${index}`} data-kind={node.kind}>
+                    <li
+                      key={node.id}
+                      className="flow-item"
+                      data-node-id={node.id}
+                      data-k={`s${index}`}
+                      data-kind={node.kind}
+                    >
                       {base !== undefined ? (
                         <a className="flow-node" data-link="" href={stepHref(node.id)} style={boxStyle}>
                           {inner}

@@ -29,15 +29,37 @@ export function InquiryForm() {
   );
 }
 
-/** ?practice= preselects the service. ?sent=1 or ?sent=0 is where a form post without JavaScript lands. */
+const TRADE_NAMES: Record<string, string> = {
+  hvac: "HVAC",
+  plumbing: "Plumbing",
+  electrical: "Electrical",
+  roofing: "Roofing",
+  landscaping: "Lawn and landscaping",
+  cleaning: "Cleaning and pest control",
+};
+
+function starterNote(trade: string | null, missed: string | null): string {
+  const cleanTrade = trade ? (TRADE_NAMES[trade.toLowerCase()] ?? trade.slice(0, 40)) : "";
+  const count = missed ? Number.parseInt(missed, 10) : Number.NaN;
+  const parts: string[] = [];
+  if (cleanTrade) parts.push(`Trade: ${cleanTrade}.`);
+  if (Number.isFinite(count) && count > 0 && count <= 200) {
+    parts.push(`Roughly ${count} missed calls or slow web leads a week.`);
+  }
+  return parts.join(" ");
+}
+
+/** ?practice= preselects the service. ?trade= and ?missed= prefill a starter note from the calculator. */
 function InquiryFromQuery() {
   const params = useSearchParams();
   const practice = practiceFromQuery(params.get("practice"));
   const sent = params.get("sent");
+  const initialNote = starterNote(params.get("trade"), params.get("missed"));
   return (
     <InquiryFields
-      key={`${practice}-${sent}`}
+      key={`${practice}-${sent}-${initialNote}`}
       initialPractice={practice}
+      initialNote={initialNote}
       initialStatus={sent === "1" ? "success" : sent === "0" ? "error" : "idle"}
     />
   );
@@ -45,9 +67,11 @@ function InquiryFromQuery() {
 
 function InquiryFields({
   initialPractice,
+  initialNote = "",
   initialStatus = "idle",
 }: {
   initialPractice: PracticeInterest;
+  initialNote?: string;
   initialStatus?: Status;
 }) {
   const submitting = useRef(false);
@@ -230,6 +254,7 @@ function InquiryFields({
               rows={6}
               required
               maxLength={2000}
+              defaultValue={initialNote}
               aria-invalid={Boolean(errors.note)}
               aria-describedby={errors.note ? "note-error" : undefined}
               className="field min-h-36 resize-y"

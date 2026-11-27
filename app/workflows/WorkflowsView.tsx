@@ -5,13 +5,14 @@ import { ClosingCta } from "@/components/layout/ClosingCta";
 import { Breadcrumbs } from "@/components/nav/Breadcrumbs";
 import { toFlowNodes } from "@/components/workflow/examples";
 import { FlowDiagram } from "@/components/workflow/flow/FlowDiagram";
+import { FlowPlayer } from "@/components/workflow/FlowPlayer";
 import { WorkflowText } from "@/components/workflow/WorkflowText";
 import { WORKFLOWS_PAGE } from "@/content/pages";
 import { WORKFLOWS, type Workflow } from "@/content/workflows";
 
 const COPY = WORKFLOWS_PAGE;
 
-/** /workflows: all eight, each with its one-line summary and a compact drawing. No controls. */
+/** /workflows: all three, each with its one-line summary and a compact drawing. */
 export function WorkflowsIndex() {
   return (
     <>
@@ -94,7 +95,7 @@ function Exits({ workflow }: { workflow: Workflow }) {
   );
 }
 
-/** /workflows/[slug]: the drawing full width, where people decide, then every step in writing. */
+/** /workflows/[slug]: interactive simulator full width, where people decide, then every step in writing. */
 export function WorkflowDetail({ workflow }: { workflow: Workflow }) {
   const index = WORKFLOWS.findIndex((item) => item.id === workflow.id);
   const previous = index > 0 ? WORKFLOWS[index - 1] : undefined;
@@ -117,14 +118,16 @@ export function WorkflowDetail({ workflow }: { workflow: Workflow }) {
           <p className="lead measure mt-5 text-muted">{workflow.summary}</p>
           <HelpCta className="mt-6" />
           <div className="mt-10">
-            <FlowDiagram
-              id={`flow-${workflow.id}`}
-              title={workflow.title}
-              nodes={toFlowNodes(workflow)}
-              linkSteps
-              labelledBy="workflow-title"
-              eager
-            />
+            <FlowPlayer workflow={workflow}>
+              <FlowDiagram
+                id={`flow-${workflow.id}`}
+                title={workflow.title}
+                nodes={toFlowNodes(workflow)}
+                linkSteps
+                labelledBy="workflow-title"
+                eager
+              />
+            </FlowPlayer>
           </div>
           <Decides workflow={workflow} />
           <section aria-labelledby="steps" className="mt-14">

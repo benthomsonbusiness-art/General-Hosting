@@ -1,3 +1,14 @@
+# HANDOFF: Interactive console, split hero & surface cadence
+
+Last updated: Nov 27, 2026 · Live branch: `main`
+
+- **Split hero & tactile phone stage:** rebuilt `app/page.tsx` with a 12-column split hero (`.display` headline + trade eyebrow + software strip on the left, interactive `HeroPhoneStage` with the 7-bar Ember waveform and tactile `.copper-key` approval button on the right) and compact goals strip so everything fits in a 900px viewport.
+- **Interactive workflow simulator (`FlowPlayer`):** reconnected `lib/run-machine.ts` and `content/scenarios.ts` onto server-rendered `FlowDiagram` across Home (`HomeWorkflowStage` with 3-workflow tabs), `/workflows/[slug]`, and `/services/[slug]`.
+- **Playable `QueuePanel`, `BookingPanel` & `LeadLeakCalculator`:** upgraded `QueuePanel` with live Approve / SMS preview / Reset, gave `BookingPanel` a home-service `Trade board` default alongside `Client week`, added trade-specific SMS threads to `Pickers` on `/industries`, and added `LeadLeakCalculator` with trade presets that pre-fill `/contact?practice=missed-calls&trade=...&missed=...`.
+- **Surface cadence, nav & conversion fixes:** added a warm `--ivory` contrast band mid-home, promoted `Industries` into primary `NAV`, fixed duplicate `/services` icon, gated single-client `NameMarquee` until 4+ quotes exist, dropped unused `Cormorant_Garamond` font, pointed default `SITE_URL` to `valentini-next.benthomsonbusiness.workers.dev` until `NEXT_PUBLIC_SITE_URL` is set, and added a direct `mailto:` fallback on `/contact`.
+
+---
+
 # HANDOFF: Ember palette
 
 Last updated: Nov 27, 2026

@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
-import { Cormorant_Garamond, IBM_Plex_Mono, Mona_Sans } from "next/font/google";
+import { IBM_Plex_Mono, Mona_Sans } from "next/font/google";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { InputModality } from "@/components/util/InputModality";
@@ -15,14 +15,6 @@ const mona = Mona_Sans({
   subsets: ["latin"],
   axes: ["wdth"],
   variable: "--font-mona",
-  display: "swap",
-});
-
-// Cormorant is no longer used by BrandWordmark (now font-sans); kept for remaining serif accents.
-const cormorantWordmark = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["500"],
-  variable: "--font-cormorant",
   display: "swap",
 });
 
@@ -95,7 +87,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       lang="en"
       data-motion="on"
       data-scroll-behavior="smooth"
-      className={`${mona.variable} ${cormorantWordmark.variable} ${plexMono.variable} h-full antialiased`}
+      className={`${mona.variable} ${plexMono.variable} h-full antialiased`}
     >
       <body data-surface="dark" className="flex min-h-full flex-col">
         <InputModality />

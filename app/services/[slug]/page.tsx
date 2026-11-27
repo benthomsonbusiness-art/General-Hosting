@@ -10,6 +10,7 @@ import { Breadcrumbs } from "@/components/nav/Breadcrumbs";
 import { JsonLd } from "@/components/util/JsonLd";
 import { toFlowNodes } from "@/components/workflow/examples";
 import { FlowDiagram } from "@/components/workflow/flow/FlowDiagram";
+import { FlowPlayer } from "@/components/workflow/FlowPlayer";
 import { getService, INTEGRATIONS, SERVICES, serviceHref } from "@/content/services";
 import { workflowsById } from "@/content/workflows";
 import { pageMetadata, serviceJsonLd } from "@/lib/seo";
@@ -85,13 +86,15 @@ export default async function ServicePage({ params }: Props) {
               See it work
             </h2>
             <div className="mt-10">
-              <FlowDiagram
-                id={`service-${workflow.id}`}
-                title={workflow.title}
-                nodes={toFlowNodes(workflow)}
-                stepsHref={`/workflows/${workflow.id}`}
-                labelledBy="see"
-              />
+              <FlowPlayer workflow={workflow}>
+                <FlowDiagram
+                  id={`service-${workflow.id}`}
+                  title={workflow.title}
+                  nodes={toFlowNodes(workflow)}
+                  stepsHref={`/workflows/${workflow.id}`}
+                  labelledBy="see"
+                />
+              </FlowPlayer>
             </div>
           </Container>
         </Section>

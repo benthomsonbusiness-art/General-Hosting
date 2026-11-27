@@ -6,7 +6,7 @@
    * approves), "cyan" is the yellow AI / automation accent, "violet" is the orange brand accent. */
   --obsidian: #140c08;
   --well: #0c0705;
-  --forest: #1c120d;
+  --forest: #21150f;
   --ivory: #fbf6f1;
   --ink: #140c08;
   --slate: #5a4a3f;
@@ -58,7 +58,6 @@
   --color-rule: var(--rule);
   --font-sans: var(--font-mona), "Mona Sans", system-ui, sans-serif;
   --font-display: var(--font-mona), "Mona Sans", system-ui, sans-serif;
-  --font-wordmark: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
   --font-mono: var(--font-plex-mono), "IBM Plex Mono", ui-monospace, monospace;
   --radius-sm: 0px;
   --radius-md: 0px;
@@ -2442,5 +2441,237 @@ input[type="search"]::-webkit-search-cancel-button {
   .brand-gradient-text {
     background: none;
     color: CanvasText;
+  }
+}
+
+@layer components {
+  [data-surface="light"] .btn-secondary {
+    border-color: rgb(20 12 8 / 0.24);
+  }
+
+  [data-surface="light"] .btn-secondary:hover {
+    border-color: var(--ink);
+  }
+
+  /* Tactile machined copper approval key */
+  .copper-key {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 6px;
+    border: 0;
+    background: linear-gradient(180deg, var(--gold-hi), var(--gold));
+    color: var(--obsidian);
+    box-shadow:
+      0 3px 0 #9e2a12,
+      0 0 24px -4px rgb(255 107 74 / 0.55),
+      inset 0 1px 0 rgb(255 255 255 / 0.52);
+    transition:
+      transform 90ms ease,
+      box-shadow 90ms ease,
+      filter 140ms ease;
+  }
+
+  .copper-key:hover {
+    filter: brightness(1.06);
+  }
+
+  .copper-key:active,
+  .copper-key-pressed {
+    transform: translateY(2px);
+    box-shadow:
+      0 1px 0 #9e2a12,
+      0 0 16px -4px rgb(255 107 74 / 0.45),
+      inset 0 1px 0 rgb(255 255 255 / 0.4);
+  }
+
+  /* Hero interactive phone console */
+  .hero-phone {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 18px;
+    border-radius: 16px;
+    border: 1px solid rgb(251 246 241 / 0.14);
+    background:
+      radial-gradient(120% 90% at 50% -15%, rgb(190 80 20 / 0.42), transparent 60%),
+      var(--well);
+    box-shadow:
+      0 32px 64px -32px rgb(0 0 0 / 0.85),
+      inset 0 1px 0 rgb(251 246 241 / 0.08);
+  }
+
+  .hero-phone-burst {
+    animation: ember-burst 560ms ease-out 1;
+  }
+
+  .hero-phone-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .hero-phone-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 2px 10px;
+    border-radius: 9999px;
+    border: 1px solid rgb(255 107 74 / 0.42);
+    background: rgb(255 107 74 / 0.14);
+    color: var(--gold-hi);
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .hero-phone-pill[data-approved] {
+    border-color: rgb(253 224 71 / 0.45);
+    background: rgb(253 224 71 / 0.14);
+    color: var(--cyan);
+  }
+
+  .hero-phone-call {
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: rgb(251 246 241 / 0.03);
+  }
+
+  .hero-waveform {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    height: 24px;
+  }
+
+  .hero-wave-bar {
+    width: 3.5px;
+    border-radius: 9999px;
+    transform-origin: center;
+  }
+
+  html[data-motion="on"] .hero-waveform:not(.hero-waveform-still) .hero-wave-bar {
+    animation: hero-wave 1.15s ease-in-out infinite;
+  }
+
+  .hero-waveform-still .hero-wave-bar {
+    transform: scaleY(0.45);
+    opacity: 0.5;
+  }
+
+  .hero-phone-draft {
+    padding: 14px;
+    border-radius: 12px;
+    border: 1px solid rgb(253 224 71 / 0.5);
+    background:
+      linear-gradient(180deg, rgb(253 224 71 / 0.13), rgb(253 224 71 / 0.03)),
+      #1a100b;
+    box-shadow: 0 0 26px -10px rgb(253 224 71 / 0.38);
+  }
+
+  .hero-phone-booked {
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid rgb(255 107 74 / 0.42);
+    background: rgb(255 107 74 / 0.1);
+  }
+
+  /* Compact hero stats bar so split hero + goals fit comfortably in 900px viewport */
+  .stats-compact .stat {
+    padding: 14px 18px;
+    gap: 4px;
+  }
+
+  .stats-compact .stat-value {
+    font-size: clamp(1.75rem, 1.35rem + 1.3vw, 2.5rem);
+  }
+
+  .stats-compact .stat-label {
+    font-size: 14px;
+  }
+
+  /* Interactive FlowPlayer bar and node run-state rings */
+  .flow-player-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: var(--well);
+  }
+
+  .flow-item[data-run-state="active"] .flow-card {
+    border-color: var(--cyan);
+    box-shadow:
+      0 0 0 4px rgb(253 224 71 / 0.22),
+      0 0 28px -4px rgb(253 224 71 / 0.55);
+  }
+
+  .flow-item[data-run-state="awaiting"] .flow-card-gold {
+    box-shadow:
+      inset 0 1px 0 rgb(251 246 241 / 0.65),
+      0 0 0 6px rgb(255 107 74 / 0.32),
+      0 0 36px 0 rgb(255 107 74 / 0.75);
+  }
+
+  html[data-motion="on"] .flow-item[data-run-state="awaiting"] .flow-card-gold {
+    animation: gate-pulse 1.3s ease-in-out infinite;
+  }
+
+  .flow-item[data-run-state="complete"] .flow-card:not(.flow-card-gold) {
+    border-color: rgb(251 246 241 / 0.55);
+  }
+
+  .flow-item[data-run-state="skipped"],
+  .flow-item[data-run-state="low-confidence"] {
+    opacity: 0.42;
+  }
+}
+
+@keyframes hero-wave {
+  0%,
+  100% {
+    transform: scaleY(0.38);
+    opacity: 0.72;
+  }
+  50% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+@keyframes ember-burst {
+  0% {
+    box-shadow: 0 0 0 0 rgb(255 107 74 / 0.55);
+  }
+  100% {
+    box-shadow: 0 0 0 18px rgb(255 107 74 / 0);
+  }
+}
+
+@keyframes gate-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-wave-bar,
+  .hero-phone-burst,
+  .flow-item[data-run-state="awaiting"] .flow-card-gold {
+    animation: none !important;
   }
 }

@@ -6,8 +6,9 @@ import { Container, Section } from "@/components/layout/Section";
 import { Breadcrumbs } from "@/components/nav/Breadcrumbs";
 import { TESTIMONIALS_PAGE } from "@/content/pages";
 import { TESTIMONIALS } from "@/content/testimonials";
-import { getWorkflow } from "@/content/workflows";
+import { getWorkflow, WORKFLOWS } from "@/content/workflows";
 import { pageMetadata } from "@/lib/seo";
+import { appsByCategory, showMark, usedAppSlugs } from "@/lib/used-apps";
 
 export const metadata = pageMetadata({
   title: "Client testimonials",
@@ -16,6 +17,8 @@ export const metadata = pageMetadata({
 });
 
 export default function TestimonialsPage() {
+  const tools = appsByCategory(usedAppSlugs(WORKFLOWS)).flatMap((group) => group.apps);
+
   return (
     <>
       <Section labelledBy="testimonials-title">
@@ -62,7 +65,7 @@ export default function TestimonialsPage() {
           )}
         </Container>
       </Section>
-      {TESTIMONIALS.length ? (
+      {TESTIMONIALS.length >= 4 ? (
         <section data-surface="dark" aria-labelledby="helped" className="border-t border-line bg-obsidian">
           <div className="wrap py-14 lg:py-20">
             <h2 id="helped" className="h2 text-center">
@@ -76,7 +79,29 @@ export default function TestimonialsPage() {
             />
           </div>
         </section>
-      ) : null}
+      ) : (
+        <section data-surface="dark" aria-labelledby="tools-strip" className="border-t border-line bg-forest">
+          <div className="wrap py-14 lg:py-20">
+            <h2 id="tools-strip" className="h3">
+              Works with the software your office runs today
+            </h2>
+            <ul className="mt-6 flex flex-wrap gap-3">
+              {tools.map((app) => (
+                <li
+                  key={app.slug}
+                  className="flex min-h-11 items-center gap-2.5 rounded-[8px] border border-line bg-well px-3.5 text-[15px]"
+                >
+                  {showMark(app.slug) ? (
+                    // eslint-disable-next-line @next/next/no-img-element -- official SVG artwork
+                    <img src={`/logos/${app.slug}.svg`} alt="" width={18} height={18} className="h-[18px] w-[18px]" />
+                  ) : null}
+                  <span>{app.name}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
       <ClosingCta />
     </>
   );

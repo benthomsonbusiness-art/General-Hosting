@@ -1,5 +1,5 @@
 import type { NextConfig } from "next";
-import { SITE_URL, SITE_WWW } from "./lib/site";
+import { CANONICAL_SITE_URL, SITE_WWW } from "./lib/site";
 
 const isDev = process.env.NODE_ENV !== "production";
 
@@ -43,7 +43,7 @@ const nextConfig: NextConfig = {
       {
         source: "/:path*",
         has: [{ type: "host", value: SITE_WWW }],
-        destination: `${SITE_URL}/:path*`,
+        destination: `${CANONICAL_SITE_URL}/:path*`,
         permanent: true,
       },
       { source: "/approach", destination: "/how-it-works", permanent: true },

@@ -7,9 +7,9 @@ export type NavItem = NavLink & {
 
 /** Single source for the header, the mobile drawer and the footer. */
 export const NAV: NavItem[] = [
-  { label: "Home", href: "/", match: ["/"] },
   { label: "Workflows", href: "/workflows", match: ["/workflows"] },
   { label: "Services", href: "/services", match: ["/services"] },
+  { label: "Industries", href: "/industries", match: ["/industries"] },
   { label: "How it works", href: "/how-it-works", match: ["/how-it-works"] },
   { label: "Testimonials", href: "/testimonials", match: ["/testimonials"] },
   { label: "About", href: "/about", match: ["/about"] },
@@ -17,7 +17,7 @@ export const NAV: NavItem[] = [
 
 /** Listed under the main items in the phone menu, which has no footer in view. */
 export const DRAWER_LINKS: NavLink[] = [
-  { label: "Industries", href: "/industries" },
+  { label: "Home", href: "/" },
   { label: "Contact", href: "/contact" },
 ];
 
