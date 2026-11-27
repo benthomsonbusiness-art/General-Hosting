@@ -2,9 +2,9 @@ import { useId } from "react";
 
 type Tone = "dark" | "light";
 
-/* Brand spectrum: blue to violet to pink. The same three stops are used for the
+/* Brand spectrum: yellow to orange to red. The same three stops are used for the
    waveform bars and the "o" in the wordmark. */
-export const BRAND_STOPS = ["#3B82F6", "#8B5CF6", "#EC4899"] as const;
+export const BRAND_STOPS = ["#FDE047", "#F97316", "#EF4444"] as const;
 
 /* Temporant mark on a 200 grid: a seven-bar voice waveform (a phone call
    becoming a booking), filled with one diagonal gradient across all bars. */
@@ -38,7 +38,7 @@ export function BrandMark({ className, title }: { className?: string; title?: st
 }
 
 export function BrandWordmark({ tone = "dark", className = "" }: { tone?: Tone; className?: string }) {
-  const ink = tone === "light" ? "text-[#0B0D1C]" : "text-[#F5F6FB]";
+  const ink = tone === "light" ? "text-[#140C08]" : "text-[#FBF6F1]";
 
   return (
     <span className={`inline-block font-sans leading-none font-semibold tracking-[0.02em] [font-variation-settings:"wght"_600] ${ink} ${className}`}>

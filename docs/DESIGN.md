@@ -1,6 +1,6 @@
 # v5 design: the operator's console
 
-The site is a console for a back office. Dark, left-aligned, and exact. Pink (the `--gold` token) appears only where a person approves.
+The site is a console for a back office. Dark, left-aligned, and exact. Red-orange (the `--gold` token) appears only where a person approves.
 
 ## Thesis
 
@@ -10,29 +10,29 @@ The memorable element is the approval key: a gold control in the interface, and 
 
 ## Color
 
-Spectrum palette. Token names are kept from earlier palettes so classes stay stable.
+Ember palette (yellow to orange to red on warm near-black). Token names are kept from earlier palettes so classes stay stable.
 
 | Token | Value | Role |
 |---|---|---|
-| `--obsidian` | `#0B0D1C` | Page background |
-| `--well` | `#070814` | Console wells and logs |
-| `--forest` | `#14172E` | Raised panels, header after scroll |
-| `--card-top` / `--card-bottom` / `--card-hover` | `#1B1F3D` / `#10132A` / `#232850` | Card gradients |
-| `--ivory` | `#F5F6FB` | Primary text on dark; reading surfaces |
-| `--ink` | `#0B0D1C` | Text on ivory |
-| `--slate` | `#4A4F6E` | Secondary text on ivory |
-| `--ivory-64` | `#A6A9C2` | Secondary text on dark |
-| `--gold` | `#F472B6` (pink) | Human approval only |
-| `--gold-ink` | `#BE185D` | Approval on light surfaces |
-| `--cyan` | `#6EA8FF` (blue) | AI and automation |
-| `--cyan-ink` | `#1D4ED8` | AI on light surfaces |
-| `--violet` / `--violet-hi` | `#8B5CF6` / `#C4B5FD` | Brand accents, button hover, chips |
-| `--brand-gradient` | `#3B82F6` → `#8B5CF6` → `#EC4899` | Logo and wordmark "o" only |
+| `--obsidian` | `#140C08` | Page background |
+| `--well` | `#0C0705` | Console wells and logs |
+| `--forest` | `#1C120D` | Raised panels, header after scroll |
+| `--card-top` / `--card-bottom` / `--card-hover` | `#2A1B13` / `#1A100B` / `#33211A` | Card gradients |
+| `--ivory` | `#FBF6F1` | Primary text on dark; reading surfaces |
+| `--ink` | `#140C08` | Text on ivory |
+| `--slate` | `#5A4A3F` | Secondary text on ivory |
+| `--ivory-64` | `#B8A99D` | Secondary text on dark |
+| `--gold` | `#FF6B4A` (red-orange) | Human approval only |
+| `--gold-ink` | `#C2410C` | Approval on light surfaces |
+| `--cyan` | `#FDE047` (yellow) | AI and automation |
+| `--cyan-ink` | `#A16207` | AI on light surfaces |
+| `--violet` / `--violet-hi` | `#F97316` / `#FDBA74` | Orange brand accents, button hover, chips |
+| `--brand-gradient` | `#FDE047` → `#F97316` → `#EF4444` | Logo and wordmark "o" only |
 | `--error-dark` / `--error-light` | `#E8A090` / `#8A2E1B` | Errors on dark / light |
 
-The Temporant mark is a 7-bar voice waveform filled with the brand gradient (a phone call turning into a booking). The favicon uses 5 bars on a dark tile so it reads at 16px. The gradient is not used as text on light surfaces (it fails 4.5:1 there).
+The Temporant mark is a 7-bar voice waveform filled with the brand gradient (a phone call turning into a booking). The favicon uses 5 bars on a dark tile so it reads at 16px. The gradient is not used as text on light surfaces (yellow fails 4.5:1 there).
 
-Primary actions are ivory on dark and obsidian on ivory, hovering to `--violet-hi`. They are not pink.
+Primary actions are ivory on dark and obsidian on ivory, hovering to `--violet-hi`. They are not red-orange.
 
 ## Type
 
@@ -64,7 +64,7 @@ One component draws every workflow: `components/workflow/flow/` (`layout.ts` is 
 - The spine runs left to right. Trigger, rule and result cards are 64px squares in `--forest` with a 0.16 ivory border and the app's mark. The AI card is 208 by 64 with its label inside and no glyph. The approval card is the Approve key: gold, 6px, a person-check glyph, and never a third-party mark.
 - Under each card: the label (13px Mona Sans 500) and the mono line (12px Plex Mono, `--ivory-64`). Approval cards add the approver role.
 - Tools hang below the AI card's Model and Tools ports, and below a rule step's Calls port, as 40px circles on dashed S-curves. Exits rise above the spine as dashed stubs with one muted line. Two outputs after one approval stack in the last column.
-- Lines are ivory at 0.48, 1.5px. Pink (`--gold`) appears only on approval cards.
+- Lines are ivory at 0.48, 1.5px. Red-orange (`--gold`) appears only on approval cards.
 - The stage is horizontal when the canvas is at least 880px wide (up to five columns) or 1040px (six columns), and at least 680px for the compact variant used on home and the workflow index. Below that the same HTML becomes a vertical list. Nothing scrolls sideways.
 - A caption under every drawing says it is an example with sample data and that product names and logos belong to their owners.
 

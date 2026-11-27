@@ -5,31 +5,31 @@ const ICON = { "aria-hidden": true, focusable: "false", strokeWidth: 1.5 } as co
 
 /**
  * The four kinds of step, drawn as the diagram draws them: a rule card, the wide AI card (cyan), the
- * pink approval key (--gold) and the record card. Keyed by position, so the titles can change freely.
+ * red-orange approval key (--gold) and the record card. Keyed by position, so the titles can change freely.
  */
 const NODES = [
   <span
     key="rule"
-    className="relative z-10 grid h-12 place-items-center border border-[rgb(245_246_251_/_0.16)] bg-obsidian text-muted w-12"
+    className="relative z-10 grid h-12 place-items-center border border-[rgb(251_246_241_/_0.16)] bg-obsidian text-muted w-12"
   >
     <ListChecks {...ICON} size={22} />
   </span>,
   <span
     key="ai"
-    className="relative z-10 flex h-12 w-28 items-center justify-center gap-2 border border-[rgb(110_168_255_/_0.55)] bg-forest text-ivory shadow-[0_0_0_4px_rgb(110_168_255_/_0.12),0_0_24px_-6px_rgb(110_168_255_/_0.45)]"
+    className="relative z-10 flex h-12 w-28 items-center justify-center gap-2 border border-[rgb(253_224_71_/_0.55)] bg-forest text-ivory shadow-[0_0_0_4px_rgb(253_224_71_/_0.12),0_0_24px_-6px_rgb(253_224_71_/_0.45)]"
   >
     <Sparkles {...ICON} size={18} className="text-cyan" />
     <span className="text-[13px] font-semibold">Draft</span>
   </span>,
   <span
     key="approval"
-    className="relative z-10 grid h-12 w-12 place-items-center rounded-[6px] bg-gold text-obsidian shadow-[inset_0_1px_0_rgb(245_246_251_/_0.55)]"
+    className="relative z-10 grid h-12 w-12 place-items-center rounded-[6px] bg-gold text-obsidian shadow-[inset_0_1px_0_rgb(251_246_241_/_0.55)]"
   >
     <UserCheck {...ICON} size={20} strokeWidth={1.75} />
   </span>,
   <span
     key="record"
-    className="relative z-10 grid h-12 place-items-center border border-[rgb(245_246_251_/_0.16)] bg-obsidian text-muted w-12"
+    className="relative z-10 grid h-12 place-items-center border border-[rgb(251_246_241_/_0.16)] bg-obsidian text-muted w-12"
   >
     <Database {...ICON} size={22} />
   </span>,
@@ -41,7 +41,7 @@ export function Stations() {
     <ol className="relative grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-4">
       <span
         aria-hidden
-        className="absolute top-6 right-[12.5%] left-[12.5%] hidden h-px bg-[rgb(245_246_251_/_0.48)] sm:block"
+        className="absolute top-6 right-[12.5%] left-[12.5%] hidden h-px bg-[rgb(251_246_241_/_0.48)] sm:block"
       />
       <span aria-hidden className="packet-track top-5 left-[calc(12.5%-0.25rem)] hidden w-[calc(50%+0.5rem)] sm:block">
         <span className="packet absolute top-0 left-0 h-2 w-2 bg-ivory" />

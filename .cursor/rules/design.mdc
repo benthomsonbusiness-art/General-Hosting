@@ -11,4 +11,4 @@ The redesign brief is the source of truth:
 
 Where the skill and the brief disagree, the brief wins. Implemented tokens live in `app/globals.css` and `docs/DESIGN.md`.
 
-The `--gold` token (now pink) is only the control a person presses to approve, plus the `key-hero` photograph. The site is an operator's console: dark, left-aligned, one autoplaying moment.
+The `--gold` token (now red-orange) is only the control a person presses to approve, plus the `key-hero` photograph. The site is an operator's console: dark, left-aligned, one autoplaying moment.

@@ -1,4 +1,12 @@
-# HANDOFF: Spectrum palette and waveform logo
+# HANDOFF: Ember palette
+
+Last updated: Nov 27, 2026
+
+- Replaced the blue/violet/pink Spectrum palette (owner found it too pink). Same token names. Logo gradient is now #FDE047, #F97316, #EF4444 on #140C08. `--gold` (approval) is red-orange #FF6B4A, `--cyan` (AI) is yellow #FDE047, `--violet`/`--violet-hi` are orange #F97316 / peach #FDBA74. Photos were desaturated to neutral charcoal; the approval key photo is copper.
+
+---
+
+# Earlier: Spectrum palette and waveform logo
 
 Last updated: Nov 27, 2026
 
