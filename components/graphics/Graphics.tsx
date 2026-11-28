@@ -76,41 +76,57 @@ export function iconFor(title: string, index = 0): LucideIcon {
   return ICONS[title] ?? FALLBACK[index % FALLBACK.length];
 }
 
-/** The three engagement stages as clean architectural columns separated by hairlines. */
+/** The three engagement stages as precision architectural blueprint cards. */
 export function ScopeSteps() {
   const stages = ENGAGEMENTS.stages;
   return (
     <ol className="scope">
-      {stages.map((stage, index) => (
-        <li key={stage.id} className="scope-card">
-          <div className="flex items-baseline justify-between gap-3">
-            <span className="font-mono text-[13px] text-muted">0{index + 1}</span>
-            <span className="font-mono text-[13px] text-muted">{stage.shape}</span>
-          </div>
-          <h3 className="scope-name">{stage.name}</h3>
-          <p className="scope-line">{stage.delivers}</p>
-        </li>
-      ))}
+      {stages.map((stage, index) => {
+        const Icon = iconFor(stage.name, index);
+        return (
+          <li key={stage.id} className="scope-card">
+            <div className="flex items-center justify-between gap-3">
+              <span className="g-icon" aria-hidden>
+                <Icon size={20} strokeWidth={1.75} className={index === 0 ? "text-gold" : "text-ivory"} />
+              </span>
+              <div className="text-right font-mono text-[12px]">
+                <span className="block text-gold">0{index + 1}</span>
+                <span className="block text-muted">{stage.shape}</span>
+              </div>
+            </div>
+            <h3 className="scope-name">{stage.name}</h3>
+            <p className="scope-line">{stage.delivers}</p>
+          </li>
+        );
+      })}
     </ol>
   );
 }
 
-/** Numbered steps on one line: clean number, title, and one short line. */
+/** Numbered steps on one line with connected architectural badges. */
 export function StepTrack({ steps }: { steps: { title: string; line: string }[] }) {
   return (
-    <ol className="grid gap-8 border-t border-line pt-8 sm:grid-cols-2 lg:grid-cols-4">
-      {steps.map((step, index) => (
-        <li key={step.title} className="space-y-2">
-          <span className="font-mono text-[13px] text-gold">0{index + 1}</span>
-          <h3 className="h4">{step.title}</h3>
-          <p className="text-[15px] text-muted">{step.line}</p>
-        </li>
-      ))}
+    <ol className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {steps.map((step, index) => {
+        const Icon = iconFor(step.title, index);
+        return (
+          <li key={step.title} className="icard">
+            <div className="flex items-center justify-between gap-3">
+              <span className="g-icon" aria-hidden>
+                <Icon size={19} strokeWidth={1.75} className="text-gold" />
+              </span>
+              <span className="font-mono text-[12.5px] text-gold">0{index + 1}</span>
+            </div>
+            <h3 className="h4 mt-2">{step.title}</h3>
+            <p className="text-[15px] text-muted">{step.line}</p>
+          </li>
+        );
+      })}
     </ol>
   );
 }
 
-/** Clean list/grid without beveled icon boxes or neon hover cards. */
+/** Specular hardware icon cards across service and process pages. */
 export function IconCards({
   items,
   columns = 3,
@@ -120,9 +136,13 @@ export function IconCards({
 }) {
   return (
     <ul className="icards" data-cols={columns}>
-      {items.map((item) => {
+      {items.map((item, idx) => {
+        const Icon = iconFor(item.title, idx);
         const inner = (
           <>
+            <span className="g-icon mb-2" aria-hidden>
+              <Icon size={20} strokeWidth={1.75} className="text-gold" />
+            </span>
             <span className="icard-title">{item.title}</span>
             {item.body ? <span className="icard-body">{item.body}</span> : null}
             {item.href ? (

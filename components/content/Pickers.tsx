@@ -1,5 +1,6 @@
 "use client";
 
+import { ArrowRight, MessageSquare } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useRef, useState, type KeyboardEvent } from "react";
@@ -36,7 +37,8 @@ const INDUSTRY_PHOTO: Record<string, { src: string; alt: string }> = {
 const SAMPLE_TEXT: Record<string, { trigger: string; draft: string }> = {
   gyms: {
     trigger: "Missed call during 6 p.m. class",
-    draft: "“Sorry we missed your call. Coach Maya has intro spots open tomorrow at 7 a.m. or 5:30 p.m. Reply 1 or 2 to grab one.”",
+    draft:
+      "“Sorry we missed your call. Coach Maya has intro spots open tomorrow at 7 a.m. or 5:30 p.m. Reply 1 or 2 to grab one.”",
   },
   recruiting: {
     trigger: "New candidate form submitted",
@@ -44,11 +46,13 @@ const SAMPLE_TEXT: Record<string, { trigger: string; draft: string }> = {
   },
   events: {
     trigger: "Saturday night date inquiry",
-    draft: "“Thanks for reaching out. October 14 is open on our calendar — want to hop on a quick call Tuesday at 5:30 p.m.?”",
+    draft:
+      "“Thanks for reaching out. October 14 is open on our calendar — want to hop on a quick call Tuesday at 5:30 p.m.?”",
   },
   landscaping: {
     trigger: "Spring cleanup website inquiry",
-    draft: "“Thanks for your note. Our crew is on your street Wednesday afternoon if you'd like a quick walk-through.”",
+    draft:
+      "“Thanks for your note. Our crew is on your street Wednesday afternoon if you'd like a quick walk-through.”",
   },
   plumbing: {
     trigger: "Missed call while on a job",
@@ -134,9 +138,7 @@ function IndustryTabs({ industries, initial }: { industries: IndustryView[]; ini
               aria-selected={active}
               aria-controls="industry-panel"
               tabIndex={active ? 0 : -1}
-              className={`min-h-11 shrink-0 rounded-[6px] px-4 text-left text-[15px] font-medium ${
-                active ? "bg-ivory font-semibold text-obsidian" : "border border-line text-ivory hover:border-ivory"
-              }`}
+              className="tab-chip min-h-11 shrink-0 px-4 text-left text-[15px] font-semibold"
               onClick={() => choose(index, false)}
             >
               {item.name}
@@ -162,6 +164,7 @@ function IndustryTabs({ industries, initial }: { industries: IndustryView[]; ini
                   width={1600}
                   height={2000}
                   sizes="(min-width: 1024px) 36vw, 100vw"
+                  className="rounded-[12px] border border-line shadow-(--shadow-console)"
                 />
               ) : null}
             </div>
@@ -169,16 +172,27 @@ function IndustryTabs({ industries, initial }: { industries: IndustryView[]; ini
               <h2 className="h2">{current.name}</h2>
               <p className="lead mt-3 text-muted">{current.line}</p>
 
-              <ul className="mt-6 space-y-2 border-t border-line pt-5 text-[16px] text-ivory">
+              <ul className="mt-6 space-y-2.5 border-t border-line pt-5 text-[16px] text-ivory">
                 {current.hours.map((hour) => (
-                  <li key={hour}>· {hour}</li>
+                  <li key={hour} className="flex items-start gap-2.5">
+                    <span aria-hidden className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gold" />
+                    <span>{hour}</span>
+                  </li>
                 ))}
               </ul>
 
               {SAMPLE_TEXT[current.slug] ? (
-                <div className="mt-7 border-l-2 border-gold pl-4">
-                  <p className="text-[13px] text-muted">{SAMPLE_TEXT[current.slug].trigger}</p>
-                  <p className="mt-1 text-[16px] text-ivory">{SAMPLE_TEXT[current.slug].draft}</p>
+                <div className="repo-panel mt-7 p-4 sm:p-5">
+                  <div className="flex items-center justify-between gap-2 text-[12px]">
+                    <span className="inline-flex items-center gap-1.5 font-mono text-cyan">
+                      <MessageSquare aria-hidden size={13} strokeWidth={2} />
+                      {SAMPLE_TEXT[current.slug].trigger}
+                    </span>
+                    <span className="font-mono text-[11px] text-gold">You approve first</span>
+                  </div>
+                  <p className="mt-2.5 text-[15.5px] leading-relaxed text-ivory">
+                    {SAMPLE_TEXT[current.slug].draft}
+                  </p>
                 </div>
               ) : null}
 
@@ -187,8 +201,17 @@ function IndustryTabs({ industries, initial }: { industries: IndustryView[]; ini
               <ul className="mt-8 divide-y divide-line border-y border-line">
                 {current.workflows.map((workflow) => (
                   <li key={workflow.id}>
-                    <Link href={`/workflows/${workflow.id}`} className="group flex min-h-14 items-center py-2">
+                    <Link
+                      href={`/workflows/${workflow.id}`}
+                      className="group flex min-h-14 items-center justify-between gap-4 py-2"
+                    >
                       <span className="card-title row-title">{workflow.title}</span>
+                      <ArrowRight
+                        aria-hidden
+                        size={18}
+                        strokeWidth={1.75}
+                        className="text-gold transition-transform group-hover:translate-x-1"
+                      />
                     </Link>
                   </li>
                 ))}

@@ -1,9 +1,20 @@
+# HANDOFF: High-tech optical console & bespoke signal graphics
+
+Last updated: Nov 27, 2026 · Live branch: `main`
+
+- **High-tech optical & machined hardware system (`app/globals.css`):** restored Temporant's signature warm ember stage lighting, precision engineering grid reticles (`.hero-stage`, `.hero-grid`), multi-layered volumetric console shadows, top-edge specular rim highlights, anodized coral-copper push-switches (`.copper-key`), tactile channel selector pills (`.tab-chip`), and illuminated range faders (`--range-pct`) while keeping zero AI copy slop or verbose subtext.
+- **Hero Signal-to-Booking Console & Instrumented Goals (`HeroPhoneStage.tsx`, `app/page.tsx`):** built a 24-bar animated SVG spectrum waveform oscilloscope, matched calendar slot chips, interactive copper approval switch, 12-slot studio roster lock card, and 4 custom SVG telemetry micro-graphics (`80%`, `50%`, `5 hrs`, `100%`).
+- **4-Beat Story Stage + Live Visual Artifacts (`FlowPlayer.tsx`):** added a connected 4-step signal progress rail and a dynamic right-hand `StoryArtifact` preview (incoming call waveform, calendar slot scanner, interactive phone approval gate, and confirmed class roster meter) synced with illuminated `FlowDiagram` nodes.
+- **Triage Queue, Dual Oscilloscope Timeline, Ownership Vault, DJ Production Board & Calculator:** upgraded `QueuePanel.tsx`, the 6:15 p.m. `Without / With Temporant` SVG signal comparison, `RepoPanel.tsx`, `BookingPanel.tsx` (Blessinger Entertainment Thu–Sun DJ & event production board), `LeadLeakCalculator.tsx` (20-segment live recovery meter), `Stations.tsx`, `Graphics.tsx`, `ServiceArt.tsx`, and `Pickers.tsx`.
+
+---
+
 # HANDOFF: Gyms-first positioning, guided workflow story & anti-AI visual cleanup
 
 Last updated: Nov 27, 2026 · Live branch: `main`
 
 - **Gyms & multi-service positioning:** re-centered copy across Home, `/services`, `/workflows`, `/industries`, `/about`, `/contact`, and search around **gyms & niche fitness studios** first, alongside **recruiting & staffing**, **events & entertainment**, **landscaping**, and **plumbing & home services** (including recurring class and appointment reminders).
-- **Anti-AI visual & subtext cleanup:** removed ceiling radial spotlights, neon outer glow rings, `<Sparkles>` / `<Bot>` icons, fake 3-dot window bars, uppercase micro-kickers, and duplicate disclaimers across `app/globals.css`, `app/page.tsx`, `HeroPhoneStage`, `QueuePanel`, `RepoPanel`, `ScopeSteps`, `StepTrack`, and `IconCards`. Turned Home goals and scope stages into open hairline typographic strips.
+- **Anti-AI visual & subtext cleanup:** removed `<Sparkles>` / `<Bot>` icons, fake 3-dot window bars, uppercase micro-kickers, and duplicate disclaimers across `app/page.tsx`, `HeroPhoneStage`, `QueuePanel`, `RepoPanel`, `ScopeSteps`, `StepTrack`, and `IconCards`.
 - **Guided 4-beat workflow story (`FlowPlayer`):** replaced the abstract timer bar with a step-by-step narrative (`1. Call missed -> 2. Reply drafted -> 3. You approve -> 4. Spot booked`) synced to `FlowDiagram` nodes and ending on a concrete booked result.
 - **Blessinger DJ schedule & Missed Bookings calculator:** rebuilt `BookingPanel` around Blessinger Entertainment's actual event/DJ bookings, and updated `LeadLeakCalculator` to **Missed bookings** starting with **Gyms & studios**.
 
