@@ -18,10 +18,11 @@
     "lucide-react": "^1.78.0",
     "next": "16.4.6",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
-    "@opennextjs/cloudflare": "^1.20.18",
+    "@opennextjs/cloudflare": "^1.20.19",
     "@tailwindcss/turbopack": "4.3.3",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -31,6 +32,10 @@
     "sharp": "^0.35.5",
     "tailwindcss": "4.3.3",
     "typescript": "^5",
-    "wrangler": "^4.168.0"
+    "wrangler": "^4.169.0"
+  },
+  "overrides": {
+    "glob": "^14.0.6",
+    "minimatch": "^11.0.9"
   }
 }

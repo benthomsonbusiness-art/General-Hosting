@@ -15,9 +15,13 @@ const SIZED: Record<string, number[]> = {
 };
 
 export default function imageLoader({ src, width }: { src: string; width: number }): string {
+  if (!src.startsWith("/") || src.startsWith("//") || src.includes("..")) {
+    throw new Error("imageLoader only permits local / public paths.");
+  }
+  const safeWidth = Number.isFinite(width) ? Math.max(16, Math.min(4096, Math.trunc(width))) : 800;
   const widths = SIZED[src];
-  if (!widths) return `${src}?w=${width}`;
-  const match = widths.find((candidate) => candidate >= width) ?? widths[widths.length - 1];
+  if (!widths) return `${src}?w=${safeWidth}`;
+  const match = widths.find((candidate) => candidate >= safeWidth) ?? widths[widths.length - 1];
   const name = src.replace("/images/", "").replace(/\.(jpe?g|png|webp)$/i, "");
   return `/images/sized/${name}-${match}.webp`;
 }

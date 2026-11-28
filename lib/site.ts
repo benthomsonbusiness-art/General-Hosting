@@ -3,8 +3,7 @@ export const SITE_DOMAIN = "temporant.com";
 export const SITE_WWW = `www.${SITE_DOMAIN}`;
 export const CANONICAL_SITE_URL = `https://${SITE_DOMAIN}`;
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/+$/, "") ||
-  "https://valentini-next.benthomsonbusiness.workers.dev";
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/+$/, "") || CANONICAL_SITE_URL;
 export const INQUIRY_EMAIL = `inquiries@${SITE_DOMAIN}`;
 export const SITE_LOCALITY = "Morristown, New Jersey";
 

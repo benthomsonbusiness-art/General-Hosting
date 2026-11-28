@@ -2,16 +2,21 @@ import type { NextConfig } from "next";
 import { CANONICAL_SITE_URL, SITE_WWW } from "./lib/site";
 
 const isDev = process.env.NODE_ENV !== "production";
+const hasTurnstile = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY?.trim());
+const turnstileOrigin = hasTurnstile ? " https://challenges.cloudflare.com" : "";
 
 const contentSecurityPolicy = [
   "default-src 'self'",
   // React's development debugger reconstructs stacks with eval. Production does not.
-  isDev ? "script-src 'self' 'unsafe-inline' 'unsafe-eval'" : "script-src 'self' 'unsafe-inline'",
+  isDev
+    ? `script-src 'self' 'unsafe-inline' 'unsafe-eval'${turnstileOrigin}`
+    : `script-src 'self' 'unsafe-inline'${turnstileOrigin}`,
   "script-src-attr 'none'",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob:",
   "font-src 'self'",
-  "connect-src 'self'",
+  `connect-src 'self'${turnstileOrigin}`,
+  hasTurnstile ? "frame-src https://challenges.cloudflare.com" : "frame-src 'none'",
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",
@@ -21,6 +26,7 @@ const contentSecurityPolicy = [
 ].join("; ");
 
 const nextConfig: NextConfig = {
+  poweredByHeader: false,
   // cacheComponents must stay off: with it on, pages return 500 on Cloudflare Workers via OpenNext.
   cacheComponents: false,
   images: {
@@ -99,13 +105,21 @@ const nextConfig: NextConfig = {
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           { key: "X-Frame-Options", value: "DENY" },
+          { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
+          { key: "X-DNS-Prefetch-Control", value: "off" },
           { key: "Content-Security-Policy", value: contentSecurityPolicy },
           {
             key: "Permissions-Policy",
-            value: "camera=(), microphone=(), geolocation=()",
+            value: "camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()",
           },
-          // TODO: When https://temporant.com is the live host, also send
-          // Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+          ...(isDev
+            ? []
+            : [
+                {
+                  key: "Strict-Transport-Security",
+                  value: "max-age=63072000; includeSubDomains; preload",
+                },
+              ]),
         ],
       },
     ];

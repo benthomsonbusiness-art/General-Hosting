@@ -1,5 +1,6 @@
 "use client";
 
+import Script from "next/script";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import {
@@ -8,6 +9,7 @@ import {
   INQUIRY_SENT,
   PRACTICE_INTERESTS,
   PRACTICE_LABELS,
+  TURNSTILE_FIELD,
   practiceFromQuery,
   validateInquiry,
   type FieldErrors,
@@ -18,6 +20,7 @@ import { CTA_LABEL } from "@/lib/site";
 
 const FIELD_ORDER: InquiryField[] = ["fullName", "email", "companyRole", "practice", "note"];
 const FALLBACK_ERROR = "The inquiry could not be sent.";
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY?.trim() ?? "";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -127,14 +130,20 @@ function InquiryFields({
     submitting.current = true;
     setStatus("submitting");
 
+    const payloadBody: Record<string, string> = {
+      ...parsed.value,
+      [HONEYPOT_FIELD]: String(data.get(HONEYPOT_FIELD) ?? ""),
+    };
+    const turnstileToken = data.get(TURNSTILE_FIELD);
+    if (typeof turnstileToken === "string" && turnstileToken.length > 0) {
+      payloadBody[TURNSTILE_FIELD] = turnstileToken;
+    }
+
     try {
       const response = await fetch("/api/inquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...parsed.value,
-          [HONEYPOT_FIELD]: String(data.get(HONEYPOT_FIELD) ?? ""),
-        }),
+        body: JSON.stringify(payloadBody),
       });
       const body = (await response.json().catch(() => null)) as {
         ok?: boolean;
@@ -174,6 +183,10 @@ function InquiryFields({
 
   return (
     <form method="post" action="/api/inquiry" noValidate onSubmit={onSubmit} aria-busy={sending} className="relative">
+      {TURNSTILE_SITE_KEY ? (
+        <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" strategy="lazyOnload" />
+      ) : null}
+
       <div className="absolute -left-[9999px] h-px w-px overflow-hidden" aria-hidden="true">
         <label htmlFor={HONEYPOT_FIELD}>Fax</label>
         <input id={HONEYPOT_FIELD} name={HONEYPOT_FIELD} type="text" tabIndex={-1} autoComplete="off" defaultValue="" />
@@ -262,6 +275,12 @@ function InquiryFields({
           </Field>
         </div>
       </div>
+
+      {TURNSTILE_SITE_KEY ? (
+        <div className="mt-6">
+          <div className="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-theme="light" />
+        </div>
+      ) : null}
 
       <div role="alert">
         {formError ? (

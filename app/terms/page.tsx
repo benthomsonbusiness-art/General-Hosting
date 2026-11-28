@@ -4,38 +4,39 @@ import { pageMetadata } from "@/lib/seo";
 import { trademarkLines, usedAppSlugs } from "@/lib/used-apps";
 
 const title = "Terms";
-const description = "Placeholder terms for the Temporant website. Not in effect.";
+const description =
+  "Website terms of use for Temporant (temporant.com), covering site materials, booking audit inquiries, and third-party marks.";
 
 export const metadata = pageMetadata({ title, description, path: "/terms", noindex: true });
 
 export default function TermsPage() {
-  // Only apps a workflow actually draws, one line per owner.
   const marks = trademarkLines(usedAppSlugs(WORKFLOWS));
   return (
     <LegalFrame
       path="/terms"
       other={{ href: "/privacy", label: "Privacy" }}
       title="Terms"
-      lede="These terms will govern use of the Temporant website. Until the approved text is published, this page creates no obligation on either side."
+      lede="Effective November 2026. These terms govern your use of temporant.com."
     >
       <LegalSection heading="Using this site">
         <p>
-          Browsing the site does not create a client relationship, a retainer, or any other
-          work with Temporant.
+          Browsing temporant.com is for informational purposes and does not create a client
+          relationship, retainer, or service agreement with Temporant. Client work begins only
+          under a separate written agreement signed by both sides.
         </p>
       </LegalSection>
       <LegalSection heading="Inquiries">
         <p>
-          Requesting a booking audit asks for a conversation. It does not reserve services, form
-          a contract, or require a response.
+          Requesting a booking audit asks for an introductory conversation. Submitting the form
+          does not reserve capacity, form a contract, or obligate either party.
         </p>
       </LegalSection>
       <LegalSection heading="Materials on the site">
         <p>
-          Text and images on the site belong to Temporant or its licensors. Third-party product names and
-          logos belong to their owners. They appear only to show the kinds of tools a workflow can connect to, and
-          their use does not mean any of those companies is a client, partner or sponsor. The final terms will state
-          what visitors may do with the site&apos;s own materials.
+          Text, graphics, and code created for this site belong to Temporant or its licensors.
+          Third-party product names and logos belong to their respective owners. They appear solely
+          to illustrate the software tools a workflow can connect with, and their appearance does
+          not imply endorsement, partnership, or sponsorship.
         </p>
       </LegalSection>
       {marks.length > 0 ? (
@@ -47,22 +48,23 @@ export default function TermsPage() {
           </ul>
         </LegalSection>
       ) : null}
-      <LegalSection heading="Liability">
+      <LegalSection heading="No warranties and limitation of liability">
         <p>
-          The final terms will set the limits that apply to use of the site. This placeholder is
-          not those terms.
+          This website and example figures or calculators are provided as-is for general
+          illustration without warranties of any kind. To the fullest extent permitted by law,
+          Temporant is not liable for indirect or consequential damages arising from use of this
+          website.
         </p>
       </LegalSection>
       <LegalSection heading="Changes">
         <p>
-          Temporant will replace this page with the approved terms and may update them
-          later. The published date will appear here.
+          Temporant may update these terms as the website evolves and will post the current
+          effective date at the top of this page.
         </p>
       </LegalSection>
       <LegalSection heading="Contact">
         <p>
-          Questions about these terms go through the inquiry form. The final text
-          will be the governing contact statement.
+          Questions about these terms can be sent to inquiries@temporant.com.
         </p>
       </LegalSection>
     </LegalFrame>

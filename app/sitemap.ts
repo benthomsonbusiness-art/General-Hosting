@@ -4,9 +4,9 @@ import { WORKFLOWS } from "@/content/workflows";
 import { absolute } from "@/lib/seo";
 
 /** Date the page copy last changed. Update it when content files change. */
-const CONTENT_DATE = "2026-11-25";
+const CONTENT_DATE = "2026-11-27";
 
-// /privacy, /terms and /search stay out: the first two are noindex, the last has no content of its own.
+// /privacy, /terms and /search stay out: legal notices and search utility carry no landing content of their own.
 export default function sitemap(): MetadataRoute.Sitemap {
   const paths = [
     "/",
