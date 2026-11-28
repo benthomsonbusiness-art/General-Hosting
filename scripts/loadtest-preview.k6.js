@@ -42,7 +42,7 @@ export const options = {
 
 const ROUTES = ["/", "/services", "/workflows/missed-call-text-back", "/search-index.json"];
 
-export default function () {
+export default function runPreviewScenario() {
   const route = ROUTES[Math.floor(Math.random() * ROUTES.length)];
   const pageRes = http.get(`${TARGET}${route}`);
   const pageOk = check(pageRes, {

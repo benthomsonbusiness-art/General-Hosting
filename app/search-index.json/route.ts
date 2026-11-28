@@ -64,10 +64,16 @@ function entries(): SearchEntry[] {
       url: "/privacy",
       title: "Privacy",
       type: "Page",
-      summary: "Placeholder privacy notice. Not in effect.",
-      keywords: "legal data",
+      summary: "How Temporant handles inquiry form submissions and visitor data.",
+      keywords: "legal privacy data",
     },
-    { url: "/terms", title: "Terms", type: "Page", summary: "Placeholder terms. Not in effect.", keywords: "legal" },
+    {
+      url: "/terms",
+      title: "Terms",
+      type: "Page",
+      summary: "Terms governing use of temporant.com.",
+      keywords: "legal terms",
+    },
     ...SERVICES.map(
       (item): SearchEntry => ({
         url: serviceHref(item.slug),
