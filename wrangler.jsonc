@@ -6,14 +6,19 @@
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-11-24",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  // Keep true while valentini-next.benthomsonbusiness.workers.dev is used for review;
+  // set to false once https://temporant.com custom domain is attached so WAF/Turnstile cannot be bypassed.
   "workers_dev": true,
   "preview_urls": false,
+  // Cap per-invocation CPU time to protect Paid plan billing from runaway spikes.
+  "limits": { "cpu_ms": 200 },
   "assets": { "directory": ".open-next/assets", "binding": "ASSETS" },
   "services": [{ "binding": "WORKER_SELF_REFERENCE", "service": "valentini-next" }],
   "observability": { "enabled": true },
   // Workers Builds runs `wrangler preview` for non-production branches; it needs this block.
   "previews": {}
-  // Add "account_id" from `wrangler whoami` if the login has more than one account.
+  // Never store secrets in "vars" here. Set RESEND_API_KEY, WEBHOOK_URL, IP_HASH_SALT,
+  // and optional TURNSTILE_SECRET_KEY via `npx wrangler secret put <NAME>`.
   // Optional inquiry storage. Create the database first (see HANDOFF.md), then uncomment:
   // "d1_databases": [
   //   { "binding": "INQUIRIES_DB", "database_name": "valentini-inquiries", "database_id": "<id>", "migrations_dir": "migrations" }

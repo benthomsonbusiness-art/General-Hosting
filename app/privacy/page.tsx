@@ -12,39 +12,47 @@ export default function PrivacyPage() {
       path="/privacy"
       other={{ href: "/terms", label: "Terms" }}
       title="Privacy"
-      lede="This notice will explain how Temporant handles information collected on this website. The sections below mark what the final text must cover."
+      lede="This draft notice describes how the Temporant website handles inquiry submissions and technical request data while the final legal policy awaits owner approval."
     >
-      <LegalSection heading="Information this site may collect">
+      <LegalSection heading="Information this site collects">
         <p>
-          The contact form asks for a name, a work email, a company and role, which tool you need,
-          and where jobs slip away. The final notice will also cover ordinary technical data such as
-          browser type and pages visited. This placeholder does not publish those
-          details as a policy.
+          The booking audit form collects your name, work email, company and role, which workflow
+          you need, and your note about where bookings slip (including optional business type or
+          weekly missed-lead estimates prefilled from the calculator). For spam and abuse protection,
+          the form also includes a hidden honeypot field, checks your network address in memory to
+          enforce a short ten-minute rate limit, and when enabled verifies a Cloudflare Turnstile
+          anti-bot token. Standard edge request metadata such as browser headers and pages visited
+          are processed by Cloudflare to serve the site.
         </p>
       </LegalSection>
       <LegalSection heading="How it is used">
         <p>
-          Submissions are meant to be used to reply to an inquiry and to operate the site. The
-          published notice will be the statement of permitted uses.
+          Submissions are used solely to review and reply to your inquiry, prevent automated spam
+          or abuse, and operate the site. The published notice will set out the final governing
+          statement of permitted uses.
         </p>
       </LegalSection>
       <LegalSection heading="Who receives it">
         <p>
-          When configured, the inquiry route can forward a submission to a webhook and send mail
-          through Resend. If inquiry storage is switched on, the submission is also saved in a Cloudflare D1 database together with its delivery status and, when configured, a one-way hash of the network address that changes daily. The final notice will name each recipient and the reason they receive it.
+          When configured, the inquiry route forwards your submission over HTTPS to a private
+          webhook and sends plain-text notification email through Resend using your work email as
+          the reply-to address. If optional inquiry storage is enabled on Cloudflare D1, the
+          submission is saved alongside its delivery status and, when a salt secret is configured,
+          a daily rotating SHA-256 hash of the network address (never the raw IP address). When
+          Turnstile is enabled, Cloudflare processes the challenge token to block automated bots.
         </p>
       </LegalSection>
       <LegalSection heading="How long it is kept">
         <p>
-          The retention period for stored submissions is to be confirmed: [retention period]. The final notice will state how long submissions and logs are kept, and when they are
-          deleted.
+          In-memory rate-limit counters expire ten minutes after the request. Retention schedules
+          for email inbox threads, webhook logs, and optional D1 records are to be confirmed by the
+          owner before final publication: [retention period].
         </p>
       </LegalSection>
       <LegalSection heading="Requests">
         <p>
-          A contact for access, correction, and deletion requests will be published with the final
-          notice. Until then, use the inquiry form. No retention rule is in
-          effect on this draft.
+          A dedicated address for access, correction, and deletion requests will be published with
+          the final policy. Until then, contact inquiries@temporant.com or use the contact form.
         </p>
       </LegalSection>
     </LegalFrame>

@@ -1,4 +1,5 @@
-/** Client-safe half of the inquiry contract: constants, types and validation. */
+/** Client-safe half of the inquiry contract: constants, types and Zod schema validation. */
+import { z } from "zod";
 
 export const PRACTICE_INTERESTS = [
   "Instant Booking",
@@ -18,8 +19,10 @@ export const PRACTICE_LABELS: Record<PracticeInterest, string> = {
 };
 
 export const HONEYPOT_FIELD = "fax_number";
+export const TURNSTILE_FIELD = "cf-turnstile-response";
 
-export const INQUIRY_OFFLINE_ERROR = "The form is not working right now, so nothing was sent. Please try again later.";
+export const INQUIRY_OFFLINE_ERROR =
+  "The form is not working right now, so nothing was sent. Please try again later.";
 
 /** Shown on /contact?sent=1 after a form post without JavaScript, and after a sent note. */
 export const INQUIRY_SENT = "Your note was sent.";
@@ -40,7 +43,15 @@ export type InquiryField = keyof Inquiry;
 
 export type FieldErrors = Partial<Record<InquiryField, string>>;
 
-const EMAIL = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+/** Strips C0/C1 control characters (except \n, \r, \t) and Unicode BiDi override characters. */
+const UNSAFE_CHARS =
+  /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F-\u009F\u202A-\u202E\u2066-\u2069]/g;
+
+/** Collapses ASCII and Unicode line/paragraph breaks into single spaces to prevent header injection. */
+const LINE_BREAKS = /[\r\n\t\u0085\u2028\u2029]+/g;
+
+/** Forbids header-delimiter or display-name spoofing characters inside an email address. */
+const SAFE_EMAIL_CHARS = /^[^\s<>",;\\()[\]]+$/;
 
 export function practiceFromQuery(value: string | null | undefined): PracticeInterest {
   const normalized = (value ?? "").trim().toLowerCase();
@@ -53,19 +64,43 @@ export function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
-function readString(record: Record<string, unknown>, key: string): string {
-  const value = record[key];
+function cleanMultiline(value: unknown): string {
   if (typeof value !== "string") return "";
-  return value.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "").trim();
+  return value.normalize("NFC").replace(UNSAFE_CHARS, "").replace(/[\u0085\u2028\u2029]/g, "\n").trim();
 }
 
-function singleLine(value: string): string {
-  return value.replace(/[\r\n\t]+/g, " ").trim();
+function cleanSingleLine(value: unknown): string {
+  if (typeof value !== "string") return "";
+  return value.normalize("NFC").replace(UNSAFE_CHARS, "").replace(LINE_BREAKS, " ").trim();
 }
 
-function isPractice(value: string): value is PracticeInterest {
-  return (PRACTICE_INTERESTS as readonly string[]).includes(value);
-}
+export const inquirySchema = z.object({
+  fullName: z
+    .preprocess(cleanSingleLine, z.string().min(2, "Enter your name.").max(100, "Enter your name.")),
+  email: z.preprocess(
+    cleanSingleLine,
+    z
+      .string()
+      .max(254, "Enter a valid work email.")
+      .email("Enter a valid work email.")
+      .regex(SAFE_EMAIL_CHARS, "Enter a valid work email."),
+  ),
+  companyRole: z.preprocess(
+    cleanSingleLine,
+    z.string().min(2, "Enter your company and role.").max(140, "Enter your company and role."),
+  ),
+  practice: z.preprocess(
+    cleanSingleLine,
+    z.enum(PRACTICE_INTERESTS, { message: "Choose what you need." }),
+  ),
+  note: z.preprocess(
+    cleanMultiline,
+    z
+      .string()
+      .min(8, "Describe the process in a sentence or two.")
+      .max(2000, "Describe the process in a sentence or two."),
+  ),
+});
 
 export function validateInquiry(
   input: unknown,
@@ -77,36 +112,20 @@ export function validateInquiry(
     };
   }
 
-  const fieldErrors: FieldErrors = {};
-  const fullName = singleLine(readString(input, "fullName"));
-  const email = singleLine(readString(input, "email"));
-  const companyRole = singleLine(readString(input, "companyRole"));
-  const practiceRaw = readString(input, "practice");
-  const practice = isPractice(practiceRaw) ? practiceRaw : null;
-  const note = readString(input, "note");
-
-  if (fullName.length < 2 || fullName.length > 100) {
-    fieldErrors.fullName = "Enter your name.";
-  }
-  if (!EMAIL.test(email) || email.length > 254) {
-    fieldErrors.email = "Enter a valid work email.";
-  }
-  if (companyRole.length < 2 || companyRole.length > 140) {
-    fieldErrors.companyRole = "Enter your company and role.";
-  }
-  if (!practice) {
-    fieldErrors.practice = "Choose what you need.";
-  }
-  if (note.length < 8 || note.length > 2000) {
-    fieldErrors.note = "Describe the process in a sentence or two.";
-  }
-
-  if (!practice || Object.keys(fieldErrors).length > 0) {
+  const parsed = inquirySchema.safeParse(input);
+  if (!parsed.success) {
+    const fieldErrors: FieldErrors = {};
+    for (const issue of parsed.error.issues) {
+      const key = issue.path[0] as InquiryField | undefined;
+      if (key && !fieldErrors[key]) {
+        fieldErrors[key] = issue.message;
+      }
+    }
     return { ok: false, fieldErrors };
   }
 
   return {
     ok: true,
-    value: { fullName, email, companyRole, practice, note },
+    value: parsed.data,
   };
 }
